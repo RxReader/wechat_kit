@@ -1,0 +1,26 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="io.github.v7lin.fakewechat">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application>
+        <activity
+            android:name=".WechatCallbackActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.FakeWechat" />
+
+        <activity-alias
+            android:name="${applicationId}.wxapi.WXEntryActivity"
+            android:exported="true"
+            android:targetActivity=".WechatCallbackActivity" />
+
+        <activity-alias
+            android:name="${applicationId}.wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:targetActivity=".WechatCallbackActivity" />
+    </application>
+</manifest>

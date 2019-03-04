@@ -1,0 +1,40 @@
+kind: pipeline
+name: default
+
+steps:
+- name: prepare
+  image: nathansamson/flutter-builder-docker:v1.0.0
+  volumes:
+  - name: pub-cache
+    path: /opt/flutter/.pub-cache
+  commands:
+  - flutter packages get
+
+- name: analyze
+  image: nathansamson/flutter-builder-docker:v1.0.0
+  volumes:
+  - name: pub-cache
+    path: /opt/flutter/.pub-cache
+  commands:
+  - flutter analyze
+
+- name: test
+  image: nathansamson/flutter-builder-docker:v1.0.0
+  volumes:
+  - name: pub-cache
+    path: /opt/flutter/.pub-cache
+  commands:
+  - pushd example/
+  - flutter test
+
+- name: publish-check
+  image: nathansamson/flutter-builder-docker:v1.0.0
+  volumes:
+  - name: pub-cache
+    path: /opt/flutter/.pub-cache
+  commands:
+  - flutter packages pub publish --dry-run
+
+volumes:
+- name: pub-cache
+  temp: {}
