@@ -1,5 +1,8 @@
 # fake_wechat
 
+[![Build Status](https://cloud.drone.io/api/badges/v7lin/fake_wechat/status.svg)](https://cloud.drone.io/v7lin/fake_wechat)
+[![GitHub tag](https://img.shields.io/github/tag/v7lin/fake_wechat.svg)](https://github.com/v7lin/fake_wechat/releases)
+
 flutter版腾讯(QQ)SDK
 
 ## Fake 系列 Library
