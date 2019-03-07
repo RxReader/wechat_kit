@@ -616,11 +616,11 @@ class FakeWechat {
     }).then((HttpClientResponse response) async {
       if (response.statusCode == HttpStatus.ok) {
         String content = await utf8.decodeStream(response);
-        Map<dynamic, dynamic> map = json.decode(content);
+        Map<dynamic, dynamic> map = json.decode(content) as Map<dynamic, dynamic>;
         int errorCode = map.containsKey(FakeWechatApiResp.KEY_ERRORCODE)
-            ? map[FakeWechatApiResp.KEY_ERRORCODE]
+            ? map[FakeWechatApiResp.KEY_ERRORCODE] as int
             : FakeWechatApiResp.SUCCESS;
-        String errorMsg = map[FakeWechatApiResp.KEY_ERRORMSG];
+        String errorMsg = map[FakeWechatApiResp.KEY_ERRORMSG] as String;
         if (errorCode == FakeWechatApiResp.SUCCESS) {
           return FakeWechatAccessToken._(
             errorCode: errorCode,
@@ -652,11 +652,11 @@ class FakeWechat {
     }).then((HttpClientResponse response) async {
       if (response.statusCode == HttpStatus.ok) {
         String content = await utf8.decodeStream(response);
-        Map<dynamic, dynamic> map = json.decode(content);
+        Map<dynamic, dynamic> map = json.decode(content) as Map<dynamic, dynamic>;
         int errorCode = map.containsKey(FakeWechatApiResp.KEY_ERRORCODE)
-            ? map[FakeWechatApiResp.KEY_ERRORCODE]
+            ? map[FakeWechatApiResp.KEY_ERRORCODE] as int
             : FakeWechatApiResp.SUCCESS;
-        String errorMsg = map[FakeWechatApiResp.KEY_ERRORMSG];
+        String errorMsg = map[FakeWechatApiResp.KEY_ERRORMSG] as String;
         if (errorCode == FakeWechatApiResp.SUCCESS) {
           return FakeWechatTicket._(
             errorCode: errorCode,
@@ -721,11 +721,11 @@ class FakeWechat {
     }).then((HttpClientResponse response) async {
       if (response.statusCode == HttpStatus.ok) {
         String content = await utf8.decodeStream(response);
-        Map<dynamic, dynamic> map = json.decode(content);
+        Map<dynamic, dynamic> map = json.decode(content) as Map<dynamic, dynamic>;
         int errorCode = map.containsKey(FakeWechatApiResp.KEY_ERRORCODE)
-            ? map[FakeWechatApiResp.KEY_ERRORCODE]
+            ? map[FakeWechatApiResp.KEY_ERRORCODE] as int
             : FakeWechatApiResp.SUCCESS;
-        String errorMsg = map[FakeWechatApiResp.KEY_ERRORMSG];
+        String errorMsg = map[FakeWechatApiResp.KEY_ERRORMSG] as String;
         if (errorCode == FakeWechatApiResp.SUCCESS) {
           return FakeWechatUnionIDAccessToken._(
             errorCode: errorCode,
@@ -763,11 +763,11 @@ class FakeWechat {
     }).then((HttpClientResponse response) async {
       if (response.statusCode == HttpStatus.ok) {
         String content = await utf8.decodeStream(response);
-        Map<dynamic, dynamic> map = json.decode(content);
+        Map<dynamic, dynamic> map = json.decode(content) as Map<dynamic, dynamic>;
         int errorCode = map.containsKey(FakeWechatApiResp.KEY_ERRORCODE)
-            ? map[FakeWechatApiResp.KEY_ERRORCODE]
+            ? map[FakeWechatApiResp.KEY_ERRORCODE] as int
             : FakeWechatApiResp.SUCCESS;
-        String errorMsg = map[FakeWechatApiResp.KEY_ERRORMSG];
+        String errorMsg = map[FakeWechatApiResp.KEY_ERRORMSG] as String;
         if (errorCode == FakeWechatApiResp.SUCCESS) {
           return FakeWechatUnionIDUserInfo._(
             errorCode: errorCode,
