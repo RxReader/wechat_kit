@@ -14,8 +14,8 @@ A new Flutter plugin.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
-  s.static_framework = true
   s.dependency 'Flutter'
+  s.static_framework = true
   s.dependency 'WechatOpenSDK', '~> 1.8.4'
 
   s.ios.deployment_target = '8.0'
