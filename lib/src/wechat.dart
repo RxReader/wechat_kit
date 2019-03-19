@@ -14,7 +14,6 @@ import 'package:fake_wechat/src/domain/sdk/wechat_pay_resp.dart';
 import 'package:fake_wechat/src/domain/sdk/wechat_sdk_resp.dart';
 import 'package:fake_wechat/src/domain/sdk/wechat_subscribe_msg_resp.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
 
