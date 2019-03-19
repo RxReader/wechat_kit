@@ -4,7 +4,7 @@
 [![GitHub tag](https://img.shields.io/github/tag/v7lin/fake_wechat.svg)](https://github.com/v7lin/fake_wechat/releases)
 [![pub package](https://img.shields.io/pub/v/fake_wechat.svg)](https://pub.dartlang.org/packages/fake_wechat)
 
-flutter版腾讯(QQ)SDK
+flutter版微信SDK
 
 ## fake 系列 libraries
 
@@ -59,7 +59,7 @@ dependencies:
 
 ### release
 ````
-latestVersion = 0.0.1+2
+latestVersion = 0.1.0
 ````
 
 ````

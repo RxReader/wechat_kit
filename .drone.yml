@@ -3,7 +3,7 @@ name: default
 
 steps:
 - name: prepare
-  image: v7lin/flutter:1.0.0-stable
+  image: v7lin/flutter:1.2.1-stable
   volumes:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
@@ -11,7 +11,7 @@ steps:
   - flutter packages get
 
 - name: analyze
-  image: v7lin/flutter:1.0.0-stable
+  image: v7lin/flutter:1.2.1-stable
   volumes:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
@@ -19,16 +19,17 @@ steps:
   - flutter analyze
 
 - name: test
-  image: v7lin/flutter:1.0.0-stable
+  image: v7lin/flutter:1.2.1-stable
   volumes:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
   commands:
+  - flutter test
   - pushd example/
   - flutter test
 
 - name: publish-check
-  image: v7lin/flutter:1.0.0-stable
+  image: v7lin/flutter:1.2.1-stable
   volumes:
   - name: pub-cache
     path: /opt/flutter/.pub-cache

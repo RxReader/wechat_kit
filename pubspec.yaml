@@ -1,11 +1,11 @@
 name: fake_wechat
 description: A powerful wechat plugin for Flutter.
-version: 0.0.1+3
+version: 0.1.0
 author: v7lin <v7lin@qq.com>
 homepage: https://github.com/v7lin/fake_wechat
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -16,11 +16,16 @@ dependencies:
   convert: ^2.0.2
   crypto: ^2.0.6
 
+  jaguar_serializer: ^2.2.12
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   pedantic: '>=1.4.0 <3.0.0'
+
+  build_runner: ^1.2.3
+  jaguar_serializer_cli: ^2.2.5
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec

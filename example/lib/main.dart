@@ -23,9 +23,9 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    FakeWechat wechat = FakeWechat();
+    Wechat wechat = Wechat();
     wechat.registerApp(appId: 'wx854345270316ce6e'); // 更换为目标应用的appId
-    return FakeWechatProvider(
+    return WechatProvider(
       wechat: wechat,
       child: MaterialApp(
         home: Home(
@@ -42,7 +42,7 @@ class Home extends StatefulWidget {
     @required this.wechat,
   }) : super(key: key);
 
-  final FakeWechat wechat;
+  final Wechat wechat;
 
   @override
   State<StatefulWidget> createState() {
@@ -51,8 +51,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  StreamSubscription<FakeWechatAuthResp> _auth;
-  StreamSubscription<FakeWechatShareMsgResp> _share;
+  StreamSubscription<WechatAuthResp> _auth;
+  StreamSubscription<WechatSdkResp> _share;
 
   @override
   void initState() {
@@ -61,12 +61,12 @@ class _HomeState extends State<Home> {
     _share = widget.wechat.shareMsgResp().listen(_listenShareMsg);
   }
 
-  void _listenAuth(FakeWechatAuthResp resp) {
+  void _listenAuth(WechatAuthResp resp) {
     String content = 'auth: ${resp.errorCode} ${resp.errorMsg}';
     _showTips('登录', content);
   }
 
-  void _listenShareMsg(FakeWechatShareMsgResp resp) {
+  void _listenShareMsg(WechatSdkResp resp) {
     String content = 'share: ${resp.errorCode} ${resp.errorMsg}';
     _showTips('分享', content);
   }
@@ -102,7 +102,7 @@ class _HomeState extends State<Home> {
             title: const Text('登录'),
             onTap: () {
               widget.wechat.auth(
-                scope: <String>[FakeWechatScope.SNSAPI_USERINFO],
+                scope: <String>[WechatScope.SNSAPI_USERINFO],
                 state: 'auth',
               );
             },
@@ -111,7 +111,7 @@ class _HomeState extends State<Home> {
             title: const Text('文字分享'),
             onTap: () {
               widget.wechat.shareText(
-                scene: FakeWechatScene.TIMELINE,
+                scene: WechatScene.TIMELINE,
                 text: 'Share Text',
               );
             },
@@ -124,7 +124,7 @@ class _HomeState extends State<Home> {
                   await image.obtainKey(createLocalImageConfiguration(context));
               ByteData imageData = await key.bundle.load(key.name);
               await widget.wechat.shareImage(
-                scene: FakeWechatScene.TIMELINE,
+                scene: WechatScene.TIMELINE,
                 imageData: imageData.buffer.asUint8List(),
               );
             },
@@ -133,7 +133,7 @@ class _HomeState extends State<Home> {
             title: const Text('网页分享'),
             onTap: () {
               widget.wechat.shareWebpage(
-                scene: FakeWechatScene.TIMELINE,
+                scene: WechatScene.TIMELINE,
                 webpageUrl: 'https://www.baidu.com',
               );
             },
