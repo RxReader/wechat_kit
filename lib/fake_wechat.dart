@@ -3,6 +3,7 @@ library fake_wechat;
 export 'src/domain/api/wechat_access_token_resp.dart'
     hide WechatAccessTokenRespSerializer;
 export 'src/domain/api/wechat_api_resp.dart';
+export 'src/domain/api/wechat_ticket_resp.dart' hide WechatTicketRespSerializer;
 export 'src/domain/api/wechat_user_info_resp.dart'
     hide WechatUserInfoRespSerializer;
 export 'src/domain/qrauth/wechat_qrauth_resp.dart'

@@ -6,6 +6,7 @@ import 'dart:typed_data';
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
 import 'package:fake_wechat/src/domain/api/wechat_access_token_resp.dart';
+import 'package:fake_wechat/src/domain/api/wechat_ticket_resp.dart';
 import 'package:fake_wechat/src/domain/api/wechat_user_info_resp.dart';
 import 'package:fake_wechat/src/domain/qrauth/wechat_qrauth_resp.dart';
 import 'package:fake_wechat/src/domain/sdk/wechat_auth_resp.dart';
@@ -239,6 +240,8 @@ class Wechat {
     return (await _channel.invokeMethod(_METHOD_OPENWECHAT)) as bool;
   }
 
+  // --- 微信APP授权登录
+
   /// 授权登录
   Future<void> auth({
     @required List<String> scope,
@@ -257,7 +260,124 @@ class Wechat {
     return _channel.invokeMethod(_METHOD_AUTH, map);
   }
 
-  /// 开始扫码登录
+  /// 获取 access_token（UnionID）
+  Future<WechatAccessTokenResp> getAccessTokenUnionID({
+    @required String appId,
+    @required String appSecret,
+    @required String code,
+  }) {
+    assert(appId != null && appId.isNotEmpty);
+    assert(appSecret != null && appSecret.isNotEmpty);
+    assert(code != null && code.isNotEmpty);
+    return HttpClient()
+        .getUrl(Uri.parse(
+            'https://api.weixin.qq.com/sns/oauth2/access_token?appid=$appId&secret=$appSecret&code=$code&grant_type=authorization_code'))
+        .then((HttpClientRequest request) {
+      return request.close();
+    }).then((HttpClientResponse response) async {
+      if (response.statusCode == HttpStatus.ok) {
+        String content = await utf8.decodeStream(response);
+        return WechatAccessTokenRespSerializer()
+            .fromMap(json.decode(content) as Map<dynamic, dynamic>);
+      }
+      throw HttpException(
+          'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');
+    });
+  }
+
+  /// 刷新或续期access_token使用（UnionID）
+  Future<WechatAccessTokenResp> refreshAccessTokenUnionID({
+    @required String appId,
+    @required String refreshToken,
+  }) {
+    assert(appId != null && appId.isNotEmpty);
+    assert(refreshToken != null && refreshToken.isNotEmpty);
+    return HttpClient()
+        .getUrl(Uri.parse(
+            'https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=$appId&grant_type=refresh_token&refresh_token=$refreshToken'))
+        .then((HttpClientRequest request) {
+      return request.close();
+    }).then((HttpClientResponse response) async {
+      if (response.statusCode == HttpStatus.ok) {
+        String content = await utf8.decodeStream(response);
+        return WechatAccessTokenRespSerializer()
+            .fromMap(json.decode(content) as Map<dynamic, dynamic>);
+      }
+      throw HttpException(
+          'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');
+    });
+  }
+
+  /// 获取用户个人信息（UnionID）
+  Future<WechatUserInfoResp> getUserInfoUnionID({
+    @required String openId,
+    @required String accessToken,
+  }) {
+    assert(openId != null && openId.isNotEmpty);
+    assert(accessToken != null && accessToken.isNotEmpty);
+    return HttpClient()
+        .getUrl(Uri.parse(
+            'https://api.weixin.qq.com/sns/userinfo?access_token=$accessToken&openid=$openId'))
+        .then((HttpClientRequest request) {
+      return request.close();
+    }).then((HttpClientResponse response) async {
+      if (response.statusCode == HttpStatus.ok) {
+        String content = await utf8.decodeStream(response);
+        return WechatUserInfoRespSerializer()
+            .fromMap(json.decode(content) as Map<dynamic, dynamic>);
+      }
+      throw HttpException(
+          'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');
+    });
+  }
+
+  // --- 微信APP扫码登录
+
+  /// 获取access_token
+  Future<WechatAccessTokenResp> getAccessToken({
+    @required String appId,
+    @required String appSecret,
+  }) {
+    assert(appId != null && appId.isNotEmpty);
+    assert(appSecret != null && appSecret.isNotEmpty);
+    return HttpClient()
+        .getUrl(Uri.parse(
+            'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appId&secret=$appSecret'))
+        .then((HttpClientRequest request) {
+      return request.close();
+    }).then((HttpClientResponse response) async {
+      if (response.statusCode == HttpStatus.ok) {
+        String content = await utf8.decodeStream(response);
+        return WechatAccessTokenRespSerializer()
+            .fromMap(json.decode(content) as Map<dynamic, dynamic>);
+      }
+      throw HttpException(
+          'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');
+    });
+  }
+
+  /// 用上面的函数拿到的access_token，获取sdk_ticket
+  Future<WechatTicketResp> getTicket({
+    @required String accessToken,
+  }) {
+    assert(accessToken != null && accessToken.isNotEmpty);
+    return HttpClient()
+        .getUrl(Uri.parse(
+            'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=$accessToken&type=2'))
+        .then((HttpClientRequest request) {
+      return request.close();
+    }).then((HttpClientResponse response) async {
+      if (response.statusCode == HttpStatus.ok) {
+        String content = await utf8.decodeStream(response);
+        return WechatTicketRespSerializer()
+            .fromMap(json.decode(content) as Map<dynamic, dynamic>);
+      }
+      throw HttpException(
+          'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');
+    });
+  }
+
+  /// 用上面函数拿到的ticket，开始扫码登录
   Future<void> startQrauth({
     @required String appId,
     @required String scope,
@@ -283,77 +403,6 @@ class Wechat {
   /// 暂停扫码登录请求
   Future<void> stopQrauth() {
     return _channel.invokeMethod(_METHOD_STOPQRAUTH);
-  }
-
-  /// 获取 access_token（UnionID）
-  Future<WechatAccessTokenResp> getAccessToken({
-    @required String appId,
-    @required String appSecret,
-    @required String code,
-  }) {
-    assert(appId != null && appId.isNotEmpty);
-    assert(appSecret != null && appSecret.isNotEmpty);
-    assert(code != null && code.isNotEmpty);
-    return HttpClient()
-        .getUrl(Uri.parse(
-            'https://api.weixin.qq.com/sns/oauth2/access_token?appid=$appId&secret=$appSecret&code=$code&grant_type=authorization_code'))
-        .then((HttpClientRequest request) {
-      return request.close();
-    }).then((HttpClientResponse response) async {
-      if (response.statusCode == HttpStatus.ok) {
-        String content = await utf8.decodeStream(response);
-        return WechatAccessTokenRespSerializer()
-            .fromMap(json.decode(content) as Map<dynamic, dynamic>);
-      }
-      throw HttpException(
-          'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');
-    });
-  }
-
-  /// 刷新或续期access_token使用（UnionID）
-  Future<WechatAccessTokenResp> refreshAccessToken({
-    @required String appId,
-    @required String refreshToken,
-  }) {
-    assert(appId != null && appId.isNotEmpty);
-    assert(refreshToken != null && refreshToken.isNotEmpty);
-    return HttpClient()
-        .getUrl(Uri.parse(
-            'https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=$appId&grant_type=refresh_token&refresh_token=$refreshToken'))
-        .then((HttpClientRequest request) {
-      return request.close();
-    }).then((HttpClientResponse response) async {
-      if (response.statusCode == HttpStatus.ok) {
-        String content = await utf8.decodeStream(response);
-        return WechatAccessTokenRespSerializer()
-            .fromMap(json.decode(content) as Map<dynamic, dynamic>);
-      }
-      throw HttpException(
-          'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');
-    });
-  }
-
-  /// 获取用户个人信息（UnionID）
-  Future<WechatUserInfoResp> getUserInfo({
-    @required String openId,
-    @required String accessToken,
-  }) {
-    assert(openId != null && openId.isNotEmpty);
-    assert(accessToken != null && accessToken.isNotEmpty);
-    return HttpClient()
-        .getUrl(Uri.parse(
-            'https://api.weixin.qq.com/sns/userinfo?access_token=$accessToken&openid=$openId'))
-        .then((HttpClientRequest request) {
-      return request.close();
-    }).then((HttpClientResponse response) async {
-      if (response.statusCode == HttpStatus.ok) {
-        String content = await utf8.decodeStream(response);
-        return WechatUserInfoRespSerializer()
-            .fromMap(json.decode(content) as Map<dynamic, dynamic>);
-      }
-      throw HttpException(
-          'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');
-    });
   }
 
   /// 打开指定网页
