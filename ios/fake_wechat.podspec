@@ -15,6 +15,7 @@ A new Flutter plugin.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
+  # 微信
   s.static_framework = true
   s.dependency 'WechatOpenSDK', '~> 1.8.4'
 
