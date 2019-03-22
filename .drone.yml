@@ -10,6 +10,14 @@ steps:
   commands:
   - flutter packages get
 
+- name: format
+  image: v7lin/flutter:1.2.1-stable
+  volumes:
+  - name: pub-cache
+    path: /opt/flutter/.pub-cache
+  commands:
+  - flutter format --dry-run --set-exit-if-changed .
+
 - name: analyze
   image: v7lin/flutter:1.2.1-stable
   volumes:

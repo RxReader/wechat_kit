@@ -10,7 +10,7 @@ class WechatSdkResp {
   WechatSdkResp({
     int errorCode,
     this.errorMsg,
-  }): errorCode = errorCode ?? ERRORCODE_SUCCESS;
+  }) : errorCode = errorCode ?? ERRORCODE_SUCCESS;
 
   /// 成功
   static const int ERRORCODE_SUCCESS = 0;

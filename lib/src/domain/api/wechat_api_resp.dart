@@ -2,7 +2,7 @@ abstract class WechatApiResp {
   WechatApiResp({
     int errcode,
     this.errmsg,
-  }): errcode = errcode ?? ERRORCODE_SUCCESS;
+  }) : errcode = errcode ?? ERRORCODE_SUCCESS;
 
   /// 成功
   static const int ERRORCODE_SUCCESS = 0;

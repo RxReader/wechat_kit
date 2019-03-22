@@ -43,6 +43,9 @@ void main() {
     expect(userInfoResp.errcode, equals(0));
     expect(userInfoResp.nickname, equals('NICKNAME'));
     expect(userInfoResp.sex, equals(1));
-    expect(userInfoResp.headimgurl, equals('http://wx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/0'));
+    expect(
+        userInfoResp.headimgurl,
+        equals(
+            'http://wx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/0'));
   });
 }

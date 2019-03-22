@@ -4,7 +4,8 @@ import 'package:fake_wechat/src/domain/api/wechat_api_resp.dart';
 part 'wechat_access_token_resp.jser.dart';
 
 @GenSerializer(nameFormatter: toSnakeCase)
-class WechatAccessTokenRespSerializer extends Serializer<WechatAccessTokenResp> with _$WechatAccessTokenRespSerializer{}
+class WechatAccessTokenRespSerializer extends Serializer<WechatAccessTokenResp>
+    with _$WechatAccessTokenRespSerializer {}
 
 class WechatAccessTokenResp extends WechatApiResp {
   WechatAccessTokenResp({
