@@ -436,11 +436,11 @@ class Wechat {
       _ARGUMENT_KEY_USERNAME: username,
 //      _ARGUMENT_KEY_EXTMSG: extMsg,
     };
+
+    /// 兼容 iOS 空安全 -> NSNull
     if (extMsg != null) {
       map.putIfAbsent(_ARGUMENT_KEY_EXTMSG, () => extMsg);
     }
-
-    /// 兼容 iOS 空安全 -> NSNull
     return _channel.invokeMethod(_METHOD_OPENBIZPROFILE, map);
   }
 
