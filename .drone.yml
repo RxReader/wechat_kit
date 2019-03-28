@@ -10,6 +10,14 @@ steps:
   commands:
   - flutter packages get
 
+#- name: build_runner
+#  image: v7lin/flutter:1.2.1-stable
+#  volumes:
+#  - name: pub-cache
+#    path: /opt/flutter/.pub-cache
+#  commands:
+#  - flutter packages pub run build_runner build
+
 - name: format
   image: v7lin/flutter:1.2.1-stable
   volumes:
