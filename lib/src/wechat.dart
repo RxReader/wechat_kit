@@ -52,7 +52,6 @@ class Wechat {
   static const String _METHOD_ONAUTHFINISH = 'onAuthFinish';
 
   static const String _ARGUMENT_KEY_APPID = 'appId';
-  static const String _ARGUMENT_KEY_ENABLEMTA = 'enableMTA';
   static const String _ARGUMENT_KEY_SCOPE = 'scope';
   static const String _ARGUMENT_KEY_STATE = 'state';
   static const String _ARGUMENT_KEY_NONCESTR = 'noncestr';
@@ -126,7 +125,6 @@ class Wechat {
   /// 向微信注册应用
   Future<void> registerApp({
     @required String appId,
-    bool enableMTA = false,
   }) {
     assert(appId != null && appId.isNotEmpty);
     _channel.setMethodCallHandler(_handleMethod);
@@ -134,7 +132,6 @@ class Wechat {
       _METHOD_REGISTERAPP,
       <String, dynamic>{
         _ARGUMENT_KEY_APPID: appId,
-        _ARGUMENT_KEY_ENABLEMTA: enableMTA,
       },
     );
   }
