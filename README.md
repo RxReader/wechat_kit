@@ -15,6 +15,7 @@ flutter版微信SDK
 5. [flutter版支付宝SDK](https://github.com/v7lin/fake_alipay)
 
 ## dart/flutter 私服
+
 [simple_pub_server](https://github.com/v7lin/simple_pub_server)
 
 ## android
@@ -49,7 +50,8 @@ iOS 9系统策略更新，限制了http协议的访问，此外应用需要在�
 
 ## flutter
 
-### snapshot
+* snapshot
+
 ````
 dependencies:
   fake_wechat:
@@ -57,14 +59,11 @@ dependencies:
       url: https://github.com/v7lin/fake_wechat.git
 ````
 
-### release
-````
-latestVersion = 0.1.0
-````
+* release
 
 ````
 dependencies:
-  fake_wechat: ^${latestVersion}
+  fake_wechat: ^${latestTag}
 ````
 
 ### example

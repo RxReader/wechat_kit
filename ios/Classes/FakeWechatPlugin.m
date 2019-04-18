@@ -52,7 +52,6 @@ static NSString * const METHOD_ONAUTHQRCODESCANNED = @"onAuthQrcodeScanned";
 static NSString * const METHOD_ONAUTHFINISH = @"onAuthFinish";
 
 static NSString * const ARGUMENT_KEY_APPID = @"appId";
-static NSString * const ARGUMENT_KEY_ENABLEMTA = @"enableMTA";
 static NSString * const ARGUMENT_KEY_SCOPE = @"scope";
 static NSString * const ARGUMENT_KEY_STATE = @"state";
 static NSString * const ARGUMENT_KEY_NONCESTR = @"noncestr";
@@ -117,8 +116,7 @@ static NSString * const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     if ([METHOD_REGISTERAPP isEqualToString:call.method]) {
         NSString * appId = call.arguments[ARGUMENT_KEY_APPID];
-        NSNumber * enableMTA = call.arguments[ARGUMENT_KEY_ENABLEMTA];
-        [WXApi registerApp:appId enableMTA:enableMTA.boolValue];
+        [WXApi registerApp:appId enableMTA:NO];
         result(nil);
     } else if ([METHOD_ISWECHATINSTALLED isEqualToString:call.method]) {
         result([NSNumber numberWithBool:[WXApi isWXAppInstalled]]);

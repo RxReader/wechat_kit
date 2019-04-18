@@ -88,7 +88,6 @@ public class FakeWechatPlugin implements MethodCallHandler, PluginRegistry.ViewD
     private static final String METHOD_ONAUTHFINISH = "onAuthFinish";
 
     private static final String ARGUMENT_KEY_APPID = "appId";
-    private static final String ARGUMENT_KEY_ENABLEMTA = "enableMTA";
     private static final String ARGUMENT_KEY_SCOPE = "scope";
     private static final String ARGUMENT_KEY_STATE = "state";
     private static final String ARGUMENT_KEY_NONCESTR = "noncestr";
@@ -238,12 +237,7 @@ public class FakeWechatPlugin implements MethodCallHandler, PluginRegistry.ViewD
     public void onMethodCall(MethodCall call, Result result) {
         if (METHOD_REGISTERAPP.equals(call.method)) {
             String appId = call.argument(ARGUMENT_KEY_APPID);
-            boolean enableMTA = call.argument(ARGUMENT_KEY_ENABLEMTA);
-            if (enableMTA) {
-                iwxapi = WXAPIFactory.createWXAPI(registrar.activity(), appId);
-            } else {
-                iwxapi = WXAPIFactory.createWXAPI(registrar.context().getApplicationContext(), appId);
-            }
+            iwxapi = WXAPIFactory.createWXAPI(registrar.context().getApplicationContext(), appId);
             iwxapi.registerApp(appId);
             result.success(null);
         } else if (METHOD_ISWECHATINSTALLED.equals(call.method)) {
