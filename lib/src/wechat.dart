@@ -509,23 +509,23 @@ class Wechat {
     return _channel.invokeMethod(_METHOD_SHAREIMAGE, map);
   }
 
-  /// 分享 - 表情/GIF
+  /// 分享 - Emoji/GIF
   Future<void> shareEmoji({
     @required int scene,
     String title,
     String description,
-    Uint8List thumbData,
+    @required Uint8List thumbData,
     @required Uint8List emojiData,
   }) {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
-    assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
+    assert(thumbData != null && thumbData.lengthInBytes <= 32 * 1024);
     assert(emojiData != null && emojiData.lengthInBytes <= 10 * 1024 * 1024);
     Map<String, dynamic> map = <String, dynamic>{
       _ARGUMENT_KEY_SCENE: scene, // Scene
 //      _ARGUMENT_KEY_TITLE: title,
 //      _ARGUMENT_KEY_DESCRIPTION: description,
-//      _ARGUMENT_KEY_THUMBDATA: thumbData,
+      _ARGUMENT_KEY_THUMBDATA: thumbData,
       _ARGUMENT_KEY_EMOJIDATA: emojiData,
     };
 
@@ -535,9 +535,6 @@ class Wechat {
     }
     if (description != null) {
       map.putIfAbsent(_ARGUMENT_KEY_DESCRIPTION, () => description);
-    }
-    if (thumbData != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_THUMBDATA, () => thumbData);
     }
     return _channel.invokeMethod(_METHOD_SHAREEMOJI, map);
   }

@@ -138,6 +138,7 @@ class _HomeState extends State<Home> {
               ByteData emojiData = await key.bundle.load(key.name);
               await widget.wechat.shareEmoji(
                 scene: WechatScene.SESSION,
+                thumbData: null,
                 emojiData: emojiData.buffer.asUint8List(),
               );
             },
