@@ -17,6 +17,7 @@ import com.tencent.mm.opensdk.modelbiz.SubscribeMessage;
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXEmojiObject;
 import com.tencent.mm.opensdk.modelmsg.WXImageObject;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXMiniProgramObject;
@@ -69,6 +70,7 @@ public class FakeWechatPlugin implements MethodCallHandler, PluginRegistry.ViewD
     private static final String METHOD_OPENBIZURL = "openBizUrl";
     private static final String METHOD_SHARETEXT = "shareText";
     private static final String METHOD_SHAREIMAGE = "shareImage";
+    private static final String METHOD_SHAREEMOJI = "shareEmoji";
     private static final String METHOD_SHAREMUSIC = "shareMusic";
     private static final String METHOD_SHAREVIDEO = "shareVideo";
     private static final String METHOD_SHAREWEBPAGE = "shareWebpage";
@@ -104,6 +106,7 @@ public class FakeWechatPlugin implements MethodCallHandler, PluginRegistry.ViewD
     private static final String ARGUMENT_KEY_DESCRIPTION = "description";
     private static final String ARGUMENT_KEY_THUMBDATA = "thumbData";
     private static final String ARGUMENT_KEY_IMAGEDATA = "imageData";
+    private static final String ARGUMENT_KEY_EMOJIDATA = "emojiData";
     private static final String ARGUMENT_KEY_MUSICURL = "musicUrl";
     private static final String ARGUMENT_KEY_MUSICDATAURL = "musicDataUrl";
     private static final String ARGUMENT_KEY_MUSICLOWBANDURL = "musicLowBandUrl";
@@ -262,6 +265,7 @@ public class FakeWechatPlugin implements MethodCallHandler, PluginRegistry.ViewD
         } else if (METHOD_SHARETEXT.equals(call.method)) {
             handleShareTextCall(call, result);
         } else if (METHOD_SHAREIMAGE.equals(call.method) ||
+                METHOD_SHAREEMOJI.equals(call.method) ||
                 METHOD_SHAREMUSIC.equals(call.method) ||
                 METHOD_SHAREVIDEO.equals(call.method) ||
                 METHOD_SHAREWEBPAGE.equals(call.method) ||
@@ -357,6 +361,10 @@ public class FakeWechatPlugin implements MethodCallHandler, PluginRegistry.ViewD
         if (METHOD_SHAREIMAGE.equals(call.method)) {
             WXImageObject object = new WXImageObject();
             object.imageData = call.argument(ARGUMENT_KEY_IMAGEDATA);
+            message.mediaObject = object;
+        } else if (METHOD_SHAREEMOJI.equals(call.method)) {
+            WXEmojiObject object = new WXEmojiObject();
+            object.emojiData = call.argument(ARGUMENT_KEY_EMOJIDATA);
             message.mediaObject = object;
         } else if (METHOD_SHAREMUSIC.equals(call.method)) {
             WXMusicObject object = new WXMusicObject();

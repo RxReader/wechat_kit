@@ -130,6 +130,19 @@ class _HomeState extends State<Home> {
             },
           ),
           ListTile(
+            title: const Text('Emoji分享'),
+            onTap: () async {
+              AssetImage image = const AssetImage('images/icon/timg.gif');
+              AssetBundleImageKey key =
+                  await image.obtainKey(createLocalImageConfiguration(context));
+              ByteData emojiData = await key.bundle.load(key.name);
+              await widget.wechat.shareEmoji(
+                scene: WechatScene.SESSION,
+                emojiData: emojiData.buffer.asUint8List(),
+              );
+            },
+          ),
+          ListTile(
             title: const Text('网页分享'),
             onTap: () {
               widget.wechat.shareWebpage(

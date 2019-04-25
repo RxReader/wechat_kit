@@ -33,6 +33,7 @@ static NSString * const METHOD_OPENBIZPROFILE = @"openBizProfile";
 static NSString * const METHOD_OPENBIZURL = @"openBizUrl";
 static NSString * const METHOD_SHARETEXT = @"shareText";
 static NSString * const METHOD_SHAREIMAGE = @"shareImage";
+static NSString * const METHOD_SHAREEMOJI = @"shareEmoji";
 static NSString * const METHOD_SHAREMUSIC = @"shareMusic";
 static NSString * const METHOD_SHAREVIDEO = @"shareVideo";
 static NSString * const METHOD_SHAREWEBPAGE = @"shareWebpage";
@@ -68,6 +69,7 @@ static NSString * const ARGUMENT_KEY_TITLE = @"title";
 static NSString * const ARGUMENT_KEY_DESCRIPTION = @"description";
 static NSString * const ARGUMENT_KEY_THUMBDATA = @"thumbData";
 static NSString * const ARGUMENT_KEY_IMAGEDATA = @"imageData";
+static NSString * const ARGUMENT_KEY_EMOJIDATA = @"emojiData";
 static NSString * const ARGUMENT_KEY_MUSICURL = @"musicUrl";
 static NSString * const ARGUMENT_KEY_MUSICDATAURL = @"musicDataUrl";
 static NSString * const ARGUMENT_KEY_MUSICLOWBANDURL = @"musicLowBandUrl";
@@ -140,6 +142,7 @@ static NSString * const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
     } else if ([METHOD_SHARETEXT isEqualToString:call.method]) {
         [self handleShareTextCall:call result:result];
     } else if ([METHOD_SHAREIMAGE isEqualToString:call.method] ||
+               [METHOD_SHAREEMOJI isEqualToString:call.method] ||
                [METHOD_SHAREMUSIC isEqualToString:call.method] ||
                [METHOD_SHAREVIDEO isEqualToString:call.method] ||
                [METHOD_SHAREWEBPAGE isEqualToString:call.method] ||
@@ -237,6 +240,11 @@ static NSString * const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
         WXImageObject * mediaObject = [WXImageObject object];
         FlutterStandardTypedData * imageData = call.arguments[ARGUMENT_KEY_IMAGEDATA];
         mediaObject.imageData = imageData.data;
+        message.mediaObject = mediaObject;
+    } else if ([METHOD_SHAREEMOJI isEqualToString:call.method]) {
+        WXEmoticonObject * mediaObject = [WXEmoticonObject object];
+        FlutterStandardTypedData * emojiData = call.arguments[ARGUMENT_KEY_EMOJIDATA];
+        mediaObject.emoticonData = emojiData.data;
         message.mediaObject = mediaObject;
     } else if ([METHOD_SHAREMUSIC isEqualToString:call.method]) {
         WXMusicObject * mediaObject = [WXMusicObject object];
