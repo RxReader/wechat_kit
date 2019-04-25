@@ -24,6 +24,8 @@ dev_dependencies:
 
   pedantic: '>=1.4.0 <3.0.0'
 
+  image: ^2.0.7
+
   build_runner: ^1.2.3
   jaguar_serializer_cli: ^2.2.5
 
