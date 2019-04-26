@@ -69,8 +69,8 @@ class Wechat {
   static const String _ARGUMENT_KEY_TITLE = 'title';
   static const String _ARGUMENT_KEY_DESCRIPTION = 'description';
   static const String _ARGUMENT_KEY_THUMBDATA = 'thumbData';
-  static const String _ARGUMENT_KEY_IMAGEDATA = 'imageData';
-  static const String _ARGUMENT_KEY_EMOJIDATA = 'emojiData';
+  static const String _ARGUMENT_KEY_IMAGEURI = 'imageUri';
+  static const String _ARGUMENT_KEY_EMOJIURI = 'emojiUri';
   static const String _ARGUMENT_KEY_MUSICURL = 'musicUrl';
   static const String _ARGUMENT_KEY_MUSICDATAURL = 'musicDataUrl';
   static const String _ARGUMENT_KEY_MUSICLOWBANDURL = 'musicLowBandUrl';
@@ -92,6 +92,8 @@ class Wechat {
   static const String _ARGUMENT_KEY_SIGN = 'sign';
 
   static const String _ARGUMENT_KEY_RESULT_IMAGEDATA = 'imageData';
+
+  static const String _SCHEME_FILE = 'file';
 
   static const MethodChannel _channel =
       MethodChannel('v7lin.github.io/fake_wechat');
@@ -483,18 +485,21 @@ class Wechat {
     String title,
     String description,
     Uint8List thumbData,
-    @required Uint8List imageData,
+    @required Uri imageUri,
   }) {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
-    assert(imageData != null && imageData.lengthInBytes <= 25 * 1024 * 1024);
+    assert(imageUri != null &&
+        imageUri.isScheme(_SCHEME_FILE) &&
+        imageUri.toFilePath().length <= 10 * 1024 &&
+        File.fromUri(imageUri).lengthSync() <= 25 * 1024 * 1024);
     Map<String, dynamic> map = <String, dynamic>{
       _ARGUMENT_KEY_SCENE: scene, // Scene
 //      _ARGUMENT_KEY_TITLE: title,
 //      _ARGUMENT_KEY_DESCRIPTION: description,
 //      _ARGUMENT_KEY_THUMBDATA: thumbData,
-      _ARGUMENT_KEY_IMAGEDATA: imageData,
+      _ARGUMENT_KEY_IMAGEURI: imageUri.toString(),
     };
 
     /// 兼容 iOS 空安全 -> NSNull
@@ -516,18 +521,21 @@ class Wechat {
     String title,
     String description,
     @required Uint8List thumbData,
-    @required Uint8List emojiData,
+    @required Uri emojiUri,
   }) {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
     assert(thumbData != null && thumbData.lengthInBytes <= 32 * 1024);
-    assert(emojiData != null && emojiData.lengthInBytes <= 10 * 1024 * 1024);
+    assert(emojiUri != null &&
+        emojiUri.isScheme(_SCHEME_FILE) &&
+        emojiUri.toFilePath().length <= 10 * 1024 &&
+        File.fromUri(emojiUri).lengthSync() <= 10 * 1024 * 1024);
     Map<String, dynamic> map = <String, dynamic>{
       _ARGUMENT_KEY_SCENE: scene, // Scene
 //      _ARGUMENT_KEY_TITLE: title,
 //      _ARGUMENT_KEY_DESCRIPTION: description,
       _ARGUMENT_KEY_THUMBDATA: thumbData,
-      _ARGUMENT_KEY_EMOJIDATA: emojiData,
+      _ARGUMENT_KEY_EMOJIURI: emojiUri.toString(),
     };
 
     /// 兼容 iOS 空安全 -> NSNull

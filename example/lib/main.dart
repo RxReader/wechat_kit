@@ -4,7 +4,9 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fake_path_provider/fake_path_provider.dart';
 import 'package:fake_wechat/fake_wechat.dart';
+import 'package:path/path.dart' as path;
 import 'package:image/image.dart' as image;
 
 void main() {
@@ -124,10 +126,17 @@ class _HomeState extends State<Home> {
               AssetImage timg = const AssetImage('images/icon/timg.jpeg');
               AssetBundleImageKey key =
                   await timg.obtainKey(createLocalImageConfiguration(context));
-              ByteData imageData = await key.bundle.load(key.name);
+              ByteData timgData = await key.bundle.load(key.name);
+              Directory saveDir = await PathProvider.getDocumentsDirectory();
+              File saveFile = File('${saveDir.path}${path.separator}timg.jpeg');
+              if (!saveFile.existsSync()) {
+                saveFile.createSync(recursive: true);
+                saveFile.writeAsBytesSync(timgData.buffer.asUint8List(),
+                    flush: true);
+              }
               await widget.wechat.shareImage(
-                scene: WechatScene.TIMELINE,
-                imageData: imageData.buffer.asUint8List(),
+                scene: WechatScene.SESSION,
+                imageUri: Uri.file(saveFile.path),
               );
             },
           ),
@@ -137,17 +146,25 @@ class _HomeState extends State<Home> {
               AssetImage timg = const AssetImage('images/icon/timg.gif');
               AssetBundleImageKey key =
                   await timg.obtainKey(createLocalImageConfiguration(context));
-              ByteData emojiData = await key.bundle.load(key.name);
+              ByteData timgData = await key.bundle.load(key.name);
+              Directory saveDir = await PathProvider.getDocumentsDirectory();
+              File saveFile = File('${saveDir.path}${path.separator}timg.gif');
+              if (!saveFile.existsSync()) {
+                saveFile.createSync(recursive: true);
+                saveFile.writeAsBytesSync(timgData.buffer.asUint8List(),
+                    flush: true);
+              }
               image.Image thumbnail =
-                  image.decodeGif(emojiData.buffer.asUint8List());
+                  image.decodeGif(timgData.buffer.asUint8List());
               Uint8List thumbData = thumbnail.getBytes();
               if (thumbData.length > 32 * 1024) {
-                thumbData = Uint8List.fromList(image.encodeJpg(thumbnail, quality: 100 * 32 * 1024 ~/ thumbData.length));
+                thumbData = Uint8List.fromList(image.encodeJpg(thumbnail,
+                    quality: 100 * 32 * 1024 ~/ thumbData.length));
               }
               await widget.wechat.shareEmoji(
                 scene: WechatScene.SESSION,
                 thumbData: thumbData,
-                emojiData: emojiData.buffer.asUint8List(),
+                emojiUri: Uri.file(saveFile.path),
               );
             },
           ),
