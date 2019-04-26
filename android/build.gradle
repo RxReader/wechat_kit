@@ -36,5 +36,5 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation 'io.github.v7lin:wechat-android:5.3.1'
+    implementation 'io.github.v7lin:wechat-android:5.3.1+1'
 }

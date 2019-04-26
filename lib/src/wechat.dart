@@ -14,6 +14,7 @@ import 'package:fake_wechat/src/domain/sdk/wechat_launch_mini_program_resp.dart'
 import 'package:fake_wechat/src/domain/sdk/wechat_pay_resp.dart';
 import 'package:fake_wechat/src/domain/sdk/wechat_sdk_resp.dart';
 import 'package:fake_wechat/src/domain/sdk/wechat_subscribe_msg_resp.dart';
+import 'package:fake_wechat/src/wechat_scene.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
@@ -487,7 +488,7 @@ class Wechat {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
-    assert(imageData != null && imageData.lengthInBytes <= 10 * 1024 * 1024);
+    assert(imageData != null && imageData.lengthInBytes <= 25 * 1024 * 1024);
     Map<String, dynamic> map = <String, dynamic>{
       _ARGUMENT_KEY_SCENE: scene, // Scene
 //      _ARGUMENT_KEY_TITLE: title,
@@ -689,6 +690,7 @@ class Wechat {
     Uint8List hdImageData,
     bool withShareTicket = false,
   }) {
+    assert(scene == WechatScene.SESSION);
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
