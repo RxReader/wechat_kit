@@ -67,7 +67,8 @@ dependencies:
   fake_wechat: ^${latestTag}
 ````
 
-### example
+* example
+
 [示例](./example/lib/main.dart)
 
 ## Getting Started
