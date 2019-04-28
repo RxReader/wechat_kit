@@ -19,6 +19,13 @@ flutter版微信SDK
 
 [simple_pub_server](https://github.com/v7lin/simple_pub_server)
 
+## docs
+
+* [微信开放平台](https://open.weixin.qq.com/)
+* [微信登录](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419317851&token=&lang=zh_CN)
+* [扫码登录](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=215238808828h4XN&token=&lang=zh_CN)
+* [微信支付](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419317780&token=&lang=zh_CN)
+
 ## android
 
 ````
