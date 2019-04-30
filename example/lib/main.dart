@@ -9,6 +9,8 @@ import 'package:fake_wechat/fake_wechat.dart';
 import 'package:path/path.dart' as path;
 import 'package:image/image.dart' as image;
 
+const String WECHAT_APPID = 'wx854345270316ce6e'; // 更换为目标应用的appId
+
 void main() {
   runZoned(() {
     runApp(MyApp());
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Wechat wechat = Wechat();
-    wechat.registerApp(appId: 'wx854345270316ce6e'); // 更换为目标应用的appId
+    wechat.registerApp(appId: WECHAT_APPID);
     return WechatProvider(
       wechat: wechat,
       child: MaterialApp(
@@ -57,12 +59,14 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   StreamSubscription<WechatAuthResp> _auth;
   StreamSubscription<WechatSdkResp> _share;
+  StreamSubscription<WechatPayResp> _pay;
 
   @override
   void initState() {
     super.initState();
     _auth = widget.wechat.authResp().listen(_listenAuth);
     _share = widget.wechat.shareMsgResp().listen(_listenShareMsg);
+    _pay = widget.wechat.payResp().listen(_listenPay);
   }
 
   void _listenAuth(WechatAuthResp resp) {
@@ -75,6 +79,11 @@ class _HomeState extends State<Home> {
     _showTips('分享', content);
   }
 
+  void _listenPay(WechatPayResp resp) {
+    String content = 'pay: ${resp.errorCode} ${resp.errorMsg}';
+    _showTips('支付', content);
+  }
+
   @override
   void dispose() {
     if (_auth != null) {
@@ -82,6 +91,9 @@ class _HomeState extends State<Home> {
     }
     if (_share != null) {
       _share.cancel();
+    }
+    if (_pay != null) {
+      _pay.cancel();
     }
     super.dispose();
   }
@@ -176,7 +188,22 @@ class _HomeState extends State<Home> {
                 webpageUrl: 'https://www.baidu.com',
               );
             },
-          )
+          ),
+          ListTile(
+            title: const Text('支付'),
+            onTap: () {
+              // 微信 Demo 例子：https://wxpay.wxutil.com/pub_v2/app/app_pay.php
+              widget.wechat.pay(
+                appId: WECHAT_APPID,
+                partnerId: '商户号',
+                prepayId: '预支付交易会话ID',
+                package: '扩展字段,暂填写固定值：Sign=WXPay',
+                nonceStr: '随机字符串, 随机字符串，不长于32位',
+                timeStamp: '时间戳：东八区，单位秒',
+                sign: '签名',
+              );
+            },
+          ),
         ],
       ),
     );

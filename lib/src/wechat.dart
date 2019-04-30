@@ -778,21 +778,22 @@ class Wechat {
   }
 
   /// 支付
+  /// 参数说明：https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_12&index=2
   Future<void> pay({
     @required String appId,
     @required String partnerId,
     @required String prepayId,
+    @required String package,
     @required String nonceStr,
     @required String timeStamp,
-    @required String package,
     @required String sign,
   }) {
     assert(appId != null && appId.isNotEmpty);
     assert(partnerId != null && partnerId.isNotEmpty);
     assert(prepayId != null && prepayId.isNotEmpty);
+    assert(package != null && package.isNotEmpty);
     assert(nonceStr != null && nonceStr.isNotEmpty);
     assert(timeStamp != null && timeStamp.isNotEmpty);
-    assert(package != null && package.isNotEmpty);
     assert(sign != null && sign.isNotEmpty);
     return _channel.invokeMethod(_METHOD_PAY, <String, dynamic>{
       _ARGUMENT_KEY_APPID: appId,

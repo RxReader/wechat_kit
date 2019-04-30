@@ -25,7 +25,7 @@ linter:
   - camel_case_types
   - empty_constructor_bodies
   - avoid_init_to_null
-  - constant_identifier_names
+#  - constant_identifier_names
   - one_member_abstracts
   - slash_for_doc_comments
   - sort_constructors_first
