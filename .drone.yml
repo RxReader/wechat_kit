@@ -40,9 +40,17 @@ steps:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
   commands:
-  - flutter test
+  - flutter test --coverage
   - pushd example/
   - flutter test
+
+- name: coveralls
+  image: lizheming/drone-coveralls
+  settings:
+    token:
+      from_secret: COVERALLS_REPO_TOKEN
+    files:
+    - ./coverage/lcov.info
 
 - name: publish-check
   image: v7lin/flutter:1.2.1-stable
