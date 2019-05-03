@@ -45,14 +45,14 @@ steps:
   - flutter test
 
 - name: coverage
-  image: plugins/codecov:2.0.3
+  image: plugins/codecov
   settings:
     token:
       from_secret: CODECOV_TOKEN
     files:
     - lcov.info
     paths:
-    - ./coverage
+    - coverage
 
 - name: publish-check
   image: v7lin/flutter:1.2.1-stable
