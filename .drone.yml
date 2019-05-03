@@ -50,9 +50,7 @@ steps:
     token:
       from_secret: CODECOV_TOKEN
     files:
-    - lcov.info
-    paths:
-    - coverage
+    - ./coverage/lcov.info
 
 - name: publish-check
   image: v7lin/flutter:1.2.1-stable
