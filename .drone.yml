@@ -52,7 +52,7 @@ steps:
     files:
     - lcov.info
     paths:
-    - coverage
+    - ./coverage
 
 - name: publish-check
   image: v7lin/flutter:1.2.1-stable
