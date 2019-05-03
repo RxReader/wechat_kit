@@ -45,7 +45,7 @@ steps:
   - flutter test
 
 - name: coverage
-  image: plugins/codecov
+  image: plugins/codecov:2.0.3
   settings:
     token:
       from_secret: CODECOV_TOKEN
