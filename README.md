@@ -3,6 +3,7 @@
 [![Build Status](https://cloud.drone.io/api/badges/v7lin/fake_wechat/status.svg)](https://cloud.drone.io/v7lin/fake_wechat)
 [![GitHub Tag](https://img.shields.io/github/tag/v7lin/fake_wechat.svg)](https://github.com/v7lin/fake_wechat/releases)
 [![Pub Package](https://img.shields.io/pub/v/fake_wechat.svg)](https://pub.dartlang.org/packages/fake_wechat)
+[![Coverage Status](https://coveralls.io/repos/github/v7lin/fake_wechat/badge.svg?branch=master)](https://coveralls.io/github/v7lin/fake_wechat?branch=master)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/v7lin/fake_wechat/blob/master/LICENSE)
 
 flutter版微信SDK
