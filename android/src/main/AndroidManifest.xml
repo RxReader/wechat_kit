@@ -11,7 +11,7 @@
         <activity
             android:name=".WechatCallbackActivity"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.FakeWechat" />
+            android:theme="@style/fake_wechat.Theme.FakeWechat" />
 
         <activity-alias
             android:name="${applicationId}.wxapi.WXEntryActivity"

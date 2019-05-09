@@ -16,7 +16,7 @@ dependencies:
   image: ^2.0.7
 
   path: ^1.6.2
-  fake_path_provider: ^0.0.1
+  fake_path_provider: ^0.0.1+1
 
   fake_wechat:
     path: ../

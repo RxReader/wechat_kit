@@ -44,6 +44,15 @@ steps:
   - pushd example/
   - flutter test
 
+#- name: proguard
+#  image: v7lin/flutter:1.5.4-hotfix.2-stable
+#  volumes:
+#  - name: pub-cache
+#    path: /opt/flutter/.pub-cache
+#  commands:
+#  - pushd example/
+#  - flutter build apk
+
 - name: coverage
   image: plugins/codecov:2.0.3
   settings:
