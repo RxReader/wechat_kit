@@ -50,7 +50,7 @@ steps:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
   commands:
-  - pushd example/
+  - cd example/
   - flutter build apk
 
 - name: coverage
