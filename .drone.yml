@@ -3,15 +3,16 @@ name: default
 
 steps:
 - name: prepare
-  image: v7lin/flutter:1.5.4-hotfix.2-stable
+  image: v7lin/flutter:test
   volumes:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
   commands:
   - flutter packages get
+  - find / -name '.pub-cache' -type d
 
 #- name: build_runner
-#  image: v7lin/flutter:1.5.4-hotfix.2-stable
+#  image: v7lin/flutter:test
 #  volumes:
 #  - name: pub-cache
 #    path: /opt/flutter/.pub-cache
@@ -19,7 +20,7 @@ steps:
 #  - flutter packages pub run build_runner build
 
 - name: format
-  image: v7lin/flutter:1.5.4-hotfix.2-stable
+  image: v7lin/flutter:test
   volumes:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
@@ -27,7 +28,7 @@ steps:
   - flutter format --dry-run --set-exit-if-changed .
 
 - name: analyze
-  image: v7lin/flutter:1.5.4-hotfix.2-stable
+  image: v7lin/flutter:test
   volumes:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
@@ -35,7 +36,7 @@ steps:
   - flutter analyze
 
 - name: test
-  image: v7lin/flutter:1.5.4-hotfix.2-stable
+  image: v7lin/flutter:test
   volumes:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
@@ -45,7 +46,7 @@ steps:
   - flutter test
 
 - name: proguard
-  image: v7lin/flutter:1.5.4-hotfix.2-stable
+  image: v7lin/flutter:test
   volumes:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
@@ -62,7 +63,7 @@ steps:
     - ./coverage/lcov.info
 
 - name: publish-check
-  image: v7lin/flutter:1.5.4-hotfix.2-stable
+  image: v7lin/flutter:test
   volumes:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
