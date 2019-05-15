@@ -9,7 +9,6 @@ steps:
     path: /opt/flutter/.pub-cache
   commands:
   - flutter packages get
-  - find / -name '.pub-cache' -type d
 
 #- name: build_runner
 #  image: v7lin/flutter:test
@@ -42,7 +41,7 @@ steps:
     path: /opt/flutter/.pub-cache
   commands:
   - flutter test --coverage
-  - pushd example/
+  - cd example/
   - flutter test
 
 - name: proguard
