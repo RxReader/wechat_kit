@@ -49,6 +49,8 @@ steps:
   volumes:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
+  - name: gradle
+    path: /root/.gradle
   commands:
   - cd example/
   - flutter build apk
@@ -68,7 +70,12 @@ steps:
     path: /opt/flutter/.pub-cache
   commands:
   - flutter packages pub publish --dry-run
+  when:
+    event:
+    - tag
 
 volumes:
 - name: pub-cache
+  temp: {}
+- name: gradle
   temp: {}

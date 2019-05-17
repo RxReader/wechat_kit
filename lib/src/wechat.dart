@@ -95,8 +95,8 @@ class Wechat {
 
   static const String _SCHEME_FILE = 'file';
 
-  static const MethodChannel _channel =
-      MethodChannel('v7lin.github.io/fake_wechat');
+  final MethodChannel _channel =
+      const MethodChannel('v7lin.github.io/fake_wechat');
 
   final StreamController<WechatAuthResp> _authRespStreamController =
       StreamController<WechatAuthResp>.broadcast();
