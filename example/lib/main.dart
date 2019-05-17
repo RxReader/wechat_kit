@@ -9,8 +9,6 @@ import 'package:fake_wechat/fake_wechat.dart';
 import 'package:path/path.dart' as path;
 import 'package:image/image.dart' as image;
 
-const String WECHAT_APPID = 'wx854345270316ce6e'; // 更换为目标应用的appId
-
 void main() {
   runZoned(() {
     runApp(MyApp());
@@ -29,27 +27,13 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Wechat wechat = Wechat();
-    wechat.registerApp(appId: WECHAT_APPID);
-    return WechatProvider(
-      wechat: wechat,
-      child: MaterialApp(
-        home: Home(
-          wechat: wechat,
-        ),
-      ),
+    return MaterialApp(
+      home: Home(),
     );
   }
 }
 
 class Home extends StatefulWidget {
-  Home({
-    Key key,
-    @required this.wechat,
-  }) : super(key: key);
-
-  final Wechat wechat;
-
   @override
   State<StatefulWidget> createState() {
     return _HomeState();
@@ -57,19 +41,28 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  static const String WECHAT_APPID = 'wx854345270316ce6e';
+  static const String WECHAT_APPSECRET = '';
+
+  Wechat _wechat = Wechat();
+
   StreamSubscription<WechatAuthResp> _auth;
   StreamSubscription<WechatSdkResp> _share;
   StreamSubscription<WechatPayResp> _pay;
 
+  WechatAuthResp _authResp;
+
   @override
   void initState() {
     super.initState();
-    _auth = widget.wechat.authResp().listen(_listenAuth);
-    _share = widget.wechat.shareMsgResp().listen(_listenShareMsg);
-    _pay = widget.wechat.payResp().listen(_listenPay);
+    _wechat.registerApp(appId: WECHAT_APPID);
+    _auth = _wechat.authResp().listen(_listenAuth);
+    _share = _wechat.shareMsgResp().listen(_listenShareMsg);
+    _pay = _wechat.payResp().listen(_listenPay);
   }
 
   void _listenAuth(WechatAuthResp resp) {
+    _authResp = resp;
     String content = 'auth: ${resp.errorCode} ${resp.errorMsg}';
     _showTips('登录', content);
   }
@@ -110,23 +103,54 @@ class _HomeState extends State<Home> {
             title: const Text('环境检查'),
             onTap: () async {
               String content =
-                  'wechat: ${await widget.wechat.isWechatInstalled()} - ${await widget.wechat.isWechatSupportApi()}';
+                  'wechat: ${await _wechat.isWechatInstalled()} - ${await _wechat.isWechatSupportApi()}';
               _showTips('环境检查', content);
             },
           ),
           ListTile(
             title: const Text('登录'),
             onTap: () {
-              widget.wechat.auth(
+              _wechat.auth(
                 scope: <String>[WechatScope.SNSAPI_USERINFO],
                 state: 'auth',
               );
             },
           ),
           ListTile(
+            title: const Text('获取用户信息'),
+            onTap: () {
+              if (_authResp != null &&
+                  _authResp.errorCode == WechatSdkResp.ERRORCODE_SUCCESS) {
+                _wechat
+                    .getAccessTokenUnionID(
+                  appId: WECHAT_APPID,
+                  appSecret: WECHAT_APPSECRET,
+                  code: _authResp.code,
+                )
+                    .then((WechatAccessTokenResp accessTokenResp) {
+                  if (accessTokenResp.errcode ==
+                      WechatApiResp.ERRORCODE_SUCCESS) {
+                    _wechat
+                        .getUserInfoUnionID(
+                      openId: accessTokenResp.openid,
+                      accessToken: accessTokenResp.accessToken,
+                    )
+                        .then((WechatUserInfoResp userInfoResp) {
+                      if (userInfoResp.errcode ==
+                          WechatApiResp.ERRORCODE_SUCCESS) {
+                        _showTips('用户信息',
+                            '${userInfoResp.nickname} - ${userInfoResp.sex}');
+                      }
+                    });
+                  }
+                });
+              }
+            },
+          ),
+          ListTile(
             title: const Text('文字分享'),
             onTap: () {
-              widget.wechat.shareText(
+              _wechat.shareText(
                 scene: WechatScene.TIMELINE,
                 text: 'Share Text',
               );
@@ -146,7 +170,7 @@ class _HomeState extends State<Home> {
                 saveFile.writeAsBytesSync(timgData.buffer.asUint8List(),
                     flush: true);
               }
-              await widget.wechat.shareImage(
+              await _wechat.shareImage(
                 scene: WechatScene.SESSION,
                 imageUri: Uri.file(saveFile.path),
               );
@@ -173,7 +197,7 @@ class _HomeState extends State<Home> {
                 thumbData = Uint8List.fromList(image.encodeJpg(thumbnail,
                     quality: 100 * 32 * 1024 ~/ thumbData.length));
               }
-              await widget.wechat.shareEmoji(
+              await _wechat.shareEmoji(
                 scene: WechatScene.SESSION,
                 thumbData: thumbData,
                 emojiUri: Uri.file(saveFile.path),
@@ -183,7 +207,7 @@ class _HomeState extends State<Home> {
           ListTile(
             title: const Text('网页分享'),
             onTap: () {
-              widget.wechat.shareWebpage(
+              _wechat.shareWebpage(
                 scene: WechatScene.TIMELINE,
                 webpageUrl: 'https://www.baidu.com',
               );
@@ -193,7 +217,7 @@ class _HomeState extends State<Home> {
             title: const Text('支付'),
             onTap: () {
               // 微信 Demo 例子：https://wxpay.wxutil.com/pub_v2/app/app_pay.php
-              widget.wechat.pay(
+              _wechat.pay(
                 appId: WECHAT_APPID,
                 partnerId: '商户号',
                 prepayId: '预支付交易会话ID',

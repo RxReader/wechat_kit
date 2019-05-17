@@ -18,6 +18,5 @@ export 'src/domain/sdk/wechat_subscribe_msg_resp.dart'
 export 'src/wechat.dart';
 export 'src/wechat_biz_profile_type.dart';
 export 'src/wechat_mp_webview_type.dart';
-export 'src/wechat_provider.dart';
 export 'src/wechat_scene.dart';
 export 'src/wechat_scope.dart';
