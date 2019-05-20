@@ -393,13 +393,16 @@ class Wechat {
     final String content =
         'appid=$appId&noncestr=$noncestr&sdk_ticket=$ticket&timestamp=$timestamp';
     String signature = hex.encode(sha1.convert(utf8.encode(content)).bytes);
-    return _channel.invokeMethod(_METHOD_STARTQRAUTH, <String, dynamic>{
-      _ARGUMENT_KEY_APPID: appId,
-      _ARGUMENT_KEY_SCOPE: scope, // Scope
-      _ARGUMENT_KEY_NONCESTR: noncestr,
-      _ARGUMENT_KEY_TIMESTAMP: timestamp,
-      _ARGUMENT_KEY_SIGNATURE: signature,
-    });
+    return _channel.invokeMethod(
+      _METHOD_STARTQRAUTH,
+      <String, dynamic>{
+        _ARGUMENT_KEY_APPID: appId,
+        _ARGUMENT_KEY_SCOPE: scope, // Scope
+        _ARGUMENT_KEY_NONCESTR: noncestr,
+        _ARGUMENT_KEY_TIMESTAMP: timestamp,
+        _ARGUMENT_KEY_SIGNATURE: signature,
+      },
+    );
   }
 
   /// 暂停扫码登录请求
@@ -473,10 +476,13 @@ class Wechat {
     @required String text,
   }) {
     assert(text != null && text.isNotEmpty && text.length <= 10 * 1024);
-    return _channel.invokeMethod(_METHOD_SHARETEXT, <String, dynamic>{
-      _ARGUMENT_KEY_SCENE: scene, // Scene
-      _ARGUMENT_KEY_TEXT: text,
-    });
+    return _channel.invokeMethod(
+      _METHOD_SHARETEXT,
+      <String, dynamic>{
+        _ARGUMENT_KEY_SCENE: scene, // Scene
+        _ARGUMENT_KEY_TEXT: text,
+      },
+    );
   }
 
   /// 分享 - 图片
@@ -795,14 +801,17 @@ class Wechat {
     assert(nonceStr != null && nonceStr.isNotEmpty);
     assert(timeStamp != null && timeStamp.isNotEmpty);
     assert(sign != null && sign.isNotEmpty);
-    return _channel.invokeMethod(_METHOD_PAY, <String, dynamic>{
-      _ARGUMENT_KEY_APPID: appId,
-      _ARGUMENT_KEY_PARTNERID: partnerId,
-      _ARGUMENT_KEY_PREPAYID: prepayId,
-      _ARGUMENT_KEY_NONCESTR: nonceStr,
-      _ARGUMENT_KEY_TIMESTAMP: timeStamp,
-      _ARGUMENT_KEY_PACKAGE: package,
-      _ARGUMENT_KEY_SIGN: sign,
-    });
+    return _channel.invokeMethod(
+      _METHOD_PAY,
+      <String, dynamic>{
+        _ARGUMENT_KEY_APPID: appId,
+        _ARGUMENT_KEY_PARTNERID: partnerId,
+        _ARGUMENT_KEY_PREPAYID: prepayId,
+        _ARGUMENT_KEY_NONCESTR: nonceStr,
+        _ARGUMENT_KEY_TIMESTAMP: timeStamp,
+        _ARGUMENT_KEY_PACKAGE: package,
+        _ARGUMENT_KEY_SIGN: sign,
+      },
+    );
   }
 }
