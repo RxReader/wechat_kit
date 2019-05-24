@@ -287,7 +287,7 @@ class Wechat {
     });
   }
 
-  /// 刷新或续期access_token使用（UnionID）
+  /// 刷新或续期 access_token 使用（UnionID）
   Future<WechatAccessTokenResp> refreshAccessTokenUnionID({
     @required String appId,
     @required String refreshToken,
@@ -335,7 +335,7 @@ class Wechat {
 
   // --- 微信APP扫码登录
 
-  /// 获取access_token
+  /// 获取 access_token
   Future<WechatAccessTokenResp> getAccessToken({
     @required String appId,
     @required String appSecret,
@@ -358,7 +358,7 @@ class Wechat {
     });
   }
 
-  /// 用上面的函数拿到的access_token，获取sdk_ticket
+  /// 用上面的函数拿到的 access_token，获取 sdk_ticket
   Future<WechatTicketResp> getTicket({
     @required String accessToken,
   }) {
@@ -379,7 +379,7 @@ class Wechat {
     });
   }
 
-  /// 用上面函数拿到的ticket，开始扫码登录
+  /// 用上面函数拿到的 ticket，开始扫码登录
   Future<void> startQrauth({
     @required String appId,
     @required String scope,
@@ -428,7 +428,7 @@ class Wechat {
     return _channel.invokeMethod(_METHOD_OPENRANKLIST);
   }
 
-  /// 打开指定微信号profile页面
+  /// 打开指定微信号 profile 页面
   Future<void> openBizProfile({
     @required int profileType,
     @required String username,
@@ -449,7 +449,7 @@ class Wechat {
     return _channel.invokeMethod(_METHOD_OPENBIZPROFILE, map);
   }
 
-  /// 打开指定username的profile网页版
+  /// 打开指定 username 的 profile 网页版
   Future<void> openBizUrl({
     @required int webType,
     @required String username,

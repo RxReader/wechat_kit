@@ -44,7 +44,7 @@ class _HomeState extends State<Home> {
   static const String WECHAT_APPID = 'wx854345270316ce6e';
   static const String WECHAT_APPSECRET = '';
 
-  Wechat _wechat = Wechat();
+  Wechat _wechat = Wechat()..registerApp(appId: WECHAT_APPID);
 
   StreamSubscription<WechatAuthResp> _auth;
   StreamSubscription<WechatSdkResp> _share;
@@ -55,7 +55,6 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _wechat.registerApp(appId: WECHAT_APPID);
     _auth = _wechat.authResp().listen(_listenAuth);
     _share = _wechat.shareMsgResp().listen(_listenShareMsg);
     _pay = _wechat.payResp().listen(_listenPay);
