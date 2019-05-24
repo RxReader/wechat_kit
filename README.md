@@ -10,7 +10,6 @@ flutter版微信SDK
 
 ## fake 系列 libraries
 
-* [flutter版okhttp3](https://github.com/v7lin/fake_http)
 * [flutter版微信SDK](https://github.com/v7lin/fake_wechat)
 * [flutter版腾讯(QQ)SDK](https://github.com/v7lin/fake_tencent)
 * [flutter版新浪微博SDK](https://github.com/v7lin/fake_weibo)
