@@ -68,7 +68,9 @@ static NSString * const ARGUMENT_KEY_TEXT = @"text";
 static NSString * const ARGUMENT_KEY_TITLE = @"title";
 static NSString * const ARGUMENT_KEY_DESCRIPTION = @"description";
 static NSString * const ARGUMENT_KEY_THUMBDATA = @"thumbData";
+static NSString * const ARGUMENT_KEY_IMAGEDATA = @"imageData";
 static NSString * const ARGUMENT_KEY_IMAGEURI = @"imageUri";
+static NSString * const ARGUMENT_KEY_EMOJIDATA = @"emojiData";
 static NSString * const ARGUMENT_KEY_EMOJIURI = @"emojiUri";
 static NSString * const ARGUMENT_KEY_MUSICURL = @"musicUrl";
 static NSString * const ARGUMENT_KEY_MUSICDATAURL = @"musicDataUrl";
@@ -237,16 +239,26 @@ static NSString * const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
         message.thumbData = thumbData.data;
     }
     if ([METHOD_SHAREIMAGE isEqualToString:call.method]) {
-        NSString * imageUri = call.arguments[ARGUMENT_KEY_IMAGEURI];
-        NSURL * imageUrl = [NSURL URLWithString:imageUri];
         WXImageObject * mediaObject = [WXImageObject object];
-        mediaObject.imageData = [NSData dataWithContentsOfFile:imageUrl.path];
+        FlutterStandardTypedData * imageData = call.arguments[ARGUMENT_KEY_IMAGEDATA];
+        if (imageData != nil) {
+            mediaObject.imageData = imageData.data;
+        } else {
+            NSString * imageUri = call.arguments[ARGUMENT_KEY_IMAGEURI];
+            NSURL * imageUrl = [NSURL URLWithString:imageUri];
+            mediaObject.imageData = [NSData dataWithContentsOfFile:imageUrl.path];
+        }
         message.mediaObject = mediaObject;
     } else if ([METHOD_SHAREEMOJI isEqualToString:call.method]) {
-        NSString * emojiUri = call.arguments[ARGUMENT_KEY_EMOJIURI];
-        NSURL * emojiUrl = [NSURL URLWithString:emojiUri];
         WXEmoticonObject * mediaObject = [WXEmoticonObject object];
-        mediaObject.emoticonData = [NSData dataWithContentsOfFile:emojiUrl.path];
+        FlutterStandardTypedData * emojiData = call.arguments[ARGUMENT_KEY_EMOJIDATA];
+        if (emojiData != nil) {
+            mediaObject.emoticonData = emojiData.data;
+        } else {
+            NSString * emojiUri = call.arguments[ARGUMENT_KEY_EMOJIURI];
+            NSURL * emojiUrl = [NSURL URLWithString:emojiUri];
+            mediaObject.emoticonData = [NSData dataWithContentsOfFile:emojiUrl.path];
+        }
         message.mediaObject = mediaObject;
     } else if ([METHOD_SHAREMUSIC isEqualToString:call.method]) {
         WXMusicObject * mediaObject = [WXMusicObject object];

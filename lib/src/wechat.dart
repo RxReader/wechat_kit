@@ -69,7 +69,9 @@ class Wechat {
   static const String _ARGUMENT_KEY_TITLE = 'title';
   static const String _ARGUMENT_KEY_DESCRIPTION = 'description';
   static const String _ARGUMENT_KEY_THUMBDATA = 'thumbData';
+  static const String _ARGUMENT_KEY_IMAGEDATA = 'imageData';
   static const String _ARGUMENT_KEY_IMAGEURI = 'imageUri';
+  static const String _ARGUMENT_KEY_EMOJIDATA = 'emojiData';
   static const String _ARGUMENT_KEY_EMOJIURI = 'emojiUri';
   static const String _ARGUMENT_KEY_MUSICURL = 'musicUrl';
   static const String _ARGUMENT_KEY_MUSICDATAURL = 'musicDataUrl';
@@ -491,21 +493,24 @@ class Wechat {
     String title,
     String description,
     Uint8List thumbData,
-    @required Uri imageUri,
+    Uint8List imageData,
+    Uri imageUri,
   }) {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
-    assert(imageUri != null &&
-        imageUri.isScheme(_SCHEME_FILE) &&
-        imageUri.toFilePath().length <= 10 * 1024 &&
-        File.fromUri(imageUri).lengthSync() <= 25 * 1024 * 1024);
+    assert((imageData != null && imageData.lengthInBytes <= 25 * 1024 * 1024) ||
+        (imageUri != null &&
+            imageUri.isScheme(_SCHEME_FILE) &&
+            imageUri.toFilePath().length <= 10 * 1024 &&
+            File.fromUri(imageUri).lengthSync() <= 25 * 1024 * 1024));
     Map<String, dynamic> map = <String, dynamic>{
       _ARGUMENT_KEY_SCENE: scene, // Scene
 //      _ARGUMENT_KEY_TITLE: title,
 //      _ARGUMENT_KEY_DESCRIPTION: description,
 //      _ARGUMENT_KEY_THUMBDATA: thumbData,
-      _ARGUMENT_KEY_IMAGEURI: imageUri.toString(),
+//      _ARGUMENT_KEY_IMAGEDATA: imageData
+//      _ARGUMENT_KEY_IMAGEURI: imageUri.toString(),
     };
 
     /// 兼容 iOS 空安全 -> NSNull
@@ -518,6 +523,12 @@ class Wechat {
     if (thumbData != null) {
       map.putIfAbsent(_ARGUMENT_KEY_THUMBDATA, () => thumbData);
     }
+    if (imageData != null) {
+      map.putIfAbsent(_ARGUMENT_KEY_IMAGEDATA, () => imageData);
+    }
+    if (imageUri != null) {
+      map.putIfAbsent(_ARGUMENT_KEY_IMAGEURI, () => imageUri.toString());
+    }
     return _channel.invokeMethod(_METHOD_SHAREIMAGE, map);
   }
 
@@ -527,21 +538,23 @@ class Wechat {
     String title,
     String description,
     @required Uint8List thumbData,
-    @required Uri emojiUri,
+    Uint8List emojiData,
+    Uri emojiUri,
   }) {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
     assert(thumbData != null && thumbData.lengthInBytes <= 32 * 1024);
-    assert(emojiUri != null &&
+    assert((emojiData != null && emojiData.lengthInBytes <= 10 * 1024 * 1024) || (emojiUri != null &&
         emojiUri.isScheme(_SCHEME_FILE) &&
         emojiUri.toFilePath().length <= 10 * 1024 &&
-        File.fromUri(emojiUri).lengthSync() <= 10 * 1024 * 1024);
+        File.fromUri(emojiUri).lengthSync() <= 10 * 1024 * 1024));
     Map<String, dynamic> map = <String, dynamic>{
       _ARGUMENT_KEY_SCENE: scene, // Scene
 //      _ARGUMENT_KEY_TITLE: title,
 //      _ARGUMENT_KEY_DESCRIPTION: description,
       _ARGUMENT_KEY_THUMBDATA: thumbData,
-      _ARGUMENT_KEY_EMOJIURI: emojiUri.toString(),
+//      _ARGUMENT_KEY_EMOJIDATA: emojiData,
+//      _ARGUMENT_KEY_EMOJIURI: emojiUri.toString(),
     };
 
     /// 兼容 iOS 空安全 -> NSNull
@@ -550,6 +563,12 @@ class Wechat {
     }
     if (description != null) {
       map.putIfAbsent(_ARGUMENT_KEY_DESCRIPTION, () => description);
+    }
+    if (emojiData != null) {
+      map.putIfAbsent(_ARGUMENT_KEY_EMOJIDATA, () => emojiData);
+    }
+    if (emojiUri != null) {
+      map.putIfAbsent(_ARGUMENT_KEY_EMOJIURI, () => emojiUri.toString());
     }
     return _channel.invokeMethod(_METHOD_SHAREEMOJI, map);
   }

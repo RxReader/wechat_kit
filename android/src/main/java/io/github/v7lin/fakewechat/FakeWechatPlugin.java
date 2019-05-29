@@ -106,7 +106,9 @@ public class FakeWechatPlugin implements MethodCallHandler, PluginRegistry.ViewD
     private static final String ARGUMENT_KEY_TITLE = "title";
     private static final String ARGUMENT_KEY_DESCRIPTION = "description";
     private static final String ARGUMENT_KEY_THUMBDATA = "thumbData";
+    private static final String ARGUMENT_KEY_IMAGEDATA = "imageData";
     private static final String ARGUMENT_KEY_IMAGEURI = "imageUri";
+    private static final String ARGUMENT_KEY_EMOJIDATA = "emojiData";
     private static final String ARGUMENT_KEY_EMOJIURI = "emojiUri";
     private static final String ARGUMENT_KEY_MUSICURL = "musicUrl";
     private static final String ARGUMENT_KEY_MUSICDATAURL = "musicDataUrl";
@@ -360,14 +362,22 @@ public class FakeWechatPlugin implements MethodCallHandler, PluginRegistry.ViewD
         message.description = call.argument(ARGUMENT_KEY_DESCRIPTION);
         message.thumbData = call.argument(ARGUMENT_KEY_THUMBDATA);
         if (METHOD_SHAREIMAGE.equals(call.method)) {
-            String imageUri = call.argument(ARGUMENT_KEY_IMAGEURI);
             WXImageObject object = new WXImageObject();
-            object.imagePath = Uri.parse(imageUri).getPath();
+            if (call.hasArgument(ARGUMENT_KEY_IMAGEDATA)) {
+                object.imageData = call.argument(ARGUMENT_KEY_IMAGEDATA);
+            } else if (call.hasArgument(ARGUMENT_KEY_IMAGEURI)) {
+                String imageUri = call.argument(ARGUMENT_KEY_IMAGEURI);
+                object.imagePath = Uri.parse(imageUri).getPath();
+            }
             message.mediaObject = object;
         } else if (METHOD_SHAREEMOJI.equals(call.method)) {
-            String emojiUri = call.argument(ARGUMENT_KEY_EMOJIURI);
             WXEmojiObject object = new WXEmojiObject();
-            object.emojiPath = Uri.parse(emojiUri).getPath();
+            if (call.hasArgument(ARGUMENT_KEY_EMOJIDATA)) {
+                object.emojiData = call.argument(ARGUMENT_KEY_EMOJIDATA);
+            } else if (call.hasArgument(ARGUMENT_KEY_EMOJIURI)) {
+                String emojiUri = call.argument(ARGUMENT_KEY_EMOJIURI);
+                object.emojiPath = Uri.parse(emojiUri).getPath();
+            }
             message.mediaObject = object;
         } else if (METHOD_SHAREMUSIC.equals(call.method)) {
             WXMusicObject object = new WXMusicObject();
