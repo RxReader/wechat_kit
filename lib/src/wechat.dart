@@ -544,10 +544,11 @@ class Wechat {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
     assert(thumbData != null && thumbData.lengthInBytes <= 32 * 1024);
-    assert((emojiData != null && emojiData.lengthInBytes <= 10 * 1024 * 1024) || (emojiUri != null &&
-        emojiUri.isScheme(_SCHEME_FILE) &&
-        emojiUri.toFilePath().length <= 10 * 1024 &&
-        File.fromUri(emojiUri).lengthSync() <= 10 * 1024 * 1024));
+    assert((emojiData != null && emojiData.lengthInBytes <= 10 * 1024 * 1024) ||
+        (emojiUri != null &&
+            emojiUri.isScheme(_SCHEME_FILE) &&
+            emojiUri.toFilePath().length <= 10 * 1024 &&
+            File.fromUri(emojiUri).lengthSync() <= 10 * 1024 * 1024));
     Map<String, dynamic> map = <String, dynamic>{
       _ARGUMENT_KEY_SCENE: scene, // Scene
 //      _ARGUMENT_KEY_TITLE: title,
