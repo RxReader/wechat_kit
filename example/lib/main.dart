@@ -244,3 +244,67 @@ class _HomeState extends State<Home> {
     );
   }
 }
+
+class Qrauth extends StatefulWidget {
+  const Qrauth({
+    Key key,
+    this.wechat,
+  }) : super(key: key);
+
+  final Wechat wechat;
+
+  @override
+  State<StatefulWidget> createState() {
+    return _QrauthState();
+  }
+}
+
+class _QrauthState extends State<Qrauth> {
+  StreamSubscription<Uint8List> _authGotQrcode;
+  StreamSubscription<String> _authQrcodeScanned;
+  StreamSubscription<WechatQrauthResp> _authFinish;
+
+  @override
+  void initState() {
+    super.initState();
+    _authGotQrcode =
+        widget.wechat.authGotQrcodeResp().listen(_listenAuthGotQrcode);
+    _authQrcodeScanned =
+        widget.wechat.authQrcodeScannedResp().listen(_listenAuthQrcodeScanned);
+    _authFinish = widget.wechat.authFinishResp().listen(_listenAuthFinish);
+  }
+
+  void _listenAuthGotQrcode(Uint8List qrcode) {}
+
+  void _listenAuthQrcodeScanned(String msg) {}
+
+  void _listenAuthFinish(WechatQrauthResp qrcode) {}
+
+  @override
+  void dispose() {
+    if (_authGotQrcode != null) {
+      _authGotQrcode.cancel();
+    }
+    if (_authQrcodeScanned != null) {
+      _authQrcodeScanned.cancel();
+    }
+    if (_authFinish != null) {
+      _authFinish.cancel();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Qrauth'),
+      ),
+      body: GestureDetector(
+        child: Center(
+          child: const Text('got qr code'),
+        ),
+      ),
+    );
+  }
+}
