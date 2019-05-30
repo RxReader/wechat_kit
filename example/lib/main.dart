@@ -116,6 +116,18 @@ class _HomeState extends State<Home> {
             },
           ),
           ListTile(
+            title: const Text('扫码登录'),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute<dynamic>(
+                builder: (BuildContext context) => Qrauth(
+                      wechat: _wechat,
+                    ),
+              )).then((dynamic result) {
+
+              });
+            },
+          ),
+          ListTile(
             title: const Text('获取用户信息'),
             onTap: () {
               if (_authResp != null &&
