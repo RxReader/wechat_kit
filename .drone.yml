@@ -63,6 +63,14 @@ steps:
     files:
     - ./coverage/lcov.info
 
+- name: publish-check
+  image: v7lin/flutter:1.5.4-hotfix.2-stable
+  volumes:
+  - name: pub-cache
+    path: /opt/flutter/.pub-cache
+  commands:
+  - flutter packages pub publish --dry-run
+
 volumes:
 - name: pub-cache
   temp: {}
@@ -74,14 +82,6 @@ kind: pipeline
 name: publish
 
 steps:
-- name: publish-check
-  image: v7lin/flutter:1.5.4-hotfix.2-stable
-  volumes:
-  - name: pub-cache
-    path: /opt/flutter/.pub-cache
-  commands:
-  - flutter packages pub publish --dry-run
-
 - name: restore-cache
   image: alpine:3.9.3
   volumes:
