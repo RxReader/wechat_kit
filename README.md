@@ -15,6 +15,7 @@ flutter版微信SDK
 * [flutter版新浪微博SDK](https://github.com/v7lin/fake_weibo)
 * [flutter版支付宝SDK](https://github.com/v7lin/fake_alipay)
 * [flutter版腾讯(信鸽)推送SDK](https://github.com/v7lin/fake_push)
+* [flutter版talkingdata移动统计SDK](https://github.com/v7lin/fake_analytics)
 
 ## dart/flutter 私服
 
