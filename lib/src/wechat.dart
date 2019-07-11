@@ -20,6 +20,10 @@ import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
 
 class Wechat {
+  Wechat() {
+    _channel.setMethodCallHandler(_handleMethod);
+  }
+
   static const String _METHOD_REGISTERAPP = 'registerApp';
   static const String _METHOD_ISWECHATINSTALLED = 'isWechatInstalled';
   static const String _METHOD_ISWECHATSUPPORTAPI = 'isWechatSupportApi';
@@ -134,7 +138,6 @@ class Wechat {
     @required String appId,
   }) {
     assert(appId != null && appId.isNotEmpty);
-    _channel.setMethodCallHandler(_handleMethod);
     return _channel.invokeMethod(
       _METHOD_REGISTERAPP,
       <String, dynamic>{
