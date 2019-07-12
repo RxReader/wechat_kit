@@ -121,8 +121,8 @@ class _HomeState extends State<Home> {
               Navigator.of(context)
                   .push(MaterialPageRoute<dynamic>(
                     builder: (BuildContext context) => Qrauth(
-                          wechat: _wechat,
-                        ),
+                      wechat: _wechat,
+                    ),
                   ))
                   .then((dynamic result) {});
             },
