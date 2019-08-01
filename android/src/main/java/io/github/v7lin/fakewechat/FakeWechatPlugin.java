@@ -1,9 +1,13 @@
 package io.github.v7lin.fakewechat;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 
 import com.tencent.mm.opensdk.constants.Build;
+import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.diffdev.DiffDevOAuthFactory;
 import com.tencent.mm.opensdk.diffdev.IDiffDevOAuth;
 import com.tencent.mm.opensdk.diffdev.OAuthErrCode;
@@ -124,7 +128,7 @@ public class FakeWechatPlugin implements MethodCallHandler, PluginRegistry.ViewD
     private static final String ARGUMENT_KEY_RESERVED = "reserved";
     private static final String ARGUMENT_KEY_PARTNERID = "partnerId";
     private static final String ARGUMENT_KEY_PREPAYID = "prepayId";
-//    private static final String ARGUMENT_KEY_NONCESTR = "noncestr";
+    //    private static final String ARGUMENT_KEY_NONCESTR = "noncestr";
 //    private static final String ARGUMENT_KEY_TIMESTAMP = "timestamp";
     private static final String ARGUMENT_KEY_PACKAGE = "package";
     private static final String ARGUMENT_KEY_SIGN = "sign";
@@ -151,6 +155,7 @@ public class FakeWechatPlugin implements MethodCallHandler, PluginRegistry.ViewD
     private final AtomicBoolean register = new AtomicBoolean(false);
 
     private IWXAPI iwxapi;
+    private BroadcastReceiver refreshWxappReceiver;
 
     private FakeWechatPlugin(Registrar registrar, MethodChannel channel) {
         this.registrar = registrar;
@@ -187,7 +192,9 @@ public class FakeWechatPlugin implements MethodCallHandler, PluginRegistry.ViewD
     private WechatReceiver wechatReceiver = new WechatReceiver() {
         @Override
         public void handleIntent(Intent intent) {
-            iwxapi.handleIntent(intent, iwxapiEventHandler);
+            if (iwxapi != null) {
+                iwxapi.handleIntent(intent, iwxapiEventHandler);
+            }
         }
     };
 
@@ -242,10 +249,7 @@ public class FakeWechatPlugin implements MethodCallHandler, PluginRegistry.ViewD
     @Override
     public void onMethodCall(MethodCall call, Result result) {
         if (METHOD_REGISTERAPP.equals(call.method)) {
-            String appId = call.argument(ARGUMENT_KEY_APPID);
-            iwxapi = WXAPIFactory.createWXAPI(registrar.context().getApplicationContext(), appId);
-            iwxapi.registerApp(appId);
-            result.success(null);
+            registerApp(call, result);
         } else if (METHOD_ISWECHATINSTALLED.equals(call.method)) {
             result.success(iwxapi.isWXAppInstalled());
         } else if (METHOD_ISWECHATSUPPORTAPI.equals(call.method)) {
@@ -283,6 +287,26 @@ public class FakeWechatPlugin implements MethodCallHandler, PluginRegistry.ViewD
         } else {
             result.notImplemented();
         }
+    }
+
+    private void registerApp(MethodCall call, Result result) {
+        final String appId = call.argument(ARGUMENT_KEY_APPID);
+        iwxapi = WXAPIFactory.createWXAPI(registrar.context().getApplicationContext(), appId);
+        iwxapi.registerApp(appId);
+        if (refreshWxappReceiver != null) {
+            registrar.context().unregisterReceiver(refreshWxappReceiver);
+            refreshWxappReceiver = null;
+        }
+        refreshWxappReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (iwxapi != null) {
+                    iwxapi.registerApp(appId);
+                }
+            }
+        };
+        registrar.context().registerReceiver(refreshWxappReceiver, new IntentFilter(ConstantsAPI.ACTION_REFRESH_WXAPP));
+        result.success(null);
     }
 
     private void handleAuthCall(MethodCall call, Result result) {
@@ -450,6 +474,10 @@ public class FakeWechatPlugin implements MethodCallHandler, PluginRegistry.ViewD
             WechatReceiver.unregisterReceiver(registrar.context(), wechatReceiver);
         }
         qrauth.removeAllListeners();
+        if (refreshWxappReceiver != null) {
+            registrar.context().unregisterReceiver(refreshWxappReceiver);
+            refreshWxappReceiver = null;
+        }
         return false;
     }
 }

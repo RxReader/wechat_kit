@@ -11,12 +11,12 @@ dependencies:
   flutter:
     sdk: flutter
 
-  meta: '>=1.1.6 <2.0.0'
+  meta: ^1.1.6
   uuid: '>=1.0.0 <3.0.0'
-  convert: '>=2.0.2 <3.0.0'
-  crypto: '>=2.0.6 <3.0.0'
+  convert: ^2.0.2
+  crypto: ^2.0.6
 
-  jaguar_serializer: '>=2.2.12 <3.0.0'
+  jaguar_serializer: ^2.2.12
 
 dev_dependencies:
   flutter_test:
@@ -27,7 +27,7 @@ dev_dependencies:
   image: ^2.0.7
 
   path: ^1.6.2
-  fake_path_provider: ^0.0.1+1
+  fake_path_provider: ^0.1.2
 
   build_runner:
   jaguar_serializer_cli:
