@@ -160,8 +160,8 @@ public class FakeWechatPlugin implements MethodCallHandler, PluginRegistry.ViewD
     private FakeWechatPlugin(Registrar registrar, MethodChannel channel) {
         this.registrar = registrar;
         this.channel = channel;
-        this.qrauth = DiffDevOAuthFactory.getDiffDevOAuth();
-        this.qrauth.addListener(qrauthListener);
+        qrauth = DiffDevOAuthFactory.getDiffDevOAuth();
+        qrauth.addListener(qrauthListener);
         if (register.compareAndSet(false, true)) {
             WechatReceiver.registerReceiver(registrar.context(), wechatReceiver);
         }
