@@ -161,7 +161,6 @@ public class FakeWechatPlugin implements MethodCallHandler, PluginRegistry.ViewD
         this.registrar = registrar;
         this.channel = channel;
         qrauth = DiffDevOAuthFactory.getDiffDevOAuth();
-        qrauth.addListener(qrauthListener);
         if (register.compareAndSet(false, true)) {
             WechatReceiver.registerReceiver(registrar.context(), wechatReceiver);
         }
@@ -324,7 +323,7 @@ public class FakeWechatPlugin implements MethodCallHandler, PluginRegistry.ViewD
             String noncestr = call.argument(ARGUMENT_KEY_NONCESTR);
             String timestamp = call.argument(ARGUMENT_KEY_TIMESTAMP);
             String signature = call.argument(ARGUMENT_KEY_SIGNATURE);
-            qrauth.auth(appId, scope, noncestr, timestamp, signature, null);
+            qrauth.auth(appId, scope, noncestr, timestamp, signature, qrauthListener);
         } else if (METHOD_STOPQRAUTH.equals(call.method)) {
             qrauth.stopAuth();
         }

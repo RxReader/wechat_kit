@@ -289,6 +289,7 @@ class _QrauthState extends State<Qrauth> {
 
   void _listenAuthGotQrcode(Uint8List qrcode) {
     _qrcod = qrcode;
+    setState(() {});
   }
 
   void _listenAuthQrcodeScanned(String msg) {
@@ -326,22 +327,27 @@ class _QrauthState extends State<Qrauth> {
                 appId: WECHAT_APPID,
                 appSecret: WECHAT_APPSECRET,
               );
-              WechatTicketResp sdkTicket = await widget.wechat.getTicket(
+              print(
+                  'accessToken: ${accessToken.errcode} - ${accessToken.errmsg} - ${accessToken.accessToken}');
+              WechatTicketResp ticket = await widget.wechat.getTicket(
                 accessToken: accessToken.accessToken,
               );
+              print(
+                  'accessToken: ${ticket.errcode} - ${ticket.errmsg} - ${ticket.ticket}');
               await widget.wechat.startQrauth(
                 appId: WECHAT_APPID,
                 scope: WechatScope.SNSAPI_USERINFO,
-                ticket: sdkTicket.ticket,
+                ticket: ticket.ticket,
               );
             },
             child: const Text('got qr code'),
-          )
+          ),
         ],
       ),
       body: GestureDetector(
         child: Center(
-          child: _qrcod != null ? Image.memory(_qrcod) : const Text('got qr code'),
+          child:
+              _qrcod != null ? Image.memory(_qrcod) : const Text('got qr code'),
         ),
       ),
     );
