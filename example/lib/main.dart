@@ -9,6 +9,9 @@ import 'package:fake_wechat/fake_wechat.dart';
 import 'package:path/path.dart' as path;
 import 'package:image/image.dart' as image;
 
+const String WECHAT_APPID = 'wx854345270316ce6e';
+const String WECHAT_APPSECRET = '';
+
 void main() {
   runZoned(() {
     runApp(MyApp());
@@ -41,9 +44,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  static const String WECHAT_APPID = 'wx854345270316ce6e';
-  static const String WECHAT_APPSECRET = '';
-
   Wechat _wechat = Wechat()..registerApp(appId: WECHAT_APPID);
 
   StreamSubscription<WechatAuthResp> _auth;
@@ -118,13 +118,12 @@ class _HomeState extends State<Home> {
           ListTile(
             title: const Text('扫码登录'),
             onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute<dynamic>(
-                    builder: (BuildContext context) => Qrauth(
-                      wechat: _wechat,
-                    ),
-                  ))
-                  .then((dynamic result) {});
+              Navigator.of(context).push(MaterialPageRoute<dynamic>(
+                builder: (BuildContext context) => Qrauth(
+                  wechat: _wechat,
+                ),
+              ));
+              ;
             },
           ),
           ListTile(
@@ -276,6 +275,8 @@ class _QrauthState extends State<Qrauth> {
   StreamSubscription<String> _authQrcodeScanned;
   StreamSubscription<WechatQrauthResp> _authFinish;
 
+  Uint8List _qrcod;
+
   @override
   void initState() {
     super.initState();
@@ -286,11 +287,17 @@ class _QrauthState extends State<Qrauth> {
     _authFinish = widget.wechat.authFinishResp().listen(_listenAuthFinish);
   }
 
-  void _listenAuthGotQrcode(Uint8List qrcode) {}
+  void _listenAuthGotQrcode(Uint8List qrcode) {
+    _qrcod = qrcode;
+  }
 
-  void _listenAuthQrcodeScanned(String msg) {}
+  void _listenAuthQrcodeScanned(String msg) {
+    print('msg: $msg');
+  }
 
-  void _listenAuthFinish(WechatQrauthResp qrcode) {}
+  void _listenAuthFinish(WechatQrauthResp qrauthResp) {
+    print('resp: ${qrauthResp.errorCode} - ${qrauthResp.authCode}');
+  }
 
   @override
   void dispose() {
@@ -311,10 +318,30 @@ class _QrauthState extends State<Qrauth> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Qrauth'),
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () async {
+              WechatAccessTokenResp accessToken =
+                  await widget.wechat.getAccessToken(
+                appId: WECHAT_APPID,
+                appSecret: WECHAT_APPSECRET,
+              );
+              WechatTicketResp sdkTicket = await widget.wechat.getTicket(
+                accessToken: accessToken.accessToken,
+              );
+              await widget.wechat.startQrauth(
+                appId: WECHAT_APPID,
+                scope: WechatScope.SNSAPI_USERINFO,
+                ticket: sdkTicket.ticket,
+              );
+            },
+            child: const Text('got qr code'),
+          )
+        ],
       ),
       body: GestureDetector(
         child: Center(
-          child: const Text('got qr code'),
+          child: _qrcod != null ? Image.memory(_qrcod) : const Text('got qr code'),
         ),
       ),
     );
