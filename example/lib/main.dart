@@ -45,7 +45,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  Wechat _wechat = Wechat()..registerApp(appId: WECHAT_APPID, universalLink: WECHAT_UNIVERSAL_LINK);
+  Wechat _wechat = Wechat()
+    ..registerApp(
+      appId: WECHAT_APPID,
+      universalLink: WECHAT_UNIVERSAL_LINK,
+    );
 
   StreamSubscription<WechatAuthResp> _auth;
   StreamSubscription<WechatSdkResp> _share;
