@@ -29,8 +29,6 @@ static NSString * const METHOD_STARTQRAUTH = @"startQrauth";
 static NSString * const METHOD_STOPQRAUTH = @"stopQrauth";
 static NSString * const METHOD_OPENURL = @"openUrl";
 static NSString * const METHOD_OPENRANKLIST = @"openRankList";
-static NSString * const METHOD_OPENBIZPROFILE = @"openBizProfile";
-static NSString * const METHOD_OPENBIZURL = @"openBizUrl";
 static NSString * const METHOD_SHARETEXT = @"shareText";
 static NSString * const METHOD_SHAREIMAGE = @"shareImage";
 static NSString * const METHOD_SHAREEMOJI = @"shareEmoji";
@@ -53,16 +51,14 @@ static NSString * const METHOD_ONAUTHQRCODESCANNED = @"onAuthQrcodeScanned";
 static NSString * const METHOD_ONAUTHFINISH = @"onAuthFinish";
 
 static NSString * const ARGUMENT_KEY_APPID = @"appId";
+static NSString * const ARGUMENT_KEY_UNIVERSALLINK = @"universalLink";
 static NSString * const ARGUMENT_KEY_SCOPE = @"scope";
 static NSString * const ARGUMENT_KEY_STATE = @"state";
 static NSString * const ARGUMENT_KEY_NONCESTR = @"noncestr";
 static NSString * const ARGUMENT_KEY_TIMESTAMP = @"timestamp";
 static NSString * const ARGUMENT_KEY_SIGNATURE = @"signature";
 static NSString * const ARGUMENT_KEY_URL = @"url";
-static NSString * const ARGUMENT_KEY_PROFILETYPE = @"profileType";
 static NSString * const ARGUMENT_KEY_USERNAME = @"username";
-static NSString * const ARGUMENT_KEY_EXTMSG = @"extMsg";
-static NSString * const ARGUMENT_KEY_WEBTYPE = @"webType";
 static NSString * const ARGUMENT_KEY_SCENE = @"scene";
 static NSString * const ARGUMENT_KEY_TEXT = @"text";
 static NSString * const ARGUMENT_KEY_TITLE = @"title";
@@ -120,7 +116,8 @@ static NSString * const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     if ([METHOD_REGISTERAPP isEqualToString:call.method]) {
         NSString * appId = call.arguments[ARGUMENT_KEY_APPID];
-        [WXApi registerApp:appId enableMTA:NO];
+        NSString * universalLink = call.arguments[ARGUMENT_KEY_UNIVERSALLINK];
+        [WXApi registerApp:appId universalLink:universalLink];
         result(nil);
     } else if ([METHOD_ISWECHATINSTALLED isEqualToString:call.method]) {
         result([NSNumber numberWithBool:[WXApi isWXAppInstalled]]);
@@ -137,10 +134,6 @@ static NSString * const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
         [self handleOpenUrlCall:call result:result];
     } else if ([METHOD_OPENRANKLIST isEqualToString:call.method]) {
         [self handleOpenRankListCall:call result:result];
-    } else if ([METHOD_OPENBIZPROFILE isEqualToString:call.method]) {
-        [self handleOpenBizProfileCall:call result:result];
-    } else if ([METHOD_OPENBIZURL isEqualToString:call.method]) {
-        [self handleOpenBizUrlCall:call result:result];
     } else if ([METHOD_SHARETEXT isEqualToString:call.method]) {
         [self handleShareTextCall:call result:result];
     } else if ([METHOD_SHAREIMAGE isEqualToString:call.method] ||
@@ -165,7 +158,9 @@ static NSString * const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
     SendAuthReq * req = [[SendAuthReq alloc] init];
     req.scope = call.arguments[ARGUMENT_KEY_SCOPE];
     req.state = call.arguments[ARGUMENT_KEY_STATE];
-    [WXApi sendReq:req];
+    [WXApi sendReq:req completion:^(BOOL success) {
+        // do nothing
+    }];
     result(nil);
 }
 
@@ -186,33 +181,17 @@ static NSString * const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
 -(void) handleOpenUrlCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     OpenWebviewReq * req = [[OpenWebviewReq alloc] init];
     req.url = call.arguments[ARGUMENT_KEY_URL];
-    [WXApi sendReq:req];
+    [WXApi sendReq:req completion:^(BOOL success) {
+        // do nothing
+    }];
     result(nil);
 }
 
 -(void) handleOpenRankListCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     OpenRankListReq * req = [[OpenRankListReq alloc] init];
-    [WXApi sendReq:req];
-    result(nil);
-}
-
--(void) handleOpenBizProfileCall:(FlutterMethodCall*)call result:(FlutterResult)result {
-    JumpToBizProfileReq * req = [[JumpToBizProfileReq alloc] init];
-    NSNumber * profileType = call.arguments[ARGUMENT_KEY_PROFILETYPE];
-    req.profileType = [profileType intValue];
-    req.username = call.arguments[ARGUMENT_KEY_USERNAME];
-    req.extMsg = call.arguments[ARGUMENT_KEY_EXTMSG];
-    [WXApi sendReq:req];
-    result(nil);
-}
-
--(void) handleOpenBizUrlCall:(FlutterMethodCall*)call result:(FlutterResult)result {
-    JumpToBizWebviewReq * req = [[JumpToBizWebviewReq alloc] init];
-    NSNumber * webType = call.arguments[ARGUMENT_KEY_WEBTYPE];
-    req.webType = [webType intValue];
-    req.tousrname = call.arguments[ARGUMENT_KEY_USERNAME];
-    req.extMsg = call.arguments[ARGUMENT_KEY_EXTMSG];
-    [WXApi sendReq:req];
+    [WXApi sendReq:req completion:^(BOOL success) {
+        // do nothing
+    }];
     result(nil);
 }
 
@@ -222,7 +201,9 @@ static NSString * const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
     req.scene = [scene intValue];
     req.bText = YES;
     req.text = call.arguments[ARGUMENT_KEY_TEXT];
-    [WXApi sendReq:req];
+    [WXApi sendReq:req completion:^(BOOL success) {
+        // do nothing
+    }];
     result(nil);
 }
 
@@ -290,7 +271,9 @@ static NSString * const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
         message.mediaObject = mediaObject;
     }
     req.message = message;
-    [WXApi sendReq:req];
+    [WXApi sendReq:req completion:^(BOOL success) {
+        // do nothing
+    }];
     result(nil);
 }
 
@@ -304,7 +287,9 @@ static NSString * const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
 #endif
     req.templateId = call.arguments[ARGUMENT_KEY_TEMPLATEID];
     req.reserved = call.arguments[ARGUMENT_KEY_RESERVED];
-    [WXApi sendReq:req];
+    [WXApi sendReq:req completion:^(BOOL success) {
+        // do nothing
+    }];
     result(nil);
 }
 
@@ -312,7 +297,9 @@ static NSString * const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
     WXLaunchMiniProgramReq * req = [[WXLaunchMiniProgramReq alloc] init];
     req.userName = call.arguments[ARGUMENT_KEY_USERNAME];
     req.path = call.arguments[ARGUMENT_KEY_PATH];
-    [WXApi sendReq:req];
+    [WXApi sendReq:req completion:^(BOOL success) {
+        // do nothing
+    }];
     result(nil);
 }
 
@@ -325,7 +312,9 @@ static NSString * const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
     req.timeStamp = [timeStamp intValue];
     req.package = call.arguments[ARGUMENT_KEY_PACKAGE];
     req.sign = call.arguments[ARGUMENT_KEY_SIGN];
-    [WXApi sendReq:req];
+    [WXApi sendReq:req completion:^(BOOL success) {
+        // do nothing
+    }];
     result(nil);
 }
 
@@ -341,6 +330,10 @@ static NSString * const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
 
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
     return [WXApi handleOpenURL:url delegate:self];
+}
+
+-(BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nonnull))restorationHandler {
+    return [WXApi handleOpenUniversalLink:userActivity delegate:self];
 }
 
 # pragma mark - WXApiDelegate

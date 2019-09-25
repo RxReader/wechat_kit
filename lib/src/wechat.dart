@@ -33,8 +33,6 @@ class Wechat {
   static const String _METHOD_STOPQRAUTH = 'stopQrauth';
   static const String _METHOD_OPENURL = 'openUrl';
   static const String _METHOD_OPENRANKLIST = 'openRankList';
-  static const String _METHOD_OPENBIZPROFILE = 'openBizProfile';
-  static const String _METHOD_OPENBIZURL = 'openBizUrl';
   static const String _METHOD_SHARETEXT = 'shareText';
   static const String _METHOD_SHAREIMAGE = 'shareImage';
   static const String _METHOD_SHAREEMOJI = 'shareEmoji';
@@ -58,16 +56,14 @@ class Wechat {
   static const String _METHOD_ONAUTHFINISH = 'onAuthFinish';
 
   static const String _ARGUMENT_KEY_APPID = 'appId';
+  static const String _ARGUMENT_KEY_UNIVERSALLINK = 'universalLink';
   static const String _ARGUMENT_KEY_SCOPE = 'scope';
   static const String _ARGUMENT_KEY_STATE = 'state';
   static const String _ARGUMENT_KEY_NONCESTR = 'noncestr';
   static const String _ARGUMENT_KEY_TIMESTAMP = 'timestamp';
   static const String _ARGUMENT_KEY_SIGNATURE = 'signature';
   static const String _ARGUMENT_KEY_URL = 'url';
-  static const String _ARGUMENT_KEY_PROFILETYPE = 'profileType';
   static const String _ARGUMENT_KEY_USERNAME = 'username';
-  static const String _ARGUMENT_KEY_EXTMSG = 'extMsg';
-  static const String _ARGUMENT_KEY_WEBTYPE = 'webType';
   static const String _ARGUMENT_KEY_SCENE = 'scene';
   static const String _ARGUMENT_KEY_TEXT = 'text';
   static const String _ARGUMENT_KEY_TITLE = 'title';
@@ -136,12 +132,14 @@ class Wechat {
   /// 向微信注册应用
   Future<void> registerApp({
     @required String appId,
+    @required String universalLink,
   }) {
     assert(appId != null && appId.isNotEmpty);
     return _channel.invokeMethod(
       _METHOD_REGISTERAPP,
       <String, dynamic>{
         _ARGUMENT_KEY_APPID: appId,
+        _ARGUMENT_KEY_UNIVERSALLINK: universalLink,
       },
     );
   }
@@ -431,48 +429,6 @@ class Wechat {
   /// 打开硬件排行榜
   Future<void> openRankList() {
     return _channel.invokeMethod(_METHOD_OPENRANKLIST);
-  }
-
-  /// 打开指定微信号 profile 页面
-  Future<void> openBizProfile({
-    @required int profileType,
-    @required String username,
-    String extMsg,
-  }) {
-    assert(username != null && username.isNotEmpty && username.length <= 512);
-    assert(extMsg == null || extMsg.length <= 1024);
-    Map<String, dynamic> map = <String, dynamic>{
-      _ARGUMENT_KEY_PROFILETYPE: profileType, // BizProfileType
-      _ARGUMENT_KEY_USERNAME: username,
-//      _ARGUMENT_KEY_EXTMSG: extMsg,
-    };
-
-    /// 兼容 iOS 空安全 -> NSNull
-    if (extMsg != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_EXTMSG, () => extMsg);
-    }
-    return _channel.invokeMethod(_METHOD_OPENBIZPROFILE, map);
-  }
-
-  /// 打开指定 username 的 profile 网页版
-  Future<void> openBizUrl({
-    @required int webType,
-    @required String username,
-    String extMsg,
-  }) {
-    assert(username != null && username.isNotEmpty && username.length <= 512);
-    assert(extMsg == null || extMsg.length <= 1024);
-    Map<String, dynamic> map = <String, dynamic>{
-      _ARGUMENT_KEY_WEBTYPE: webType, // MPWebviewType
-      _ARGUMENT_KEY_USERNAME: username,
-//      _ARGUMENT_KEY_EXTMSG: extMsg,
-    };
-
-    /// 兼容 iOS 空安全 -> NSNull
-    if (extMsg != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_EXTMSG, () => extMsg);
-    }
-    return _channel.invokeMethod(_METHOD_OPENBIZURL, map);
   }
 
   /// 分享 - 文本

@@ -14,8 +14,6 @@ import com.tencent.mm.opensdk.diffdev.OAuthErrCode;
 import com.tencent.mm.opensdk.diffdev.OAuthListener;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
-import com.tencent.mm.opensdk.modelbiz.JumpToBizProfile;
-import com.tencent.mm.opensdk.modelbiz.JumpToBizWebview;
 import com.tencent.mm.opensdk.modelbiz.OpenRankList;
 import com.tencent.mm.opensdk.modelbiz.OpenWebview;
 import com.tencent.mm.opensdk.modelbiz.SubscribeMessage;
@@ -71,8 +69,6 @@ public class FakeWechatPlugin implements MethodCallHandler, PluginRegistry.ViewD
     private static final String METHOD_STOPQRAUTH = "stopQrauth";
     private static final String METHOD_OPENURL = "openUrl";
     private static final String METHOD_OPENRANKLIST = "openRankList";
-    private static final String METHOD_OPENBIZPROFILE = "openBizProfile";
-    private static final String METHOD_OPENBIZURL = "openBizUrl";
     private static final String METHOD_SHARETEXT = "shareText";
     private static final String METHOD_SHAREIMAGE = "shareImage";
     private static final String METHOD_SHAREEMOJI = "shareEmoji";
@@ -95,16 +91,14 @@ public class FakeWechatPlugin implements MethodCallHandler, PluginRegistry.ViewD
     private static final String METHOD_ONAUTHFINISH = "onAuthFinish";
 
     private static final String ARGUMENT_KEY_APPID = "appId";
+    private static final String ARGUMENT_KEY_UNIVERSALLINK = "universalLink";
     private static final String ARGUMENT_KEY_SCOPE = "scope";
     private static final String ARGUMENT_KEY_STATE = "state";
     private static final String ARGUMENT_KEY_NONCESTR = "noncestr";
     private static final String ARGUMENT_KEY_TIMESTAMP = "timestamp";
     private static final String ARGUMENT_KEY_SIGNATURE = "signature";
     private static final String ARGUMENT_KEY_URL = "url";
-    private static final String ARGUMENT_KEY_PROFILETYPE = "profileType";
     private static final String ARGUMENT_KEY_USERNAME = "username";
-    private static final String ARGUMENT_KEY_EXTMSG = "extMsg";
-    private static final String ARGUMENT_KEY_WEBTYPE = "webType";
     private static final String ARGUMENT_KEY_SCENE = "scene";
     private static final String ARGUMENT_KEY_TEXT = "text";
     private static final String ARGUMENT_KEY_TITLE = "title";
@@ -264,10 +258,6 @@ public class FakeWechatPlugin implements MethodCallHandler, PluginRegistry.ViewD
             handleOpenUrlCall(call, result);
         } else if (METHOD_OPENRANKLIST.equals(call.method)) {
             handleOpenRankListCall(call, result);
-        } else if (METHOD_OPENBIZPROFILE.equals(call.method)) {
-            handleOpenBizProfileCall(call, result);
-        } else if (METHOD_OPENBIZURL.equals(call.method)) {
-            handleOpenBizUrlCall(call, result);
         } else if (METHOD_SHARETEXT.equals(call.method)) {
             handleShareTextCall(call, result);
         } else if (METHOD_SHAREIMAGE.equals(call.method) ||
@@ -290,6 +280,7 @@ public class FakeWechatPlugin implements MethodCallHandler, PluginRegistry.ViewD
 
     private void registerApp(MethodCall call, Result result) {
         final String appId = call.argument(ARGUMENT_KEY_APPID);
+//        final String universalLink = call.argument(ARGUMENT_KEY_UNIVERSALLINK);
         iwxapi = WXAPIFactory.createWXAPI(registrar.context().getApplicationContext(), appId);
         iwxapi.registerApp(appId);
         if (refreshWxappReceiver != null) {
@@ -339,24 +330,6 @@ public class FakeWechatPlugin implements MethodCallHandler, PluginRegistry.ViewD
 
     private void handleOpenRankListCall(MethodCall call, Result result) {
         OpenRankList.Req req = new OpenRankList.Req();
-        iwxapi.sendReq(req);
-        result.success(null);
-    }
-
-    private void handleOpenBizProfileCall(MethodCall call, Result result) {
-        JumpToBizProfile.Req req = new JumpToBizProfile.Req();
-        req.profileType = call.argument(ARGUMENT_KEY_PROFILETYPE);
-        req.toUserName = call.argument(ARGUMENT_KEY_USERNAME);
-        req.extMsg = call.argument(ARGUMENT_KEY_EXTMSG);
-        iwxapi.sendReq(req);
-        result.success(null);
-    }
-
-    private void handleOpenBizUrlCall(MethodCall call, Result result) {
-        JumpToBizWebview.Req req = new JumpToBizWebview.Req();
-        req.webType = call.argument(ARGUMENT_KEY_WEBTYPE);
-        req.toUserName = call.argument(ARGUMENT_KEY_USERNAME);
-        req.extMsg = call.argument(ARGUMENT_KEY_EXTMSG);
         iwxapi.sendReq(req);
         result.success(null);
     }

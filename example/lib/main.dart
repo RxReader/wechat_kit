@@ -10,6 +10,7 @@ import 'package:path/path.dart' as path;
 import 'package:image/image.dart' as image;
 
 const String WECHAT_APPID = 'wx854345270316ce6e';
+const String WECHAT_UNIVERSAL_LINK = '';
 const String WECHAT_APPSECRET = '';
 
 void main() {
@@ -44,7 +45,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  Wechat _wechat = Wechat()..registerApp(appId: WECHAT_APPID);
+  Wechat _wechat = Wechat()..registerApp(appId: WECHAT_APPID, universalLink: WECHAT_UNIVERSAL_LINK);
 
   StreamSubscription<WechatAuthResp> _auth;
   StreamSubscription<WechatSdkResp> _share;
