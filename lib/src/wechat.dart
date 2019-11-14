@@ -135,6 +135,7 @@ class Wechat {
     @required String universalLink,
   }) {
     assert(appId != null && appId.isNotEmpty);
+    assert(!Platform.isIOS || (universalLink != null && universalLink.isNotEmpty));
     return _channel.invokeMethod(
       _METHOD_REGISTERAPP,
       <String, dynamic>{

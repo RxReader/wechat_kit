@@ -39,10 +39,6 @@ flutter版微信SDK
 ## ios
 
 ```
-
-```
-
-```
 在Xcode中，选择你的工程设置项，选中“TARGETS”一栏，在“info”标签栏的“URL type“添加“URL scheme”为你所注册的应用程序id
 
 URL Types
@@ -62,8 +58,12 @@ iOS 9系统策略更新，限制了http协议的访问，此外应用需要在�
     <key>NSAllowsArbitraryLoads</key>
     <true/>
 </dict>
+```
 
+```
+Universal Links
 
+Capabilities -> Associated Domain -> Domain -> applinks:${your applinks}
 ```
 
 ## flutter
