@@ -55,12 +55,15 @@ iOS 9系统策略更新，限制了http协议的访问，此外应用需要在�
 <key>LSApplicationQueriesSchemes</key>
 <array>
     <string>weixin</string>
+    <string>weixinULAPI</string>
 </array>
 <key>NSAppTransportSecurity</key>
 <dict>
     <key>NSAllowsArbitraryLoads</key>
     <true/>
 </dict>
+
+
 ```
 
 ## flutter
