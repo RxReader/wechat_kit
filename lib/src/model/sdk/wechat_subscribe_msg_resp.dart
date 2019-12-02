@@ -27,5 +27,6 @@ class WechatSubscribeMsgResp extends WechatSdkResp {
   final String reserved;
   final String openId;
 
+  @override
   Map<dynamic, dynamic> toJson() => _$WechatSubscribeMsgRespToJson(this);
 }

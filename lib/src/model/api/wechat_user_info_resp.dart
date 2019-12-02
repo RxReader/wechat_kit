@@ -9,9 +9,6 @@ part 'wechat_user_info_resp.g.dart';
   fieldRename: FieldRename.snake,
 )
 class WechatUserInfoResp extends WechatApiResp {
-  factory WechatUserInfoResp.fromJson(Map<dynamic, dynamic> json) =>
-      _$WechatUserInfoRespFromJson(json);
-
   WechatUserInfoResp({
     int errcode,
     String errmsg,
@@ -25,6 +22,9 @@ class WechatUserInfoResp extends WechatApiResp {
     this.privilege,
     this.unionid,
   }) : super(errcode: errcode, errmsg: errmsg);
+
+  factory WechatUserInfoResp.fromJson(Map<dynamic, dynamic> json) =>
+      _$WechatUserInfoRespFromJson(json);
 
   final String openid;
   final String nickname;

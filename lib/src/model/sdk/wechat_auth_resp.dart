@@ -26,5 +26,6 @@ class WechatAuthResp extends WechatSdkResp {
   final String lang;
   final String country;
 
+  @override
   Map<dynamic, dynamic> toJson() => _$WechatAuthRespToJson(this);
 }
