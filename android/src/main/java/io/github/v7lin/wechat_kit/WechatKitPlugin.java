@@ -59,8 +59,8 @@ public class WechatKitPlugin implements MethodCallHandler, PluginRegistry.ViewDe
     }
 
     private static final String METHOD_REGISTERAPP = "registerApp";
-    private static final String METHOD_ISWECHATINSTALLED = "isWechatInstalled";
-    private static final String METHOD_ISWECHATSUPPORTAPI = "isWechatSupportApi";
+    private static final String METHOD_ISINSTALLED = "isInstalled";
+    private static final String METHOD_ISSUPPORTAPI = "isSupportApi";
     private static final String METHOD_OPENWECHAT = "openWechat";
     private static final String METHOD_AUTH = "auth";
     private static final String METHOD_STARTQRAUTH = "startQrauth";
@@ -219,9 +219,9 @@ public class WechatKitPlugin implements MethodCallHandler, PluginRegistry.ViewDe
     public void onMethodCall(MethodCall call, @NonNull Result result) {
         if (METHOD_REGISTERAPP.equals(call.method)) {
             registerApp(call, result);
-        } else if (METHOD_ISWECHATINSTALLED.equals(call.method)) {
+        } else if (METHOD_ISINSTALLED.equals(call.method)) {
             result.success(iwxapi.isWXAppInstalled());
-        } else if (METHOD_ISWECHATSUPPORTAPI.equals(call.method)) {
+        } else if (METHOD_ISSUPPORTAPI.equals(call.method)) {
             result.success(iwxapi.getWXAppSupportAPI() >= Build.OPENID_SUPPORTED_SDK_INT);
         } else if (METHOD_OPENWECHAT.equals(call.method)) {
             result.success(iwxapi.openWXApp());

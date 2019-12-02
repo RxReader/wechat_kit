@@ -94,7 +94,7 @@ class _HomeState extends State<Home> {
             title: const Text('环境检查'),
             onTap: () async {
               String content =
-                  'wechat: ${await _wechat.isWechatInstalled()} - ${await _wechat.isWechatSupportApi()}';
+                  'wechat: ${await _wechat.isInstalled()} - ${await _wechat.isSupportApi()}';
               _showTips('环境检查', content);
             },
           ),

@@ -27,8 +27,8 @@ class Wechat {
   }
 
   static const String _METHOD_REGISTERAPP = 'registerApp';
-  static const String _METHOD_ISWECHATINSTALLED = 'isWechatInstalled';
-  static const String _METHOD_ISWECHATSUPPORTAPI = 'isWechatSupportApi';
+  static const String _METHOD_ISINSTALLED = 'isInstalled';
+  static const String _METHOD_ISSUPPORTAPI = 'isSupportApi';
   static const String _METHOD_OPENWECHAT = 'openWechat';
   static const String _METHOD_AUTH = 'auth';
   static const String _METHOD_STARTQRAUTH = 'startQrauth';
@@ -235,18 +235,18 @@ class Wechat {
   }
 
   /// 检测微信是否已安装
-  Future<bool> isWechatInstalled() async {
-    return (await _channel.invokeMethod(_METHOD_ISWECHATINSTALLED)) as bool;
+  Future<bool> isInstalled() {
+    return _channel.invokeMethod(_METHOD_ISINSTALLED);
   }
 
   /// 判断当前微信的版本是否支持OpenApi
-  Future<bool> isWechatSupportApi() async {
-    return (await _channel.invokeMethod(_METHOD_ISWECHATSUPPORTAPI)) as bool;
+  Future<bool> isSupportApi() {
+    return _channel.invokeMethod(_METHOD_ISSUPPORTAPI);
   }
 
   /// 打开微信
-  Future<bool> openWechat() async {
-    return (await _channel.invokeMethod(_METHOD_OPENWECHAT)) as bool;
+  Future<bool> openWechat() {
+    return _channel.invokeMethod(_METHOD_OPENWECHAT);
   }
 
   // --- 微信APP授权登录
@@ -257,16 +257,16 @@ class Wechat {
     String state,
   }) {
     assert(scope != null && scope.isNotEmpty);
-    Map<String, dynamic> map = <String, dynamic>{
+    Map<String, dynamic> arguments = <String, dynamic>{
       _ARGUMENT_KEY_SCOPE: scope.join(','), // Scope
 //      _ARGUMENT_KEY_STATE: state,
     };
 
     /// 兼容 iOS 空安全 -> NSNull
     if (state != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_STATE, () => state);
+      arguments[_ARGUMENT_KEY_STATE] = state;
     }
-    return _channel.invokeMethod(_METHOD_AUTH, map);
+    return _channel.invokeMethod(_METHOD_AUTH, arguments);
   }
 
   /// 获取 access_token（UnionID）
@@ -467,7 +467,7 @@ class Wechat {
             imageUri.isScheme(_SCHEME_FILE) &&
             imageUri.toFilePath().length <= 10 * 1024 &&
             File.fromUri(imageUri).lengthSync() <= 25 * 1024 * 1024));
-    Map<String, dynamic> map = <String, dynamic>{
+    Map<String, dynamic> arguments = <String, dynamic>{
       _ARGUMENT_KEY_SCENE: scene, // Scene
 //      _ARGUMENT_KEY_TITLE: title,
 //      _ARGUMENT_KEY_DESCRIPTION: description,
@@ -478,21 +478,21 @@ class Wechat {
 
     /// 兼容 iOS 空安全 -> NSNull
     if (title != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_TITLE, () => title);
+      arguments[_ARGUMENT_KEY_TITLE] = title;
     }
     if (description != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_DESCRIPTION, () => description);
+      arguments[_ARGUMENT_KEY_DESCRIPTION] = description;
     }
     if (thumbData != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_THUMBDATA, () => thumbData);
+      arguments[_ARGUMENT_KEY_THUMBDATA] = thumbData;
     }
     if (imageData != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_IMAGEDATA, () => imageData);
+      arguments[_ARGUMENT_KEY_IMAGEDATA] = imageData;
     }
     if (imageUri != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_IMAGEURI, () => imageUri.toString());
+      arguments[_ARGUMENT_KEY_IMAGEURI] = imageUri.toString();
     }
-    return _channel.invokeMethod(_METHOD_SHAREIMAGE, map);
+    return _channel.invokeMethod(_METHOD_SHAREIMAGE, arguments);
   }
 
   /// 分享 - Emoji/GIF
@@ -512,7 +512,7 @@ class Wechat {
             emojiUri.isScheme(_SCHEME_FILE) &&
             emojiUri.toFilePath().length <= 10 * 1024 &&
             File.fromUri(emojiUri).lengthSync() <= 10 * 1024 * 1024));
-    Map<String, dynamic> map = <String, dynamic>{
+    Map<String, dynamic> arguments = <String, dynamic>{
       _ARGUMENT_KEY_SCENE: scene, // Scene
 //      _ARGUMENT_KEY_TITLE: title,
 //      _ARGUMENT_KEY_DESCRIPTION: description,
@@ -523,18 +523,18 @@ class Wechat {
 
     /// 兼容 iOS 空安全 -> NSNull
     if (title != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_TITLE, () => title);
+      arguments[_ARGUMENT_KEY_TITLE] = title;
     }
     if (description != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_DESCRIPTION, () => description);
+      arguments[_ARGUMENT_KEY_DESCRIPTION] = description;
     }
     if (emojiData != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_EMOJIDATA, () => emojiData);
+      arguments[_ARGUMENT_KEY_EMOJIDATA] = emojiData;
     }
     if (emojiUri != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_EMOJIURI, () => emojiUri.toString());
+      arguments[_ARGUMENT_KEY_EMOJIURI] = emojiUri.toString();
     }
-    return _channel.invokeMethod(_METHOD_SHAREEMOJI, map);
+    return _channel.invokeMethod(_METHOD_SHAREEMOJI, arguments);
   }
 
   /// 分享 - 音乐
@@ -557,7 +557,7 @@ class Wechat {
         (musicLowBandUrl != null &&
             musicLowBandUrl.isNotEmpty &&
             musicLowBandUrl.length <= 10 * 1024));
-    Map<String, dynamic> map = <String, dynamic>{
+    Map<String, dynamic> arguments = <String, dynamic>{
       _ARGUMENT_KEY_SCENE: scene, // Scene
 //      _ARGUMENT_KEY_TITLE: title,
 //      _ARGUMENT_KEY_DESCRIPTION: description,
@@ -570,28 +570,27 @@ class Wechat {
 
     /// 兼容 iOS 空安全 -> NSNull
     if (title != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_TITLE, () => title);
+      arguments[_ARGUMENT_KEY_TITLE] = title;
     }
     if (description != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_DESCRIPTION, () => description);
+      arguments[_ARGUMENT_KEY_DESCRIPTION] = description;
     }
     if (thumbData != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_THUMBDATA, () => thumbData);
+      arguments[_ARGUMENT_KEY_THUMBDATA] = thumbData;
     }
     if (musicUrl != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_MUSICURL, () => musicUrl);
+      arguments[_ARGUMENT_KEY_MUSICURL] = musicUrl;
     }
     if (musicDataUrl != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_MUSICDATAURL, () => musicDataUrl);
+      arguments[_ARGUMENT_KEY_MUSICDATAURL] = musicDataUrl;
     }
     if (musicLowBandUrl != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_MUSICLOWBANDURL, () => musicLowBandUrl);
+      arguments[_ARGUMENT_KEY_MUSICLOWBANDURL] = musicLowBandUrl;
     }
     if (musicLowBandDataUrl != null) {
-      map.putIfAbsent(
-          _ARGUMENT_KEY_MUSICLOWBANDDATAURL, () => musicLowBandDataUrl);
+      arguments[_ARGUMENT_KEY_MUSICLOWBANDDATAURL] = musicLowBandDataUrl;
     }
-    return _channel.invokeMethod(_METHOD_SHAREMUSIC, map);
+    return _channel.invokeMethod(_METHOD_SHAREMUSIC, arguments);
   }
 
   /// 分享 - 视频
@@ -612,7 +611,7 @@ class Wechat {
         (videoLowBandUrl != null &&
             videoLowBandUrl.isNotEmpty &&
             videoLowBandUrl.length <= 10 * 1024));
-    Map<String, dynamic> map = <String, dynamic>{
+    Map<String, dynamic> arguments = <String, dynamic>{
       _ARGUMENT_KEY_SCENE: scene, // Scene
 //      _ARGUMENT_KEY_TITLE: title,
 //      _ARGUMENT_KEY_DESCRIPTION: description,
@@ -623,21 +622,21 @@ class Wechat {
 
     /// 兼容 iOS 空安全 -> NSNull
     if (title != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_TITLE, () => title);
+      arguments[_ARGUMENT_KEY_TITLE] = title;
     }
     if (description != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_DESCRIPTION, () => description);
+      arguments[_ARGUMENT_KEY_DESCRIPTION] = description;
     }
     if (thumbData != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_THUMBDATA, () => thumbData);
+      arguments[_ARGUMENT_KEY_THUMBDATA] = thumbData;
     }
     if (videoUrl != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_VIDEOURL, () => videoUrl);
+      arguments[_ARGUMENT_KEY_VIDEOURL] = videoUrl;
     }
     if (videoLowBandUrl != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_VIDEOLOWBANDURL, () => videoLowBandUrl);
+      arguments[_ARGUMENT_KEY_VIDEOLOWBANDURL] = videoLowBandUrl;
     }
-    return _channel.invokeMethod(_METHOD_SHAREVIDEO, map);
+    return _channel.invokeMethod(_METHOD_SHAREVIDEO, arguments);
   }
 
   /// 分享 - 网页
@@ -654,7 +653,7 @@ class Wechat {
     assert(webpageUrl != null &&
         webpageUrl.isNotEmpty &&
         webpageUrl.length <= 10 * 1024);
-    Map<String, dynamic> map = <String, dynamic>{
+    Map<String, dynamic> arguments = <String, dynamic>{
       _ARGUMENT_KEY_SCENE: scene, // Scene
 //      _ARGUMENT_KEY_TITLE: title,
 //      _ARGUMENT_KEY_DESCRIPTION: description,
@@ -664,15 +663,15 @@ class Wechat {
 
     /// 兼容 iOS 空安全 -> NSNull
     if (title != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_TITLE, () => title);
+      arguments[_ARGUMENT_KEY_TITLE] = title;
     }
     if (description != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_DESCRIPTION, () => description);
+      arguments[_ARGUMENT_KEY_DESCRIPTION] = description;
     }
     if (thumbData != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_THUMBDATA, () => thumbData);
+      arguments[_ARGUMENT_KEY_THUMBDATA] = thumbData;
     }
-    return _channel.invokeMethod(_METHOD_SHAREWEBPAGE, map);
+    return _channel.invokeMethod(_METHOD_SHAREWEBPAGE, arguments);
   }
 
   /// 分享 - 小程序 - 目前只支持分享到会话
@@ -694,7 +693,7 @@ class Wechat {
     assert(webpageUrl != null && webpageUrl.isNotEmpty);
     assert(userName != null && userName.isNotEmpty);
     assert(hdImageData == null || hdImageData.lengthInBytes <= 128 * 1024);
-    Map<String, dynamic> map = <String, dynamic>{
+    Map<String, dynamic> arguments = <String, dynamic>{
       _ARGUMENT_KEY_SCENE: scene, // Scene
 //      _ARGUMENT_KEY_TITLE: title,
 //      _ARGUMENT_KEY_DESCRIPTION: description,
@@ -708,21 +707,21 @@ class Wechat {
 
     /// 兼容 iOS 空安全 -> NSNull
     if (title != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_TITLE, () => title);
+      arguments[_ARGUMENT_KEY_TITLE] = title;
     }
     if (description != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_DESCRIPTION, () => description);
+      arguments[_ARGUMENT_KEY_DESCRIPTION] = description;
     }
     if (thumbData != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_THUMBDATA, () => thumbData);
+      arguments[_ARGUMENT_KEY_THUMBDATA] = thumbData;
     }
     if (path != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_PATH, () => path);
+      arguments[_ARGUMENT_KEY_PATH] = path;
     }
     if (hdImageData != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_HDIMAGEDATA, () => hdImageData);
+      arguments[_ARGUMENT_KEY_HDIMAGEDATA] = hdImageData;
     }
-    return _channel.invokeMethod(_METHOD_SHAREMINIPROGRAM, map);
+    return _channel.invokeMethod(_METHOD_SHAREMINIPROGRAM, arguments);
   }
 
   /// 一次性订阅消息
@@ -735,7 +734,7 @@ class Wechat {
         templateId.isNotEmpty &&
         templateId.length <= 1024);
     assert(reserved == null || reserved.length <= 1024);
-    Map<String, dynamic> map = <String, dynamic>{
+    Map<String, dynamic> arguments = <String, dynamic>{
       _ARGUMENT_KEY_SCENE: scene,
       _ARGUMENT_KEY_TEMPLATEID: templateId,
 //      _ARGUMENT_KEY_RESERVED: reserved,
@@ -743,9 +742,9 @@ class Wechat {
 
     /// 兼容 iOS 空安全 -> NSNull
     if (reserved != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_RESERVED, () => reserved);
+      arguments[_ARGUMENT_KEY_RESERVED] = reserved;
     }
-    return _channel.invokeMethod(_METHOD_SUBSCRIBEMSG, map);
+    return _channel.invokeMethod(_METHOD_SUBSCRIBEMSG, arguments);
   }
 
   /// 打开小程序
@@ -754,16 +753,16 @@ class Wechat {
     String path,
   }) {
     assert(userName != null && userName.isNotEmpty);
-    Map<String, dynamic> map = <String, dynamic>{
+    Map<String, dynamic> arguments = <String, dynamic>{
       _ARGUMENT_KEY_USERNAME: userName,
 //      _ARGUMENT_KEY_PATH: path,
     };
 
     /// 兼容 iOS 空安全 -> NSNull
     if (path != null) {
-      map.putIfAbsent(_ARGUMENT_KEY_PATH, () => path);
+      arguments[_ARGUMENT_KEY_PATH] = path;
     }
-    return _channel.invokeMethod(_METHOD_LAUNCHMINIPROGRAM, map);
+    return _channel.invokeMethod(_METHOD_LAUNCHMINIPROGRAM, arguments);
   }
 
   /// 支付

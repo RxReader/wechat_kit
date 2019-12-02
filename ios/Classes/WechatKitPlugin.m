@@ -21,8 +21,8 @@
 }
 
 static NSString *const METHOD_REGISTERAPP = @"registerApp";
-static NSString *const METHOD_ISWECHATINSTALLED = @"isWechatInstalled";
-static NSString *const METHOD_ISWECHATSUPPORTAPI = @"isWechatSupportApi";
+static NSString *const METHOD_ISINSTALLED = @"isInstalled";
+static NSString *const METHOD_ISSUPPORTAPI = @"isSupportApi";
 static NSString *const METHOD_OPENWECHAT = @"openWechat";
 static NSString *const METHOD_AUTH = @"auth";
 static NSString *const METHOD_STARTQRAUTH = @"startQrauth";
@@ -122,9 +122,9 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
         NSString *universalLink = call.arguments[ARGUMENT_KEY_UNIVERSALLINK];
         [WXApi registerApp:appId universalLink:universalLink];
         result(nil);
-    } else if ([METHOD_ISWECHATINSTALLED isEqualToString:call.method]) {
+    } else if ([METHOD_ISINSTALLED isEqualToString:call.method]) {
         result([NSNumber numberWithBool:[WXApi isWXAppInstalled]]);
-    } else if ([METHOD_ISWECHATSUPPORTAPI isEqualToString:call.method]) {
+    } else if ([METHOD_ISSUPPORTAPI isEqualToString:call.method]) {
         result([NSNumber numberWithBool:[WXApi isWXAppSupportApi]]);
     } else if ([METHOD_OPENWECHAT isEqualToString:call.method]) {
         result([NSNumber numberWithBool:[WXApi openWXApp]]);
