@@ -1,14 +1,14 @@
-# fake_wechat
+# wechat_kit
 
 [![Build Status](https://cloud.drone.io/api/badges/v7lin/fake_wechat/status.svg)](https://cloud.drone.io/v7lin/fake_wechat)
 [![Codecov](https://codecov.io/gh/v7lin/fake_wechat/branch/master/graph/badge.svg)](https://codecov.io/gh/v7lin/fake_wechat)
 [![GitHub Tag](https://img.shields.io/github/tag/v7lin/fake_wechat.svg)](https://github.com/v7lin/fake_wechat/releases)
-[![Pub Package](https://img.shields.io/pub/v/fake_wechat.svg)](https://pub.dartlang.org/packages/fake_wechat)
+[![Pub Package](https://img.shields.io/pub/v/wechat_kit.svg)](https://pub.dartlang.org/packages/wechat_kit)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/v7lin/fake_wechat/blob/master/LICENSE)
 
 flutter版微信SDK
 
-## fake 系列 libraries
+## flutter toolkit
 
 * [flutter版微信SDK](https://github.com/v7lin/fake_wechat)
 * [flutter版腾讯(QQ)SDK](https://github.com/v7lin/fake_tencent)
@@ -34,6 +34,26 @@ flutter版微信SDK
 ```
 # 不需要做任何额外接入工作
 # 混淆已打入 Library，随 Library 引用，自动添加到 apk 打包混淆
+```
+
+#### 获取 android 微信签名信息
+
+非官方方法 -> 反编译 Gen_Signature_Android2.apk 所得
+
+命令：
+
+```shell
+keytool -list -v -keystore ${your_keystore_path} -storepass ${your_keystore_password} 2>/dev/null | grep -p 'MD5:.*' -o | sed 's/MD5://' | sed 's/ //g' | sed 's/://g' | awk '{print tolower($0)}'
+```
+
+示例：
+
+```shell
+keytool -list -v -keystore example/android/app/infos/debug.keystore -storepass android 2>/dev/null | grep -p 'MD5:.*' -o | sed 's/MD5://' | sed 's/ //g' | sed 's/://g' | awk '{print tolower($0)}'
+```
+
+```shell
+ce187ed67e05c2d8879bf66bbfdfc8b9
 ```
 
 ## ios
@@ -72,7 +92,7 @@ Capabilities -> Associated Domain -> Domain -> applinks:${your applinks}
 
 ```
 dependencies:
-  fake_wechat:
+  wechat_kit:
     git:
       url: https://github.com/v7lin/fake_wechat.git
 ```
@@ -81,7 +101,7 @@ dependencies:
 
 ```
 dependencies:
-  fake_wechat: ^${latestTag}
+  wechat_kit: ^${latestTag}
 ```
 
 * example
@@ -91,10 +111,10 @@ dependencies:
 ## Getting Started
 
 This project is a starting point for a Flutter
-[plug-in package](https://flutter.io/developing-packages/),
+[plug-in package](https://flutter.dev/developing-packages/),
 a specialized package that includes platform-specific implementation code for
 Android and/or iOS.
 
 For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
+[online documentation](https://flutter.dev/docs), which offers tutorials, 
 samples, guidance on mobile development, and a full API reference.

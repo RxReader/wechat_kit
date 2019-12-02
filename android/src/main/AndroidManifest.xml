@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.github.v7lin.fakewechat">
+    package="io.github.v7lin.wechat_kit">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -8,25 +8,25 @@
     <application>
         <activity
             android:name=".WechatCallbackActivity"
-            android:theme="@style/fake_wechat.Theme.Transparent"
             android:exported="true"
             android:launchMode="singleTask"
-            android:taskAffinity="${applicationId}" />
+            android:taskAffinity="${applicationId}"
+            android:theme="@style/wechat_kit.Theme.Transparent" />
 
         <activity-alias
             android:name="${applicationId}.wxapi.WXEntryActivity"
-            android:theme="@style/fake_wechat.Theme.Transparent"
             android:exported="true"
             android:launchMode="singleTask"
+            android:targetActivity=".WechatCallbackActivity"
             android:taskAffinity="${applicationId}"
-            android:targetActivity=".WechatCallbackActivity" />
+            android:theme="@style/wechat_kit.Theme.Transparent" />
 
         <activity-alias
             android:name="${applicationId}.wxapi.WXPayEntryActivity"
-            android:theme="@style/fake_wechat.Theme.Transparent"
             android:exported="true"
             android:launchMode="singleTask"
+            android:targetActivity=".WechatCallbackActivity"
             android:taskAffinity="${applicationId}"
-            android:targetActivity=".WechatCallbackActivity" />
+            android:theme="@style/wechat_kit.Theme.Transparent" />
     </application>
 </manifest>

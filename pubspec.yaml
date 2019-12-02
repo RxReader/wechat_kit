@@ -1,8 +1,8 @@
-name: fake_wechat
-description: A powerful wechat plugin for Flutter.
-version: 0.3.4
+name: wechat_kit
+description: A powerful Flutter plugin allowing developers to share with natvie android & iOS Wechat SDKs.
+version: 1.0.0
 author: v7lin <v7lin@qq.com>
-homepage: https://github.com/v7lin/fake_wechat
+homepage: https://github.com/v7lin/wechat_kit
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -11,29 +11,31 @@ dependencies:
   flutter:
     sdk: flutter
 
-  meta: ^1.1.6
-  uuid: '>=1.0.0 <3.0.0'
   convert: ^2.0.2
   crypto: ^2.0.6
 
-  jaguar_serializer: ^2.2.12
+  uuid: '>=1.0.0 <3.0.0'
+
+  json_annotation: '>=2.0.0 <4.0.0'
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  pedantic: '>=1.4.0 <3.0.0'
-
   image: ^2.0.7
 
-  path: ^1.6.2
-  fake_path_provider: ^0.1.2
+  path: ^1.6.4
+  path_provider: ^1.4.0
+
+  okhttp_kit: ^1.0.0
+
+  pedantic:
 
   build_runner:
-  jaguar_serializer_cli:
+  json_serializable:
 
 # For information on the generic Dart part of this file, see the
-# following page: https://www.dartlang.org/tools/pub/pubspec
+# following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
@@ -42,8 +44,8 @@ flutter:
   # be modified. They are used by the tooling to maintain consistency when
   # adding or updating assets for this project.
   plugin:
-    androidPackage: io.github.v7lin.fakewechat
-    pluginClass: FakeWechatPlugin
+    androidPackage: io.github.v7lin.wechat_kit
+    pluginClass: WechatKitPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
@@ -51,10 +53,10 @@ flutter:
   #  - images/a_dot_ham.jpeg
   #
   # For details regarding assets in packages, see
-  # https://flutter.io/assets-and-images/#from-packages
+  # https://flutter.dev/assets-and-images/#from-packages
   #
   # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.io/assets-and-images/#resolution-aware.
+  # https://flutter.dev/assets-and-images/#resolution-aware.
 
   # To add custom fonts to your plugin package, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
@@ -74,4 +76,4 @@ flutter:
   #         weight: 700
   #
   # For details regarding fonts in packages, see
-  # https://flutter.io/custom-fonts/#from-packages
+  # https://flutter.dev/custom-fonts/#from-packages

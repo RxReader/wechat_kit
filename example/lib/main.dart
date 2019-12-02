@@ -3,30 +3,17 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:fake_path_provider/fake_path_provider.dart';
-import 'package:fake_wechat/fake_wechat.dart';
-import 'package:path/path.dart' as path;
 import 'package:image/image.dart' as image;
+import 'package:okhttp_kit/okhttp_kit.dart';
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:wechat_kit/wechat_kit.dart';
 
-const String WECHAT_APPID = 'wx854345270316ce6e';
-const String WECHAT_UNIVERSAL_LINK = '';
+void main() => runApp(MyApp());
+
+const String WECHAT_APPID = 'wxd930ea5d5a258f4f';
+const String WECHAT_UNIVERSAL_LINK = 'https://help.wechat.com/sdksample/';
 const String WECHAT_APPSECRET = '';
-
-void main() {
-  runZoned(() {
-    runApp(MyApp());
-  }, onError: (Object error, StackTrace stack) {
-    print(error);
-    print(stack);
-  });
-
-  if (Platform.isAndroid) {
-    SystemUiOverlayStyle systemUiOverlayStyle =
-        const SystemUiOverlayStyle(statusBarColor: Colors.transparent);
-    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
-  }
-}
 
 class MyApp extends StatelessWidget {
   @override
@@ -99,7 +86,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Fake Wechat Demo'),
+        title: const Text('WechatKit Demo'),
       ),
       body: ListView(
         children: <Widget>[
@@ -174,49 +161,69 @@ class _HomeState extends State<Home> {
           ListTile(
             title: const Text('图片分享'),
             onTap: () async {
-              AssetImage timg = const AssetImage('images/icon/timg.jpeg');
-              AssetBundleImageKey key =
-                  await timg.obtainKey(createLocalImageConfiguration(context));
-              ByteData timgData = await key.bundle.load(key.name);
-              Directory saveDir = await PathProvider.getDocumentsDirectory();
-              File saveFile = File('${saveDir.path}${path.separator}timg.jpeg');
-              if (!saveFile.existsSync()) {
-                saveFile.createSync(recursive: true);
-                saveFile.writeAsBytesSync(timgData.buffer.asUint8List(),
-                    flush: true);
+              OkHttpClient client = OkHttpClientBuilder().build();
+              Response resp = await client
+                  .newCall(RequestBuilder()
+                      .get()
+                      .url(HttpUrl.parse(
+                          'https://www.baidu.com/img/bd_logo1.png?where=super'))
+                      .build())
+                  .enqueue();
+              if (resp.isSuccessful()) {
+                Directory saveDir = Platform.isAndroid
+                    ? await path_provider.getExternalStorageDirectory()
+                    : await path_provider.getApplicationDocumentsDirectory();
+                File saveFile = File(path.join(saveDir.path, 'timg.png'));
+                if (!saveFile.existsSync()) {
+                  saveFile.createSync(recursive: true);
+                  saveFile.writeAsBytesSync(
+                    await resp.body().bytes(),
+                    flush: true,
+                  );
+                }
+                await _wechat.shareImage(
+                  scene: WechatScene.SESSION,
+                  imageUri: Uri.file(saveFile.path),
+                );
               }
-              await _wechat.shareImage(
-                scene: WechatScene.SESSION,
-                imageUri: Uri.file(saveFile.path),
-              );
             },
           ),
           ListTile(
             title: const Text('Emoji分享'),
             onTap: () async {
-              AssetImage timg = const AssetImage('images/icon/timg.gif');
-              AssetBundleImageKey key =
-                  await timg.obtainKey(createLocalImageConfiguration(context));
-              ByteData timgData = await key.bundle.load(key.name);
-              Directory saveDir = await PathProvider.getDocumentsDirectory();
-              File saveFile = File('${saveDir.path}${path.separator}timg.gif');
-              if (!saveFile.existsSync()) {
-                saveFile.createSync(recursive: true);
-                saveFile.writeAsBytesSync(timgData.buffer.asUint8List(),
-                    flush: true);
+              OkHttpClient client = OkHttpClientBuilder().build();
+              Response resp = await client
+                  .newCall(RequestBuilder()
+                      .get()
+                      .url(HttpUrl.parse(
+                          'https://n.sinaimg.cn/tech/transform/695/w467h228/20191119/bf27-iipztfe9404360.gif'))
+                      .build())
+                  .enqueue();
+              if (resp.isSuccessful()) {
+                Directory saveDir = Platform.isAndroid
+                    ? await path_provider.getExternalStorageDirectory()
+                    : await path_provider.getApplicationDocumentsDirectory();
+                File saveFile = File(path.join(saveDir.path, 'timg.gif'));
+                if (!saveFile.existsSync()) {
+                  saveFile.createSync(recursive: true);
+                  saveFile.writeAsBytesSync(
+                    await resp.body().bytes(),
+                    flush: true,
+                  );
+                }
+                image.Image thumbnail =
+                    image.decodeGif(saveFile.readAsBytesSync());
+                Uint8List thumbData = thumbnail.getBytes();
+                if (thumbData.length > 32 * 1024) {
+                  thumbData = Uint8List.fromList(image.encodeJpg(thumbnail,
+                      quality: 100 * 32 * 1024 ~/ thumbData.length));
+                }
+                await _wechat.shareEmoji(
+                  scene: WechatScene.SESSION,
+                  thumbData: thumbData,
+                  emojiUri: Uri.file(saveFile.path),
+                );
               }
-              image.Image thumbnail =
-                  image.decodeGif(timgData.buffer.asUint8List());
-              Uint8List thumbData = thumbnail.getBytes();
-              if (thumbData.length > 32 * 1024) {
-                thumbData = Uint8List.fromList(image.encodeJpg(thumbnail,
-                    quality: 100 * 32 * 1024 ~/ thumbData.length));
-              }
-              await _wechat.shareEmoji(
-                scene: WechatScene.SESSION,
-                thumbData: thumbData,
-                emojiUri: Uri.file(saveFile.path),
-              );
             },
           ),
           ListTile(

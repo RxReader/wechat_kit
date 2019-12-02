@@ -1,0 +1,44 @@
+# 基础样式
+BasedOnStyle: LLVM
+
+# 缩进宽度
+IndentWidth: 4
+
+# 圆括号的换行方式
+BreakBeforeBraces: Attach
+
+# 是否允许循环单行
+AllowShortLoopsOnASingleLine: false
+
+# 支持一行的if
+AllowShortIfStatementsOnASingleLine: false
+
+# switch的case缩进
+IndentCaseLabels: true
+
+# 针对OC的block的缩进宽度
+ObjCBlockIndentWidth: 4
+
+# 针对OC，属性名后加空格
+ObjCSpaceAfterProperty: true
+
+# 每行字符的长度
+ColumnLimit: 0
+
+# 注释对齐
+AlignTrailingComments: true
+
+# 括号后加空格
+SpaceAfterCStyleCast: false
+
+# 不在小括号里加空格
+SpacesInParentheses: false
+
+# 不在中括号里加空格
+SpacesInSquareBrackets: false
+
+AllowShortBlocksOnASingleLine: false
+
+AllowShortCaseLabelsOnASingleLine: false
+
+AllowShortFunctionsOnASingleLine: false

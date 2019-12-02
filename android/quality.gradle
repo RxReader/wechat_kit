@@ -1,0 +1,17 @@
+apply plugin: 'checkstyle'
+
+check.dependsOn 'checkstyle'
+
+checkstyle {
+//    toolVersion = "6.15"
+}
+
+task checkstyle(type: Checkstyle) {
+    configFile project.file('checkstyle.xml')
+    source 'src/main/java'
+    ignoreFailures false
+    showViolations true
+    include '**/*.java'
+
+    classpath = files()
+}

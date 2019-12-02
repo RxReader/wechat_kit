@@ -1,3 +1,8 @@
+## 1.0.0
+
+* 更名 wechat_kit
+* 添加 Android 代码静态检查
+
 ## 0.3.4 - 2019.9.25
 
 * 升级Android/iOS SDK

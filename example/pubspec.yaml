@@ -1,5 +1,6 @@
-name: fake_wechat_example
-description: Demonstrates how to use the fake_wechat plugin.
+name: wechat_kit_example
+description: Demonstrates how to use the wechat_kit plugin.
+version: 1.0.0+1000
 publish_to: 'none'
 
 environment:
@@ -15,20 +16,20 @@ dependencies:
 
   image: ^2.0.7
 
-  path: ^1.6.2
-  fake_path_provider: ^0.1.2
+  path: ^1.6.4
+  path_provider: ^1.4.0
 
-  fake_wechat:
-    path: ../
+  okhttp_kit: ^1.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  pedantic: '>=1.4.0 <3.0.0'
+  wechat_kit:
+    path: ../
 
 # For information on the generic Dart part of this file, see the
-# following page: https://www.dartlang.org/tools/pub/pubspec
+# following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
@@ -39,15 +40,15 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  assets:
-    - images/icon/timg.jpeg
-    - images/icon/timg.gif
+  # assets:
+  #  - images/a_dot_burr.jpeg
+  #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.io/assets-and-images/#resolution-aware.
+  # https://flutter.dev/assets-and-images/#resolution-aware.
 
   # For details regarding adding assets from package dependencies, see
-  # https://flutter.io/assets-and-images/#from-packages
+  # https://flutter.dev/assets-and-images/#from-packages
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
@@ -67,4 +68,4 @@ flutter:
   #         weight: 700
   #
   # For details regarding fonts from package dependencies,
-  # see https://flutter.io/custom-fonts/#from-packages
+  # see https://flutter.dev/custom-fonts/#from-packages

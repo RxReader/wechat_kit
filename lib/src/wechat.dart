@@ -5,21 +5,23 @@ import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
-import 'package:fake_wechat/src/domain/api/wechat_access_token_resp.dart';
-import 'package:fake_wechat/src/domain/api/wechat_ticket_resp.dart';
-import 'package:fake_wechat/src/domain/api/wechat_user_info_resp.dart';
-import 'package:fake_wechat/src/domain/qrauth/wechat_qrauth_resp.dart';
-import 'package:fake_wechat/src/domain/sdk/wechat_auth_resp.dart';
-import 'package:fake_wechat/src/domain/sdk/wechat_launch_mini_program_resp.dart';
-import 'package:fake_wechat/src/domain/sdk/wechat_pay_resp.dart';
-import 'package:fake_wechat/src/domain/sdk/wechat_sdk_resp.dart';
-import 'package:fake_wechat/src/domain/sdk/wechat_subscribe_msg_resp.dart';
-import 'package:fake_wechat/src/wechat_scene.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
+import 'package:wechat_kit/src/model/api/wechat_access_token_resp.dart';
+import 'package:wechat_kit/src/model/api/wechat_ticket_resp.dart';
+import 'package:wechat_kit/src/model/api/wechat_user_info_resp.dart';
+import 'package:wechat_kit/src/model/qrauth/wechat_qrauth_resp.dart';
+import 'package:wechat_kit/src/model/sdk/wechat_auth_resp.dart';
+import 'package:wechat_kit/src/model/sdk/wechat_launch_mini_program_resp.dart';
+import 'package:wechat_kit/src/model/sdk/wechat_pay_resp.dart';
+import 'package:wechat_kit/src/model/sdk/wechat_sdk_resp.dart';
+import 'package:wechat_kit/src/model/sdk/wechat_subscribe_msg_resp.dart';
+import 'package:wechat_kit/src/wechat_constant.dart';
 
+///
 class Wechat {
+  ///
   Wechat() {
     _channel.setMethodCallHandler(_handleMethod);
   }
@@ -98,7 +100,7 @@ class Wechat {
   static const String _SCHEME_FILE = 'file';
 
   final MethodChannel _channel =
-      const MethodChannel('v7lin.github.io/fake_wechat');
+      const MethodChannel('v7lin.github.io/wechat_kit');
 
   final StreamController<WechatAuthResp> _authRespStreamController =
       StreamController<WechatAuthResp>.broadcast();
@@ -149,29 +151,29 @@ class Wechat {
   Future<dynamic> _handleMethod(MethodCall call) async {
     switch (call.method) {
       case _METHOD_ONAUTHRESP:
-        _authRespStreamController.add(WechatAuthRespSerializer()
-            .fromMap(call.arguments as Map<dynamic, dynamic>));
+        _authRespStreamController.add(
+            WechatAuthResp.fromJson(call.arguments as Map<dynamic, dynamic>));
         break;
       case _METHOD_ONOPENURLRESP:
-        _openUrlRespStreamController.add(WechatSdkRespSerializer()
-            .fromMap(call.arguments as Map<dynamic, dynamic>));
+        _openUrlRespStreamController.add(
+            WechatSdkResp.fromJson(call.arguments as Map<dynamic, dynamic>));
         break;
       case _METHOD_ONSHAREMSGRESP:
-        _shareMsgRespStreamController.add(WechatSdkRespSerializer()
-            .fromMap(call.arguments as Map<dynamic, dynamic>));
+        _shareMsgRespStreamController.add(
+            WechatSdkResp.fromJson(call.arguments as Map<dynamic, dynamic>));
         break;
       case _METHOD_ONSUBSCRIBEMSGRESP:
-        _subscribeMsgRespStreamController.add(WechatSubscribeMsgRespSerializer()
-            .fromMap(call.arguments as Map<dynamic, dynamic>));
+        _subscribeMsgRespStreamController.add(WechatSubscribeMsgResp.fromJson(
+            call.arguments as Map<dynamic, dynamic>));
         break;
       case _METHOD_ONLAUNCHMINIPROGRAMRESP:
         _launchMiniProgramRespStreamController.add(
-            WechatLaunchMiniProgramRespSerializer()
-                .fromMap(call.arguments as Map<dynamic, dynamic>));
+            WechatLaunchMiniProgramResp.fromJson(
+                call.arguments as Map<dynamic, dynamic>));
         break;
       case _METHOD_ONPAYRESP:
-        _payRespStreamController.add(WechatPayRespSerializer()
-            .fromMap(call.arguments as Map<dynamic, dynamic>));
+        _payRespStreamController.add(
+            WechatPayResp.fromJson(call.arguments as Map<dynamic, dynamic>));
         break;
       case _METHOD_ONAUTHGOTQRCODE:
         _authGotQrcodeRespStreamController
@@ -181,8 +183,8 @@ class Wechat {
         _authQrcodeScannedRespStreamController.add('QrcodeScanned');
         break;
       case _METHOD_ONAUTHFINISH:
-        _authFinishRespStreamController.add(WechatQrauthRespSerializer()
-            .fromMap(call.arguments as Map<dynamic, dynamic>));
+        _authFinishRespStreamController.add(
+            WechatQrauthResp.fromJson(call.arguments as Map<dynamic, dynamic>));
         break;
     }
   }
@@ -284,8 +286,8 @@ class Wechat {
     }).then((HttpClientResponse response) async {
       if (response.statusCode == HttpStatus.ok) {
         String content = await utf8.decodeStream(response);
-        return WechatAccessTokenRespSerializer()
-            .fromMap(json.decode(content) as Map<dynamic, dynamic>);
+        return WechatAccessTokenResp.fromJson(
+            json.decode(content) as Map<dynamic, dynamic>);
       }
       throw HttpException(
           'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');
@@ -307,8 +309,8 @@ class Wechat {
     }).then((HttpClientResponse response) async {
       if (response.statusCode == HttpStatus.ok) {
         String content = await utf8.decodeStream(response);
-        return WechatAccessTokenRespSerializer()
-            .fromMap(json.decode(content) as Map<dynamic, dynamic>);
+        return WechatAccessTokenResp.fromJson(
+            json.decode(content) as Map<dynamic, dynamic>);
       }
       throw HttpException(
           'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');
@@ -330,8 +332,8 @@ class Wechat {
     }).then((HttpClientResponse response) async {
       if (response.statusCode == HttpStatus.ok) {
         String content = await utf8.decodeStream(response);
-        return WechatUserInfoRespSerializer()
-            .fromMap(json.decode(content) as Map<dynamic, dynamic>);
+        return WechatUserInfoResp.fromJson(
+            json.decode(content) as Map<dynamic, dynamic>);
       }
       throw HttpException(
           'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');
@@ -355,8 +357,8 @@ class Wechat {
     }).then((HttpClientResponse response) async {
       if (response.statusCode == HttpStatus.ok) {
         String content = await utf8.decodeStream(response);
-        return WechatAccessTokenRespSerializer()
-            .fromMap(json.decode(content) as Map<dynamic, dynamic>);
+        return WechatAccessTokenResp.fromJson(
+            json.decode(content) as Map<dynamic, dynamic>);
       }
       throw HttpException(
           'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');
@@ -376,8 +378,8 @@ class Wechat {
     }).then((HttpClientResponse response) async {
       if (response.statusCode == HttpStatus.ok) {
         String content = await utf8.decodeStream(response);
-        return WechatTicketRespSerializer()
-            .fromMap(json.decode(content) as Map<dynamic, dynamic>);
+        return WechatTicketResp.fromJson(
+            json.decode(content) as Map<dynamic, dynamic>);
       }
       throw HttpException(
           'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');

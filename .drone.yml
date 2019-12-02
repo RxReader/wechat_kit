@@ -16,7 +16,25 @@ steps:
 #  - name: pub-cache
 #    path: /opt/flutter/.pub-cache
 #  commands:
-#  - flutter packages pub run build_runner build
+#  - flutter packages pub run build_runner build --delete-conflicting-outputs
+
+#- name: android-check
+#  image: v7lin/flutter:1.9.1-hotfix.6-stable
+#  volumes:
+#  - name: pub-cache
+#    path: /opt/flutter/.pub-cache
+#  - name: gradle
+#    path: /root/.gradle
+#  commands:
+#  - cd example/android/
+#  - ./gradlew :wechat_kit:check
+
+# docker run --rm -it -v ${PWD}:/src v7lin/clang sh -c "clang-format -style=file -i src/Classes/*.h src/Classes/*.m"
+#- name: ios-format
+#  image: v7lin/clang
+#  commands:
+#  - cd example/ios/
+#  - clang-format -style=file -i src/Classes/*.h src/Classes/*.m
 
 - name: format
   image: v7lin/flutter:1.9.1-hotfix.6-stable
@@ -40,7 +58,7 @@ steps:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
   commands:
-  - flutter test --coverage
+  - flutter test
   - cd example/
   - flutter test
 
@@ -55,17 +73,17 @@ steps:
   - cd example/
   - flutter build apk
 
-- name: coverage
-  image: plugins/codecov:2.0.3
-  settings:
-    token:
-      from_secret: CODECOV_TOKEN
-    files:
-    - ./coverage/lcov.info
-  when:
-    event:
-      exclude:
-      - pull_request
+#- name: coverage
+#  image: plugins/codecov:2.0.3
+#  settings:
+#    token:
+#      from_secret: CODECOV_TOKEN
+#    files:
+#    - ./coverage/lcov.info
+#  when:
+#    event:
+#      exclude:
+#      - pull_request
 
 - name: publish-check
   image: v7lin/flutter:1.9.1-hotfix.6-stable
@@ -91,10 +109,9 @@ steps:
   volumes:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
-  environment:
-    PUB_CACHE: /opt/flutter/.pub-cache
   commands:
-  - wget -P $PUB_CACHE https://raw.githubusercontent.com/v7lin/pub_credentials/master/credentials.json.enc
+  - FLUTTER_HOME=/opt/flutter/.pub-cache
+  - wget -P $FLUTTER_HOME https://raw.githubusercontent.com/v7lin/pub_credentials/master/credentials.json.enc
 
 - name: restore-cache-openssl
   image: v7lin/openssl:1.1.1b
@@ -102,14 +119,14 @@ steps:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
   environment:
-    PUB_CACHE: /opt/flutter/.pub-cache
     ENC_METHOD:
       from_secret: ENC_METHOD
     ENC_PASSWORD:
       from_secret: ENC_PASSWORD
   commands:
-  - openssl enc -d -$ENC_METHOD -k $ENC_PASSWORD -in $PUB_CACHE/credentials.json.enc -out $PUB_CACHE/credentials.json
-  - rm $PUB_CACHE/credentials.json.enc
+  - FLUTTER_HOME=/opt/flutter/.pub-cache
+  - openssl enc -d -$ENC_METHOD -k $ENC_PASSWORD -in $FLUTTER_HOME/credentials.json.enc -out $FLUTTER_HOME/credentials.json
+  - rm $FLUTTER_HOME/credentials.json.enc
 
 - name: publish
   image: v7lin/flutter:1.9.1-hotfix.6-stable
@@ -125,14 +142,14 @@ steps:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
   environment:
-    PUB_CACHE: /opt/flutter/.pub-cache
     ENC_METHOD:
       from_secret: ENC_METHOD
     ENC_PASSWORD:
       from_secret: ENC_PASSWORD
   commands:
-  - openssl enc -e -$ENC_METHOD -k $ENC_PASSWORD -in $PUB_CACHE/credentials.json -out $PUB_CACHE/credentials.json.enc
-  - rm $PUB_CACHE/credentials.json
+  - FLUTTER_HOME=/opt/flutter/.pub-cache
+  - openssl enc -e -$ENC_METHOD -k $ENC_PASSWORD -in $FLUTTER_HOME/credentials.json -out $FLUTTER_HOME/credentials.json.enc
+  - rm /opt/flutter/.pub-cache/credentials.json
 
 - name: save-cache
   image: docker:git
@@ -140,7 +157,6 @@ steps:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
   environment:
-    PUB_CACHE: /opt/flutter/.pub-cache
     GIT_USER_EMAIL:
       from_secret: GIT_USER_EMAIL
     GIT_USER_NAME:
@@ -148,13 +164,14 @@ steps:
     GIT_USER_PASSWORD:
       from_secret: GIT_USER_PASSWORD # 密码含'@'，用'%40'替换 -> URLEncoder.encode("@","utf-8");
   commands:
+  - FLUTTER_HOME=/opt/flutter/.pub-cache
   - git config --global user.email $GIT_USER_EMAIL
   - git config --global user.name $GIT_USER_NAME
   - git config --global credential.helper store
-  - git clone -b master https://$GIT_USER_NAME:$GIT_USER_PASSWORD@github.com/v7lin/pub_credentials.git $PUB_CACHE/pub_credentials
-  - rm $PUB_CACHE/pub_credentials/credentials.json.enc
-  - mv $PUB_CACHE/credentials.json.enc $PUB_CACHE/pub_credentials/credentials.json.enc
-  - cd $PUB_CACHE/pub_credentials
+  - git clone -b master https://$GIT_USER_NAME:$GIT_USER_PASSWORD@github.com/v7lin/pub_credentials.git $FLUTTER_HOME/pub_credentials
+  - rm $FLUTTER_HOME/pub_credentials/credentials.json.enc
+  - mv $FLUTTER_HOME/credentials.json.enc $FLUTTER_HOME/pub_credentials/credentials.json.enc
+  - cd $FLUTTER_HOME/pub_credentials
   - git commit -am "update credentials by ci/cd tools"
   - git push
 
