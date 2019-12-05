@@ -1,4 +1,9 @@
-## 1.0.0
+## 1.0.1 - 2019.12.05
+
+* 修正 homepage
+* 适配 Android Q 本地分享（targetSdkVersion >= 29，豁免外部存储沙箱限制，微信SDK并没有提供 FileProvider 方式）
+
+## 1.0.0 - 2019.12.02
 
 * 更名 wechat_kit
 * 添加 Android 代码静态检查
