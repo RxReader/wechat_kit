@@ -36,11 +36,9 @@ flutter版微信SDK
 # 混淆已打入 Library，随 Library 引用，自动添加到 apk 打包混淆
 ```
 
-targetSdkVersion >= 29 && compileSdkVersion >= 29 时需要豁免 Android Q 的外部存储沙箱限制
-targetSdkVersion < 29 请忽略
 ```xml
 <manifest>
-    <!-- 豁免 Android Q 的外部存储沙箱限制 -->
+    <!-- targetSdkVersion >= 29 && compileSdkVersion >= 29, 豁免 Android Q 的外部存储沙箱限制 -->
     <application android:requestLegacyExternalStorage="true">
     </application>
 </manifest>
