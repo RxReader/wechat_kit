@@ -68,7 +68,6 @@ class Wechat {
   static const String _ARGUMENT_KEY_SIGNATURE = 'signature';
   static const String _ARGUMENT_KEY_URL = 'url';
   static const String _ARGUMENT_KEY_USERNAME = 'username';
-  static const String _ARGUMENT_KEY_TYPE = 'type';
   static const String _ARGUMENT_KEY_SCENE = 'scene';
   static const String _ARGUMENT_KEY_TEXT = 'text';
   static const String _ARGUMENT_KEY_TITLE = 'title';
@@ -90,6 +89,7 @@ class Wechat {
   static const String _ARGUMENT_KEY_WITHSHARETICKET = 'withShareTicket';
   static const String _ARGUMENT_KEY_TEMPLATEID = 'templateId';
   static const String _ARGUMENT_KEY_RESERVED = 'reserved';
+  static const String _ARGUMENT_KEY_TYPE = 'type';
   static const String _ARGUMENT_KEY_PARTNERID = 'partnerId';
   static const String _ARGUMENT_KEY_PREPAYID = 'prepayId';
 
@@ -760,14 +760,13 @@ class Wechat {
     Map<String, dynamic> arguments = <String, dynamic>{
       _ARGUMENT_KEY_USERNAME: userName,
 //      _ARGUMENT_KEY_PATH: path,
+      _ARGUMENT_KEY_TYPE: type,
     };
 
     /// 兼容 iOS 空安全 -> NSNull
     if (path != null) {
       arguments[_ARGUMENT_KEY_PATH] = path;
     }
-
-    arguments[_ARGUMENT_KEY_TYPE] = type;
 
     return _channel.invokeMethod(_METHOD_LAUNCHMINIPROGRAM, arguments);
   }

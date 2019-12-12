@@ -98,7 +98,6 @@ public class WechatKitPlugin implements MethodCallHandler, PluginRegistry.ViewDe
     private static final String ARGUMENT_KEY_SIGNATURE = "signature";
     private static final String ARGUMENT_KEY_URL = "url";
     private static final String ARGUMENT_KEY_USERNAME = "username";
-    private static final String ARGUMENT_KEY_TYPE = "type";
     private static final String ARGUMENT_KEY_SCENE = "scene";
     private static final String ARGUMENT_KEY_TEXT = "text";
     private static final String ARGUMENT_KEY_TITLE = "title";
@@ -120,6 +119,7 @@ public class WechatKitPlugin implements MethodCallHandler, PluginRegistry.ViewDe
     private static final String ARGUMENT_KEY_WITHSHARETICKET = "withShareTicket";
     private static final String ARGUMENT_KEY_TEMPLATEID = "templateId";
     private static final String ARGUMENT_KEY_RESERVED = "reserved";
+    private static final String ARGUMENT_KEY_TYPE = "type";
     private static final String ARGUMENT_KEY_PARTNERID = "partnerId";
     private static final String ARGUMENT_KEY_PREPAYID = "prepayId";
     //    private static final String ARGUMENT_KEY_NONCESTR = "noncestr";

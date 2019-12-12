@@ -3,7 +3,7 @@ name: default
 
 steps:
 - name: prepare
-  image: v7lin/flutter:1.9.1-hotfix.6-stable
+  image: v7lin/flutter:1.12.13-hotfix.5-stable
   volumes:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
@@ -11,7 +11,7 @@ steps:
   - flutter packages get
 
 #- name: build_runner
-#  image: v7lin/flutter:1.9.1-hotfix.6-stable
+#  image: v7lin/flutter:1.12.13-hotfix.5-stable
 #  volumes:
 #  - name: pub-cache
 #    path: /opt/flutter/.pub-cache
@@ -19,7 +19,7 @@ steps:
 #  - flutter packages pub run build_runner build --delete-conflicting-outputs
 
 #- name: android-check
-#  image: v7lin/flutter:1.9.1-hotfix.6-stable
+#  image: v7lin/flutter:1.12.13-hotfix.5-stable
 #  volumes:
 #  - name: pub-cache
 #    path: /opt/flutter/.pub-cache
@@ -37,7 +37,7 @@ steps:
 #  - clang-format -style=file -i src/Classes/*.h src/Classes/*.m
 
 - name: format
-  image: v7lin/flutter:1.9.1-hotfix.6-stable
+  image: v7lin/flutter:1.12.13-hotfix.5-stable
   volumes:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
@@ -45,7 +45,7 @@ steps:
   - flutter format --dry-run --set-exit-if-changed .
 
 - name: analyze
-  image: v7lin/flutter:1.9.1-hotfix.6-stable
+  image: v7lin/flutter:1.12.13-hotfix.5-stable
   volumes:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
@@ -53,7 +53,7 @@ steps:
   - flutter analyze
 
 - name: test
-  image: v7lin/flutter:1.9.1-hotfix.6-stable
+  image: v7lin/flutter:1.12.13-hotfix.5-stable
   volumes:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
@@ -63,7 +63,7 @@ steps:
   - flutter test
 
 - name: proguard
-  image: v7lin/flutter:1.9.1-hotfix.6-stable
+  image: v7lin/flutter:1.12.13-hotfix.5-stable
   volumes:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
@@ -86,7 +86,7 @@ steps:
 #      - pull_request
 
 - name: publish-check
-  image: v7lin/flutter:1.9.1-hotfix.6-stable
+  image: v7lin/flutter:1.12.13-hotfix.5-stable
   volumes:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
@@ -129,7 +129,7 @@ steps:
   - rm $FLUTTER_HOME/credentials.json.enc
 
 - name: publish
-  image: v7lin/flutter:1.9.1-hotfix.6-stable
+  image: v7lin/flutter:1.12.13-hotfix.5-stable
   volumes:
   - name: pub-cache
     path: /opt/flutter/.pub-cache

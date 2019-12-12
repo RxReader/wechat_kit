@@ -323,8 +323,8 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
     WXLaunchMiniProgramReq *req = [[WXLaunchMiniProgramReq alloc] init];
     req.userName = call.arguments[ARGUMENT_KEY_USERNAME];
     req.path = call.arguments[ARGUMENT_KEY_PATH];
-    NSNumber * miniProgramType = call.arguments[ARGUMENT_KEY_TYPE];
-    req.miniProgramType = miniProgramType.intValue;
+    NSNumber *miniProgramType = call.arguments[ARGUMENT_KEY_TYPE];
+    req.miniProgramType = miniProgramType.unsignedIntegerValue;
     [WXApi sendReq:req
         completion:^(BOOL success){
             // do nothing

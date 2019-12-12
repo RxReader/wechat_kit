@@ -38,9 +38,15 @@ class WechatMPWebviewType {
   static const int AD = 0;
 }
 
-//正式版:0，测试版:1，体验版:2
 class WechatMiniProgram {
+  WechatMiniProgram._();
+
+  /// 正式版
   static const int release = 0;
+
+  /// 测试版
   static const int test = 1;
+
+  /// 体验版
   static const int preview = 2;
 }
