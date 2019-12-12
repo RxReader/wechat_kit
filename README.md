@@ -57,11 +57,11 @@ keytool -list -v -keystore ${your_keystore_path} -storepass ${your_keystore_pass
 示例：
 
 ```shell
-keytool -list -v -keystore example/android/app/infos/debug.keystore -storepass android 2>/dev/null | grep -p 'MD5:.*' -o | sed 's/MD5://' | sed 's/ //g' | sed 's/://g' | awk '{print tolower($0)}'
+keytool -list -v -keystore example/android/app/infos/dev.jks -storepass 123456 2>/dev/null | grep -p 'MD5:.*' -o | sed 's/MD5://' | sed 's/ //g' | sed 's/://g' | awk '{print tolower($0)}'
 ```
 
 ```shell
-ce187ed67e05c2d8879bf66bbfdfc8b9
+28424130a4416d519e00946651d53a46
 ```
 
 ## ios

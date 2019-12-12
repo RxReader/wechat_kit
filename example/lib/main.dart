@@ -11,9 +11,9 @@ import 'package:wechat_kit/wechat_kit.dart';
 
 void main() => runApp(MyApp());
 
-const String WECHAT_APPID = 'wxd930ea5d5a258f4f';
-const String WECHAT_UNIVERSAL_LINK = 'https://help.wechat.com/sdksample/';
-const String WECHAT_APPSECRET = '';
+const String WECHAT_APPID = 'wx854345270316ce6e';
+const String WECHAT_UNIVERSAL_LINK = 'https://link.haitanyule.com/wechat_kit/';
+const String WECHAT_APPSECRET = 'ce4c6c4f007cf10baad3f600da16aa8e';
 const String WECHAT_MINIAPPID = 'gh_wxd930ea5d5a258f4f';
 
 class MyApp extends StatelessWidget {

@@ -33,7 +33,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "net.sourceforge.simcpux"
+        applicationId "io.github.v7lin.wechat_kit_example"
         minSdkVersion 16
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
@@ -43,7 +43,10 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file('debug.keystore')
+            storeFile file('infos/dev.jks')
+            storePassword '123456'
+            keyAlias 'dev'
+            keyPassword '123456'
         }
     }
 
