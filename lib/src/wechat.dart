@@ -766,7 +766,7 @@ class Wechat {
     if (path != null) {
       arguments[_ARGUMENT_KEY_PATH] = path;
     }
-    
+
     arguments[_ARGUMENT_KEY_TYPE] = type;
 
     return _channel.invokeMethod(_METHOD_LAUNCHMINIPROGRAM, arguments);
