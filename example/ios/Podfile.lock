@@ -2,7 +2,7 @@ PODS:
   - Flutter (1.0.0)
   - path_provider (0.0.1):
     - Flutter
-  - wechat_kit (1.0.0):
+  - wechat_kit (1.0.1):
     - Flutter
     - WechatOpenSDK (~> 1.8.6)
   - WechatOpenSDK (1.8.6)
@@ -27,7 +27,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
-  wechat_kit: c0df5f40753894e91a98e3cb5f87235407d98130
+  wechat_kit: 60e2a36de716bad3ddc630aab08d7455c4df6820
   WechatOpenSDK: 368ae03b72ee3ea1328c4f11326fbb5d2721d118
 
 PODFILE CHECKSUM: 7fb83752f59ead6285236625b82473f90b1cb932

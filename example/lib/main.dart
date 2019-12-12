@@ -14,6 +14,7 @@ void main() => runApp(MyApp());
 const String WECHAT_APPID = 'wxd930ea5d5a258f4f';
 const String WECHAT_UNIVERSAL_LINK = 'https://help.wechat.com/sdksample/';
 const String WECHAT_APPSECRET = '';
+const String WECHAT_MINIAPPID = 'gh_wxd930ea5d5a258f4f';
 
 class MyApp extends StatelessWidget {
   @override
@@ -41,6 +42,7 @@ class _HomeState extends State<Home> {
   StreamSubscription<WechatAuthResp> _auth;
   StreamSubscription<WechatSdkResp> _share;
   StreamSubscription<WechatPayResp> _pay;
+  StreamSubscription<WechatLaunchMiniProgramResp> _miniProgram;
 
   WechatAuthResp _authResp;
 
@@ -50,6 +52,7 @@ class _HomeState extends State<Home> {
     _auth = _wechat.authResp().listen(_listenAuth);
     _share = _wechat.shareMsgResp().listen(_listenShareMsg);
     _pay = _wechat.payResp().listen(_listenPay);
+    _miniProgram = _wechat.launchMiniProgramResp().listen(_listenMiniProgram);
   }
 
   void _listenAuth(WechatAuthResp resp) {
@@ -68,6 +71,11 @@ class _HomeState extends State<Home> {
     _showTips('支付', content);
   }
 
+  void _listenMiniProgram(WechatLaunchMiniProgramResp resp) {
+    String content = 'mini program: ${resp.errorCode} ${resp.errorMsg}';
+    _showTips('拉起小程序', content);
+  }
+
   @override
   void dispose() {
     if (_auth != null) {
@@ -78,6 +86,9 @@ class _HomeState extends State<Home> {
     }
     if (_pay != null) {
       _pay.cancel();
+    }
+    if (_miniProgram != null) {
+      _miniProgram.cancel();
     }
     super.dispose();
   }
@@ -248,6 +259,15 @@ class _HomeState extends State<Home> {
                 timeStamp: '时间戳：东八区，单位秒',
                 sign: '签名',
               );
+            },
+          ),
+          ListTile(
+            title: const Text('拉起小程序'),
+            onTap: () {
+              _wechat.launchMiniProgram(
+                userName: WECHAT_MINIAPPID, 
+                path: "page/page/index?uid=123",
+                type: WechatMiniProgram.preview);
             },
           ),
         ],

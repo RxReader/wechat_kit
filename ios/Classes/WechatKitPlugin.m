@@ -60,6 +60,7 @@ static NSString *const ARGUMENT_KEY_TIMESTAMP = @"timestamp";
 static NSString *const ARGUMENT_KEY_SIGNATURE = @"signature";
 static NSString *const ARGUMENT_KEY_URL = @"url";
 static NSString *const ARGUMENT_KEY_USERNAME = @"username";
+static NSString *const ARGUMENT_KEY_TYPE = @"type";
 static NSString *const ARGUMENT_KEY_SCENE = @"scene";
 static NSString *const ARGUMENT_KEY_TEXT = @"text";
 static NSString *const ARGUMENT_KEY_TITLE = @"title";
@@ -322,6 +323,7 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
     WXLaunchMiniProgramReq *req = [[WXLaunchMiniProgramReq alloc] init];
     req.userName = call.arguments[ARGUMENT_KEY_USERNAME];
     req.path = call.arguments[ARGUMENT_KEY_PATH];
+    req.miniProgramType = (int)call.arguments[ARGUMENT_KEY_TYPE];
     [WXApi sendReq:req
         completion:^(BOOL success){
             // do nothing
