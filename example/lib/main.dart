@@ -12,7 +12,7 @@ import 'package:wechat_kit/wechat_kit.dart';
 void main() => runApp(MyApp());
 
 const String WECHAT_APPID = 'wx854345270316ce6e';
-const String WECHAT_UNIVERSAL_LINK = null;// iOS 请配置
+const String WECHAT_UNIVERSAL_LINK = null; // iOS 请配置
 const String WECHAT_APPSECRET = 'ce4c6c4f007cf10baad3f600da16aa8e';
 const String WECHAT_MINIAPPID = 'gh_wxd930ea5d5a258f4f';
 
