@@ -19,6 +19,8 @@ import 'package:wechat_kit/src/model/sdk/wechat_sdk_resp.dart';
 import 'package:wechat_kit/src/model/sdk/wechat_subscribe_msg_resp.dart';
 import 'package:wechat_kit/src/wechat_constant.dart';
 
+import 'wechat_constant.dart';
+
 ///
 class Wechat {
   ///
@@ -66,6 +68,7 @@ class Wechat {
   static const String _ARGUMENT_KEY_SIGNATURE = 'signature';
   static const String _ARGUMENT_KEY_URL = 'url';
   static const String _ARGUMENT_KEY_USERNAME = 'username';
+  static const String _ARGUMENT_KEY_TYPE = 'type';
   static const String _ARGUMENT_KEY_SCENE = 'scene';
   static const String _ARGUMENT_KEY_TEXT = 'text';
   static const String _ARGUMENT_KEY_TITLE = 'title';
@@ -751,6 +754,7 @@ class Wechat {
   Future<void> launchMiniProgram({
     @required String userName,
     String path,
+    int type = WechatMiniProgram.release,
   }) {
     assert(userName != null && userName.isNotEmpty);
     Map<String, dynamic> arguments = <String, dynamic>{
@@ -762,6 +766,9 @@ class Wechat {
     if (path != null) {
       arguments[_ARGUMENT_KEY_PATH] = path;
     }
+
+    arguments[_ARGUMENT_KEY_TYPE] = type;
+
     return _channel.invokeMethod(_METHOD_LAUNCHMINIPROGRAM, arguments);
   }
 

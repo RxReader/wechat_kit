@@ -98,6 +98,7 @@ public class WechatKitPlugin implements MethodCallHandler, PluginRegistry.ViewDe
     private static final String ARGUMENT_KEY_SIGNATURE = "signature";
     private static final String ARGUMENT_KEY_URL = "url";
     private static final String ARGUMENT_KEY_USERNAME = "username";
+    private static final String ARGUMENT_KEY_TYPE = "type";
     private static final String ARGUMENT_KEY_SCENE = "scene";
     private static final String ARGUMENT_KEY_TEXT = "text";
     private static final String ARGUMENT_KEY_TITLE = "title";
@@ -406,6 +407,7 @@ public class WechatKitPlugin implements MethodCallHandler, PluginRegistry.ViewDe
         WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
         req.userName = call.argument(ARGUMENT_KEY_USERNAME);
         req.path = call.argument(ARGUMENT_KEY_PATH);
+        req.miniprogramType = call.argument(ARGUMENT_KEY_TYPE);
         iwxapi.sendReq(req);
         result.success(null);
     }
