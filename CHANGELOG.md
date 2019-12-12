@@ -12,7 +12,7 @@
 ## 0.3.4 - 2019.9.25
 
 * 升级Android/iOS SDK
-* 修正 Universal Links 文档（by [Myth](https://github.com/kenleemyth)）
+* 修正 Universal Links 文档（by [kenleemyth](https://github.com/kenleemyth)）
 
 ## 0.3.3 - 2019.8.8
 
