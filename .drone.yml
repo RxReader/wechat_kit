@@ -29,11 +29,11 @@ steps:
 #  - cd example/android/
 #  - ./gradlew :wechat_kit:check
 
-# docker run --rm -it -v ${PWD}:/src v7lin/clang sh -c "clang-format -style=file -i src/Classes/*.h src/Classes/*.m"
+# docker run --rm -it -v ${PWD}:/src v7lin/clang:5.0.2-r0 sh -c "clang-format -style=file -i src/Classes/*.h src/Classes/*.m"
 #- name: ios-format
 #  image: v7lin/clang
 #  commands:
-#  - cd example/ios/
+#  - cd ios/
 #  - clang-format -style=file -i src/Classes/*.h src/Classes/*.m
 
 - name: format
