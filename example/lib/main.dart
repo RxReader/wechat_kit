@@ -265,9 +265,9 @@ class _HomeState extends State<Home> {
             title: const Text('拉起小程序'),
             onTap: () {
               _wechat.launchMiniProgram(
-                userName: WECHAT_MINIAPPID, 
-                path: "page/page/index?uid=123",
-                type: WechatMiniProgram.preview);
+                  userName: WECHAT_MINIAPPID,
+                  path: "page/page/index?uid=123",
+                  type: WechatMiniProgram.preview);
             },
           ),
         ],
