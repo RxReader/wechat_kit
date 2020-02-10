@@ -3,7 +3,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'wechat_kit'
-  s.version          = '1.0.1'
+  s.version          = '1.0.2'
   s.summary          = 'A powerful Flutter plugin allowing developers to share with natvie android & iOS Wechat SDKs.'
   s.description      = <<-DESC
 A new flutter plugin project.

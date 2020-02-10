@@ -12,8 +12,7 @@ class WechatSdkResp {
     this.errorMsg,
   });
 
-  factory WechatSdkResp.fromJson(Map<dynamic, dynamic> json) =>
-      _$WechatSdkRespFromJson(json);
+  factory WechatSdkResp.fromJson(Map<dynamic, dynamic> json) => _$WechatSdkRespFromJson(json);
 
   /// 成功
   static const int ERRORCODE_SUCCESS = 0;
@@ -41,6 +40,8 @@ class WechatSdkResp {
 
   /// 错误提示字符串
   final String errorMsg;
+
+  bool isSuccessful() => errorCode == ERRORCODE_SUCCESS;
 
   Map<dynamic, dynamic> toJson() => _$WechatSdkRespToJson(this);
 }

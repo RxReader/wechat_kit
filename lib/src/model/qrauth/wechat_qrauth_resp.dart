@@ -39,5 +39,7 @@ class WechatQrauthResp {
   final int errorCode;
   final String authCode;
 
+  bool isSuccessful() => errorCode == ERRORCODE_OK;
+
   Map<dynamic, dynamic> toJson() => _$WechatQrauthRespToJson(this);
 }
