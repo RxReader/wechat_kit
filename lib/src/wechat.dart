@@ -392,7 +392,7 @@ class Wechat {
   /// 用上面函数拿到的 ticket，开始扫码登录
   Future<void> startQrauth({
     @required String appId,
-    @required String scope,
+    @required List<String> scope,
     @required String ticket,
   }) {
     assert(appId != null && appId.isNotEmpty);
@@ -407,7 +407,7 @@ class Wechat {
       _METHOD_STARTQRAUTH,
       <String, dynamic>{
         _ARGUMENT_KEY_APPID: appId,
-        _ARGUMENT_KEY_SCOPE: scope, // Scope
+        _ARGUMENT_KEY_SCOPE: scope.join(','), // Scope
         _ARGUMENT_KEY_NONCESTR: noncestr,
         _ARGUMENT_KEY_TIMESTAMP: timestamp,
         _ARGUMENT_KEY_SIGNATURE: signature,

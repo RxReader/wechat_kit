@@ -369,7 +369,7 @@ class _QrauthState extends State<Qrauth> {
                   'accessToken: ${ticket.errcode} - ${ticket.errmsg} - ${ticket.ticket}');
               await widget.wechat.startQrauth(
                 appId: WECHAT_APPID,
-                scope: WechatScope.SNSAPI_USERINFO,
+                scope: <String>[WechatScope.SNSAPI_USERINFO],
                 ticket: ticket.ticket,
               );
             },
