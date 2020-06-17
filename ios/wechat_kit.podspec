@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.version          = '1.1.0'
   s.summary          = 'A powerful Flutter plugin allowing developers to share with natvie android & iOS Wechat SDKs.'
   s.description      = <<-DESC
-A new flutter plugin project.
+A powerful Flutter plugin allowing developers to share with natvie android & iOS Wechat SDKs.
                        DESC
   s.homepage         = 'http://example.com'
   s.license          = { :file => '../LICENSE' }
