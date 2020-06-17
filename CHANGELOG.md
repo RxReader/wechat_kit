@@ -1,3 +1,7 @@
+## 1.1.0 - 2020.6.17
+
+* 升级 Android/iOS SDK
+
 ## 1.0.3 - 2019.2.25
 
 * scope: String -> List<String>

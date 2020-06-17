@@ -1,9 +1,10 @@
 #
-# To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
+# To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
+# Run `pod lib lint wechat_kit.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
   s.name             = 'wechat_kit'
-  s.version          = '1.0.3'
+  s.version          = '1.1.0'
   s.summary          = 'A powerful Flutter plugin allowing developers to share with natvie android & iOS Wechat SDKs.'
   s.description      = <<-DESC
 A new flutter plugin project.
@@ -15,10 +16,19 @@ A new flutter plugin project.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  # 微信
+  s.platform = :ios, '8.0'
+
   s.static_framework = true
-  s.dependency 'WechatOpenSDK', '~> 1.8.6'
+  s.subspec 'vendor' do |sp|
+    sp.source_files = 'Libraries/**/*.h'
+    sp.public_header_files = 'Libraries/**/*.h'
+    sp.vendored_libraries = 'Libraries/**/*.a'
+    sp.frameworks = 'CoreGraphics', 'Security', 'WebKit'
+    sp.pod_target_xcconfig = {
+        'OTHER_LDFLAGS' => '$(inherited) -ObjC -all_load'
+    }
+  end
 
-  s.ios.deployment_target = '8.0'
+  # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
+  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'VALID_ARCHS[sdk=iphonesimulator*]' => 'x86_64' }
 end
-

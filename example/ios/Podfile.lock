@@ -2,34 +2,42 @@ PODS:
   - Flutter (1.0.0)
   - path_provider (0.0.1):
     - Flutter
-  - wechat_kit (1.0.1):
+  - path_provider_linux (0.0.1):
     - Flutter
-    - WechatOpenSDK (~> 1.8.6)
-  - WechatOpenSDK (1.8.6)
+  - path_provider_macos (0.0.1):
+    - Flutter
+  - wechat_kit (1.1.0):
+    - Flutter
+    - wechat_kit/vendor (= 1.1.0)
+  - wechat_kit/vendor (1.1.0):
+    - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - path_provider_linux (from `.symlinks/plugins/path_provider_linux/ios`)
+  - path_provider_macos (from `.symlinks/plugins/path_provider_macos/ios`)
   - wechat_kit (from `.symlinks/plugins/wechat_kit/ios`)
-
-SPEC REPOS:
-  trunk:
-    - WechatOpenSDK
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
+  path_provider_linux:
+    :path: ".symlinks/plugins/path_provider_linux/ios"
+  path_provider_macos:
+    :path: ".symlinks/plugins/path_provider_macos/ios"
   wechat_kit:
     :path: ".symlinks/plugins/wechat_kit/ios"
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
-  wechat_kit: 60e2a36de716bad3ddc630aab08d7455c4df6820
-  WechatOpenSDK: 368ae03b72ee3ea1328c4f11326fbb5d2721d118
+  path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
+  path_provider_linux: 4d630dc393e1f20364f3e3b4a2ff41d9674a84e4
+  path_provider_macos: f760a3c5b04357c380e2fddb6f9db6f3015897e0
+  wechat_kit: cc9fd9c5812e52054aa9b09158fdd9c4c248d014
 
-PODFILE CHECKSUM: 3dbe063e9c90a5d7c9e4e76e70a821b9e2c1d271
+PODFILE CHECKSUM: f32fb4e7c14f8b3ca19a369d7be425dd9241af27
 
 COCOAPODS: 1.8.4

@@ -11,10 +11,10 @@ import 'package:wechat_kit/wechat_kit.dart';
 
 void main() => runApp(MyApp());
 
-const String WECHAT_APPID = 'wx854345270316ce6e';
-const String WECHAT_UNIVERSAL_LINK = null; // iOS 请配置
-const String WECHAT_APPSECRET = 'ce4c6c4f007cf10baad3f600da16aa8e';
-const String WECHAT_MINIAPPID = 'gh_wxd930ea5d5a258f4f';
+const String WECHAT_APPID = 'your wechat appId';
+const String WECHAT_UNIVERSAL_LINK = 'your wechat universal link'; // iOS 请配置
+const String WECHAT_APPSECRET = 'your wechat appSecret';
+const String WECHAT_MINIAPPID = 'your wechat miniAppId';
 
 class MyApp extends StatelessWidget {
   @override
@@ -97,7 +97,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('WechatKit Demo'),
+        title: const Text('Wechat Kit Demo'),
       ),
       body: ListView(
         children: <Widget>[
@@ -121,12 +121,11 @@ class _HomeState extends State<Home> {
           ListTile(
             title: const Text('扫码登录'),
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute<dynamic>(
+              Navigator.of(context).push<void>(MaterialPageRoute<dynamic>(
                 builder: (BuildContext context) => Qrauth(
                   wechat: _wechat,
                 ),
               ));
-              ;
             },
           ),
           ListTile(
@@ -266,7 +265,7 @@ class _HomeState extends State<Home> {
             onTap: () {
               _wechat.launchMiniProgram(
                 userName: WECHAT_MINIAPPID,
-                path: "page/page/index?uid=123",
+                path: 'page/page/index?uid=123',
                 type: WechatMiniProgram.preview,
               );
             },
@@ -277,7 +276,7 @@ class _HomeState extends State<Home> {
   }
 
   void _showTips(String title, String content) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
