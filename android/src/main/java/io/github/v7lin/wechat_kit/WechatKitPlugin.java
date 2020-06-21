@@ -5,10 +5,6 @@ import androidx.annotation.NonNull;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
-import io.flutter.plugin.common.MethodCall;
-import io.flutter.plugin.common.MethodChannel;
-import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
-import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 /** WechatKitPlugin */
@@ -37,10 +33,10 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware {
   }
 
   @Override
-  public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
-    wechatKit.setApplicationContext(flutterPluginBinding.getApplicationContext());
+  public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
+    wechatKit.setApplicationContext(binding.getApplicationContext());
     wechatKit.setActivity(null);
-    wechatKit.startListening(flutterPluginBinding.getBinaryMessenger());
+    wechatKit.startListening(binding.getBinaryMessenger());
   }
 
   @Override

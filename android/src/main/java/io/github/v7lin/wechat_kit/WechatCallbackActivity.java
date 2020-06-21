@@ -10,7 +10,6 @@ public class WechatCallbackActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         handleIntent(getIntent());
-        finish();
     }
 
     @Override
@@ -18,10 +17,10 @@ public class WechatCallbackActivity extends Activity {
         super.onNewIntent(intent);
         setIntent(intent);
         handleIntent(intent);
-        finish();
     }
 
     private void handleIntent(Intent intent) {
         WechatReceiver.sendWechatResp(this, intent);
+        finish();
     }
 }
