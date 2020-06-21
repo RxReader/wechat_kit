@@ -576,7 +576,7 @@ class Wechat {
         (videoLowBandUrl != null &&
             videoLowBandUrl.isNotEmpty &&
             videoLowBandUrl.length <= 10 * 1024));
-    return _channel.invokeMethod(
+    return _channel.invokeMethod<void>(
       _METHOD_SHAREVIDEO,
       <String, dynamic>{
         _ARGUMENT_KEY_SCENE: scene, // Scene
@@ -608,7 +608,7 @@ class Wechat {
     assert(webpageUrl != null &&
         webpageUrl.isNotEmpty &&
         webpageUrl.length <= 10 * 1024);
-    return _channel.invokeMethod(
+    return _channel.invokeMethod<void>(
       _METHOD_SHAREWEBPAGE,
       <String, dynamic>{
         _ARGUMENT_KEY_SCENE: scene, // Scene
@@ -642,7 +642,7 @@ class Wechat {
     assert(webpageUrl != null && webpageUrl.isNotEmpty);
     assert(userName != null && userName.isNotEmpty);
     assert(hdImageData == null || hdImageData.lengthInBytes <= 128 * 1024);
-    return _channel.invokeMethod(
+    return _channel.invokeMethod<void>(
       _METHOD_SHAREMINIPROGRAM,
       <String, dynamic>{
         _ARGUMENT_KEY_SCENE: scene, // Scene
@@ -671,7 +671,7 @@ class Wechat {
   }) {
     assert((templateId?.isNotEmpty ?? false) && templateId.length <= 1024);
     assert(reserved == null || reserved.length <= 1024);
-    return _channel.invokeMethod(
+    return _channel.invokeMethod<void>(
       _METHOD_SUBSCRIBEMSG,
       <String, dynamic>{
         _ARGUMENT_KEY_SCENE: scene,
@@ -688,7 +688,7 @@ class Wechat {
     int type = WechatMiniProgram.release,
   }) {
     assert(userName?.isNotEmpty ?? false);
-    return _channel.invokeMethod(
+    return _channel.invokeMethod<void>(
       _METHOD_LAUNCHMINIPROGRAM,
       <String, dynamic>{
         _ARGUMENT_KEY_USERNAME: userName,
@@ -716,7 +716,7 @@ class Wechat {
     assert(nonceStr?.isNotEmpty ?? false);
     assert(timeStamp?.isNotEmpty ?? false);
     assert(sign?.isNotEmpty ?? false);
-    return _channel.invokeMethod(
+    return _channel.invokeMethod<void>(
       _METHOD_PAY,
       <String, dynamic>{
         _ARGUMENT_KEY_APPID: appId,
