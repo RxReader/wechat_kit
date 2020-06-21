@@ -200,13 +200,19 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
                 map.put(ARGUMENT_KEY_RESULT_STATE, authResp.state);
                 map.put(ARGUMENT_KEY_RESULT_LANG, authResp.lang);
                 map.put(ARGUMENT_KEY_RESULT_COUNTRY, authResp.country);
-                channel.invokeMethod(METHOD_ONAUTHRESP, map);
+                if (channel != null) {
+                    channel.invokeMethod(METHOD_ONAUTHRESP, map);
+                }
             } else if (resp instanceof OpenWebview.Resp) {
                 // 浏览器
-                channel.invokeMethod(METHOD_ONOPENURLRESP, map);
+                if (channel != null) {
+                    channel.invokeMethod(METHOD_ONOPENURLRESP, map);
+                }
             } else if (resp instanceof SendMessageToWX.Resp) {
                 // 分享
-                channel.invokeMethod(METHOD_ONSHAREMSGRESP, map);
+                if (channel != null) {
+                    channel.invokeMethod(METHOD_ONSHAREMSGRESP, map);
+                }
             } else if (resp instanceof SubscribeMessage.Resp) {
                 // 一次性订阅消息
                 SubscribeMessage.Resp subscribeMsgResp = (SubscribeMessage.Resp) resp;
@@ -215,24 +221,32 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
                 map.put(ARGUMENT_KEY_RESULT_ACTION, subscribeMsgResp.action);
                 map.put(ARGUMENT_KEY_RESULT_RESERVED, subscribeMsgResp.reserved);
                 map.put(ARGUMENT_KEY_RESULT_OPENID, subscribeMsgResp.openId);
-                channel.invokeMethod(METHOD_ONSUBSCRIBEMSGRESP, map);
+                if (channel != null) {
+                    channel.invokeMethod(METHOD_ONSUBSCRIBEMSGRESP, map);
+                }
             } else if (resp instanceof WXLaunchMiniProgram.Resp) {
                 // 打开小程序
                 WXLaunchMiniProgram.Resp launchMiniProgramResp = (WXLaunchMiniProgram.Resp) resp;
                 map.put(ARGUMENT_KEY_RESULT_EXTMSG, launchMiniProgramResp.extMsg);
-                channel.invokeMethod(METHOD_ONLAUNCHMINIPROGRAMRESP, map);
+                if (channel != null) {
+                    channel.invokeMethod(METHOD_ONLAUNCHMINIPROGRAMRESP, map);
+                }
             } else if (resp instanceof PayResp) {
                 // 支付
                 PayResp payResp = (PayResp) resp;
                 map.put(ARGUMENT_KEY_RESULT_RETURNKEY, payResp.returnKey);
-                channel.invokeMethod(METHOD_ONPAYRESP, map);
+                if (channel != null) {
+                    channel.invokeMethod(METHOD_ONPAYRESP, map);
+                }
             }
         }
     };
 
     public void stopListening() {
-        channel.setMethodCallHandler(null);
-        channel = null;
+        if (channel != null) {
+            channel.setMethodCallHandler(null);
+            channel = null;
+        }
         if (register.compareAndSet(true, false)) {
             WechatReceiver.unregisterReceiver(applicationContext, wechatReceiver);
         }
@@ -247,11 +261,11 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
         if (METHOD_REGISTERAPP.equals(call.method)) {
             registerApp(call, result);
         } else if (METHOD_ISINSTALLED.equals(call.method)) {
-            result.success(iwxapi.isWXAppInstalled());
+            result.success(iwxapi != null && iwxapi.isWXAppInstalled());
         } else if (METHOD_ISSUPPORTAPI.equals(call.method)) {
-            result.success(iwxapi.getWXAppSupportAPI() >= Build.OPENID_SUPPORTED_SDK_INT);
+            result.success(iwxapi != null && iwxapi.getWXAppSupportAPI() >= Build.OPENID_SUPPORTED_SDK_INT);
         } else if (METHOD_OPENWECHAT.equals(call.method)) {
-            result.success(iwxapi.openWXApp());
+            result.success(iwxapi != null && iwxapi.openWXApp());
         } else if (METHOD_AUTH.equals(call.method)) {
             handleAuthCall(call, result);
         } else if (METHOD_STARTQRAUTH.equals(call.method) ||
@@ -293,7 +307,9 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
         SendAuth.Req req = new SendAuth.Req();
         req.scope = call.argument(ARGUMENT_KEY_SCOPE);
         req.state = call.argument(ARGUMENT_KEY_STATE);
-        iwxapi.sendReq(req);
+        if (iwxapi != null) {
+            iwxapi.sendReq(req);
+        }
         result.success(null);
     }
 
@@ -316,12 +332,16 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
         public void onAuthGotQrcode(@Deprecated String qrcodeImgPath, byte[] imgBuf) {
             Map<String, Object> map = new HashMap<>();
             map.put(ARGUMENT_KEY_RESULT_IMAGEDATA, imgBuf);
-            channel.invokeMethod(METHOD_ONAUTHGOTQRCODE, map);
+            if (channel != null) {
+                channel.invokeMethod(METHOD_ONAUTHGOTQRCODE, map);
+            }
         }
 
         @Override
         public void onQrcodeScanned() {
-            channel.invokeMethod(METHOD_ONAUTHQRCODESCANNED, null);
+            if (channel != null) {
+                channel.invokeMethod(METHOD_ONAUTHQRCODESCANNED, null);
+            }
         }
 
         @Override
@@ -329,20 +349,26 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
             Map<String, Object> map = new HashMap<>();
             map.put(ARGUMENT_KEY_RESULT_ERRORCODE, errCode.getCode());
             map.put(ARGUMENT_KEY_RESULT_AUTHCODE, authCode);
-            channel.invokeMethod(METHOD_ONAUTHFINISH, map);
+            if (channel != null) {
+                channel.invokeMethod(METHOD_ONAUTHFINISH, map);
+            }
         }
     };
 
     private void handleOpenUrlCall(MethodCall call, MethodChannel.Result result) {
         OpenWebview.Req req = new OpenWebview.Req();
         req.url = call.argument(ARGUMENT_KEY_URL);
-        iwxapi.sendReq(req);
+        if (iwxapi != null) {
+            iwxapi.sendReq(req);
+        }
         result.success(null);
     }
 
     private void handleOpenRankListCall(MethodCall call, MethodChannel.Result result) {
         OpenRankList.Req req = new OpenRankList.Req();
-        iwxapi.sendReq(req);
+        if (iwxapi != null) {
+            iwxapi.sendReq(req);
+        }
         result.success(null);
     }
 
@@ -357,7 +383,9 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
         object.text = text;
         message.mediaObject = object;
         req.message = message;
-        iwxapi.sendReq(req);
+        if (iwxapi != null) {
+            iwxapi.sendReq(req);
+        }
         result.success(null);
     }
 
@@ -416,7 +444,9 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
             message.mediaObject = object;
         }
         req.message = message;
-        iwxapi.sendReq(req);
+        if (iwxapi != null) {
+            iwxapi.sendReq(req);
+        }
         result.success(null);
     }
 
@@ -425,7 +455,9 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
         req.scene = call.argument(ARGUMENT_KEY_SCENE);
         req.templateID = call.argument(ARGUMENT_KEY_TEMPLATEID);
         req.reserved = call.argument(ARGUMENT_KEY_RESERVED);
-        iwxapi.sendReq(req);
+        if (iwxapi != null) {
+            iwxapi.sendReq(req);
+        }
         result.success(null);
     }
 
@@ -434,7 +466,9 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
         req.userName = call.argument(ARGUMENT_KEY_USERNAME);
         req.path = call.argument(ARGUMENT_KEY_PATH);
         req.miniprogramType = call.argument(ARGUMENT_KEY_TYPE);
-        iwxapi.sendReq(req);
+        if (iwxapi != null) {
+            iwxapi.sendReq(req);
+        }
         result.success(null);
     }
 
@@ -447,7 +481,9 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
         req.timeStamp = call.argument(ARGUMENT_KEY_TIMESTAMP);
         req.packageValue = call.argument(ARGUMENT_KEY_PACKAGE);
         req.sign = call.argument(ARGUMENT_KEY_SIGN);
-        iwxapi.sendReq(req);
+        if (iwxapi != null) {
+            iwxapi.sendReq(req);
+        }
         result.success(null);
     }
 
