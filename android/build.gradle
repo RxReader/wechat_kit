@@ -37,10 +37,22 @@ android {
     lintOptions {
         disable 'InvalidPackage'
     }
+
+    flavorDimensions 'vendor'
+
+    productFlavors {
+        vendor {
+            dimension 'vendor'
+
+            // library 混淆 -> 随 library 引用，自动添加到 apk 打包混淆
+            consumerProguardFiles 'consumer-vendor-rules.pro'
+        }
+    }
 }
 
 dependencies {
     implementation 'androidx.annotation:annotation:1.0.0'
-    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.6.4'
+
+    vendorImplementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.6.4'
 }
 
