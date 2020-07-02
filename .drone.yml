@@ -58,7 +58,7 @@ steps:
   - name: pub-cache
     path: /opt/flutter/.pub-cache
   commands:
-  - flutter test
+  - flutter test --coverage
 #  - cd example/
 #  - flutter test
 
@@ -73,17 +73,17 @@ steps:
   - cd example/
   - flutter build apk
 
-#- name: coverage
-#  image: plugins/codecov:2.0.3
-#  settings:
-#    token:
-#      from_secret: CODECOV_TOKEN
-#    files:
-#    - ./coverage/lcov.info
-#  when:
-#    event:
-#      exclude:
-#      - pull_request
+- name: coverage
+  image: plugins/codecov:2.0.3
+  settings:
+    token:
+      from_secret: CODECOV_TOKEN
+    files:
+    - ./coverage/lcov.info
+  when:
+    event:
+      exclude:
+      - pull_request
 
 - name: publish-check
   image: v7lin/flutter:1.17.3-stable
