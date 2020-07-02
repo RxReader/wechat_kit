@@ -18,6 +18,7 @@ A powerful Flutter plugin allowing developers to auth/share/pay with natvie Andr
   s.dependency 'Flutter'
   s.platform = :ios, '8.0'
 
+  # v1.8.7.1
   s.static_framework = true
   s.subspec 'vendor' do |sp|
     sp.source_files = 'Libraries/**/*.h'
