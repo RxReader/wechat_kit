@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'wechat_kit'
-  s.version          = '1.1.0'
+  s.version          = '1.1.1'
   s.summary          = 'A powerful Flutter plugin allowing developers to auth/share/pay with natvie Android & iOS Wechat SDKs.'
   s.description      = <<-DESC
 A powerful Flutter plugin allowing developers to auth/share/pay with natvie Android & iOS Wechat SDKs.
@@ -25,6 +25,7 @@ A powerful Flutter plugin allowing developers to auth/share/pay with natvie Andr
     sp.public_header_files = 'Libraries/**/*.h'
     sp.vendored_libraries = 'Libraries/**/*.a'
     sp.frameworks = 'CoreGraphics', 'Security', 'WebKit'
+    sp.libraries = ["c++"]
     sp.pod_target_xcconfig = {
         'OTHER_LDFLAGS' => '$(inherited) -ObjC -all_load'
     }
