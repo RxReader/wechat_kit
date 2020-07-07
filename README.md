@@ -65,6 +65,8 @@ keytool -list -v -keystore example/android/app/infos/dev.jks -storepass 123456 2
 
 ## ios
 
+> 暂不支持 SceneDelegate 见文档[微信-iOS接入指南](https://developers.weixin.qq.com/doc/oplatform/Mobile_App/Access_Guide/iOS.html)
+
 ```
 在Xcode中，选择你的工程设置项，选中“TARGETS”一栏，在“info”标签栏的“URL type“添加“URL scheme”为你所注册的应用程序id
 

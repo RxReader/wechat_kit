@@ -374,8 +374,6 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
     return [WXApi handleOpenUniversalLink:userActivity delegate:self];
 }
 
-#pragma mark - SceneDelegate
-
 #pragma mark - WXApiDelegate
 
 - (void)onReq:(BaseReq *)req {
