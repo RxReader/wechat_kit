@@ -78,18 +78,14 @@ class _HomeState extends State<Home> {
 
   @override
   void dispose() {
-    if (_auth != null) {
-      _auth.cancel();
-    }
-    if (_share != null) {
-      _share.cancel();
-    }
-    if (_pay != null) {
-      _pay.cancel();
-    }
-    if (_miniProgram != null) {
-      _miniProgram.cancel();
-    }
+    _auth?.cancel();
+    _auth = null;
+    _share?.cancel();
+    _share = null;
+    _pay?.cancel();
+    _pay = null;
+    _miniProgram?.cancel();
+    _miniProgram = null;
     super.dispose();
   }
 
@@ -334,15 +330,12 @@ class _QrauthState extends State<Qrauth> {
 
   @override
   void dispose() {
-    if (_authGotQrcode != null) {
-      _authGotQrcode.cancel();
-    }
-    if (_authQrcodeScanned != null) {
-      _authQrcodeScanned.cancel();
-    }
-    if (_authFinish != null) {
-      _authFinish.cancel();
-    }
+    _authGotQrcode?.cancel();
+    _authGotQrcode = null;
+    _authQrcodeScanned?.cancel();
+    _authQrcodeScanned = null;
+    _authFinish?.cancel();
+    _authFinish = null;
     super.dispose();
   }
 

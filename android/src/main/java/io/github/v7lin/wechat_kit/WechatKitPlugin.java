@@ -41,9 +41,9 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware {
 
   @Override
   public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-    wechatKit.setApplicationContext(null);
-    wechatKit.setActivity(null);
     wechatKit.stopListening();
+    wechatKit.setActivity(null);
+    wechatKit.setApplicationContext(null);
   }
 
   // --- ActivityAware
