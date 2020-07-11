@@ -25,7 +25,7 @@ A powerful Flutter plugin allowing developers to auth/share/pay with natvie Andr
     sp.public_header_files = 'Libraries/**/*.h'
     sp.vendored_libraries = 'Libraries/**/*.a'
     sp.frameworks = 'CoreGraphics', 'Security', 'WebKit'
-    sp.libraries = ["c++"]
+    sp.libraries = 'c++', 'z', 'sqlite3.0'
     sp.pod_target_xcconfig = {
         'OTHER_LDFLAGS' => '$(inherited) -ObjC -all_load'
     }
