@@ -374,6 +374,11 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
     return [WXApi handleOpenUniversalLink:userActivity delegate:self];
 }
 
+- (void)scene:(UIScene *)scene continueUserActivity:(NSUserActivity *)userActivity  API_AVAILABLE(ios(13.0)){
+    // 这玩意儿会被调用？
+    [WXApi handleOpenUniversalLink:userActivity delegate:self];
+}
+
 #pragma mark - WXApiDelegate
 
 - (void)onReq:(BaseReq *)req {

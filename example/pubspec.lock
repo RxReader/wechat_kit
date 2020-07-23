@@ -281,7 +281,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "1.1.1"
+    version: "1.1.2"
   xdg_directories:
     dependency: transitive
     description:

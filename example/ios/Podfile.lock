@@ -6,10 +6,10 @@ PODS:
     - Flutter
   - path_provider_macos (0.0.1):
     - Flutter
-  - wechat_kit (1.1.1):
+  - wechat_kit (1.1.2):
     - Flutter
-    - wechat_kit/vendor (= 1.1.1)
-  - wechat_kit/vendor (1.1.1):
+    - wechat_kit/vendor (= 1.1.2)
+  - wechat_kit/vendor (1.1.2):
     - Flutter
 
 DEPENDENCIES:
@@ -36,8 +36,8 @@ SPEC CHECKSUMS:
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   path_provider_linux: 4d630dc393e1f20364f3e3b4a2ff41d9674a84e4
   path_provider_macos: f760a3c5b04357c380e2fddb6f9db6f3015897e0
-  wechat_kit: cd568ef5bf76791fdc70c6bcb9f917acfb850e0e
+  wechat_kit: 07eb4f9d9b1da6a95696b1904084a9031cacd78d
 
 PODFILE CHECKSUM: f32fb4e7c14f8b3ca19a369d7be425dd9241af27
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.3

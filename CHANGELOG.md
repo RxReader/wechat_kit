@@ -1,3 +1,7 @@
+## 1.1.2
+
+* [issues#45](https://github.com/rxreader/wechat_kit/issues/45) 更新到1.1.0版本后，微信支付完成后无法获得回调
+
 ## 1.1.1
 
 * 修正 iOS 部分
