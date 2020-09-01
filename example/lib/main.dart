@@ -195,6 +195,37 @@ class _HomeState extends State<Home> {
             },
           ),
           ListTile(
+            title: const Text('文件分享'),
+            onTap: () async {
+              OkHttpClient client = OkHttpClientBuilder().build();
+              Response resp = await client
+                  .newCall(RequestBuilder()
+                      .get()
+                      .url(HttpUrl.parse(
+                          'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'))
+                      .build())
+                  .enqueue();
+              if (resp.isSuccessful()) {
+                Directory saveDir = Platform.isAndroid
+                    ? await path_provider.getExternalStorageDirectory()
+                    : await path_provider.getApplicationDocumentsDirectory();
+                File saveFile = File(path.join(saveDir.path, 'demo.pdf'));
+                if (!saveFile.existsSync()) {
+                  saveFile.createSync(recursive: true);
+                  saveFile.writeAsBytesSync(
+                    await resp.body().bytes(),
+                    flush: true,
+                  );
+                }
+                await _wechat.shareFile(
+                  scene: WechatScene.SESSION,
+                  title: '测试文件',
+                  fileUri: Uri.file(saveFile.path),
+                );
+              }
+            },
+          ),
+          ListTile(
             title: const Text('Emoji分享'),
             onTap: () async {
               OkHttpClient client = OkHttpClientBuilder().build();
