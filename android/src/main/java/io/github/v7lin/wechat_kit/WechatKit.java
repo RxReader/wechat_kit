@@ -102,6 +102,7 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
     private static final String ARGUMENT_KEY_EMOJIURI = "emojiUri";
     private static final String ARGUMENT_KEY_FILEDATA = "fileData";
     private static final String ARGUMENT_KEY_FILEURI = "fileUri";
+    private static final String ARGUMENT_KEY_FILEEXTENSION = "fileExtension";
     private static final String ARGUMENT_KEY_MUSICURL = "musicUrl";
     private static final String ARGUMENT_KEY_MUSICDATAURL = "musicDataUrl";
     private static final String ARGUMENT_KEY_MUSICLOWBANDURL = "musicLowBandUrl";
@@ -419,6 +420,7 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
                 String fileUri = call.argument(ARGUMENT_KEY_FILEURI);
                 object.filePath = Uri.parse(fileUri).getPath();
             }
+//            String fileExtension = call.argument(ARGUMENT_KEY_FILEEXTENSION);
             message.mediaObject = object;
         } else if (METHOD_SHAREEMOJI.equals(call.method)) {
             WXEmojiObject object = new WXEmojiObject();

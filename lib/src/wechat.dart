@@ -78,6 +78,7 @@ class Wechat {
   static const String _ARGUMENT_KEY_IMAGEURI = 'imageUri';
   static const String _ARGUMENT_KEY_FILEDATA = 'fileData';
   static const String _ARGUMENT_KEY_FILEURI = 'fileUri';
+  static const String _ARGUMENT_KEY_FILEEXTENSION = 'fileExtension';
   static const String _ARGUMENT_KEY_EMOJIDATA = 'emojiData';
   static const String _ARGUMENT_KEY_EMOJIURI = 'emojiUri';
   static const String _ARGUMENT_KEY_MUSICURL = 'musicUrl';
@@ -487,6 +488,7 @@ class Wechat {
     Uint8List thumbData,
     Uint8List fileData,
     Uri fileUri,
+    String fileExtension,
   }) {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
@@ -496,6 +498,7 @@ class Wechat {
             fileUri.isScheme(_SCHEME_FILE) &&
             fileUri.toFilePath().length <= 10 * 1024 &&
             File.fromUri(fileUri).lengthSync() <= 10 * 1024 * 1024));
+    assert(Platform.isAndroid || (fileExtension?.isNotEmpty ?? false));
     return _channel.invokeMethod<void>(
       _METHOD_SHAREFILE,
       <String, dynamic>{
@@ -505,6 +508,7 @@ class Wechat {
         if (thumbData != null) _ARGUMENT_KEY_THUMBDATA: thumbData,
         if (fileData != null) _ARGUMENT_KEY_FILEDATA: fileData,
         if (fileUri != null) _ARGUMENT_KEY_FILEURI: fileUri.toString(),
+        if (fileExtension != null) _ARGUMENT_KEY_FILEEXTENSION: fileExtension,
       },
     );
   }

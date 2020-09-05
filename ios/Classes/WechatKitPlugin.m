@@ -31,6 +31,7 @@ static NSString *const METHOD_OPENURL = @"openUrl";
 static NSString *const METHOD_OPENRANKLIST = @"openRankList";
 static NSString *const METHOD_SHARETEXT = @"shareText";
 static NSString *const METHOD_SHAREIMAGE = @"shareImage";
+static NSString *const METHOD_SHAREFILE = @"shareFile";
 static NSString *const METHOD_SHAREEMOJI = @"shareEmoji";
 static NSString *const METHOD_SHAREMUSIC = @"shareMusic";
 static NSString *const METHOD_SHAREVIDEO = @"shareVideo";
@@ -67,6 +68,9 @@ static NSString *const ARGUMENT_KEY_DESCRIPTION = @"description";
 static NSString *const ARGUMENT_KEY_THUMBDATA = @"thumbData";
 static NSString *const ARGUMENT_KEY_IMAGEDATA = @"imageData";
 static NSString *const ARGUMENT_KEY_IMAGEURI = @"imageUri";
+static NSString *const ARGUMENT_KEY_FILEDATA = @"fileData";
+static NSString *const ARGUMENT_KEY_FILEURI = @"fileUri";
+static NSString *const ARGUMENT_KEY_FILEEXTENSION = @"fileExtension";
 static NSString *const ARGUMENT_KEY_EMOJIDATA = @"emojiData";
 static NSString *const ARGUMENT_KEY_EMOJIURI = @"emojiUri";
 static NSString *const ARGUMENT_KEY_MUSICURL = @"musicUrl";
@@ -141,6 +145,7 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
     } else if ([METHOD_SHARETEXT isEqualToString:call.method]) {
         [self handleShareTextCall:call result:result];
     } else if ([METHOD_SHAREIMAGE isEqualToString:call.method] ||
+               [METHOD_SHAREFILE isEqualToString:call.method] ||
                [METHOD_SHAREEMOJI isEqualToString:call.method] ||
                [METHOD_SHAREMUSIC isEqualToString:call.method] ||
                [METHOD_SHAREVIDEO isEqualToString:call.method] ||
@@ -248,6 +253,18 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
             NSURL *imageUrl = [NSURL URLWithString:imageUri];
             mediaObject.imageData = [NSData dataWithContentsOfFile:imageUrl.path];
         }
+        message.mediaObject = mediaObject;
+    } else if ([METHOD_SHAREFILE isEqualToString:call.method]) {
+        WXFileObject *mediaObject = [WXFileObject object];
+        FlutterStandardTypedData *fileData = call.arguments[ARGUMENT_KEY_FILEDATA];
+        if (fileData != nil) {
+            mediaObject.fileData = fileData.data;
+        } else {
+            NSString *fileUri = call.arguments[ARGUMENT_KEY_FILEURI];
+            NSURL *fileUrl = [NSURL URLWithString:fileUri];
+            mediaObject.fileData = [NSData dataWithContentsOfFile:fileUrl.path];
+        }
+        mediaObject.fileExtension = call.arguments[ARGUMENT_KEY_FILEEXTENSION];
         message.mediaObject = mediaObject;
     } else if ([METHOD_SHAREEMOJI isEqualToString:call.method]) {
         WXEmoticonObject *mediaObject = [WXEmoticonObject object];
@@ -372,11 +389,6 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
     continueUserActivity:(NSUserActivity *)userActivity
       restorationHandler:(void (^)(NSArray *_Nonnull))restorationHandler {
     return [WXApi handleOpenUniversalLink:userActivity delegate:self];
-}
-
-- (void)scene:(UIScene *)scene continueUserActivity:(NSUserActivity *)userActivity  API_AVAILABLE(ios(13.0)){
-    // 这玩意儿会被调用？
-    [WXApi handleOpenUniversalLink:userActivity delegate:self];
 }
 
 #pragma mark - WXApiDelegate

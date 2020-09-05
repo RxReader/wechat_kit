@@ -221,6 +221,7 @@ class _HomeState extends State<Home> {
                   scene: WechatScene.SESSION,
                   title: '测试文件',
                   fileUri: Uri.file(saveFile.path),
+                  fileExtension: path.extension(saveFile.path),
                 );
               }
             },
