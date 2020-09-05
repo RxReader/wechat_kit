@@ -39,6 +39,7 @@ class Wechat {
   static const String _METHOD_OPENRANKLIST = 'openRankList';
   static const String _METHOD_SHARETEXT = 'shareText';
   static const String _METHOD_SHAREIMAGE = 'shareImage';
+  static const String _METHOD_SHAREFILE = 'shareFile';
   static const String _METHOD_SHAREEMOJI = 'shareEmoji';
   static const String _METHOD_SHAREMUSIC = 'shareMusic';
   static const String _METHOD_SHAREVIDEO = 'shareVideo';
@@ -75,6 +76,9 @@ class Wechat {
   static const String _ARGUMENT_KEY_THUMBDATA = 'thumbData';
   static const String _ARGUMENT_KEY_IMAGEDATA = 'imageData';
   static const String _ARGUMENT_KEY_IMAGEURI = 'imageUri';
+  static const String _ARGUMENT_KEY_FILEDATA = 'fileData';
+  static const String _ARGUMENT_KEY_FILEURI = 'fileUri';
+  static const String _ARGUMENT_KEY_FILEEXTENSION = 'fileExtension';
   static const String _ARGUMENT_KEY_EMOJIDATA = 'emojiData';
   static const String _ARGUMENT_KEY_EMOJIURI = 'emojiUri';
   static const String _ARGUMENT_KEY_MUSICURL = 'musicUrl';
@@ -261,8 +265,7 @@ class Wechat {
     assert(scope?.isNotEmpty ?? false);
     return _channel.invokeMethod<void>(_METHOD_AUTH, <String, dynamic>{
       _ARGUMENT_KEY_SCOPE: scope.join(','), // Scope
-      if (state != null)
-        _ARGUMENT_KEY_STATE: state,
+      if (state != null) _ARGUMENT_KEY_STATE: state,
     });
   }
 
@@ -468,16 +471,44 @@ class Wechat {
       _METHOD_SHAREIMAGE,
       <String, dynamic>{
         _ARGUMENT_KEY_SCENE: scene, // Scene
-        if (title != null)
-          _ARGUMENT_KEY_TITLE: title,
-        if (description != null)
-          _ARGUMENT_KEY_DESCRIPTION: description,
-        if (thumbData != null)
-          _ARGUMENT_KEY_THUMBDATA: thumbData,
-        if (imageData != null)
-          _ARGUMENT_KEY_IMAGEDATA: imageData,
-        if (imageUri != null)
-          _ARGUMENT_KEY_IMAGEURI: imageUri.toString(),
+        if (title != null) _ARGUMENT_KEY_TITLE: title,
+        if (description != null) _ARGUMENT_KEY_DESCRIPTION: description,
+        if (thumbData != null) _ARGUMENT_KEY_THUMBDATA: thumbData,
+        if (imageData != null) _ARGUMENT_KEY_IMAGEDATA: imageData,
+        if (imageUri != null) _ARGUMENT_KEY_IMAGEURI: imageUri.toString(),
+      },
+    );
+  }
+
+  /// 分享 - 文件
+  Future<void> shareFile({
+    @required int scene,
+    String title,
+    String description,
+    Uint8List thumbData,
+    Uint8List fileData,
+    Uri fileUri,
+    String fileExtension,
+  }) {
+    assert(title == null || title.length <= 512);
+    assert(description == null || description.length <= 1024);
+    assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
+    assert((fileData != null && fileData.lengthInBytes <= 10 * 1024 * 1024) ||
+        (fileUri != null &&
+            fileUri.isScheme(_SCHEME_FILE) &&
+            fileUri.toFilePath().length <= 10 * 1024 &&
+            File.fromUri(fileUri).lengthSync() <= 10 * 1024 * 1024));
+    assert(Platform.isAndroid || (fileExtension?.isNotEmpty ?? false));
+    return _channel.invokeMethod<void>(
+      _METHOD_SHAREFILE,
+      <String, dynamic>{
+        _ARGUMENT_KEY_SCENE: scene, // Scene
+        if (title != null) _ARGUMENT_KEY_TITLE: title,
+        if (description != null) _ARGUMENT_KEY_DESCRIPTION: description,
+        if (thumbData != null) _ARGUMENT_KEY_THUMBDATA: thumbData,
+        if (fileData != null) _ARGUMENT_KEY_FILEDATA: fileData,
+        if (fileUri != null) _ARGUMENT_KEY_FILEURI: fileUri.toString(),
+        if (fileExtension != null) _ARGUMENT_KEY_FILEEXTENSION: fileExtension,
       },
     );
   }
@@ -503,15 +534,11 @@ class Wechat {
       _METHOD_SHAREEMOJI,
       <String, dynamic>{
         _ARGUMENT_KEY_SCENE: scene, // Scene
-        if (title != null)
-          _ARGUMENT_KEY_TITLE: title,
-        if (description != null)
-          _ARGUMENT_KEY_DESCRIPTION: description,
+        if (title != null) _ARGUMENT_KEY_TITLE: title,
+        if (description != null) _ARGUMENT_KEY_DESCRIPTION: description,
         _ARGUMENT_KEY_THUMBDATA: thumbData,
-        if (emojiData != null)
-          _ARGUMENT_KEY_EMOJIDATA: emojiData,
-        if (emojiUri != null)
-          _ARGUMENT_KEY_EMOJIURI: emojiUri.toString(),
+        if (emojiData != null) _ARGUMENT_KEY_EMOJIDATA: emojiData,
+        if (emojiUri != null) _ARGUMENT_KEY_EMOJIURI: emojiUri.toString(),
       },
     );
   }
@@ -540,16 +567,11 @@ class Wechat {
       _METHOD_SHAREMUSIC,
       <String, dynamic>{
         _ARGUMENT_KEY_SCENE: scene, // Scene
-        if (title != null)
-          _ARGUMENT_KEY_TITLE: title,
-        if (description != null)
-          _ARGUMENT_KEY_DESCRIPTION: description,
-        if (thumbData != null)
-          _ARGUMENT_KEY_THUMBDATA: thumbData,
-        if (musicUrl != null)
-          _ARGUMENT_KEY_MUSICURL: musicUrl,
-        if (musicDataUrl != null)
-          _ARGUMENT_KEY_MUSICDATAURL: musicDataUrl,
+        if (title != null) _ARGUMENT_KEY_TITLE: title,
+        if (description != null) _ARGUMENT_KEY_DESCRIPTION: description,
+        if (thumbData != null) _ARGUMENT_KEY_THUMBDATA: thumbData,
+        if (musicUrl != null) _ARGUMENT_KEY_MUSICURL: musicUrl,
+        if (musicDataUrl != null) _ARGUMENT_KEY_MUSICDATAURL: musicDataUrl,
         if (musicLowBandUrl != null)
           _ARGUMENT_KEY_MUSICLOWBANDURL: musicLowBandUrl,
         if (musicLowBandDataUrl != null)
@@ -580,14 +602,10 @@ class Wechat {
       _METHOD_SHAREVIDEO,
       <String, dynamic>{
         _ARGUMENT_KEY_SCENE: scene, // Scene
-        if (title != null)
-          _ARGUMENT_KEY_TITLE: title,
-        if (description != null)
-          _ARGUMENT_KEY_DESCRIPTION: description,
-        if (thumbData != null)
-          _ARGUMENT_KEY_THUMBDATA: thumbData,
-        if (videoUrl != null)
-          _ARGUMENT_KEY_VIDEOURL: videoUrl,
+        if (title != null) _ARGUMENT_KEY_TITLE: title,
+        if (description != null) _ARGUMENT_KEY_DESCRIPTION: description,
+        if (thumbData != null) _ARGUMENT_KEY_THUMBDATA: thumbData,
+        if (videoUrl != null) _ARGUMENT_KEY_VIDEOURL: videoUrl,
         if (videoLowBandUrl != null)
           _ARGUMENT_KEY_VIDEOLOWBANDURL: videoLowBandUrl,
       },
@@ -612,12 +630,9 @@ class Wechat {
       _METHOD_SHAREWEBPAGE,
       <String, dynamic>{
         _ARGUMENT_KEY_SCENE: scene, // Scene
-        if (title != null)
-          _ARGUMENT_KEY_TITLE: title,
-        if (description != null)
-          _ARGUMENT_KEY_DESCRIPTION: description,
-        if (thumbData != null)
-          _ARGUMENT_KEY_THUMBDATA: thumbData,
+        if (title != null) _ARGUMENT_KEY_TITLE: title,
+        if (description != null) _ARGUMENT_KEY_DESCRIPTION: description,
+        if (thumbData != null) _ARGUMENT_KEY_THUMBDATA: thumbData,
         _ARGUMENT_KEY_WEBPAGEURL: webpageUrl,
       },
     );
@@ -646,18 +661,13 @@ class Wechat {
       _METHOD_SHAREMINIPROGRAM,
       <String, dynamic>{
         _ARGUMENT_KEY_SCENE: scene, // Scene
-        if (title != null)
-          _ARGUMENT_KEY_TITLE: title,
-        if (description != null)
-          _ARGUMENT_KEY_DESCRIPTION: description,
-        if (thumbData != null)
-          _ARGUMENT_KEY_THUMBDATA: thumbData,
+        if (title != null) _ARGUMENT_KEY_TITLE: title,
+        if (description != null) _ARGUMENT_KEY_DESCRIPTION: description,
+        if (thumbData != null) _ARGUMENT_KEY_THUMBDATA: thumbData,
         _ARGUMENT_KEY_WEBPAGEURL: webpageUrl,
         _ARGUMENT_KEY_USERNAME: userName,
-        if (path != null)
-          _ARGUMENT_KEY_PATH: path,
-        if (hdImageData != null)
-          _ARGUMENT_KEY_HDIMAGEDATA: hdImageData,
+        if (path != null) _ARGUMENT_KEY_PATH: path,
+        if (hdImageData != null) _ARGUMENT_KEY_HDIMAGEDATA: hdImageData,
         _ARGUMENT_KEY_WITHSHARETICKET: withShareTicket,
       },
     );

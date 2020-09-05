@@ -22,6 +22,7 @@ import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXEmojiObject;
+import com.tencent.mm.opensdk.modelmsg.WXFileObject;
 import com.tencent.mm.opensdk.modelmsg.WXImageObject;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXMiniProgramObject;
@@ -60,6 +61,7 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
     private static final String METHOD_OPENRANKLIST = "openRankList";
     private static final String METHOD_SHARETEXT = "shareText";
     private static final String METHOD_SHAREIMAGE = "shareImage";
+    private static final String METHOD_SHAREFILE = "shareFile";
     private static final String METHOD_SHAREEMOJI = "shareEmoji";
     private static final String METHOD_SHAREMUSIC = "shareMusic";
     private static final String METHOD_SHAREVIDEO = "shareVideo";
@@ -98,6 +100,9 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
     private static final String ARGUMENT_KEY_IMAGEURI = "imageUri";
     private static final String ARGUMENT_KEY_EMOJIDATA = "emojiData";
     private static final String ARGUMENT_KEY_EMOJIURI = "emojiUri";
+    private static final String ARGUMENT_KEY_FILEDATA = "fileData";
+    private static final String ARGUMENT_KEY_FILEURI = "fileUri";
+    private static final String ARGUMENT_KEY_FILEEXTENSION = "fileExtension";
     private static final String ARGUMENT_KEY_MUSICURL = "musicUrl";
     private static final String ARGUMENT_KEY_MUSICDATAURL = "musicDataUrl";
     private static final String ARGUMENT_KEY_MUSICLOWBANDURL = "musicLowBandUrl";
@@ -278,6 +283,7 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
         } else if (METHOD_SHARETEXT.equals(call.method)) {
             handleShareTextCall(call, result);
         } else if (METHOD_SHAREIMAGE.equals(call.method) ||
+                METHOD_SHAREFILE.equals(call.method) ||
                 METHOD_SHAREEMOJI.equals(call.method) ||
                 METHOD_SHAREMUSIC.equals(call.method) ||
                 METHOD_SHAREVIDEO.equals(call.method) ||
@@ -405,6 +411,16 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
                 String imageUri = call.argument(ARGUMENT_KEY_IMAGEURI);
                 object.imagePath = Uri.parse(imageUri).getPath();
             }
+            message.mediaObject = object;
+        } else if (METHOD_SHAREFILE.equals(call.method)) {
+            WXFileObject object = new WXFileObject();
+            if (call.hasArgument(ARGUMENT_KEY_FILEDATA)) {
+                object.fileData = call.argument(ARGUMENT_KEY_FILEDATA);
+            } else if (call.hasArgument(ARGUMENT_KEY_FILEURI)) {
+                String fileUri = call.argument(ARGUMENT_KEY_FILEURI);
+                object.filePath = Uri.parse(fileUri).getPath();
+            }
+//            String fileExtension = call.argument(ARGUMENT_KEY_FILEEXTENSION);
             message.mediaObject = object;
         } else if (METHOD_SHAREEMOJI.equals(call.method)) {
             WXEmojiObject object = new WXEmojiObject();
