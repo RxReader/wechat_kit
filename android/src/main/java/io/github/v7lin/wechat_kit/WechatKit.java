@@ -61,12 +61,12 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
     private static final String METHOD_OPENRANKLIST = "openRankList";
     private static final String METHOD_SHARETEXT = "shareText";
     private static final String METHOD_SHAREIMAGE = "shareImage";
+    private static final String METHOD_SHAREFILE = "shareFile";
     private static final String METHOD_SHAREEMOJI = "shareEmoji";
     private static final String METHOD_SHAREMUSIC = "shareMusic";
     private static final String METHOD_SHAREVIDEO = "shareVideo";
     private static final String METHOD_SHAREWEBPAGE = "shareWebpage";
     private static final String METHOD_SHAREMINIPROGRAM = "shareMiniProgram";
-    private static final String METHOD_SHAREFILE = "shareFile";
     private static final String METHOD_SUBSCRIBEMSG = "subscribeMsg";
     private static final String METHOD_LAUNCHMINIPROGRAM = "launchMiniProgram";
     private static final String METHOD_PAY = "pay";
@@ -411,6 +411,15 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
                 object.imagePath = Uri.parse(imageUri).getPath();
             }
             message.mediaObject = object;
+        } else if (METHOD_SHAREFILE.equals(call.method)) {
+            WXFileObject object = new WXFileObject();
+            if (call.hasArgument(ARGUMENT_KEY_FILEDATA)) {
+                object.fileData = call.argument(ARGUMENT_KEY_FILEDATA);
+            } else if (call.hasArgument(ARGUMENT_KEY_FILEURI)) {
+                String fileUri = call.argument(ARGUMENT_KEY_FILEURI);
+                object.filePath = Uri.parse(fileUri).getPath();
+            }
+            message.mediaObject = object;
         } else if (METHOD_SHAREEMOJI.equals(call.method)) {
             WXEmojiObject object = new WXEmojiObject();
             if (call.hasArgument(ARGUMENT_KEY_EMOJIDATA)) {
@@ -445,15 +454,6 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
             byte[] hdImageData = call.argument(ARGUMENT_KEY_HDIMAGEDATA);
             if (hdImageData != null) {
                 message.thumbData = hdImageData;
-            }
-            message.mediaObject = object;
-        } else if (METHOD_SHAREFILE.equals(call.method)) {
-            WXFileObject object = new WXFileObject();
-            if (call.hasArgument(ARGUMENT_KEY_FILEDATA)) {
-                object.fileData = call.argument(ARGUMENT_KEY_FILEDATA);
-            } else if (call.hasArgument(ARGUMENT_KEY_FILEURI)) {
-                String fileUri = call.argument(ARGUMENT_KEY_FILEURI);
-                object.filePath = Uri.parse(fileUri).getPath();
             }
             message.mediaObject = object;
         }

@@ -39,11 +39,11 @@ class Wechat {
   static const String _METHOD_OPENRANKLIST = 'openRankList';
   static const String _METHOD_SHARETEXT = 'shareText';
   static const String _METHOD_SHAREIMAGE = 'shareImage';
+  static const String _METHOD_SHAREFILE = 'shareFile';
   static const String _METHOD_SHAREEMOJI = 'shareEmoji';
   static const String _METHOD_SHAREMUSIC = 'shareMusic';
   static const String _METHOD_SHAREVIDEO = 'shareVideo';
   static const String _METHOD_SHAREWEBPAGE = 'shareWebpage';
-  static const String _METHOD_SHAREFILE = 'shareFile';
   static const String _METHOD_SHAREMINIPROGRAM = 'shareMiniProgram';
   static const String _METHOD_SUBSCRIBEMSG = 'subscribeMsg';
   static const String _METHOD_LAUNCHMINIPROGRAM = 'launchMiniProgram';
@@ -491,11 +491,11 @@ class Wechat {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
-    assert((fileData != null && fileData.lengthInBytes <= 25 * 1024 * 1024) ||
+    assert((fileData != null && fileData.lengthInBytes <= 10 * 1024 * 1024) ||
         (fileUri != null &&
             fileUri.isScheme(_SCHEME_FILE) &&
             fileUri.toFilePath().length <= 10 * 1024 &&
-            File.fromUri(fileUri).lengthSync() <= 25 * 1024 * 1024));
+            File.fromUri(fileUri).lengthSync() <= 10 * 1024 * 1024));
     return _channel.invokeMethod<void>(
       _METHOD_SHAREFILE,
       <String, dynamic>{
