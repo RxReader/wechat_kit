@@ -7,10 +7,7 @@ part 'wechat_sdk_resp.g.dart';
   explicitToJson: true,
 )
 class WechatSdkResp {
-  WechatSdkResp({
-    this.errorCode,
-    this.errorMsg,
-  });
+  WechatSdkResp({this.errorCode, this.errorMsg, this.extData});
 
   factory WechatSdkResp.fromJson(Map<dynamic, dynamic> json) =>
       _$WechatSdkRespFromJson(json);
@@ -41,6 +38,9 @@ class WechatSdkResp {
 
   /// 错误提示字符串
   final String errorMsg;
+
+  /// 自定义参数
+  final String extData;
 
   bool isSuccessful() => errorCode == ERRORCODE_SUCCESS;
 

@@ -122,6 +122,7 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
     //    private static final String ARGUMENT_KEY_TIMESTAMP = "timestamp";
     private static final String ARGUMENT_KEY_PACKAGE = "package";
     private static final String ARGUMENT_KEY_SIGN = "sign";
+    private static final String ARGUMENT_KEY_EXT_DATA = "extData";
 
     private static final String ARGUMENT_KEY_RESULT_ERRORCODE = "errorCode";
     private static final String ARGUMENT_KEY_RESULT_ERRORMSG = "errorMsg";
@@ -138,6 +139,7 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
     private static final String ARGUMENT_KEY_RESULT_RETURNKEY = "returnKey";
     private static final String ARGUMENT_KEY_RESULT_IMAGEDATA = "imageData";
     private static final String ARGUMENT_KEY_RESULT_AUTHCODE = "authCode";
+    private static final String ARGUMENT_KEY_RESULT_EXT_DATA = "extData";
 
     //
 
@@ -240,6 +242,7 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
                 // 支付
                 PayResp payResp = (PayResp) resp;
                 map.put(ARGUMENT_KEY_RESULT_RETURNKEY, payResp.returnKey);
+                map.put(ARGUMENT_KEY_RESULT_EXT_DATA,payResp.extData);
                 if (channel != null) {
                     channel.invokeMethod(METHOD_ONPAYRESP, map);
                 }
@@ -497,6 +500,7 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
         req.timeStamp = call.argument(ARGUMENT_KEY_TIMESTAMP);
         req.packageValue = call.argument(ARGUMENT_KEY_PACKAGE);
         req.sign = call.argument(ARGUMENT_KEY_SIGN);
+        req.extData = call.argument(ARGUMENT_KEY_EXT_DATA);
         if (iwxapi != null) {
             iwxapi.sendReq(req);
         }

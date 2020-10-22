@@ -10,6 +10,7 @@ WechatSdkResp _$WechatSdkRespFromJson(Map json) {
   return WechatSdkResp(
     errorCode: json['errorCode'] as int ?? 0,
     errorMsg: json['errorMsg'] as String,
+    extData: json['extData'] as String,
   );
 }
 
@@ -17,4 +18,5 @@ Map<String, dynamic> _$WechatSdkRespToJson(WechatSdkResp instance) =>
     <String, dynamic>{
       'errorCode': instance.errorCode,
       'errorMsg': instance.errorMsg,
+      'extData': instance.extData,
     };

@@ -11,6 +11,7 @@ WechatPayResp _$WechatPayRespFromJson(Map json) {
     errorCode: json['errorCode'] as int ?? 0,
     errorMsg: json['errorMsg'] as String,
     returnKey: json['returnKey'] as String,
+    extData: json['extData'] as String,
   );
 }
 
@@ -19,4 +20,5 @@ Map<String, dynamic> _$WechatPayRespToJson(WechatPayResp instance) =>
       'errorCode': instance.errorCode,
       'errorMsg': instance.errorMsg,
       'returnKey': instance.returnKey,
+      'extData': instance.extData
     };

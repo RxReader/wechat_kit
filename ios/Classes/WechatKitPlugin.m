@@ -93,6 +93,7 @@ static NSString *const ARGUMENT_KEY_PREPAYID = @"prepayId";
 // static NSString *const ARGUMENT_KEY_TIMESTAMP = @"timestamp";
 static NSString *const ARGUMENT_KEY_PACKAGE = @"package";
 static NSString *const ARGUMENT_KEY_SIGN = @"sign";
+static NSString *const ARGUMENT_KEY_EXT_DATA = @"extData";
 
 static NSString *const ARGUMENT_KEY_RESULT_ERRORCODE = @"errorCode";
 static NSString *const ARGUMENT_KEY_RESULT_ERRORMSG = @"errorMsg";
@@ -109,6 +110,7 @@ static NSString *const ARGUMENT_KEY_RESULT_EXTMSG = @"extMsg";
 static NSString *const ARGUMENT_KEY_RESULT_RETURNKEY = @"returnKey";
 static NSString *const ARGUMENT_KEY_RESULT_IMAGEDATA = @"imageData";
 static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
+static NSString *const ARGUMENT_KEY_RESULT_EXT_DATA = @"extData";
 
 - (instancetype)initWithChannel:(FlutterMethodChannel *)channel {
     self = [super init];
@@ -358,6 +360,7 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
     req.timeStamp = [timeStamp intValue];
     req.package = call.arguments[ARGUMENT_KEY_PACKAGE];
     req.sign = call.arguments[ARGUMENT_KEY_SIGN];
+    _payExtData = call.arguments[ARGUMENT_KEY_EXT_DATA];
     [WXApi sendReq:req
         completion:^(BOOL success){
             // do nothing
@@ -452,6 +455,8 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
             [dictionary setValue:payResp.returnKey
                           forKey:ARGUMENT_KEY_RESULT_RETURNKEY];
         }
+        // 设置用户自定义参数
+        [dictionary setValue:_payExtData forKey:ARGUMENT_KEY_RESULT_EXT_DATA];
         [_channel invokeMethod:METHOD_ONPAYRESP arguments:dictionary];
     }
 }

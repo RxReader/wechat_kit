@@ -101,6 +101,7 @@ class Wechat {
 //  static const String _ARGUMENT_KEY_TIMESTAMP = 'timestamp';
   static const String _ARGUMENT_KEY_PACKAGE = 'package';
   static const String _ARGUMENT_KEY_SIGN = 'sign';
+  static const String _ARGUMENT_KEY_EXT_DATA = 'extData';
 
   static const String _ARGUMENT_KEY_RESULT_IMAGEDATA = 'imageData';
 
@@ -710,15 +711,15 @@ class Wechat {
 
   /// 支付
   /// 参数说明：https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_12&index=2
-  Future<void> pay({
-    @required String appId,
-    @required String partnerId,
-    @required String prepayId,
-    @required String package,
-    @required String nonceStr,
-    @required String timeStamp,
-    @required String sign,
-  }) {
+  Future<void> pay(
+      {@required String appId,
+      @required String partnerId,
+      @required String prepayId,
+      @required String package,
+      @required String nonceStr,
+      @required String timeStamp,
+      @required String sign,
+      String extData}) {
     assert(appId?.isNotEmpty ?? false);
     assert(partnerId?.isNotEmpty ?? false);
     assert(prepayId?.isNotEmpty ?? false);
@@ -736,6 +737,7 @@ class Wechat {
         _ARGUMENT_KEY_TIMESTAMP: timeStamp,
         _ARGUMENT_KEY_PACKAGE: package,
         _ARGUMENT_KEY_SIGN: sign,
+        _ARGUMENT_KEY_EXT_DATA: extData
       },
     );
   }

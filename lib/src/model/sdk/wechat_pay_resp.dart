@@ -12,7 +12,8 @@ class WechatPayResp extends WechatSdkResp {
     int errorCode,
     String errorMsg,
     this.returnKey,
-  }) : super(errorCode: errorCode, errorMsg: errorMsg);
+    String extData,
+  }) : super(errorCode: errorCode, errorMsg: errorMsg, extData: extData);
 
   factory WechatPayResp.fromJson(Map<dynamic, dynamic> json) =>
       _$WechatPayRespFromJson(json);
