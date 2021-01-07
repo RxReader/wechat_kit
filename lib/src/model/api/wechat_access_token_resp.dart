@@ -30,5 +30,6 @@ class WechatAccessTokenResp extends WechatApiResp {
   /// 单位：秒
   final int expiresIn;
 
-  Map<dynamic, dynamic> toJson() => _$WechatAccessTokenRespToJson(this);
+  @override
+  Map<String, dynamic> toJson() => _$WechatAccessTokenRespToJson(this);
 }

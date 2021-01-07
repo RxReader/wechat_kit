@@ -20,5 +20,5 @@ class WechatLaunchMiniProgramResp extends WechatSdkResp {
   final String extMsg;
 
   @override
-  Map<dynamic, dynamic> toJson() => _$WechatLaunchMiniProgramRespToJson(this);
+  Map<String, dynamic> toJson() => _$WechatLaunchMiniProgramRespToJson(this);
 }

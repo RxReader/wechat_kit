@@ -20,5 +20,5 @@ class WechatPayResp extends WechatSdkResp {
   final String returnKey;
 
   @override
-  Map<dynamic, dynamic> toJson() => _$WechatPayRespToJson(this);
+  Map<String, dynamic> toJson() => _$WechatPayRespToJson(this);
 }

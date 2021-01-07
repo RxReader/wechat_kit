@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
 
 abstract class WechatApiResp {
@@ -8,6 +10,9 @@ abstract class WechatApiResp {
 
   /// 成功
   static const int ERRORCODE_SUCCESS = 0;
+
+  @override
+  String toString() => const JsonEncoder.withIndent('  ').convert(toJson());
 
   /// -1	    系统繁忙，此时请开发者稍候再试
   /// 0       请求成功
@@ -21,4 +26,6 @@ abstract class WechatApiResp {
   final String errmsg;
 
   bool isSuccessful() => errcode == ERRORCODE_SUCCESS;
+
+  Map<String, dynamic> toJson();
 }

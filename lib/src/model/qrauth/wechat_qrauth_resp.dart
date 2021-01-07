@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'wechat_qrauth_resp.g.dart';
@@ -32,6 +34,9 @@ class WechatQrauthResp {
 
   /// 超时
   static const int ERRORCODE_TIMEOUT = -5;
+
+  @override
+  String toString() => const JsonEncoder.withIndent('  ').convert(toJson());
 
   @JsonKey(
     defaultValue: ERRORCODE_OK,

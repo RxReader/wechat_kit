@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'wechat_sdk_resp.g.dart';
@@ -33,6 +35,9 @@ class WechatSdkResp {
   /// 微信不支持
   static const int ERRORCODE_UNSUPPORT = -5;
 
+  @override
+  String toString() => const JsonEncoder.withIndent('  ').convert(toJson());
+
   /// 错误码
   @JsonKey(
     defaultValue: ERRORCODE_SUCCESS,
@@ -44,5 +49,5 @@ class WechatSdkResp {
 
   bool isSuccessful() => errorCode == ERRORCODE_SUCCESS;
 
-  Map<dynamic, dynamic> toJson() => _$WechatSdkRespToJson(this);
+  Map<String, dynamic> toJson() => _$WechatSdkRespToJson(this);
 }

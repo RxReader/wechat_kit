@@ -22,5 +22,6 @@ class WechatTicketResp extends WechatApiResp {
   String ticket;
   int expiresIn;
 
-  Map<dynamic, dynamic> toJson() => _$WechatTicketRespToJson(this);
+  @override
+  Map<String, dynamic> toJson() => _$WechatTicketRespToJson(this);
 }

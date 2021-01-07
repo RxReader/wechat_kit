@@ -38,6 +38,9 @@ class WechatUserInfoResp extends WechatApiResp {
   final List<dynamic> privilege;
   final String unionid;
 
+  @override
+  Map<String, dynamic> toJson() => _$WechatUserInfoRespToJson(this);
+
   bool isMale() {
     return sex == 1;
   }
@@ -45,6 +48,4 @@ class WechatUserInfoResp extends WechatApiResp {
   bool isFemale() {
     return sex == 2;
   }
-
-  Map<dynamic, dynamic> toJson() => _$WechatUserInfoRespToJson(this);
 }
