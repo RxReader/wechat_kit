@@ -3,12 +3,9 @@ import 'package:wechat_kit/src/model/sdk/wechat_sdk_resp.dart';
 
 part 'wechat_subscribe_msg_resp.g.dart';
 
-@JsonSerializable(
-  anyMap: true,
-  explicitToJson: true,
-)
+@JsonSerializable(anyMap: true, explicitToJson: true)
 class WechatSubscribeMsgResp extends WechatSdkResp {
-  WechatSubscribeMsgResp({
+  const WechatSubscribeMsgResp({
     int errorCode,
     String errorMsg,
     this.templateId,

@@ -4,15 +4,9 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'wechat_qrauth_resp.g.dart';
 
-@JsonSerializable(
-  anyMap: true,
-  explicitToJson: true,
-)
+@JsonSerializable(anyMap: true, explicitToJson: true)
 class WechatQrauthResp {
-  WechatQrauthResp({
-    this.errorCode,
-    this.authCode,
-  });
+  const WechatQrauthResp({this.errorCode, this.authCode});
 
   factory WechatQrauthResp.fromJson(Map<dynamic, dynamic> json) =>
       _$WechatQrauthRespFromJson(json);
@@ -38,13 +32,11 @@ class WechatQrauthResp {
   @override
   String toString() => const JsonEncoder.withIndent('  ').convert(toJson());
 
-  @JsonKey(
-    defaultValue: ERRORCODE_OK,
-  )
+  @JsonKey(defaultValue: ERRORCODE_OK)
   final int errorCode;
   final String authCode;
 
   bool isSuccessful() => errorCode == ERRORCODE_OK;
 
-  Map<dynamic, dynamic> toJson() => _$WechatQrauthRespToJson(this);
+  Map<String, dynamic> toJson() => _$WechatQrauthRespToJson(this);
 }

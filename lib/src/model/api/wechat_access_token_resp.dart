@@ -9,7 +9,7 @@ part 'wechat_access_token_resp.g.dart';
   fieldRename: FieldRename.snake,
 )
 class WechatAccessTokenResp extends WechatApiResp {
-  WechatAccessTokenResp({
+  const WechatAccessTokenResp({
     int errcode,
     String errmsg,
     this.openid,

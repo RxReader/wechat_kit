@@ -9,7 +9,7 @@ part 'wechat_ticket_resp.g.dart';
   fieldRename: FieldRename.snake,
 )
 class WechatTicketResp extends WechatApiResp {
-  WechatTicketResp({
+  const WechatTicketResp({
     int errcode,
     String errmsg,
     this.ticket,
@@ -19,8 +19,8 @@ class WechatTicketResp extends WechatApiResp {
   factory WechatTicketResp.fromJson(Map<dynamic, dynamic> json) =>
       _$WechatTicketRespFromJson(json);
 
-  String ticket;
-  int expiresIn;
+  final String ticket;
+  final int expiresIn;
 
   @override
   Map<String, dynamic> toJson() => _$WechatTicketRespToJson(this);
