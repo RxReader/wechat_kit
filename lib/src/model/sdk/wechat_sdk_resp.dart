@@ -42,7 +42,7 @@ class WechatSdkResp {
   final String errorMsg;
 
   bool get isSuccessful => errorCode == ERRORCODE_SUCCESS;
-  
+
   bool get isCancelled => errorCode == ERRORCODE_USERCANCEL;
 
   Map<String, dynamic> toJson() => _$WechatSdkRespToJson(this);
