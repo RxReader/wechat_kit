@@ -1,16 +1,12 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'wechat_sdk_resp.g.dart';
 
-@JsonSerializable(
-  anyMap: true,
-  explicitToJson: true,
-)
+@JsonSerializable(anyMap: true, explicitToJson: true)
 class WechatSdkResp {
-  WechatSdkResp({
-    this.errorCode,
-    this.errorMsg,
-  });
+  const WechatSdkResp({this.errorCode, this.errorMsg});
 
   factory WechatSdkResp.fromJson(Map<dynamic, dynamic> json) =>
       _$WechatSdkRespFromJson(json);
@@ -33,10 +29,11 @@ class WechatSdkResp {
   /// 微信不支持
   static const int ERRORCODE_UNSUPPORT = -5;
 
+  @override
+  String toString() => const JsonEncoder.withIndent('  ').convert(toJson());
+
   /// 错误码
-  @JsonKey(
-    defaultValue: ERRORCODE_SUCCESS,
-  )
+  @JsonKey(defaultValue: ERRORCODE_SUCCESS)
   final int errorCode;
 
   /// 错误提示字符串
@@ -44,5 +41,5 @@ class WechatSdkResp {
 
   bool isSuccessful() => errorCode == ERRORCODE_SUCCESS;
 
-  Map<dynamic, dynamic> toJson() => _$WechatSdkRespToJson(this);
+  Map<String, dynamic> toJson() => _$WechatSdkRespToJson(this);
 }

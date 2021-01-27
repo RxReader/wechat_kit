@@ -3,12 +3,9 @@ import 'package:wechat_kit/src/model/sdk/wechat_sdk_resp.dart';
 
 part 'wechat_pay_resp.g.dart';
 
-@JsonSerializable(
-  anyMap: true,
-  explicitToJson: true,
-)
+@JsonSerializable(anyMap: true, explicitToJson: true)
 class WechatPayResp extends WechatSdkResp {
-  WechatPayResp({
+  const WechatPayResp({
     int errorCode,
     String errorMsg,
     this.returnKey,
@@ -20,5 +17,5 @@ class WechatPayResp extends WechatSdkResp {
   final String returnKey;
 
   @override
-  Map<dynamic, dynamic> toJson() => _$WechatPayRespToJson(this);
+  Map<String, dynamic> toJson() => _$WechatPayRespToJson(this);
 }

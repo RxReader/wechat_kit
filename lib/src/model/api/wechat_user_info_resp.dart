@@ -9,7 +9,7 @@ part 'wechat_user_info_resp.g.dart';
   fieldRename: FieldRename.snake,
 )
 class WechatUserInfoResp extends WechatApiResp {
-  WechatUserInfoResp({
+  const WechatUserInfoResp({
     int errcode,
     String errmsg,
     this.openid,
@@ -38,13 +38,10 @@ class WechatUserInfoResp extends WechatApiResp {
   final List<dynamic> privilege;
   final String unionid;
 
-  bool isMale() {
-    return sex == 1;
-  }
+  @override
+  Map<String, dynamic> toJson() => _$WechatUserInfoRespToJson(this);
 
-  bool isFemale() {
-    return sex == 2;
-  }
+  bool isMale() => sex == 1;
 
-  Map<dynamic, dynamic> toJson() => _$WechatUserInfoRespToJson(this);
+  bool isFemale() => sex == 2;
 }

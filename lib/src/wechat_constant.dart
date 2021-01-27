@@ -1,5 +1,5 @@
 class WechatScope {
-  WechatScope._();
+  const WechatScope._();
 
   /// 只能获取openId
   static const String SNSAPI_BASE = 'snsapi_base';
@@ -9,7 +9,7 @@ class WechatScope {
 }
 
 class WechatScene {
-  WechatScene._();
+  const WechatScene._();
 
   /// 聊天界面
   static const int SESSION = 0;
@@ -32,14 +32,14 @@ class WechatBizProfileType {
 }
 
 class WechatMPWebviewType {
-  WechatMPWebviewType._();
+  const WechatMPWebviewType._();
 
   /// 广告网页
   static const int AD = 0;
 }
 
 class WechatMiniProgram {
-  WechatMiniProgram._();
+  const WechatMiniProgram._();
 
   /// 正式版
   static const int release = 0;

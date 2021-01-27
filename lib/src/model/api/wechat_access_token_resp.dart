@@ -9,7 +9,7 @@ part 'wechat_access_token_resp.g.dart';
   fieldRename: FieldRename.snake,
 )
 class WechatAccessTokenResp extends WechatApiResp {
-  WechatAccessTokenResp({
+  const WechatAccessTokenResp({
     int errcode,
     String errmsg,
     this.openid,
@@ -30,5 +30,6 @@ class WechatAccessTokenResp extends WechatApiResp {
   /// 单位：秒
   final int expiresIn;
 
-  Map<dynamic, dynamic> toJson() => _$WechatAccessTokenRespToJson(this);
+  @override
+  Map<String, dynamic> toJson() => _$WechatAccessTokenRespToJson(this);
 }
