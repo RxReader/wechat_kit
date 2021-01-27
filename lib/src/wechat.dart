@@ -709,7 +709,7 @@ class Wechat {
     );
   }
 
-  /// 支付 - x.y.z-iOS-NoPay 下会直接抛出异常 [PlatformException]
+  /// 支付 - x.y.z-iOS-NoPay 版本下会直接抛出异常 [PlatformException]
   /// 参数说明：https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_12&index=2
   Future<void> pay({
     @required String appId,

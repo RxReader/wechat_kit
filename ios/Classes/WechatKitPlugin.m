@@ -457,7 +457,7 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
         [_channel invokeMethod:METHOD_ONLAUNCHMINIPROGRAMRESP arguments:dictionary];
     } else {
 #ifdef NO_PAY
-    // do nothing
+        // do nothing
 #else
         if ([resp isKindOfClass:[PayResp class]]) {
             // 支付
