@@ -3,7 +3,9 @@ import 'package:wechat_kit/src/model/sdk/wechat_sdk_resp.dart';
 
 part 'wechat_subscribe_msg_resp.g.dart';
 
-@JsonSerializable(anyMap: true, explicitToJson: true)
+@JsonSerializable(
+  explicitToJson: true,
+)
 class WechatSubscribeMsgResp extends WechatSdkResp {
   const WechatSubscribeMsgResp({
     int errorCode,
@@ -13,9 +15,12 @@ class WechatSubscribeMsgResp extends WechatSdkResp {
     this.action,
     this.reserved,
     this.openId,
-  }) : super(errorCode: errorCode, errorMsg: errorMsg);
+  }) : super(
+          errorCode: errorCode,
+          errorMsg: errorMsg,
+        );
 
-  factory WechatSubscribeMsgResp.fromJson(Map<dynamic, dynamic> json) =>
+  factory WechatSubscribeMsgResp.fromJson(Map<String, dynamic> json) =>
       _$WechatSubscribeMsgRespFromJson(json);
 
   final String templateId;

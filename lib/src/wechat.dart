@@ -157,29 +157,30 @@ class Wechat {
   Future<dynamic> _handleMethod(MethodCall call) async {
     switch (call.method) {
       case _METHOD_ONAUTHRESP:
-        _authRespStreamController.add(
-            WechatAuthResp.fromJson(call.arguments as Map<dynamic, dynamic>));
+        _authRespStreamController.add(WechatAuthResp.fromJson(
+            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
       case _METHOD_ONOPENURLRESP:
-        _openUrlRespStreamController.add(
-            WechatSdkResp.fromJson(call.arguments as Map<dynamic, dynamic>));
+        _openUrlRespStreamController.add(WechatSdkResp.fromJson(
+            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
       case _METHOD_ONSHAREMSGRESP:
-        _shareMsgRespStreamController.add(
-            WechatSdkResp.fromJson(call.arguments as Map<dynamic, dynamic>));
+        _shareMsgRespStreamController.add(WechatSdkResp.fromJson(
+            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
       case _METHOD_ONSUBSCRIBEMSGRESP:
         _subscribeMsgRespStreamController.add(WechatSubscribeMsgResp.fromJson(
-            call.arguments as Map<dynamic, dynamic>));
+            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
       case _METHOD_ONLAUNCHMINIPROGRAMRESP:
         _launchMiniProgramRespStreamController.add(
             WechatLaunchMiniProgramResp.fromJson(
-                call.arguments as Map<dynamic, dynamic>));
+                (call.arguments as Map<dynamic, dynamic>)
+                    .cast<String, dynamic>()));
         break;
       case _METHOD_ONPAYRESP:
-        _payRespStreamController.add(
-            WechatPayResp.fromJson(call.arguments as Map<dynamic, dynamic>));
+        _payRespStreamController.add(WechatPayResp.fromJson(
+            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
       case _METHOD_ONAUTHGOTQRCODE:
         _authGotQrcodeRespStreamController
@@ -189,8 +190,8 @@ class Wechat {
         _authQrcodeScannedRespStreamController.add('QrcodeScanned');
         break;
       case _METHOD_ONAUTHFINISH:
-        _authFinishRespStreamController.add(
-            WechatQrauthResp.fromJson(call.arguments as Map<dynamic, dynamic>));
+        _authFinishRespStreamController.add(WechatQrauthResp.fromJson(
+            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
     }
   }
@@ -287,7 +288,7 @@ class Wechat {
       if (response.statusCode == HttpStatus.ok) {
         String content = await utf8.decodeStream(response);
         return WechatAccessTokenResp.fromJson(
-            json.decode(content) as Map<dynamic, dynamic>);
+            json.decode(content) as Map<String, dynamic>);
       }
       throw HttpException(
           'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');
@@ -310,7 +311,7 @@ class Wechat {
       if (response.statusCode == HttpStatus.ok) {
         String content = await utf8.decodeStream(response);
         return WechatAccessTokenResp.fromJson(
-            json.decode(content) as Map<dynamic, dynamic>);
+            json.decode(content) as Map<String, dynamic>);
       }
       throw HttpException(
           'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');
@@ -333,7 +334,7 @@ class Wechat {
       if (response.statusCode == HttpStatus.ok) {
         String content = await utf8.decodeStream(response);
         return WechatUserInfoResp.fromJson(
-            json.decode(content) as Map<dynamic, dynamic>);
+            json.decode(content) as Map<String, dynamic>);
       }
       throw HttpException(
           'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');
@@ -358,7 +359,7 @@ class Wechat {
       if (response.statusCode == HttpStatus.ok) {
         String content = await utf8.decodeStream(response);
         return WechatAccessTokenResp.fromJson(
-            json.decode(content) as Map<dynamic, dynamic>);
+            json.decode(content) as Map<String, dynamic>);
       }
       throw HttpException(
           'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');
@@ -379,7 +380,7 @@ class Wechat {
       if (response.statusCode == HttpStatus.ok) {
         String content = await utf8.decodeStream(response);
         return WechatTicketResp.fromJson(
-            json.decode(content) as Map<dynamic, dynamic>);
+            json.decode(content) as Map<String, dynamic>);
       }
       throw HttpException(
           'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');
@@ -708,7 +709,7 @@ class Wechat {
     );
   }
 
-  /// 支付
+  /// 支付 - x.y.z-iOS-NoPay 下会直接抛出异常 [PlatformException]
   /// 参数说明：https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_12&index=2
   Future<void> pay({
     @required String appId,

@@ -4,7 +4,6 @@ import 'package:wechat_kit/src/model/api/wechat_api_resp.dart';
 part 'wechat_access_token_resp.g.dart';
 
 @JsonSerializable(
-  anyMap: true,
   explicitToJson: true,
   fieldRename: FieldRename.snake,
 )
@@ -17,18 +16,19 @@ class WechatAccessTokenResp extends WechatApiResp {
     this.accessToken,
     this.refreshToken,
     this.expiresIn,
-  }) : super(errcode: errcode, errmsg: errmsg);
+  }) : super(
+          errcode: errcode,
+          errmsg: errmsg,
+        );
 
-  factory WechatAccessTokenResp.fromJson(Map<dynamic, dynamic> json) =>
+  factory WechatAccessTokenResp.fromJson(Map<String, dynamic> json) =>
       _$WechatAccessTokenRespFromJson(json);
 
   final String openid;
   final String scope;
   final String accessToken;
   final String refreshToken;
-
-  /// 单位：秒
-  final int expiresIn;
+  final int expiresIn; // 单位：秒
 
   @override
   Map<String, dynamic> toJson() => _$WechatAccessTokenRespToJson(this);

@@ -3,15 +3,20 @@ import 'package:wechat_kit/src/model/sdk/wechat_sdk_resp.dart';
 
 part 'wechat_launch_mini_program_resp.g.dart';
 
-@JsonSerializable(anyMap: true, explicitToJson: true)
+@JsonSerializable(
+  explicitToJson: true,
+)
 class WechatLaunchMiniProgramResp extends WechatSdkResp {
   const WechatLaunchMiniProgramResp({
     int errorCode,
     String errorMsg,
     this.extMsg,
-  }) : super(errorCode: errorCode, errorMsg: errorMsg);
+  }) : super(
+          errorCode: errorCode,
+          errorMsg: errorMsg,
+        );
 
-  factory WechatLaunchMiniProgramResp.fromJson(Map<dynamic, dynamic> json) =>
+  factory WechatLaunchMiniProgramResp.fromJson(Map<String, dynamic> json) =>
       _$WechatLaunchMiniProgramRespFromJson(json);
 
   final String extMsg;

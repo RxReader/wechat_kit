@@ -4,7 +4,6 @@ import 'package:wechat_kit/src/model/api/wechat_api_resp.dart';
 part 'wechat_ticket_resp.g.dart';
 
 @JsonSerializable(
-  anyMap: true,
   explicitToJson: true,
   fieldRename: FieldRename.snake,
 )
@@ -14,9 +13,12 @@ class WechatTicketResp extends WechatApiResp {
     String errmsg,
     this.ticket,
     this.expiresIn,
-  }) : super(errcode: errcode, errmsg: errmsg);
+  }) : super(
+          errcode: errcode,
+          errmsg: errmsg,
+        );
 
-  factory WechatTicketResp.fromJson(Map<dynamic, dynamic> json) =>
+  factory WechatTicketResp.fromJson(Map<String, dynamic> json) =>
       _$WechatTicketRespFromJson(json);
 
   final String ticket;
