@@ -40,6 +40,8 @@ class WechatQrauthResp {
 
   bool get isSuccessful => errorCode == ERRORCODE_OK;
 
+  bool get isCancelled => errorCode == ERRORCODE_CANCEL;
+
   Map<String, dynamic> toJson() => _$WechatQrauthRespToJson(this);
 
   @override
