@@ -20,7 +20,6 @@ rootProject.allprojects {
 }
 
 apply plugin: 'com.android.library'
-apply from: './quality.gradle'
 
 android {
     compileSdkVersion 28
