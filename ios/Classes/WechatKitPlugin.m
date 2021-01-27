@@ -2,7 +2,7 @@
 #ifdef NO_PAY
 #import <WXApi.h>
 #import <WechatAuthSDK.h>
-# else
+#else
 #import <WechatOpenSDK/WXApi.h>
 #import <WechatOpenSDK/WechatAuthSDK.h>
 #endif
@@ -457,7 +457,7 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
         [_channel invokeMethod:METHOD_ONLAUNCHMINIPROGRAMRESP arguments:dictionary];
     } else {
 #ifdef NO_PAY
-        // do nothing
+    // do nothing
 #else
         if ([resp isKindOfClass:[PayResp class]]) {
             // 支付
