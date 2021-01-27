@@ -6,7 +6,8 @@ part of 'wechat_subscribe_msg_resp.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-WechatSubscribeMsgResp _$WechatSubscribeMsgRespFromJson(Map json) {
+WechatSubscribeMsgResp _$WechatSubscribeMsgRespFromJson(
+    Map<String, dynamic> json) {
   return WechatSubscribeMsgResp(
     errorCode: json['errorCode'] as int ?? 0,
     errorMsg: json['errorMsg'] as String,

@@ -6,7 +6,7 @@ part of 'wechat_qrauth_resp.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-WechatQrauthResp _$WechatQrauthRespFromJson(Map json) {
+WechatQrauthResp _$WechatQrauthRespFromJson(Map<String, dynamic> json) {
   return WechatQrauthResp(
     errorCode: json['errorCode'] as int ?? 0,
     authCode: json['authCode'] as String,

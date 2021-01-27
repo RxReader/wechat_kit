@@ -6,7 +6,8 @@ part of 'wechat_launch_mini_program_resp.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-WechatLaunchMiniProgramResp _$WechatLaunchMiniProgramRespFromJson(Map json) {
+WechatLaunchMiniProgramResp _$WechatLaunchMiniProgramRespFromJson(
+    Map<String, dynamic> json) {
   return WechatLaunchMiniProgramResp(
     errorCode: json['errorCode'] as int ?? 0,
     errorMsg: json['errorMsg'] as String,

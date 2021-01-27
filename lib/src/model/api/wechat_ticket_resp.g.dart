@@ -6,7 +6,7 @@ part of 'wechat_ticket_resp.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-WechatTicketResp _$WechatTicketRespFromJson(Map json) {
+WechatTicketResp _$WechatTicketRespFromJson(Map<String, dynamic> json) {
   return WechatTicketResp(
     errcode: json['errcode'] as int ?? 0,
     errmsg: json['errmsg'] as String,

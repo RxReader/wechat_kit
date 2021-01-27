@@ -6,7 +6,8 @@ part of 'wechat_access_token_resp.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-WechatAccessTokenResp _$WechatAccessTokenRespFromJson(Map json) {
+WechatAccessTokenResp _$WechatAccessTokenRespFromJson(
+    Map<String, dynamic> json) {
   return WechatAccessTokenResp(
     errcode: json['errcode'] as int ?? 0,
     errmsg: json['errmsg'] as String,

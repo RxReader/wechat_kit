@@ -6,7 +6,7 @@ part of 'wechat_user_info_resp.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-WechatUserInfoResp _$WechatUserInfoRespFromJson(Map json) {
+WechatUserInfoResp _$WechatUserInfoRespFromJson(Map<String, dynamic> json) {
   return WechatUserInfoResp(
     errcode: json['errcode'] as int ?? 0,
     errmsg: json['errmsg'] as String,
