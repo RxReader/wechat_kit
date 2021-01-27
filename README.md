@@ -30,6 +30,16 @@ flutter版微信SDK
 
 ## android
 
+```groovy
+buildscript {
+    dependencies {
+        // 3.5.4/3.6.4/4.x.x
+        classpath 'com.android.tools.build:gradle:3.5.4'
+    }
+}
+
+```
+
 ```
 # 不需要做任何额外接入工作
 # 混淆已打入 Library，随 Library 引用，自动添加到 apk 打包混淆
@@ -111,6 +121,11 @@ dependencies:
 ```
 dependencies:
   wechat_kit: ^${latestTag}
+```
+
+```
+dependencies:
+  wechat_kit: ^${latestTag}-iOS-NoPay
 ```
 
 * example

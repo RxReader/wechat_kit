@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'wechat_kit'
-  s.version          = '1.1.2'
+  s.version          = '1.1.3'
   s.summary          = 'A powerful Flutter plugin allowing developers to auth/share/pay with natvie Android & iOS Wechat SDKs.'
   s.description      = <<-DESC
 A powerful Flutter plugin allowing developers to auth/share/pay with natvie Android & iOS Wechat SDKs.
@@ -18,7 +18,13 @@ A powerful Flutter plugin allowing developers to auth/share/pay with natvie Andr
   s.dependency 'Flutter'
   s.platform = :ios, '8.0'
 
-  # v1.8.7.1
+#  # v1.8.7.1
+#  s.static_framework = true
+#  s.subspec 'vendor' do |sp|
+#    sp.dependency 'WechatOpenSDK', '~> 1.8.6'
+#  end
+
+  # v1.8.7.1_NoPay
   s.static_framework = true
   s.subspec 'vendor' do |sp|
     sp.source_files = 'Libraries/**/*.h'
@@ -27,7 +33,8 @@ A powerful Flutter plugin allowing developers to auth/share/pay with natvie Andr
     sp.frameworks = 'CoreGraphics', 'Security', 'WebKit'
     sp.libraries = 'c++', 'z', 'sqlite3.0'
     sp.pod_target_xcconfig = {
-        'OTHER_LDFLAGS' => '$(inherited) -ObjC -all_load'
+        'OTHER_LDFLAGS' => '$(inherited) -ObjC -all_load',
+        'GCC_PREPROCESSOR_DEFINITIONS' => 'NO_PAY=1'
     }
   end
 

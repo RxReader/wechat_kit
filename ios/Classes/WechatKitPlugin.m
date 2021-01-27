@@ -1,6 +1,11 @@
 #import "WechatKitPlugin.h"
+#ifdef NO_PAY
 #import <WXApi.h>
 #import <WechatAuthSDK.h>
+# else
+#import <WechatOpenSDK/WXApi.h>
+#import <WechatOpenSDK/WechatAuthSDK.h>
+#endif
 
 @interface WechatKitPlugin () <WXApiDelegate, WechatAuthAPIDelegate>
 
@@ -350,6 +355,10 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
 }
 
 - (void)handlePayCall:(FlutterMethodCall *)call result:(FlutterResult)result {
+#ifdef NO_PAY
+    // do nothing
+    result([FlutterError errorWithCode:@"FAILED" message:@"Unsupported" details:nil]);
+#else
     PayReq *req = [[PayReq alloc] init];
     req.partnerId = call.arguments[ARGUMENT_KEY_PARTNERID];
     req.prepayId = call.arguments[ARGUMENT_KEY_PREPAYID];
@@ -363,6 +372,7 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
             // do nothing
         }];
     result(nil);
+#endif
 }
 
 #pragma mark - AppDelegate
@@ -445,14 +455,20 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
                           forKey:ARGUMENT_KEY_RESULT_EXTMSG];
         }
         [_channel invokeMethod:METHOD_ONLAUNCHMINIPROGRAMRESP arguments:dictionary];
-    } else if ([resp isKindOfClass:[PayResp class]]) {
-        // 支付
-        if (resp.errCode == WXSuccess) {
-            PayResp *payResp = (PayResp *)resp;
-            [dictionary setValue:payResp.returnKey
-                          forKey:ARGUMENT_KEY_RESULT_RETURNKEY];
+    } else {
+#ifdef NO_PAY
+    // do nothing
+#else
+        if ([resp isKindOfClass:[PayResp class]]) {
+            // 支付
+            if (resp.errCode == WXSuccess) {
+                PayResp *payResp = (PayResp *)resp;
+                [dictionary setValue:payResp.returnKey
+                              forKey:ARGUMENT_KEY_RESULT_RETURNKEY];
+            }
+            [_channel invokeMethod:METHOD_ONPAYRESP arguments:dictionary];
         }
-        [_channel invokeMethod:METHOD_ONPAYRESP arguments:dictionary];
+#endif
     }
 }
 

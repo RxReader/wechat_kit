@@ -1,5 +1,5 @@
 group 'io.github.v7lin.wechat_kit'
-version '1.1.2'
+version '1.1.3'
 
 buildscript {
     repositories {
@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:3.5.4'
     }
 }
 
@@ -54,6 +54,6 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.0.0'
 
     // v6.6.4
-    vendorImplementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.6.4'
+    vendorImplementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.6.19'
 }
 

@@ -1,3 +1,8 @@
+## 1.1.3
+
+* 升级SDK
+* 优化
+
 ## 1.1.2
 
 * [issues#49](https://github.com/v7lin/wechat_kit/issues/49)
