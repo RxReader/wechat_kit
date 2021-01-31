@@ -29,5 +29,16 @@
             android:targetActivity=".WechatCallbackActivity"
             android:taskAffinity="${applicationId}"
             android:theme="@style/wechat_kit.Theme.Transparent" />
+
+        <provider
+            android:name=".WechatFileProvider"
+            android:authorities="${applicationId}.WechatFileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/wechat_kit_file_paths" />
+        </provider>
     </application>
 </manifest>

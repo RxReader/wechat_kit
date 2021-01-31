@@ -1,12 +1,16 @@
 package io.github.v7lin.wechat_kit;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ProviderInfo;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 
 import com.tencent.mm.opensdk.constants.Build;
 import com.tencent.mm.opensdk.diffdev.DiffDevOAuthFactory;
@@ -36,6 +40,7 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -409,7 +414,7 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
                 object.imageData = call.argument(ARGUMENT_KEY_IMAGEDATA);
             } else if (call.hasArgument(ARGUMENT_KEY_IMAGEURI)) {
                 String imageUri = call.argument(ARGUMENT_KEY_IMAGEURI);
-                object.imagePath = Uri.parse(imageUri).getPath();
+                object.imagePath = getShareFilePath(imageUri);//Uri.parse(imageUri).getPath();
             }
             message.mediaObject = object;
         } else if (METHOD_SHAREFILE.equals(call.method)) {
@@ -418,7 +423,7 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
                 object.fileData = call.argument(ARGUMENT_KEY_FILEDATA);
             } else if (call.hasArgument(ARGUMENT_KEY_FILEURI)) {
                 String fileUri = call.argument(ARGUMENT_KEY_FILEURI);
-                object.filePath = Uri.parse(fileUri).getPath();
+                object.filePath = getShareFilePath(fileUri);//Uri.parse(fileUri).getPath();
             }
 //            String fileExtension = call.argument(ARGUMENT_KEY_FILEEXTENSION);
             message.mediaObject = object;
@@ -428,7 +433,7 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
                 object.emojiData = call.argument(ARGUMENT_KEY_EMOJIDATA);
             } else if (call.hasArgument(ARGUMENT_KEY_EMOJIURI)) {
                 String emojiUri = call.argument(ARGUMENT_KEY_EMOJIURI);
-                object.emojiPath = Uri.parse(emojiUri).getPath();
+                object.emojiPath = getShareFilePath(emojiUri);//Uri.parse(emojiUri).getPath();
             }
             message.mediaObject = object;
         } else if (METHOD_SHAREMUSIC.equals(call.method)) {
@@ -464,6 +469,22 @@ public class WechatKit implements MethodChannel.MethodCallHandler, PluginRegistr
             iwxapi.sendReq(req);
         }
         result.success(null);
+    }
+
+    private String getShareFilePath(String fileUri) {
+        if (iwxapi != null && iwxapi.getWXAppSupportAPI() >= 0x27000D00) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                try {
+                    ProviderInfo providerInfo = applicationContext.getPackageManager().getProviderInfo(new ComponentName(applicationContext, WechatFileProvider.class), PackageManager.MATCH_DEFAULT_ONLY);
+                    Uri shareFileUri = FileProvider.getUriForFile(applicationContext, providerInfo.authority, new File(Uri.parse(fileUri).getPath()));
+                    applicationContext.grantUriPermission("com.tencent.mm", shareFileUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    return shareFileUri.toString();
+                } catch (PackageManager.NameNotFoundException e) {
+                    // ignore
+                }
+            }
+        }
+        return Uri.parse(fileUri).getPath();
     }
 
     private void handleSubscribeMsgCall(MethodCall call, MethodChannel.Result result) {
