@@ -44,7 +44,9 @@ static NSString *const METHOD_SHAREWEBPAGE = @"shareWebpage";
 static NSString *const METHOD_SHAREMINIPROGRAM = @"shareMiniProgram";
 static NSString *const METHOD_SUBSCRIBEMSG = @"subscribeMsg";
 static NSString *const METHOD_LAUNCHMINIPROGRAM = @"launchMiniProgram";
+#ifndef NO_PAY
 static NSString *const METHOD_PAY = @"pay";
+#endif
 
 static NSString *const METHOD_ONAUTHRESP = @"onAuthResp";
 static NSString *const METHOD_ONOPENURLRESP = @"onOpenUrlResp";
@@ -52,7 +54,9 @@ static NSString *const METHOD_ONSHAREMSGRESP = @"onShareMsgResp";
 static NSString *const METHOD_ONSUBSCRIBEMSGRESP = @"onSubscribeMsgResp";
 static NSString *const METHOD_ONLAUNCHMINIPROGRAMRESP =
     @"onLaunchMiniProgramResp";
+#ifndef NO_PAY
 static NSString *const METHOD_ONPAYRESP = @"onPayResp";
+#endif
 static NSString *const METHOD_ONAUTHGOTQRCODE = @"onAuthGotQrcode";
 static NSString *const METHOD_ONAUTHQRCODESCANNED = @"onAuthQrcodeScanned";
 static NSString *const METHOD_ONAUTHFINISH = @"onAuthFinish";
@@ -92,12 +96,14 @@ static NSString *const ARGUMENT_KEY_WITHSHARETICKET = @"withShareTicket";
 static NSString *const ARGUMENT_KEY_TEMPLATEID = @"templateId";
 static NSString *const ARGUMENT_KEY_RESERVED = @"reserved";
 static NSString *const ARGUMENT_KEY_TYPE = @"type";
+#ifndef NO_PAY
 static NSString *const ARGUMENT_KEY_PARTNERID = @"partnerId";
 static NSString *const ARGUMENT_KEY_PREPAYID = @"prepayId";
 // static NSString *const ARGUMENT_KEY_NONCESTR = @"noncestr";
 // static NSString *const ARGUMENT_KEY_TIMESTAMP = @"timestamp";
 static NSString *const ARGUMENT_KEY_PACKAGE = @"package";
 static NSString *const ARGUMENT_KEY_SIGN = @"sign";
+#endif
 
 static NSString *const ARGUMENT_KEY_RESULT_ERRORCODE = @"errorCode";
 static NSString *const ARGUMENT_KEY_RESULT_ERRORMSG = @"errorMsg";
@@ -161,9 +167,13 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
         [self handleSubscribeMsgCall:call result:result];
     } else if ([METHOD_LAUNCHMINIPROGRAM isEqualToString:call.method]) {
         [self handleLaunchMiniProgramCall:call result:result];
-    } else if ([METHOD_PAY isEqualToString:call.method]) {
+    }
+#ifndef NO_PAY
+    else if ([METHOD_PAY isEqualToString:call.method]) {
         [self handlePayCall:call result:result];
-    } else {
+    }
+#endif
+    else {
         result(FlutterMethodNotImplemented);
     }
 }
@@ -354,11 +364,8 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
     result(nil);
 }
 
+#ifndef NO_PAY
 - (void)handlePayCall:(FlutterMethodCall *)call result:(FlutterResult)result {
-#ifdef NO_PAY
-    // do nothing
-    result([FlutterError errorWithCode:@"FAILED" message:@"Unsupported" details:nil]);
-#else
     PayReq *req = [[PayReq alloc] init];
     req.partnerId = call.arguments[ARGUMENT_KEY_PARTNERID];
     req.prepayId = call.arguments[ARGUMENT_KEY_PREPAYID];
@@ -372,8 +379,8 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
             // do nothing
         }];
     result(nil);
-#endif
 }
+#endif
 
 #pragma mark - AppDelegate
 
@@ -456,9 +463,7 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
         }
         [_channel invokeMethod:METHOD_ONLAUNCHMINIPROGRAMRESP arguments:dictionary];
     } else {
-#ifdef NO_PAY
-    // do nothing
-#else
+#ifndef NO_PAY
         if ([resp isKindOfClass:[PayResp class]]) {
             // 支付
             if (resp.errCode == WXSuccess) {
