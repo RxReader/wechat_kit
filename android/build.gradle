@@ -50,7 +50,7 @@ android {
 }
 
 dependencies {
-    // v6.6.4
+    //
     vendorImplementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.6.19'
 }
 
