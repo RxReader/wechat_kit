@@ -1,3 +1,11 @@
+## 2.0.0
+
+* 同 2.0.0-iOS-NoPay
+
+## 2.0.0-iOS-NoPay
+
+* Android FileProvider
+
 ## 1.1.3
 
 * 切换微信支付版
