@@ -45,14 +45,6 @@ buildscript {
 # 混淆已打入 Library，随 Library 引用，自动添加到 apk 打包混淆
 ```
 
-```xml
-<manifest>
-    <!-- targetSdkVersion >= 29 && compileSdkVersion >= 29, 豁免 Android Q 的外部存储沙箱限制 -->
-    <application android:requestLegacyExternalStorage="true">
-    </application>
-</manifest>
-```
-
 #### 获取 android 微信签名信息
 
 非官方方法 -> 反编译 Gen_Signature_Android2.apk 所得
