@@ -4,4 +4,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <queries>
+        <!-- targetSdkVersion>=30 -> Android 11 软件包可见性 -->
+        <package android:name="com.tencent.mm" />
+    </queries>
 </manifest>
