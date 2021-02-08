@@ -21,7 +21,7 @@ A powerful Flutter plugin allowing developers to auth/share/pay with natvie Andr
 #  # v1.8.7.1
 #  s.static_framework = true
 #  s.subspec 'vendor' do |sp|
-#    sp.dependency 'WechatOpenSDK', '~> 1.8.6'
+#    sp.dependency 'WechatOpenSDK', '~> 1.8.7.1'
 #  end
 
   # v1.8.7.1_NoPay
