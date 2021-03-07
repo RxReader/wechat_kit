@@ -178,7 +178,7 @@ class _HomeState extends State<Home> {
             title: const Text('Emoji分享'),
             onTap: () async {
               final File file = await DefaultCacheManager().getSingleFile('https://n.sinaimg.cn/tech/transform/695/w467h228/20191119/bf27-iipztfe9404360.gif');
-              final image.Image thumbnail = image.decodeGif(file.readAsBytesSync())!!;
+              final image.Image thumbnail = image.decodeGif(file.readAsBytesSync())!;
               Uint8List thumbData = thumbnail.getBytes();
               if (thumbData.length > 32 * 1024) {
                 thumbData = Uint8List.fromList(image.encodeJpg(thumbnail, quality: 100 * 32 * 1024 ~/ thumbData.length));
@@ -302,7 +302,7 @@ class _QrauthState extends State<Qrauth> {
       appBar: AppBar(
         title: const Text('Qrauth'),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             onPressed: () async {
               final WechatAccessTokenResp accessToken = await widget.wechat.getAccessToken(
                 appId: WECHAT_APPID,
@@ -319,6 +319,7 @@ class _QrauthState extends State<Qrauth> {
                 ticket: ticket.ticket!,
               );
             },
+            style: ,
             child: const Text('got qr code'),
           ),
         ],
