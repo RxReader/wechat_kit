@@ -9,8 +9,8 @@ part 'wechat_auth_resp.g.dart';
 )
 class WechatAuthResp extends WechatSdkResp {
   const WechatAuthResp({
-    int errorCode,
-    String errorMsg,
+    required int errorCode,
+    String? errorMsg,
     this.code,
     this.state,
     this.lang,
@@ -23,10 +23,10 @@ class WechatAuthResp extends WechatSdkResp {
   factory WechatAuthResp.fromJson(Map<String, dynamic> json) =>
       _$WechatAuthRespFromJson(json);
 
-  final String code;
-  final String state;
-  final String lang;
-  final String country;
+  final String? code;
+  final String? state;
+  final String? lang;
+  final String? country;
 
   @override
   Map<String, dynamic> toJson() => _$WechatAuthRespToJson(this);

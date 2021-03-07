@@ -8,8 +8,8 @@ part 'wechat_subscribe_msg_resp.g.dart';
 )
 class WechatSubscribeMsgResp extends WechatSdkResp {
   const WechatSubscribeMsgResp({
-    int errorCode,
-    String errorMsg,
+    required int errorCode,
+    String? errorMsg,
     this.templateId,
     this.scene,
     this.action,
@@ -23,11 +23,11 @@ class WechatSubscribeMsgResp extends WechatSdkResp {
   factory WechatSubscribeMsgResp.fromJson(Map<String, dynamic> json) =>
       _$WechatSubscribeMsgRespFromJson(json);
 
-  final String templateId;
-  final int scene;
-  final String action;
-  final String reserved;
-  final String openId;
+  final String? templateId;
+  final int? scene;
+  final String? action;
+  final String? reserved;
+  final String? openId;
 
   @override
   Map<String, dynamic> toJson() => _$WechatSubscribeMsgRespToJson(this);

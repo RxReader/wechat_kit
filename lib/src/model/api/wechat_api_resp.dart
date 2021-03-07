@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 abstract class WechatApiResp {
   const WechatApiResp({
-    this.errcode,
+    required this.errcode,
     this.errmsg,
   });
 
@@ -18,7 +18,7 @@ abstract class WechatApiResp {
   /// 40164	  调用接口的IP地址不在白名单中，请在接口IP白名单中进行设置。（小程序及小游戏调用不要求IP地址在白名单内。）
   @JsonKey(defaultValue: ERRORCODE_SUCCESS)
   final int errcode;
-  final String errmsg;
+  final String? errmsg;
 
   bool get isSuccessful => errcode == ERRORCODE_SUCCESS;
 

@@ -5,7 +5,6 @@ import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wechat_kit/src/model/api/wechat_access_token_resp.dart';
@@ -18,8 +17,6 @@ import 'package:wechat_kit/src/model/sdk/wechat_pay_resp.dart';
 import 'package:wechat_kit/src/model/sdk/wechat_sdk_resp.dart';
 import 'package:wechat_kit/src/model/sdk/wechat_subscribe_msg_resp.dart';
 import 'package:wechat_kit/src/wechat_constant.dart';
-
-import 'wechat_constant.dart';
 
 ///
 class Wechat {
@@ -140,10 +137,9 @@ class Wechat {
 
   /// 向微信注册应用
   Future<void> registerApp({
-    @required String appId,
-    @required String universalLink,
+    required String appId,
+    required String? universalLink,
   }) {
-    assert(appId?.isNotEmpty ?? false);
     assert(!Platform.isIOS || (universalLink?.isNotEmpty ?? false));
     return _channel.invokeMethod<void>(
       _METHOD_REGISTERAPP,
@@ -242,28 +238,27 @@ class Wechat {
   }
 
   /// 检测微信是否已安装
-  Future<bool> isInstalled() {
-    return _channel.invokeMethod<bool>(_METHOD_ISINSTALLED);
+  Future<bool> isInstalled() async {
+    return await _channel.invokeMethod<bool>(_METHOD_ISINSTALLED) ?? false;
   }
 
   /// 判断当前微信的版本是否支持OpenApi
-  Future<bool> isSupportApi() {
-    return _channel.invokeMethod<bool>(_METHOD_ISSUPPORTAPI);
+  Future<bool> isSupportApi() async {
+    return await _channel.invokeMethod<bool>(_METHOD_ISSUPPORTAPI) ?? false;
   }
 
   /// 打开微信
-  Future<bool> openWechat() {
-    return _channel.invokeMethod<bool>(_METHOD_OPENWECHAT);
+  Future<bool> openWechat() async {
+    return await _channel.invokeMethod<bool>(_METHOD_OPENWECHAT) ?? false;
   }
 
   // --- 微信APP授权登录
 
   /// 授权登录
   Future<void> auth({
-    @required List<String> scope,
-    String state,
+    required List<String> scope,
+    String? state,
   }) {
-    assert(scope?.isNotEmpty ?? false);
     return _channel.invokeMethod<void>(_METHOD_AUTH, <String, dynamic>{
       _ARGUMENT_KEY_SCOPE: scope.join(','), // Scope
       if (state != null) _ARGUMENT_KEY_STATE: state,
@@ -272,13 +267,10 @@ class Wechat {
 
   /// 获取 access_token（UnionID）
   Future<WechatAccessTokenResp> getAccessTokenUnionID({
-    @required String appId,
-    @required String appSecret,
-    @required String code,
+    required String appId,
+    required String appSecret,
+    required String code,
   }) {
-    assert(appId?.isNotEmpty ?? false);
-    assert(appSecret?.isNotEmpty ?? false);
-    assert(code?.isNotEmpty ?? false);
     return HttpClient()
         .getUrl(Uri.parse(
             'https://api.weixin.qq.com/sns/oauth2/access_token?appid=$appId&secret=$appSecret&code=$code&grant_type=authorization_code'))
@@ -286,7 +278,7 @@ class Wechat {
       return request.close();
     }).then((HttpClientResponse response) async {
       if (response.statusCode == HttpStatus.ok) {
-        String content = await utf8.decodeStream(response);
+        final String content = await utf8.decodeStream(response);
         return WechatAccessTokenResp.fromJson(
             json.decode(content) as Map<String, dynamic>);
       }
@@ -297,11 +289,9 @@ class Wechat {
 
   /// 刷新或续期 access_token 使用（UnionID）
   Future<WechatAccessTokenResp> refreshAccessTokenUnionID({
-    @required String appId,
-    @required String refreshToken,
+    required String appId,
+    required String refreshToken,
   }) {
-    assert(appId?.isNotEmpty ?? false);
-    assert(refreshToken?.isNotEmpty ?? false);
     return HttpClient()
         .getUrl(Uri.parse(
             'https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=$appId&grant_type=refresh_token&refresh_token=$refreshToken'))
@@ -309,7 +299,7 @@ class Wechat {
       return request.close();
     }).then((HttpClientResponse response) async {
       if (response.statusCode == HttpStatus.ok) {
-        String content = await utf8.decodeStream(response);
+        final String content = await utf8.decodeStream(response);
         return WechatAccessTokenResp.fromJson(
             json.decode(content) as Map<String, dynamic>);
       }
@@ -320,11 +310,9 @@ class Wechat {
 
   /// 获取用户个人信息（UnionID）
   Future<WechatUserInfoResp> getUserInfoUnionID({
-    @required String openId,
-    @required String accessToken,
+    required String openId,
+    required String accessToken,
   }) {
-    assert(openId?.isNotEmpty ?? false);
-    assert(accessToken?.isNotEmpty ?? false);
     return HttpClient()
         .getUrl(Uri.parse(
             'https://api.weixin.qq.com/sns/userinfo?access_token=$accessToken&openid=$openId'))
@@ -332,7 +320,7 @@ class Wechat {
       return request.close();
     }).then((HttpClientResponse response) async {
       if (response.statusCode == HttpStatus.ok) {
-        String content = await utf8.decodeStream(response);
+        final String content = await utf8.decodeStream(response);
         return WechatUserInfoResp.fromJson(
             json.decode(content) as Map<String, dynamic>);
       }
@@ -345,11 +333,9 @@ class Wechat {
 
   /// 获取 access_token
   Future<WechatAccessTokenResp> getAccessToken({
-    @required String appId,
-    @required String appSecret,
+    required String appId,
+    required String appSecret,
   }) {
-    assert(appId?.isNotEmpty ?? false);
-    assert(appSecret?.isNotEmpty ?? false);
     return HttpClient()
         .getUrl(Uri.parse(
             'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appId&secret=$appSecret'))
@@ -357,7 +343,7 @@ class Wechat {
       return request.close();
     }).then((HttpClientResponse response) async {
       if (response.statusCode == HttpStatus.ok) {
-        String content = await utf8.decodeStream(response);
+        final String content = await utf8.decodeStream(response);
         return WechatAccessTokenResp.fromJson(
             json.decode(content) as Map<String, dynamic>);
       }
@@ -368,9 +354,8 @@ class Wechat {
 
   /// 用上面的函数拿到的 access_token，获取 sdk_ticket
   Future<WechatTicketResp> getTicket({
-    @required String accessToken,
+    required String accessToken,
   }) {
-    assert(accessToken?.isNotEmpty ?? false);
     return HttpClient()
         .getUrl(Uri.parse(
             'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=$accessToken&type=2'))
@@ -378,7 +363,7 @@ class Wechat {
       return request.close();
     }).then((HttpClientResponse response) async {
       if (response.statusCode == HttpStatus.ok) {
-        String content = await utf8.decodeStream(response);
+        final String content = await utf8.decodeStream(response);
         return WechatTicketResp.fromJson(
             json.decode(content) as Map<String, dynamic>);
       }
@@ -389,18 +374,16 @@ class Wechat {
 
   /// 用上面函数拿到的 ticket，开始扫码登录
   Future<void> startQrauth({
-    @required String appId,
-    @required List<String> scope,
-    @required String ticket,
+    required String appId,
+    required List<String> scope,
+    required String ticket,
   }) {
-    assert(appId?.isNotEmpty ?? false);
-    assert(scope?.isNotEmpty ?? false);
-    assert(ticket?.isNotEmpty ?? false);
-    String noncestr = Uuid().v1().toString().replaceAll('-', '');
-    String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
+    final String noncestr = const Uuid().v1().toString().replaceAll('-', '');
+    final String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
     final String content =
         'appid=$appId&noncestr=$noncestr&sdk_ticket=$ticket&timestamp=$timestamp';
-    String signature = hex.encode(sha1.convert(utf8.encode(content)).bytes);
+    final String signature =
+        hex.encode(sha1.convert(utf8.encode(content)).bytes);
     return _channel.invokeMethod<void>(
       _METHOD_STARTQRAUTH,
       <String, dynamic>{
@@ -420,9 +403,9 @@ class Wechat {
 
   /// 打开指定网页
   Future<void> openUrl({
-    @required String url,
+    required String url,
   }) {
-    assert((url?.isNotEmpty ?? false) && url.length <= 10 * 1024);
+    assert(url.length <= 10 * 1024);
     return _channel.invokeMethod<void>(
       _METHOD_OPENURL,
       <String, dynamic>{
@@ -438,10 +421,10 @@ class Wechat {
 
   /// 分享 - 文本
   Future<void> shareText({
-    @required int scene,
-    @required String text,
+    required int scene,
+    required String text,
   }) {
-    assert((text?.isNotEmpty ?? false) && text.length <= 10 * 1024);
+    assert(text.length <= 10 * 1024);
     return _channel.invokeMethod<void>(
       _METHOD_SHARETEXT,
       <String, dynamic>{
@@ -453,12 +436,12 @@ class Wechat {
 
   /// 分享 - 图片
   Future<void> shareImage({
-    @required int scene,
-    String title,
-    String description,
-    Uint8List thumbData,
-    Uint8List imageData,
-    Uri imageUri,
+    required int scene,
+    String? title,
+    String? description,
+    Uint8List? thumbData,
+    Uint8List? imageData,
+    Uri? imageUri,
   }) {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
@@ -483,13 +466,13 @@ class Wechat {
 
   /// 分享 - 文件
   Future<void> shareFile({
-    @required int scene,
-    String title,
-    String description,
-    Uint8List thumbData,
-    Uint8List fileData,
-    Uri fileUri,
-    String fileExtension,
+    required int scene,
+    String? title,
+    String? description,
+    Uint8List? thumbData,
+    Uint8List? fileData,
+    Uri? fileUri,
+    String? fileExtension,
   }) {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
@@ -516,16 +499,16 @@ class Wechat {
 
   /// 分享 - Emoji/GIF
   Future<void> shareEmoji({
-    @required int scene,
-    String title,
-    String description,
-    @required Uint8List thumbData,
-    Uint8List emojiData,
-    Uri emojiUri,
+    required int scene,
+    String? title,
+    String? description,
+    required Uint8List thumbData,
+    Uint8List? emojiData,
+    Uri? emojiUri,
   }) {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
-    assert(thumbData != null && thumbData.lengthInBytes <= 32 * 1024);
+    assert(thumbData.lengthInBytes <= 32 * 1024);
     assert((emojiData != null && emojiData.lengthInBytes <= 10 * 1024 * 1024) ||
         (emojiUri != null &&
             emojiUri.isScheme(_SCHEME_FILE) &&
@@ -546,24 +529,20 @@ class Wechat {
 
   /// 分享 - 音乐
   Future<void> shareMediaMusic({
-    @required int scene,
-    String title,
-    String description,
-    Uint8List thumbData,
-    String musicUrl,
-    String musicDataUrl,
-    String musicLowBandUrl,
-    String musicLowBandDataUrl,
+    required int scene,
+    String? title,
+    String? description,
+    Uint8List? thumbData,
+    String? musicUrl,
+    String? musicDataUrl,
+    String? musicLowBandUrl,
+    String? musicLowBandDataUrl,
   }) {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
-    assert((musicUrl != null &&
-            musicUrl.isNotEmpty &&
-            musicUrl.length <= 10 * 1024) ||
-        (musicLowBandUrl != null &&
-            musicLowBandUrl.isNotEmpty &&
-            musicLowBandUrl.length <= 10 * 1024));
+    assert((musicUrl != null && musicUrl.length <= 10 * 1024) ||
+        (musicLowBandUrl != null && musicLowBandUrl.length <= 10 * 1024));
     return _channel.invokeMethod<void>(
       _METHOD_SHAREMUSIC,
       <String, dynamic>{
@@ -583,22 +562,18 @@ class Wechat {
 
   /// 分享 - 视频
   Future<void> shareVideo({
-    @required int scene,
-    String title,
-    String description,
-    Uint8List thumbData,
-    String videoUrl,
-    String videoLowBandUrl,
+    required int scene,
+    String? title,
+    String? description,
+    Uint8List? thumbData,
+    String? videoUrl,
+    String? videoLowBandUrl,
   }) {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
-    assert((videoUrl != null &&
-            videoUrl.isNotEmpty &&
-            videoUrl.length <= 10 * 1024) ||
-        (videoLowBandUrl != null &&
-            videoLowBandUrl.isNotEmpty &&
-            videoLowBandUrl.length <= 10 * 1024));
+    assert((videoUrl != null && videoUrl.length <= 10 * 1024) ||
+        (videoLowBandUrl != null && videoLowBandUrl.length <= 10 * 1024));
     return _channel.invokeMethod<void>(
       _METHOD_SHAREVIDEO,
       <String, dynamic>{
@@ -615,18 +590,16 @@ class Wechat {
 
   /// 分享 - 网页
   Future<void> shareWebpage({
-    @required int scene,
-    String title,
-    String description,
-    Uint8List thumbData,
-    @required String webpageUrl,
+    required int scene,
+    String? title,
+    String? description,
+    Uint8List? thumbData,
+    required String webpageUrl,
   }) {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
-    assert(webpageUrl != null &&
-        webpageUrl.isNotEmpty &&
-        webpageUrl.length <= 10 * 1024);
+    assert(webpageUrl.length <= 10 * 1024);
     return _channel.invokeMethod<void>(
       _METHOD_SHAREWEBPAGE,
       <String, dynamic>{
@@ -641,22 +614,20 @@ class Wechat {
 
   /// 分享 - 小程序 - 目前只支持分享到会话
   Future<void> shareMiniProgram({
-    @required int scene,
-    String title,
-    String description,
-    Uint8List thumbData,
-    @required String webpageUrl,
-    @required String userName,
-    String path,
-    Uint8List hdImageData,
+    required int scene,
+    String? title,
+    String? description,
+    Uint8List? thumbData,
+    required String webpageUrl,
+    required String userName,
+    String? path,
+    Uint8List? hdImageData,
     bool withShareTicket = false,
   }) {
     assert(scene == WechatScene.SESSION);
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
-    assert(webpageUrl != null && webpageUrl.isNotEmpty);
-    assert(userName != null && userName.isNotEmpty);
     assert(hdImageData == null || hdImageData.lengthInBytes <= 128 * 1024);
     return _channel.invokeMethod<void>(
       _METHOD_SHAREMINIPROGRAM,
@@ -676,11 +647,11 @@ class Wechat {
 
   /// 一次性订阅消息
   Future<void> subscribeMsg({
-    @required int scene,
-    @required String templateId,
-    String reserved,
+    required int scene,
+    required String templateId,
+    String? reserved,
   }) {
-    assert((templateId?.isNotEmpty ?? false) && templateId.length <= 1024);
+    assert(templateId.length <= 1024);
     assert(reserved == null || reserved.length <= 1024);
     return _channel.invokeMethod<void>(
       _METHOD_SUBSCRIBEMSG,
@@ -694,11 +665,10 @@ class Wechat {
 
   /// 打开小程序
   Future<void> launchMiniProgram({
-    @required String userName,
-    String path,
+    required String userName,
+    String? path,
     int type = WechatMiniProgram.release,
   }) {
-    assert(userName?.isNotEmpty ?? false);
     return _channel.invokeMethod<void>(
       _METHOD_LAUNCHMINIPROGRAM,
       <String, dynamic>{
@@ -712,21 +682,14 @@ class Wechat {
   /// 支付 - x.y.z-iOS-NoPay 版本下 iOS 调用会直接抛出异常 No implementation [MissingPluginException]
   /// 参数说明：https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_12&index=2
   Future<void> pay({
-    @required String appId,
-    @required String partnerId,
-    @required String prepayId,
-    @required String package,
-    @required String nonceStr,
-    @required String timeStamp,
-    @required String sign,
+    required String appId,
+    required String partnerId,
+    required String prepayId,
+    required String package,
+    required String nonceStr,
+    required String timeStamp,
+    required String sign,
   }) {
-    assert(appId?.isNotEmpty ?? false);
-    assert(partnerId?.isNotEmpty ?? false);
-    assert(prepayId?.isNotEmpty ?? false);
-    assert(package?.isNotEmpty ?? false);
-    assert(nonceStr?.isNotEmpty ?? false);
-    assert(timeStamp?.isNotEmpty ?? false);
-    assert(sign?.isNotEmpty ?? false);
     return _channel.invokeMethod<void>(
       _METHOD_PAY,
       <String, dynamic>{
