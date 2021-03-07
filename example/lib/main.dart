@@ -319,7 +319,6 @@ class _QrauthState extends State<Qrauth> {
                 ticket: ticket.ticket!,
               );
             },
-            style: ,
             child: const Text('got qr code'),
           ),
         ],
