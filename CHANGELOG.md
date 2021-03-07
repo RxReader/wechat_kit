@@ -26,7 +26,7 @@
 
 ## 1.1.2
 
-* [issues#49](https://github.com/v7lin/wechat_kit/issues/49)
+* [issues#49](https://github.com/rxreader/wechat_kit/issues/49)
 
 ## 1.1.1
 

@@ -1,24 +1,24 @@
 # wechat_kit
 
-[![Build Status](https://cloud.drone.io/api/badges/v7lin/wechat_kit/status.svg)](https://cloud.drone.io/v7lin/wechat_kit)
-[![Codecov](https://codecov.io/gh/v7lin/wechat_kit/branch/master/graph/badge.svg)](https://codecov.io/gh/v7lin/wechat_kit)
-[![GitHub Tag](https://img.shields.io/github/tag/v7lin/wechat_kit.svg)](https://github.com/v7lin/wechat_kit/releases)
+[![Build Status](https://cloud.drone.io/api/badges/rxreader/wechat_kit/status.svg)](https://cloud.drone.io/rxreader/wechat_kit)
+[![Codecov](https://codecov.io/gh/rxreader/wechat_kit/branch/master/graph/badge.svg)](https://codecov.io/gh/rxreader/wechat_kit)
+[![GitHub Tag](https://img.shields.io/github/tag/rxreader/wechat_kit.svg)](https://github.com/rxreader/wechat_kit/releases)
 [![Pub Package](https://img.shields.io/pub/v/wechat_kit.svg)](https://pub.dartlang.org/packages/wechat_kit)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/v7lin/wechat_kit/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/rxreader/wechat_kit/blob/master/LICENSE)
 
 flutter版微信SDK
 
 ## flutter toolkit
 
-* [flutter版微信SDK](https://github.com/v7lin/wechat_kit)
-* [flutter版腾讯(QQ)SDK](https://github.com/v7lin/tencent_kit)
-* [flutter版新浪微博SDK](https://github.com/v7lin/weibo_kit)
-* [flutter版支付宝SDK](https://github.com/v7lin/alipay_kit)
-* [flutter版walle渠道打包工具](https://github.com/v7lin/walle_kit)
+* [flutter版微信SDK](https://github.com/rxreader/wechat_kit)
+* [flutter版腾讯(QQ)SDK](https://github.com/rxreader/tencent_kit)
+* [flutter版新浪微博SDK](https://github.com/rxreader/weibo_kit)
+* [flutter版支付宝SDK](https://github.com/rxreader/alipay_kit)
+* [flutter版walle渠道打包工具](https://github.com/rxreader/walle_kit)
 
 ## dart/flutter 私服
 
-* [simple_pub_server](https://github.com/v7lin/simple_pub_server)
+* [simple_pub_server](https://github.com/rxreader/simple_pub_server)
 
 ## docs
 
@@ -104,7 +104,7 @@ Capabilities -> Associated Domain -> Domain -> applinks:${your applinks}
 dependencies:
   wechat_kit:
     git:
-      url: https://github.com/v7lin/wechat_kit.git
+      url: https://github.com/rxreader/wechat_kit.git
 ```
 
 * release
