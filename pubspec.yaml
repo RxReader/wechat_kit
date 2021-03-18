@@ -23,9 +23,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  image:
-  flutter_cache_manager:
-
   pedantic:
 
   build_runner:
