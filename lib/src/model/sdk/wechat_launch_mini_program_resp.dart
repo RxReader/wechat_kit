@@ -8,8 +8,8 @@ part 'wechat_launch_mini_program_resp.g.dart';
 )
 class WechatLaunchMiniProgramResp extends WechatSdkResp {
   const WechatLaunchMiniProgramResp({
-    int errorCode,
-    String errorMsg,
+    required int errorCode,
+    String? errorMsg,
     this.extMsg,
   }) : super(
           errorCode: errorCode,
@@ -19,7 +19,7 @@ class WechatLaunchMiniProgramResp extends WechatSdkResp {
   factory WechatLaunchMiniProgramResp.fromJson(Map<String, dynamic> json) =>
       _$WechatLaunchMiniProgramRespFromJson(json);
 
-  final String extMsg;
+  final String? extMsg;
 
   @override
   Map<String, dynamic> toJson() => _$WechatLaunchMiniProgramRespToJson(this);

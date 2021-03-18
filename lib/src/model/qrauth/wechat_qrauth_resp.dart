@@ -9,7 +9,7 @@ part 'wechat_qrauth_resp.g.dart';
 )
 class WechatQrauthResp {
   const WechatQrauthResp({
-    this.errorCode,
+    required this.errorCode,
     this.authCode,
   });
 
@@ -36,7 +36,7 @@ class WechatQrauthResp {
 
   @JsonKey(defaultValue: ERRORCODE_OK)
   final int errorCode;
-  final String authCode;
+  final String? authCode;
 
   bool get isSuccessful => errorCode == ERRORCODE_OK;
 

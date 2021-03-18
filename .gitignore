@@ -6,6 +6,6 @@
 
 build/
 
-# custom
-.idea/
+#
 *.iml
+.idea/

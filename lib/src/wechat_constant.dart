@@ -22,7 +22,7 @@ class WechatScene {
 }
 
 class WechatBizProfileType {
-  WechatBizProfileType._();
+  const WechatBizProfileType._();
 
   /// 普通公众号
   static const int NORMAL = 0;

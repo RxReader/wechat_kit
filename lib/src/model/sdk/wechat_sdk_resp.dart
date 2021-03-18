@@ -9,7 +9,7 @@ part 'wechat_sdk_resp.g.dart';
 )
 class WechatSdkResp {
   const WechatSdkResp({
-    this.errorCode,
+    required this.errorCode,
     this.errorMsg,
   });
 
@@ -39,7 +39,7 @@ class WechatSdkResp {
   final int errorCode;
 
   /// 错误提示字符串
-  final String errorMsg;
+  final String? errorMsg;
 
   bool get isSuccessful => errorCode == ERRORCODE_SUCCESS;
 

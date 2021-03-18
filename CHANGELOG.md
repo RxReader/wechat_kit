@@ -1,3 +1,8 @@
+## 3.0.0-iOS-NoPay
+
+* nullsafety
+* 不再支持 Android embedding v1
+
 ## 2.0.0-iOS-NoPay+1
 
 * iOS优化
@@ -21,7 +26,7 @@
 
 ## 1.1.2
 
-* [issues#49](https://github.com/v7lin/wechat_kit/issues/49)
+* [issues#49](https://github.com/rxreader/wechat_kit/issues/49)
 
 ## 1.1.1
 

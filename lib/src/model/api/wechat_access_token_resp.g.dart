@@ -9,13 +9,13 @@ part of 'wechat_access_token_resp.dart';
 WechatAccessTokenResp _$WechatAccessTokenRespFromJson(
     Map<String, dynamic> json) {
   return WechatAccessTokenResp(
-    errcode: json['errcode'] as int ?? 0,
-    errmsg: json['errmsg'] as String,
-    openid: json['openid'] as String,
-    scope: json['scope'] as String,
-    accessToken: json['access_token'] as String,
-    refreshToken: json['refresh_token'] as String,
-    expiresIn: json['expires_in'] as int,
+    errcode: json['errcode'] as int? ?? 0,
+    errmsg: json['errmsg'] as String?,
+    openid: json['openid'] as String?,
+    scope: json['scope'] as String?,
+    accessToken: json['access_token'] as String?,
+    refreshToken: json['refresh_token'] as String?,
+    expiresIn: json['expires_in'] as int?,
   );
 }
 
