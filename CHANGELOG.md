@@ -1,4 +1,8 @@
-## 3.0.0-iOS-NoPay
+## 2.1.0
+
+* 同 2.1.0-iOS-NoPay
+
+## 2.1.0-iOS-NoPay
 
 * nullsafety
 * 不再支持 Android embedding v1
