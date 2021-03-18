@@ -8,12 +8,12 @@ part of 'wechat_auth_resp.dart';
 
 WechatAuthResp _$WechatAuthRespFromJson(Map<String, dynamic> json) {
   return WechatAuthResp(
-    errorCode: json['errorCode'] as int ?? 0,
-    errorMsg: json['errorMsg'] as String,
-    code: json['code'] as String,
-    state: json['state'] as String,
-    lang: json['lang'] as String,
-    country: json['country'] as String,
+    errorCode: json['errorCode'] as int? ?? 0,
+    errorMsg: json['errorMsg'] as String?,
+    code: json['code'] as String?,
+    state: json['state'] as String?,
+    lang: json['lang'] as String?,
+    country: json['country'] as String?,
   );
 }
 

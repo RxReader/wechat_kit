@@ -16,18 +16,8 @@ steps:
 #  - name: pub-cache
 #    path: /opt/flutter/.pub-cache
 #  commands:
+#  - flutter pub run build_runner build clean
 #  - flutter pub run build_runner build --delete-conflicting-outputs
-
-#- name: android-check
-#  image: v7lin/flutter:1.17.3-stable
-#  volumes:
-#  - name: pub-cache
-#    path: /opt/flutter/.pub-cache
-#  - name: gradle
-#    path: /root/.gradle
-#  commands:
-#  - cd example/android/
-#  - ./gradlew :wechat_kit:check
 
 # docker run --rm -it -v ${PWD}:/src v7lin/clang:5.0.2-r0 sh -c "clang-format -style=file -i src/Classes/*.h src/Classes/*.m"
 #- name: ios-format

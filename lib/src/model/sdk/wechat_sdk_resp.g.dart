@@ -8,8 +8,8 @@ part of 'wechat_sdk_resp.dart';
 
 WechatSdkResp _$WechatSdkRespFromJson(Map<String, dynamic> json) {
   return WechatSdkResp(
-    errorCode: json['errorCode'] as int ?? 0,
-    errorMsg: json['errorMsg'] as String,
+    errorCode: json['errorCode'] as int? ?? 0,
+    errorMsg: json['errorMsg'] as String?,
   );
 }
 

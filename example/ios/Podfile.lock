@@ -8,10 +8,10 @@ PODS:
   - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
-  - wechat_kit (3.0.0):
+  - wechat_kit (2.1.0):
     - Flutter
-    - wechat_kit/vendor (= 3.0.0)
-  - wechat_kit/vendor (3.0.0):
+    - wechat_kit/vendor (= 2.1.0)
+  - wechat_kit/vendor (2.1.0):
     - Flutter
 
 DEPENDENCIES:
@@ -39,7 +39,7 @@ SPEC CHECKSUMS:
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
-  wechat_kit: 558c2658f3a35b86ef37fb572e38c8d9e8ff2dff
+  wechat_kit: b1ddb659de636188483215784b870a789b1ecb76
 
 PODFILE CHECKSUM: 8e679eca47255a8ca8067c4c67aab20e64cb974d
 

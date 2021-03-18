@@ -8,8 +8,8 @@ part of 'wechat_qrauth_resp.dart';
 
 WechatQrauthResp _$WechatQrauthRespFromJson(Map<String, dynamic> json) {
   return WechatQrauthResp(
-    errorCode: json['errorCode'] as int ?? 0,
-    authCode: json['authCode'] as String,
+    errorCode: json['errorCode'] as int? ?? 0,
+    authCode: json['authCode'] as String?,
   );
 }
 

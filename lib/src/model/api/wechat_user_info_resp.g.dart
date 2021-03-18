@@ -8,17 +8,17 @@ part of 'wechat_user_info_resp.dart';
 
 WechatUserInfoResp _$WechatUserInfoRespFromJson(Map<String, dynamic> json) {
   return WechatUserInfoResp(
-    errcode: json['errcode'] as int ?? 0,
-    errmsg: json['errmsg'] as String,
-    openid: json['openid'] as String,
-    nickname: json['nickname'] as String,
-    sex: json['sex'] as int,
-    province: json['province'] as String,
-    city: json['city'] as String,
-    country: json['country'] as String,
-    headimgurl: json['headimgurl'] as String,
-    privilege: json['privilege'] as List,
-    unionid: json['unionid'] as String,
+    errcode: json['errcode'] as int? ?? 0,
+    errmsg: json['errmsg'] as String?,
+    openid: json['openid'] as String?,
+    nickname: json['nickname'] as String?,
+    sex: json['sex'] as int?,
+    province: json['province'] as String?,
+    city: json['city'] as String?,
+    country: json['country'] as String?,
+    headimgurl: json['headimgurl'] as String?,
+    privilege: json['privilege'] as List<dynamic>?,
+    unionid: json['unionid'] as String?,
   );
 }
 
