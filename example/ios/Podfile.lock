@@ -13,8 +13,6 @@ PODS:
     - wechat_kit/vendor (= 2.2.0)
   - wechat_kit/vendor (2.2.0):
     - Flutter
-    - WechatOpenSDK (~> 1.8.7.1)
-  - WechatOpenSDK (1.8.7.1)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -25,7 +23,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - FMDB
-    - WechatOpenSDK
 
 EXTERNAL SOURCES:
   Flutter:
@@ -42,8 +39,7 @@ SPEC CHECKSUMS:
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
-  wechat_kit: bb7fe66e87eebb83952967b2be5d87635926b645
-  WechatOpenSDK: 6a4d1436c15b3b5fe2a0bd383f3046010186da44
+  wechat_kit: 61433ed9759b167e8ad58b784ddaeb393dce47d8
 
 PODFILE CHECKSUM: 8e679eca47255a8ca8067c4c67aab20e64cb974d
 

@@ -330,7 +330,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "2.2.0"
+    version: "2.2.0-iOS-NoPay"
   win32:
     dependency: transitive
     description:
