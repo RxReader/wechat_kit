@@ -23,7 +23,6 @@ class Wechat {
   ///
   Wechat._();
 
-  ///
   static Wechat get instance => _instance;
 
   static final Wechat _instance = Wechat._();
