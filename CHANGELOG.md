@@ -1,3 +1,7 @@
+## 2.2.0
+
+* break change: Wechat 单例
+
 ## 2.1.0
 
 * 同 2.1.0-iOS-NoPay

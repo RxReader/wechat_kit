@@ -21,9 +21,12 @@ import 'package:wechat_kit/src/wechat_constant.dart';
 ///
 class Wechat {
   ///
-  Wechat() {
-    _channel.setMethodCallHandler(_handleMethod);
-  }
+  Wechat._();
+
+  ///
+  static Wechat get instance => _instance;
+
+  static final Wechat _instance = Wechat._();
 
   static const String _METHOD_REGISTERAPP = 'registerApp';
   static const String _METHOD_ISINSTALLED = 'isInstalled';
@@ -103,8 +106,9 @@ class Wechat {
 
   static const String _SCHEME_FILE = 'file';
 
-  final MethodChannel _channel =
-      const MethodChannel('v7lin.github.io/wechat_kit');
+  late final MethodChannel _channel =
+      const MethodChannel('v7lin.github.io/wechat_kit')
+        ..setMethodCallHandler(_handleMethod);
 
   final StreamController<WechatAuthResp> _authRespStreamController =
       StreamController<WechatAuthResp>.broadcast();

@@ -1,5 +1,5 @@
 group 'io.github.v7lin.wechat_kit'
-version '2.1.0'
+version '2.2.0'
 
 buildscript {
     repositories {

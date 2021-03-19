@@ -98,6 +98,10 @@ Capabilities -> Associated Domain -> Domain -> applinks:${your applinks}
 
 ## flutter
 
+* break change
+    * 2.2.0: Wechat 单例
+    * 2.1.0: nullsafety & 不再支持 Android embedding v1
+
 * snapshot
 
 ```
