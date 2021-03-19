@@ -183,7 +183,7 @@ class _HomeState extends State<Home> {
               final File file = await DefaultCacheManager().getSingleFile(
                   'https://n.sinaimg.cn/tech/transform/695/w467h228/20191119/bf27-iipztfe9404360.gif');
               final image.Image thumbnail =
-                  image.decodeGif(file.readAsBytesSync())!;
+                  image.decodeImage(file.readAsBytesSync())!;
               Uint8List thumbData = thumbnail.getBytes();
               if (thumbData.length > 32 * 1024) {
                 thumbData = Uint8List.fromList(image.encodeJpg(thumbnail,
