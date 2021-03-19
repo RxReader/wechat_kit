@@ -38,6 +38,7 @@ analyzer:
     sdk_version_async_exported_from_core: ignore
   exclude:
     - "lib/*.g.dart"
+    - "lib/**/*.g.dart"
 
 linter:
   rules:
