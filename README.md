@@ -120,7 +120,8 @@ dependencies:
 
 ```
 dependencies:
-  wechat_kit: ^${latestTag}-iOS-NoPay
+  # 请不要加 ^
+  wechat_kit: ${latestTag}-iOS-NoPay
 ```
 
 * example
