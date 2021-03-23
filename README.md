@@ -1,7 +1,5 @@
 # wechat_kit
 
-[![Build Status](https://cloud.drone.io/api/badges/rxreader/wechat_kit/status.svg)](https://cloud.drone.io/rxreader/wechat_kit)
-[![Codecov](https://codecov.io/gh/rxreader/wechat_kit/branch/master/graph/badge.svg)](https://codecov.io/gh/rxreader/wechat_kit)
 [![GitHub Tag](https://img.shields.io/github/tag/rxreader/wechat_kit.svg)](https://github.com/rxreader/wechat_kit/releases)
 [![Pub Package](https://img.shields.io/pub/v/wechat_kit.svg)](https://pub.dartlang.org/packages/wechat_kit)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/rxreader/wechat_kit/blob/master/LICENSE)
