@@ -625,6 +625,7 @@ class Wechat {
     required String userName,
     String? path,
     Uint8List? hdImageData,
+    int type = WechatMiniProgram.release,
     bool withShareTicket = false,
   }) {
     assert(scene == WechatScene.SESSION);
@@ -644,6 +645,7 @@ class Wechat {
         if (path != null) _ARGUMENT_KEY_PATH: path,
         if (hdImageData != null) _ARGUMENT_KEY_HDIMAGEDATA: hdImageData,
         _ARGUMENT_KEY_WITHSHARETICKET: withShareTicket,
+        _ARGUMENT_KEY_TYPE: type,
       },
     );
   }

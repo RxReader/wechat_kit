@@ -472,6 +472,7 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, MethodCall
             object.webpageUrl = call.argument(ARGUMENT_KEY_WEBPAGEURL);
             object.userName = call.argument(ARGUMENT_KEY_USERNAME);
             object.path = call.argument(ARGUMENT_KEY_PATH);
+            object.miniprogramType = call.argument(ARGUMENT_KEY_TYPE);
             object.withShareTicket = call.argument(ARGUMENT_KEY_WITHSHARETICKET);
             byte[] hdImageData = call.argument(ARGUMENT_KEY_HDIMAGEDATA);
             if (hdImageData != null) {
