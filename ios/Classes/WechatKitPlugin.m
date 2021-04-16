@@ -93,9 +93,10 @@ static NSString *const ARGUMENT_KEY_WEBPAGEURL = @"webpageUrl";
 static NSString *const ARGUMENT_KEY_PATH = @"path";
 static NSString *const ARGUMENT_KEY_HDIMAGEDATA = @"hdImageData";
 static NSString *const ARGUMENT_KEY_WITHSHARETICKET = @"withShareTicket";
+static NSString *const ARGUMENT_KEY_TYPE = @"type";
+static NSString *const ARGUMENT_KEY_DISABLEFORWARD = @"disableForward";
 static NSString *const ARGUMENT_KEY_TEMPLATEID = @"templateId";
 static NSString *const ARGUMENT_KEY_RESERVED = @"reserved";
-static NSString *const ARGUMENT_KEY_TYPE = @"type";
 #ifndef NO_PAY
 static NSString *const ARGUMENT_KEY_PARTNERID = @"partnerId";
 static NSString *const ARGUMENT_KEY_PREPAYID = @"prepayId";
@@ -315,15 +316,17 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
         mediaObject.webpageUrl = call.arguments[ARGUMENT_KEY_WEBPAGEURL];
         mediaObject.userName = call.arguments[ARGUMENT_KEY_USERNAME];
         mediaObject.path = call.arguments[ARGUMENT_KEY_PATH];
-        NSNumber *miniProgramType = call.arguments[ARGUMENT_KEY_TYPE];
-        mediaObject.miniProgramType = miniProgramType.unsignedIntegerValue;
         FlutterStandardTypedData *hdImageData =
             call.arguments[ARGUMENT_KEY_HDIMAGEDATA];
         if (hdImageData != nil) {
             mediaObject.hdImageData = hdImageData.data;
         }
         NSNumber *withShareTicket = call.arguments[ARGUMENT_KEY_WITHSHARETICKET];
-        mediaObject.withShareTicket = [withShareTicket boolValue];
+        mediaObject.withShareTicket = withShareTicket.boolValue;
+        NSNumber *miniProgramType = call.arguments[ARGUMENT_KEY_TYPE];
+        mediaObject.miniProgramType = miniProgramType.unsignedIntegerValue;
+        NSNumber *disableForward = call.arguments[ARGUMENT_KEY_DISABLEFORWARD];
+        mediaObject.disableForward = disableForward.boolValue;
         message.mediaObject = mediaObject;
     }
     req.message = message;

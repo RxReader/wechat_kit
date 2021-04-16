@@ -122,9 +122,10 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, MethodCall
     private static final String ARGUMENT_KEY_PATH = "path";
     private static final String ARGUMENT_KEY_HDIMAGEDATA = "hdImageData";
     private static final String ARGUMENT_KEY_WITHSHARETICKET = "withShareTicket";
+    private static final String ARGUMENT_KEY_TYPE = "type";
+    private static final String ARGUMENT_KEY_DISABLEFORWARD = "disableForward";
     private static final String ARGUMENT_KEY_TEMPLATEID = "templateId";
     private static final String ARGUMENT_KEY_RESERVED = "reserved";
-    private static final String ARGUMENT_KEY_TYPE = "type";
     private static final String ARGUMENT_KEY_PARTNERID = "partnerId";
     private static final String ARGUMENT_KEY_PREPAYID = "prepayId";
     //    private static final String ARGUMENT_KEY_NONCESTR = "noncestr";
@@ -472,12 +473,13 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, MethodCall
             object.webpageUrl = call.argument(ARGUMENT_KEY_WEBPAGEURL);
             object.userName = call.argument(ARGUMENT_KEY_USERNAME);
             object.path = call.argument(ARGUMENT_KEY_PATH);
-            object.miniprogramType = call.argument(ARGUMENT_KEY_TYPE);
-            object.withShareTicket = call.argument(ARGUMENT_KEY_WITHSHARETICKET);
             byte[] hdImageData = call.argument(ARGUMENT_KEY_HDIMAGEDATA);
             if (hdImageData != null) {
                 message.thumbData = hdImageData;
             }
+            object.withShareTicket = call.argument(ARGUMENT_KEY_WITHSHARETICKET);
+            object.miniprogramType = call.argument(ARGUMENT_KEY_TYPE);
+            object.disableforward = call.argument(ARGUMENT_KEY_DISABLEFORWARD);
             message.mediaObject = object;
         }
         req.message = message;

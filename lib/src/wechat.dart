@@ -90,9 +90,10 @@ class Wechat {
   static const String _ARGUMENT_KEY_PATH = 'path';
   static const String _ARGUMENT_KEY_HDIMAGEDATA = 'hdImageData';
   static const String _ARGUMENT_KEY_WITHSHARETICKET = 'withShareTicket';
+  static const String _ARGUMENT_KEY_TYPE = 'type';
+  static const String _ARGUMENT_KEY_DISABLEFORWARD = 'disableForward';
   static const String _ARGUMENT_KEY_TEMPLATEID = 'templateId';
   static const String _ARGUMENT_KEY_RESERVED = 'reserved';
-  static const String _ARGUMENT_KEY_TYPE = 'type';
   static const String _ARGUMENT_KEY_PARTNERID = 'partnerId';
   static const String _ARGUMENT_KEY_PREPAYID = 'prepayId';
 
@@ -625,8 +626,9 @@ class Wechat {
     required String userName,
     String? path,
     Uint8List? hdImageData,
-    int type = WechatMiniProgram.release,
     bool withShareTicket = false,
+    int type = WechatMiniProgram.release,
+    bool disableForward = false,
   }) {
     assert(scene == WechatScene.SESSION);
     assert(title == null || title.length <= 512);
@@ -646,6 +648,7 @@ class Wechat {
         if (hdImageData != null) _ARGUMENT_KEY_HDIMAGEDATA: hdImageData,
         _ARGUMENT_KEY_WITHSHARETICKET: withShareTicket,
         _ARGUMENT_KEY_TYPE: type,
+        _ARGUMENT_KEY_DISABLEFORWARD: disableForward,
       },
     );
   }
