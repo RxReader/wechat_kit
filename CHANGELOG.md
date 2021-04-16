@@ -1,3 +1,7 @@
+## 2.3.0-iOS-NoPay
+
+* fix ios dependency
+
 ## 2.2.1-iOS-NoPay
 
 * 优化小程序分享
