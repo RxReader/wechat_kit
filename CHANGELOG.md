@@ -1,3 +1,7 @@
+## 2.3.0
+
+* 同 2.3.0-iOS-NoPay
+
 ## 2.3.0-iOS-NoPay
 
 * fix ios dependency
