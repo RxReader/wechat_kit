@@ -479,7 +479,8 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, MethodCall
             }
             object.withShareTicket = call.argument(ARGUMENT_KEY_WITHSHARETICKET);
             object.miniprogramType = call.argument(ARGUMENT_KEY_TYPE);
-            object.disableforward = call.argument(ARGUMENT_KEY_DISABLEFORWARD);
+            boolean disableforward = call.argument(ARGUMENT_KEY_DISABLEFORWARD);
+            object.disableforward = disableforward ? 1 : 0;
             message.mediaObject = object;
         }
         req.message = message;

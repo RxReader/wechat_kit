@@ -1,3 +1,11 @@
+## 2.3.1
+
+* 同 2.3.1-iOS-NoPay
+
+## 2.3.1-iOS-NoPay
+
+* bugfix
+
 ## 2.3.0
 
 * 同 2.3.0-iOS-NoPay
