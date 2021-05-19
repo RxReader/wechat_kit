@@ -27,7 +27,7 @@
 
         <provider
             android:name=".WechatFileProvider"
-            android:authorities="${applicationId}.WechatFileProvider"
+            android:authorities="${applicationId}.wechat_kit.WechatFileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
 
