@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <style name="wechat_kit.Theme.Transparent" parent="android:Theme.Translucent.NoTitleBar">
         <!--<item name="android:background">@android:color/transparent</item>-->
