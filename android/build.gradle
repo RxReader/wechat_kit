@@ -4,7 +4,6 @@ version '2.3.1'
 buildscript {
     repositories {
         google()
-        jcenter() // jcenter于2021/5/1关停
         mavenCentral()
     }
 
@@ -16,7 +15,6 @@ buildscript {
 rootProject.allprojects {
     repositories {
         google()
-        jcenter() // jcenter于2021/5/1关停
         mavenCentral()
     }
 }
