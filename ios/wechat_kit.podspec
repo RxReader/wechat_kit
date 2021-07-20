@@ -27,9 +27,9 @@ A powerful Flutter plugin allowing developers to auth/share/pay with natvie Andr
   # v1.8.7.1_NoPay
   s.static_framework = true
   s.subspec 'vendor' do |sp|
-    sp.source_files = 'Libraries/**/*.h'
-    sp.public_header_files = 'Libraries/**/*.h'
-    sp.vendored_libraries = 'Libraries/**/*.a'
+    sp.source_files = 'Libraries/OpenSDK1.9.2_NoPay/*.h'
+    sp.public_header_files = 'Libraries/OpenSDK1.9.2_NoPay/*.h'
+    sp.vendored_libraries = 'Libraries/OpenSDK1.9.2_NoPay/*.a'
     sp.frameworks = 'CoreGraphics', 'Security', 'WebKit'
     sp.libraries = 'c++', 'z', 'sqlite3.0'
     sp.pod_target_xcconfig = {

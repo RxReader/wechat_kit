@@ -30,6 +30,7 @@ class Wechat {
   static const String _METHOD_REGISTERAPP = 'registerApp';
   static const String _METHOD_ISINSTALLED = 'isInstalled';
   static const String _METHOD_ISSUPPORTAPI = 'isSupportApi';
+  static const String _METHOD_ISSUPPORTSTATEAPI = 'isSupportStateAPI';
   static const String _METHOD_OPENWECHAT = 'openWechat';
   static const String _METHOD_AUTH = 'auth';
   static const String _METHOD_STARTQRAUTH = 'startQrauth';
@@ -46,6 +47,8 @@ class Wechat {
   static const String _METHOD_SHAREMINIPROGRAM = 'shareMiniProgram';
   static const String _METHOD_SUBSCRIBEMSG = 'subscribeMsg';
   static const String _METHOD_LAUNCHMINIPROGRAM = 'launchMiniProgram';
+  static const String _METHOD_OPENCUSTOMERSERVICECHAT =
+      'openCustomerServiceChat';
   static const String _METHOD_PAY = 'pay';
 
   static const String _METHOD_ONAUTHRESP = 'onAuthResp';
@@ -54,6 +57,8 @@ class Wechat {
   static const String _METHOD_ONSUBSCRIBEMSGRESP = 'onSubscribeMsgResp';
   static const String _METHOD_ONLAUNCHMINIPROGRAMRESP =
       'onLaunchMiniProgramResp';
+  static const String _METHOD_ONOPENCUSTOMERSERVICECHATRESP =
+      'onOpenCustomerServiceChatResp';
   static const String _METHOD_ONPAYRESP = 'onPayResp';
   static const String _METHOD_ONAUTHGOTQRCODE = 'onAuthGotQrcode';
   static const String _METHOD_ONAUTHQRCODESCANNED = 'onAuthQrcodeScanned';
@@ -94,6 +99,7 @@ class Wechat {
   static const String _ARGUMENT_KEY_DISABLEFORWARD = 'disableForward';
   static const String _ARGUMENT_KEY_TEMPLATEID = 'templateId';
   static const String _ARGUMENT_KEY_RESERVED = 'reserved';
+  static const String _ARGUMENT_KEY_CORPID = 'corpId';
   static const String _ARGUMENT_KEY_PARTNERID = 'partnerId';
   static const String _ARGUMENT_KEY_PREPAYID = 'prepayId';
 
@@ -126,6 +132,10 @@ class Wechat {
   final StreamController<WechatLaunchMiniProgramResp>
       _launchMiniProgramRespStreamController =
       StreamController<WechatLaunchMiniProgramResp>.broadcast();
+
+  final StreamController<WechatSdkResp>
+      _openCustomerServiceChatRespStreamController =
+      StreamController<WechatSdkResp>.broadcast();
 
   final StreamController<WechatPayResp> _payRespStreamController =
       StreamController<WechatPayResp>.broadcast();
@@ -178,6 +188,10 @@ class Wechat {
                 (call.arguments as Map<dynamic, dynamic>)
                     .cast<String, dynamic>()));
         break;
+      case _METHOD_ONOPENCUSTOMERSERVICECHATRESP:
+        _openCustomerServiceChatRespStreamController.add(WechatSdkResp.fromJson(
+            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
+        break;
       case _METHOD_ONPAYRESP:
         _payRespStreamController.add(WechatPayResp.fromJson(
             (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
@@ -221,6 +235,11 @@ class Wechat {
     return _launchMiniProgramRespStreamController.stream;
   }
 
+  /// 打开微信客服
+  Stream<WechatSdkResp> openCustomerServiceChatResp() {
+    return _openCustomerServiceChatRespStreamController.stream;
+  }
+
   /// 支付
   Stream<WechatPayResp> payResp() {
     return _payRespStreamController.stream;
@@ -249,6 +268,11 @@ class Wechat {
   /// 判断当前微信的版本是否支持OpenApi
   Future<bool> isSupportApi() async {
     return await _channel.invokeMethod<bool>(_METHOD_ISSUPPORTAPI) ?? false;
+  }
+
+  /// 判断当前微信的版本是否支持分享微信状态功能
+  Future<bool> isSupportStateAPI() async {
+    return await _channel.invokeMethod<bool>(_METHOD_ISSUPPORTSTATEAPI) ?? false;
   }
 
   /// 打开微信
@@ -683,6 +707,20 @@ class Wechat {
         _ARGUMENT_KEY_USERNAME: userName,
         if (path != null) _ARGUMENT_KEY_PATH: path,
         _ARGUMENT_KEY_TYPE: type,
+      },
+    );
+  }
+
+  /// 打开微信客服
+  Future<void> openCustomerServiceChat({
+    required String corpId,
+    required String url,
+  }) {
+    return _channel.invokeMethod<void>(
+      _METHOD_OPENCUSTOMERSERVICECHAT,
+      <String, dynamic>{
+        _ARGUMENT_KEY_CORPID: corpId,
+        _ARGUMENT_KEY_URL: url,
       },
     );
   }

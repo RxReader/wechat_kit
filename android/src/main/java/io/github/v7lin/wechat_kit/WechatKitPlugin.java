@@ -22,6 +22,7 @@ import com.tencent.mm.opensdk.modelbiz.OpenRankList;
 import com.tencent.mm.opensdk.modelbiz.OpenWebview;
 import com.tencent.mm.opensdk.modelbiz.SubscribeMessage;
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
+import com.tencent.mm.opensdk.modelbiz.WXOpenCustomerServiceChat;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXEmojiObject;
@@ -62,6 +63,7 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, MethodCall
     private static final String METHOD_REGISTERAPP = "registerApp";
     private static final String METHOD_ISINSTALLED = "isInstalled";
     private static final String METHOD_ISSUPPORTAPI = "isSupportApi";
+    private static final String METHOD_ISSUPPORTSTATEAPI = "isSupportStateAPI";
     private static final String METHOD_OPENWECHAT = "openWechat";
     private static final String METHOD_AUTH = "auth";
     private static final String METHOD_STARTQRAUTH = "startQrauth";
@@ -78,6 +80,7 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, MethodCall
     private static final String METHOD_SHAREMINIPROGRAM = "shareMiniProgram";
     private static final String METHOD_SUBSCRIBEMSG = "subscribeMsg";
     private static final String METHOD_LAUNCHMINIPROGRAM = "launchMiniProgram";
+    private static final String METHOD_OPENCUSTOMERSERVICECHAT = "openCustomerServiceChat";
     private static final String METHOD_PAY = "pay";
 
     private static final String METHOD_ONAUTHRESP = "onAuthResp";
@@ -85,6 +88,7 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, MethodCall
     private static final String METHOD_ONSHAREMSGRESP = "onShareMsgResp";
     private static final String METHOD_ONSUBSCRIBEMSGRESP = "onSubscribeMsgResp";
     private static final String METHOD_ONLAUNCHMINIPROGRAMRESP = "onLaunchMiniProgramResp";
+    private static final String METHOD_ONOPENCUSTOMERSERVICECHATRESP = "onOpenCustomerServiceChatResp";
     private static final String METHOD_ONPAYRESP = "onPayResp";
     private static final String METHOD_ONAUTHGOTQRCODE = "onAuthGotQrcode";
     private static final String METHOD_ONAUTHQRCODESCANNED = "onAuthQrcodeScanned";
@@ -126,6 +130,7 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, MethodCall
     private static final String ARGUMENT_KEY_DISABLEFORWARD = "disableForward";
     private static final String ARGUMENT_KEY_TEMPLATEID = "templateId";
     private static final String ARGUMENT_KEY_RESERVED = "reserved";
+    private static final String ARGUMENT_KEY_CORPID = "corpId";
     private static final String ARGUMENT_KEY_PARTNERID = "partnerId";
     private static final String ARGUMENT_KEY_PREPAYID = "prepayId";
     //    private static final String ARGUMENT_KEY_NONCESTR = "noncestr";
@@ -250,6 +255,10 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, MethodCall
                 if (channel != null) {
                     channel.invokeMethod(METHOD_ONLAUNCHMINIPROGRAMRESP, map);
                 }
+            } else if (resp instanceof WXOpenCustomerServiceChat.Resp) {
+                if (channel != null) {
+                    channel.invokeMethod(METHOD_ONOPENCUSTOMERSERVICECHATRESP, map);
+                }
             } else if (resp instanceof PayResp) {
                 // 支付
                 PayResp payResp = (PayResp) resp;
@@ -290,6 +299,8 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, MethodCall
             result.success(iwxapi != null && iwxapi.isWXAppInstalled());
         } else if (METHOD_ISSUPPORTAPI.equals(call.method)) {
             result.success(iwxapi != null && iwxapi.getWXAppSupportAPI() >= Build.OPENID_SUPPORTED_SDK_INT);
+        } else if (METHOD_ISSUPPORTSTATEAPI.equals(call.method)) {
+            result.success(iwxapi != null && iwxapi.getWXAppSupportAPI() >= Build.SUPPORTED_SEND_TO_STATUS);
         } else if (METHOD_OPENWECHAT.equals(call.method)) {
             result.success(iwxapi != null && iwxapi.openWXApp());
         } else if (METHOD_AUTH.equals(call.method)) {
@@ -315,6 +326,8 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, MethodCall
             handleSubscribeMsgCall(call, result);
         } else if (METHOD_LAUNCHMINIPROGRAM.equals(call.method)) {
             handleLaunchMiniProgramCall(call, result);
+        } else if (METHOD_OPENCUSTOMERSERVICECHAT.equals(call.method)) {
+            handleOpenCustomerServiceChat(call, result);
         } else if (METHOD_PAY.equals(call.method)) {
             handlePayCall(call, result);
         } else {
@@ -506,6 +519,16 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, MethodCall
         req.userName = call.argument(ARGUMENT_KEY_USERNAME);
         req.path = call.argument(ARGUMENT_KEY_PATH);
         req.miniprogramType = call.argument(ARGUMENT_KEY_TYPE);
+        if (iwxapi != null) {
+            iwxapi.sendReq(req);
+        }
+        result.success(null);
+    }
+
+    private void handleOpenCustomerServiceChat(@NonNull MethodCall call, @NonNull Result result) {
+        WXOpenCustomerServiceChat.Req req = new WXOpenCustomerServiceChat.Req();
+        req.corpId = call.argument(ARGUMENT_KEY_CORPID);
+        req.url = call.argument(ARGUMENT_KEY_URL);
         if (iwxapi != null) {
             iwxapi.sendReq(req);
         }
