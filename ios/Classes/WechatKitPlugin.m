@@ -2,10 +2,9 @@
 #ifdef NO_PAY
 #import <WXApi.h>
 #import <WechatAuthSDK.h>
-#import <WXApiObject.h>
 #else
-#import <WechatOpenSDK/WXApi.h>
-#import <WechatOpenSDK/WechatAuthSDK.h>
+#import <WXApi.h>
+#import <WechatAuthSDK.h>
 #endif
 
 @interface WechatKitPlugin () <WXApiDelegate, WechatAuthAPIDelegate>
@@ -50,6 +49,8 @@ static NSString *const METHOD_OPENCUSTOMERSERVICECHAT = @"openCustomerServiceCha
 #ifndef NO_PAY
 static NSString *const METHOD_PAY = @"pay";
 #endif
+static NSString *const METHOD_LAUNCHFROMWX = @"launchFromWX";
+static NSString *const METHOD_SHOWMESSAGEFROMWX = @"showMessageFromWX";
 
 static NSString *const METHOD_ONAUTHRESP = @"onAuthResp";
 static NSString *const METHOD_ONOPENURLRESP = @"onOpenUrlResp";
@@ -122,6 +123,8 @@ static NSString *const ARGUMENT_KEY_RESULT_ACTION = @"action";
 static NSString *const ARGUMENT_KEY_RESULT_RESERVED = @"reserved";
 static NSString *const ARGUMENT_KEY_RESULT_OPENID = @"openId";
 static NSString *const ARGUMENT_KEY_RESULT_EXTMSG = @"extMsg";
+static NSString *const ARGUMENT_KEY_RESULT_MESSAGEACTION = @"messageAction";
+static NSString *const ARGUMENT_KEY_RESULT_MESSAGEEXT = @"messageExt";
 static NSString *const ARGUMENT_KEY_RESULT_RETURNKEY = @"returnKey";
 static NSString *const ARGUMENT_KEY_RESULT_IMAGEDATA = @"imageData";
 static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
@@ -436,6 +439,23 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
 #pragma mark - WXApiDelegate
 
 - (void)onReq:(BaseReq *)req {
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    [dictionary setValue: req.openID forKey:ARGUMENT_KEY_RESULT_OPENID];
+    if ([req isKindOfClass:[LaunchFromWXReq class]]) {
+        LaunchFromWXReq *launchFromWXReq = (LaunchFromWXReq *)req;
+        [dictionary setValue:launchFromWXReq.message.messageAction forKey:ARGUMENT_KEY_RESULT_MESSAGEACTION];
+        [dictionary setValue:launchFromWXReq.message.messageExt forKey:ARGUMENT_KEY_RESULT_MESSAGEEXT];
+        [dictionary setValue:launchFromWXReq.lang forKey:ARGUMENT_KEY_RESULT_LANG];
+        [dictionary setValue:launchFromWXReq.country forKey:ARGUMENT_KEY_RESULT_COUNTRY];
+        //
+    } else if ([req isKindOfClass:[ShowMessageFromWXReq class]]) {
+        ShowMessageFromWXReq *showMessageFromWXReq = (ShowMessageFromWXReq *)req;
+        [dictionary setValue:showMessageFromWXReq.message.messageAction forKey:ARGUMENT_KEY_RESULT_MESSAGEACTION];
+        [dictionary setValue:showMessageFromWXReq.message.messageExt forKey:ARGUMENT_KEY_RESULT_MESSAGEEXT];
+        [dictionary setValue:showMessageFromWXReq.lang forKey:ARGUMENT_KEY_RESULT_LANG];
+        [dictionary setValue:showMessageFromWXReq.country forKey:ARGUMENT_KEY_RESULT_COUNTRY];
+        //
+    }
 }
 
 - (void)onResp:(BaseResp *)resp {

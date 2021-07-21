@@ -12,6 +12,7 @@ import 'package:wechat_kit/src/model/api/wechat_ticket_resp.dart';
 import 'package:wechat_kit/src/model/api/wechat_user_info_resp.dart';
 import 'package:wechat_kit/src/model/qrauth/wechat_qrauth_resp.dart';
 import 'package:wechat_kit/src/model/sdk/wechat_auth_resp.dart';
+import 'package:wechat_kit/src/model/sdk/wechat_launch_from_wx_req.dart';
 import 'package:wechat_kit/src/model/sdk/wechat_launch_mini_program_resp.dart';
 import 'package:wechat_kit/src/model/sdk/wechat_pay_resp.dart';
 import 'package:wechat_kit/src/model/sdk/wechat_sdk_resp.dart';
@@ -50,6 +51,7 @@ class Wechat {
   static const String _METHOD_OPENCUSTOMERSERVICECHAT =
       'openCustomerServiceChat';
   static const String _METHOD_PAY = 'pay';
+  static const String _METHOD_LAUNCHFROMWX = 'launchFromWX';
 
   static const String _METHOD_ONAUTHRESP = 'onAuthResp';
   static const String _METHOD_ONOPENURLRESP = 'onOpenUrlResp';
@@ -116,6 +118,9 @@ class Wechat {
       const MethodChannel('v7lin.github.io/wechat_kit')
         ..setMethodCallHandler(_handleMethod);
 
+  final StreamController<WechatLaunchFromWXReq> _launchFromWXReqStreamController =
+      StreamController<WechatLaunchFromWXReq>.broadcast();
+
   final StreamController<WechatAuthResp> _authRespStreamController =
       StreamController<WechatAuthResp>.broadcast();
 
@@ -166,6 +171,11 @@ class Wechat {
 
   Future<dynamic> _handleMethod(MethodCall call) async {
     switch (call.method) {
+      // onReq
+      case _METHOD_LAUNCHFROMWX:
+        _launchFromWXReqStreamController.add(WechatLaunchFromWXReq.fromJson((call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
+        break;
+      // onResp
       case _METHOD_ONAUTHRESP:
         _authRespStreamController.add(WechatAuthResp.fromJson(
             (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
@@ -196,6 +206,7 @@ class Wechat {
         _payRespStreamController.add(WechatPayResp.fromJson(
             (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
+      // Qrauth
       case _METHOD_ONAUTHGOTQRCODE:
         _authGotQrcodeRespStreamController
             .add(call.arguments[_ARGUMENT_KEY_RESULT_IMAGEDATA] as Uint8List);

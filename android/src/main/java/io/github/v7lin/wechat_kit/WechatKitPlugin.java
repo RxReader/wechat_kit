@@ -9,6 +9,7 @@ import android.content.pm.ProviderInfo;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 
 import com.tencent.mm.opensdk.constants.Build;
@@ -23,8 +24,10 @@ import com.tencent.mm.opensdk.modelbiz.OpenWebview;
 import com.tencent.mm.opensdk.modelbiz.SubscribeMessage;
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
 import com.tencent.mm.opensdk.modelbiz.WXOpenCustomerServiceChat;
+import com.tencent.mm.opensdk.modelmsg.LaunchFromWX;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.ShowMessageFromWX;
 import com.tencent.mm.opensdk.modelmsg.WXEmojiObject;
 import com.tencent.mm.opensdk.modelmsg.WXFileObject;
 import com.tencent.mm.opensdk.modelmsg.WXImageObject;
@@ -82,6 +85,8 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, MethodCall
     private static final String METHOD_LAUNCHMINIPROGRAM = "launchMiniProgram";
     private static final String METHOD_OPENCUSTOMERSERVICECHAT = "openCustomerServiceChat";
     private static final String METHOD_PAY = "pay";
+    private static final String METHOD_LAUNCHFROMWX = "launchFromWX";
+    private static final String METHOD_SHOWMESSAGEFROMWX = "showMessageFromWX";
 
     private static final String METHOD_ONAUTHRESP = "onAuthResp";
     private static final String METHOD_ONOPENURLRESP = "onOpenUrlResp";
@@ -150,6 +155,8 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, MethodCall
     private static final String ARGUMENT_KEY_RESULT_RESERVED = "reserved";
     private static final String ARGUMENT_KEY_RESULT_OPENID = "openId";
     private static final String ARGUMENT_KEY_RESULT_EXTMSG = "extMsg";
+    private static final String ARGUMENT_KEY_RESULT_MESSAGEACTION = "messageAction";
+    private static final String ARGUMENT_KEY_RESULT_MESSAGEEXT = "messageExt";
     private static final String ARGUMENT_KEY_RESULT_RETURNKEY = "returnKey";
     private static final String ARGUMENT_KEY_RESULT_IMAGEDATA = "imageData";
     private static final String ARGUMENT_KEY_RESULT_AUTHCODE = "authCode";
@@ -209,7 +216,23 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, MethodCall
     private final IWXAPIEventHandler iwxapiEventHandler = new IWXAPIEventHandler() {
         @Override
         public void onReq(BaseReq req) {
-
+            Map<String, Object> map = new HashMap<>();
+            map.put(ARGUMENT_KEY_RESULT_OPENID, req.openId);
+            if (req instanceof LaunchFromWX.Req) {
+                LaunchFromWX.Req launchFromWXReq = (LaunchFromWX.Req) req;
+                map.put(ARGUMENT_KEY_RESULT_MESSAGEACTION, launchFromWXReq.messageAction);
+                map.put(ARGUMENT_KEY_RESULT_MESSAGEEXT, launchFromWXReq.messageExt);
+                map.put(ARGUMENT_KEY_RESULT_LANG, launchFromWXReq.lang);
+                map.put(ARGUMENT_KEY_RESULT_COUNTRY, launchFromWXReq.country);
+                // startActivity
+            } else if (req instanceof ShowMessageFromWX.Req) {
+                ShowMessageFromWX.Req showMessageFromWXReq = (ShowMessageFromWX.Req) req;
+                map.put(ARGUMENT_KEY_RESULT_MESSAGEACTION, showMessageFromWXReq.message.messageAction);
+                map.put(ARGUMENT_KEY_RESULT_MESSAGEEXT, showMessageFromWXReq.message.messageExt);
+                map.put(ARGUMENT_KEY_RESULT_LANG, showMessageFromWXReq.lang);
+                map.put(ARGUMENT_KEY_RESULT_COUNTRY, showMessageFromWXReq.country);
+                // startActivity
+            }
         }
 
         @Override
@@ -219,11 +242,13 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, MethodCall
             map.put(ARGUMENT_KEY_RESULT_ERRORMSG, resp.errStr);
             if (resp instanceof SendAuth.Resp) {
                 // 授权
-                SendAuth.Resp authResp = (SendAuth.Resp) resp;
-                map.put(ARGUMENT_KEY_RESULT_CODE, authResp.code);
-                map.put(ARGUMENT_KEY_RESULT_STATE, authResp.state);
-                map.put(ARGUMENT_KEY_RESULT_LANG, authResp.lang);
-                map.put(ARGUMENT_KEY_RESULT_COUNTRY, authResp.country);
+                if (resp.errCode == BaseResp.ErrCode.ERR_OK) {
+                    SendAuth.Resp authResp = (SendAuth.Resp) resp;
+                    map.put(ARGUMENT_KEY_RESULT_CODE, authResp.code);
+                    map.put(ARGUMENT_KEY_RESULT_STATE, authResp.state);
+                    map.put(ARGUMENT_KEY_RESULT_LANG, authResp.lang);
+                    map.put(ARGUMENT_KEY_RESULT_COUNTRY, authResp.country);
+                }
                 if (channel != null) {
                     channel.invokeMethod(METHOD_ONAUTHRESP, map);
                 }
@@ -239,19 +264,23 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, MethodCall
                 }
             } else if (resp instanceof SubscribeMessage.Resp) {
                 // 一次性订阅消息
-                SubscribeMessage.Resp subscribeMsgResp = (SubscribeMessage.Resp) resp;
-                map.put(ARGUMENT_KEY_RESULT_TEMPLATEID, subscribeMsgResp.templateID);
-                map.put(ARGUMENT_KEY_RESULT_SCENE, subscribeMsgResp.scene);
-                map.put(ARGUMENT_KEY_RESULT_ACTION, subscribeMsgResp.action);
-                map.put(ARGUMENT_KEY_RESULT_RESERVED, subscribeMsgResp.reserved);
-                map.put(ARGUMENT_KEY_RESULT_OPENID, subscribeMsgResp.openId);
+                if (resp.errCode == BaseResp.ErrCode.ERR_OK) {
+                    SubscribeMessage.Resp subscribeMsgResp = (SubscribeMessage.Resp) resp;
+                    map.put(ARGUMENT_KEY_RESULT_TEMPLATEID, subscribeMsgResp.templateID);
+                    map.put(ARGUMENT_KEY_RESULT_SCENE, subscribeMsgResp.scene);
+                    map.put(ARGUMENT_KEY_RESULT_ACTION, subscribeMsgResp.action);
+                    map.put(ARGUMENT_KEY_RESULT_RESERVED, subscribeMsgResp.reserved);
+                    map.put(ARGUMENT_KEY_RESULT_OPENID, subscribeMsgResp.openId);
+                }
                 if (channel != null) {
                     channel.invokeMethod(METHOD_ONSUBSCRIBEMSGRESP, map);
                 }
             } else if (resp instanceof WXLaunchMiniProgram.Resp) {
                 // 打开小程序
-                WXLaunchMiniProgram.Resp launchMiniProgramResp = (WXLaunchMiniProgram.Resp) resp;
-                map.put(ARGUMENT_KEY_RESULT_EXTMSG, launchMiniProgramResp.extMsg);
+                if (resp.errCode == BaseResp.ErrCode.ERR_OK) {
+                    WXLaunchMiniProgram.Resp launchMiniProgramResp = (WXLaunchMiniProgram.Resp) resp;
+                    map.put(ARGUMENT_KEY_RESULT_EXTMSG, launchMiniProgramResp.extMsg);
+                }
                 if (channel != null) {
                     channel.invokeMethod(METHOD_ONLAUNCHMINIPROGRAMRESP, map);
                 }
@@ -261,8 +290,10 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, MethodCall
                 }
             } else if (resp instanceof PayResp) {
                 // 支付
-                PayResp payResp = (PayResp) resp;
-                map.put(ARGUMENT_KEY_RESULT_RETURNKEY, payResp.returnKey);
+                if (resp.errCode == BaseResp.ErrCode.ERR_OK) {
+                    PayResp payResp = (PayResp) resp;
+                    map.put(ARGUMENT_KEY_RESULT_RETURNKEY, payResp.returnKey);
+                }
                 if (channel != null) {
                     channel.invokeMethod(METHOD_ONPAYRESP, map);
                 }
