@@ -575,7 +575,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "2.3.2-iOS-NoPay"
+    version: "3.0.0-iOS-NoPay"
   win32:
     dependency: transitive
     description:
