@@ -33,11 +33,16 @@ dependencies:
   image: ^3.0.1
   flutter_cache_manager: ^3.1.2
 
+  json_annotation: ^4.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   pedantic:
+
+  build_runner:
+  json_serializable:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

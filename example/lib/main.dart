@@ -270,7 +270,7 @@ class _QrauthState extends State<Qrauth> {
       Wechat.instance.authGotQrcodeResp().listen(_listenAuthGotQrcode);
   late final StreamSubscription<String> _authQrcodeScanned =
       Wechat.instance.authQrcodeScannedResp().listen(_listenAuthQrcodeScanned);
-  late final StreamSubscription<WechatQrauthResp> _authFinish =
+  late final StreamSubscription<QrauthResp> _authFinish =
       Wechat.instance.authFinishResp().listen(_listenAuthFinish);
 
   Uint8List? _qrcod;
@@ -290,7 +290,7 @@ class _QrauthState extends State<Qrauth> {
     print('msg: $msg');
   }
 
-  void _listenAuthFinish(WechatQrauthResp qrauthResp) {
+  void _listenAuthFinish(QrauthResp qrauthResp) {
     print('resp: ${qrauthResp.errorCode} - ${qrauthResp.authCode}');
   }
 

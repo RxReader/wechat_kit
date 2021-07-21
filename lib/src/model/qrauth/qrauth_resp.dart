@@ -2,19 +2,19 @@ import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
 
-part 'wechat_qrauth_resp.g.dart';
+part 'qrauth_resp.g.dart';
 
 @JsonSerializable(
   explicitToJson: true,
 )
-class WechatQrauthResp {
-  const WechatQrauthResp({
+class QrauthResp {
+  const QrauthResp({
     required this.errorCode,
     this.authCode,
   });
 
-  factory WechatQrauthResp.fromJson(Map<String, dynamic> json) =>
-      _$WechatQrauthRespFromJson(json);
+  factory QrauthResp.fromJson(Map<String, dynamic> json) =>
+      _$QrauthRespFromJson(json);
 
   /// Auth成功
   static const int ERRORCODE_OK = 0;
@@ -42,7 +42,7 @@ class WechatQrauthResp {
 
   bool get isCancelled => errorCode == ERRORCODE_CANCEL;
 
-  Map<String, dynamic> toJson() => _$WechatQrauthRespToJson(this);
+  Map<String, dynamic> toJson() => _$QrauthRespToJson(this);
 
   @override
   String toString() => const JsonEncoder.withIndent('  ').convert(toJson());

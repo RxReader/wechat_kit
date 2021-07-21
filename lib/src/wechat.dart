@@ -6,7 +6,7 @@ import 'dart:typed_data';
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/services.dart';
-import 'package:wechat_kit/src/model/qrauth/wechat_qrauth_resp.dart';
+import 'package:wechat_kit/src/model/qrauth/qrauth_resp.dart';
 import 'package:wechat_kit/src/model/sdk/wechat_auth_resp.dart';
 import 'package:wechat_kit/src/model/sdk/wechat_launch_from_wx_req.dart';
 import 'package:wechat_kit/src/model/sdk/wechat_launch_mini_program_resp.dart';
@@ -148,8 +148,8 @@ class Wechat {
   final StreamController<String> _authQrcodeScannedRespStreamController =
       StreamController<String>.broadcast();
 
-  final StreamController<WechatQrauthResp> _authFinishRespStreamController =
-      StreamController<WechatQrauthResp>.broadcast();
+  final StreamController<QrauthResp> _authFinishRespStreamController =
+      StreamController<QrauthResp>.broadcast();
 
   /// 向微信注册应用
   Future<void> registerApp({
@@ -213,7 +213,7 @@ class Wechat {
         _authQrcodeScannedRespStreamController.add('QrcodeScanned');
         break;
       case _METHOD_ONAUTHFINISH:
-        _authFinishRespStreamController.add(WechatQrauthResp.fromJson(
+        _authFinishRespStreamController.add(QrauthResp.fromJson(
             (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
     }
@@ -265,7 +265,7 @@ class Wechat {
   }
 
   /// 扫码登录 - 用户点击授权
-  Stream<WechatQrauthResp> authFinishResp() {
+  Stream<QrauthResp> authFinishResp() {
     return _authFinishRespStreamController.stream;
   }
 
