@@ -6,10 +6,6 @@ import 'dart:typed_data';
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/services.dart';
-import 'package:uuid/uuid.dart';
-import 'package:wechat_kit/src/model/api/wechat_access_token_resp.dart';
-import 'package:wechat_kit/src/model/api/wechat_ticket_resp.dart';
-import 'package:wechat_kit/src/model/api/wechat_user_info_resp.dart';
 import 'package:wechat_kit/src/model/qrauth/wechat_qrauth_resp.dart';
 import 'package:wechat_kit/src/model/sdk/wechat_auth_resp.dart';
 import 'package:wechat_kit/src/model/sdk/wechat_launch_from_wx_req.dart';
@@ -118,7 +114,8 @@ class Wechat {
       const MethodChannel('v7lin.github.io/wechat_kit')
         ..setMethodCallHandler(_handleMethod);
 
-  final StreamController<WechatLaunchFromWXReq> _launchFromWXReqStreamController =
+  final StreamController<WechatLaunchFromWXReq>
+      _launchFromWXReqStreamController =
       StreamController<WechatLaunchFromWXReq>.broadcast();
 
   final StreamController<WechatAuthResp> _authRespStreamController =
@@ -173,7 +170,8 @@ class Wechat {
     switch (call.method) {
       // onReq
       case _METHOD_LAUNCHFROMWX:
-        _launchFromWXReqStreamController.add(WechatLaunchFromWXReq.fromJson((call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
+        _launchFromWXReqStreamController.add(WechatLaunchFromWXReq.fromJson(
+            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
       // onResp
       case _METHOD_ONAUTHRESP:
@@ -283,7 +281,8 @@ class Wechat {
 
   /// 判断当前微信的版本是否支持分享微信状态功能
   Future<bool> isSupportStateAPI() async {
-    return await _channel.invokeMethod<bool>(_METHOD_ISSUPPORTSTATEAPI) ?? false;
+    return await _channel.invokeMethod<bool>(_METHOD_ISSUPPORTSTATEAPI) ??
+        false;
   }
 
   /// 打开微信
@@ -304,121 +303,17 @@ class Wechat {
     });
   }
 
-  /// 获取 access_token（UnionID）
-  Future<WechatAccessTokenResp> getAccessTokenUnionID({
-    required String appId,
-    required String appSecret,
-    required String code,
-  }) {
-    return HttpClient()
-        .getUrl(Uri.parse(
-            'https://api.weixin.qq.com/sns/oauth2/access_token?appid=$appId&secret=$appSecret&code=$code&grant_type=authorization_code'))
-        .then((HttpClientRequest request) {
-      return request.close();
-    }).then((HttpClientResponse response) async {
-      if (response.statusCode == HttpStatus.ok) {
-        final String content = await utf8.decodeStream(response);
-        return WechatAccessTokenResp.fromJson(
-            json.decode(content) as Map<String, dynamic>);
-      }
-      throw HttpException(
-          'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');
-    });
-  }
-
-  /// 刷新或续期 access_token 使用（UnionID）
-  Future<WechatAccessTokenResp> refreshAccessTokenUnionID({
-    required String appId,
-    required String refreshToken,
-  }) {
-    return HttpClient()
-        .getUrl(Uri.parse(
-            'https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=$appId&grant_type=refresh_token&refresh_token=$refreshToken'))
-        .then((HttpClientRequest request) {
-      return request.close();
-    }).then((HttpClientResponse response) async {
-      if (response.statusCode == HttpStatus.ok) {
-        final String content = await utf8.decodeStream(response);
-        return WechatAccessTokenResp.fromJson(
-            json.decode(content) as Map<String, dynamic>);
-      }
-      throw HttpException(
-          'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');
-    });
-  }
-
-  /// 获取用户个人信息（UnionID）
-  Future<WechatUserInfoResp> getUserInfoUnionID({
-    required String openId,
-    required String accessToken,
-  }) {
-    return HttpClient()
-        .getUrl(Uri.parse(
-            'https://api.weixin.qq.com/sns/userinfo?access_token=$accessToken&openid=$openId'))
-        .then((HttpClientRequest request) {
-      return request.close();
-    }).then((HttpClientResponse response) async {
-      if (response.statusCode == HttpStatus.ok) {
-        final String content = await utf8.decodeStream(response);
-        return WechatUserInfoResp.fromJson(
-            json.decode(content) as Map<String, dynamic>);
-      }
-      throw HttpException(
-          'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');
-    });
-  }
-
   // --- 微信APP扫码登录
 
-  /// 获取 access_token
-  Future<WechatAccessTokenResp> getAccessToken({
-    required String appId,
-    required String appSecret,
-  }) {
-    return HttpClient()
-        .getUrl(Uri.parse(
-            'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appId&secret=$appSecret'))
-        .then((HttpClientRequest request) {
-      return request.close();
-    }).then((HttpClientResponse response) async {
-      if (response.statusCode == HttpStatus.ok) {
-        final String content = await utf8.decodeStream(response);
-        return WechatAccessTokenResp.fromJson(
-            json.decode(content) as Map<String, dynamic>);
-      }
-      throw HttpException(
-          'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');
-    });
-  }
-
-  /// 用上面的函数拿到的 access_token，获取 sdk_ticket
-  Future<WechatTicketResp> getTicket({
-    required String accessToken,
-  }) {
-    return HttpClient()
-        .getUrl(Uri.parse(
-            'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=$accessToken&type=2'))
-        .then((HttpClientRequest request) {
-      return request.close();
-    }).then((HttpClientResponse response) async {
-      if (response.statusCode == HttpStatus.ok) {
-        final String content = await utf8.decodeStream(response);
-        return WechatTicketResp.fromJson(
-            json.decode(content) as Map<String, dynamic>);
-      }
-      throw HttpException(
-          'HttpResponse statusCode: ${response.statusCode}, reasonPhrase: ${response.reasonPhrase}.');
-    });
-  }
-
-  /// 用上面函数拿到的 ticket，开始扫码登录
+  /// 调用微信 API 获得 ticket，开始扫码登录
   Future<void> startQrauth({
     required String appId,
     required List<String> scope,
+    required String noncestr,
     required String ticket,
   }) {
-    final String noncestr = const Uuid().v1().toString().replaceAll('-', '');
-    final String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
+    // final String noncestr = const Uuid().v1().toString().replaceAll('-', '');
+    final String timestamp = '${DateTime.now().millisecondsSinceEpoch}';
     final String content =
         'appid=$appId&noncestr=$noncestr&sdk_ticket=$ticket&timestamp=$timestamp';
     final String signature =

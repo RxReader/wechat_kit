@@ -15,7 +15,8 @@ class WechatLaunchFromWXReq extends WechatSdkReq {
     required this.country,
   }) : super(openId: openId);
 
-  factory WechatLaunchFromWXReq.fromJson(Map<String, dynamic> json) => _$WechatLaunchFromWXReqFromJson(json);
+  factory WechatLaunchFromWXReq.fromJson(Map<String, dynamic> json) =>
+      _$WechatLaunchFromWXReqFromJson(json);
 
   final String? messageAction;
   final String? messageExt;

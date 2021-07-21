@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:wechat_kit/src/model/api/wechat_api_resp.dart';
+import 'package:wechat_kit_example/api/model/wechat_api_resp.dart';
 
 part 'wechat_user_info_resp.g.dart';
 

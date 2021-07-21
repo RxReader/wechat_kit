@@ -6,7 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:image/image.dart' as image;
 import 'package:path/path.dart' as path;
+import 'package:uuid/uuid.dart';
 import 'package:wechat_kit/wechat_kit.dart';
+import 'package:wechat_kit_example/api/model/wechat_access_token_resp.dart';
+import 'package:wechat_kit_example/api/model/wechat_api_resp.dart';
+import 'package:wechat_kit_example/api/model/wechat_ticket_resp.dart';
+import 'package:wechat_kit_example/api/model/wechat_user_info_resp.dart';
+import 'package:wechat_kit_example/api/wechat_api.dart';
 
 const String WECHAT_APPID = 'your wechat appId';
 const String WECHAT_UNIVERSAL_LINK = 'your wechat universal link'; // iOS 请配置
@@ -124,7 +130,7 @@ class _HomeState extends State<Home> {
               if (_authResp != null &&
                   _authResp!.errorCode == WechatSdkResp.ERRORCODE_SUCCESS) {
                 final WechatAccessTokenResp accessTokenResp =
-                    await Wechat.instance.getAccessTokenUnionID(
+                    await WechatApi.getAccessTokenUnionID(
                   appId: WECHAT_APPID,
                   appSecret: WECHAT_APPSECRET,
                   code: _authResp!.code!,
@@ -132,7 +138,7 @@ class _HomeState extends State<Home> {
                 if (accessTokenResp.errcode ==
                     WechatApiResp.ERRORCODE_SUCCESS) {
                   final WechatUserInfoResp userInfoResp =
-                      await Wechat.instance.getUserInfoUnionID(
+                      await WechatApi.getUserInfoUnionID(
                     openId: accessTokenResp.openid!,
                     accessToken: accessTokenResp.accessToken!,
                   );
@@ -305,13 +311,13 @@ class _QrauthState extends State<Qrauth> {
           TextButton(
             onPressed: () async {
               final WechatAccessTokenResp accessToken =
-                  await Wechat.instance.getAccessToken(
+                  await WechatApi.getAccessToken(
                 appId: WECHAT_APPID,
                 appSecret: WECHAT_APPSECRET,
               );
               print(
                   'accessToken: ${accessToken.errcode} - ${accessToken.errmsg} - ${accessToken.accessToken}');
-              final WechatTicketResp ticket = await Wechat.instance.getTicket(
+              final WechatTicketResp ticket = await WechatApi.getTicket(
                 accessToken: accessToken.accessToken!,
               );
               print(
@@ -319,6 +325,7 @@ class _QrauthState extends State<Qrauth> {
               await Wechat.instance.startQrauth(
                 appId: WECHAT_APPID,
                 scope: <String>[WechatScope.SNSAPI_USERINFO],
+                noncestr: const Uuid().v1().toString().replaceAll('-', ''),
                 ticket: ticket.ticket!,
               );
             },

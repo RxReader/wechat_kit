@@ -15,7 +15,8 @@ class WechatShowMessageFromWXReq extends WechatSdkReq {
     required this.country,
   }) : super(openId: openId);
 
-  factory WechatShowMessageFromWXReq.fromJson(Map<String, dynamic> json) => _$WechatShowMessageFromWXReqFromJson(json);
+  factory WechatShowMessageFromWXReq.fromJson(Map<String, dynamic> json) =>
+      _$WechatShowMessageFromWXReqFromJson(json);
 
   final String? messageAction;
   final String? messageExt;
