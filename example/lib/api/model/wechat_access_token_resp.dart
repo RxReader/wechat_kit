@@ -12,6 +12,7 @@ class WechatAccessTokenResp extends WechatApiResp {
     required int errcode,
     String? errmsg,
     this.openid,
+    this.unionid,
     this.scope,
     this.accessToken,
     this.refreshToken,
@@ -25,6 +26,7 @@ class WechatAccessTokenResp extends WechatApiResp {
       _$WechatAccessTokenRespFromJson(json);
 
   final String? openid;
+  final String? unionid;
   final String? scope;
   final String? accessToken;
   final String? refreshToken;
