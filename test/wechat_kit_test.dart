@@ -89,7 +89,7 @@ void main() {
   });
 
   test('auth', () async {
-    final StreamSubscription<BaseResp> sub =
+    final StreamSubscription<BaseResp> subs =
         Wechat.instance.respStream().listen((BaseResp resp) {
       expect(resp.runtimeType, AuthResp);
       expect(resp.errorCode, BaseResp.ERRORCODE_USERCANCEL);
@@ -100,7 +100,7 @@ void main() {
       ],
     );
     await Future<void>.delayed(const Duration(seconds: 1));
-    await sub.cancel();
+    await subs.cancel();
   });
 
   test('share', () async {
