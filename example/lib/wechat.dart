@@ -1,15 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:wechat_kit_example/api/model/wechat_api_resp.dart';
+import 'package:wechat_kit/wechat_kit.dart';
+import 'package:wechat_kit_example/model/wechat_api_resp.dart';
 
-class WechatApi {
-  const WechatApi._();
+extension ApiWechat on Wechat {
 
   // --- 微信APP授权登录
 
   /// 获取 access_token（UnionID）
-  static Future<WechatAccessTokenResp> getAccessTokenUnionID({
+  Future<WechatAccessTokenResp> getAccessTokenUnionID({
     required String appId,
     required String appSecret,
     required String code,
@@ -31,7 +31,7 @@ class WechatApi {
   }
 
   /// 刷新或续期 access_token 使用（UnionID）
-  static Future<WechatAccessTokenResp> refreshAccessTokenUnionID({
+  Future<WechatAccessTokenResp> refreshAccessTokenUnionID({
     required String appId,
     required String refreshToken,
   }) {
@@ -52,7 +52,7 @@ class WechatApi {
   }
 
   /// 获取用户个人信息（UnionID）
-  static Future<WechatUserInfoResp> getUserInfoUnionID({
+  Future<WechatUserInfoResp> getUserInfoUnionID({
     required String openId,
     required String accessToken,
   }) {
@@ -75,7 +75,7 @@ class WechatApi {
   // --- 微信APP扫码登录
 
   /// 获取 access_token
-  static Future<WechatAccessTokenResp> getAccessToken({
+  Future<WechatAccessTokenResp> getAccessToken({
     required String appId,
     required String appSecret,
   }) {
@@ -96,7 +96,7 @@ class WechatApi {
   }
 
   /// 用上面的函数拿到的 access_token，获取 sdk_ticket
-  static Future<WechatTicketResp> getTicket({
+  Future<WechatTicketResp> getTicket({
     required String accessToken,
   }) {
     return HttpClient()

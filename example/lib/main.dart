@@ -8,8 +8,8 @@ import 'package:image/image.dart' as image;
 import 'package:path/path.dart' as path;
 import 'package:uuid/uuid.dart';
 import 'package:wechat_kit/wechat_kit.dart';
-import 'package:wechat_kit_example/api/model/wechat_api_resp.dart';
-import 'package:wechat_kit_example/api/wechat_api.dart';
+import 'package:wechat_kit_example/model/wechat_api_resp.dart';
+import 'package:wechat_kit_example/wechat.dart';
 
 const String WECHAT_APPID = 'your wechat appId';
 const String WECHAT_UNIVERSAL_LINK = 'your wechat universal link'; // iOS 请配置
@@ -114,14 +114,14 @@ class _HomeState extends State<Home> {
             onTap: () async {
               if (_authResp != null && _authResp!.isSuccessful) {
                 final WechatAccessTokenResp accessTokenResp =
-                    await WechatApi.getAccessTokenUnionID(
+                    await Wechat.instance.getAccessTokenUnionID(
                   appId: WECHAT_APPID,
                   appSecret: WECHAT_APPSECRET,
                   code: _authResp!.code!,
                 );
                 if (accessTokenResp.isSuccessful) {
                   final WechatUserInfoResp userInfoResp =
-                      await WechatApi.getUserInfoUnionID(
+                      await Wechat.instance.getUserInfoUnionID(
                     openId: accessTokenResp.openid!,
                     accessToken: accessTokenResp.accessToken!,
                   );
@@ -281,13 +281,13 @@ class _QrauthState extends State<Qrauth> {
           TextButton(
             onPressed: () async {
               final WechatAccessTokenResp accessToken =
-                  await WechatApi.getAccessToken(
+                  await Wechat.instance.getAccessToken(
                 appId: WECHAT_APPID,
                 appSecret: WECHAT_APPSECRET,
               );
               print(
                   'accessToken: ${accessToken.errcode} - ${accessToken.errmsg} - ${accessToken.accessToken}');
-              final WechatTicketResp ticket = await WechatApi.getTicket(
+              final WechatTicketResp ticket = await Wechat.instance.getTicket(
                 accessToken: accessToken.accessToken!,
               );
               print(
