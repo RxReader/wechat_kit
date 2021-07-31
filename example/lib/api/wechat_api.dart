@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:wechat_kit_example/api/model/wechat_access_token_resp.dart';
-import 'package:wechat_kit_example/api/model/wechat_ticket_resp.dart';
-import 'package:wechat_kit_example/api/model/wechat_user_info_resp.dart';
+import 'package:wechat_kit_example/api/model/wechat_api_resp.dart';
 
 class WechatApi {
   const WechatApi._();

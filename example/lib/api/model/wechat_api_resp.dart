@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
 
+part 'wechat_api_resp.g.dart';
+
 abstract class WechatApiResp {
   const WechatApiResp({
     required this.errcode,
@@ -26,4 +28,105 @@ abstract class WechatApiResp {
 
   @override
   String toString() => const JsonEncoder.withIndent('  ').convert(toJson());
+}
+
+@JsonSerializable(
+  explicitToJson: true,
+  fieldRename: FieldRename.snake,
+)
+class WechatAccessTokenResp extends WechatApiResp {
+  const WechatAccessTokenResp({
+    required int errcode,
+    String? errmsg,
+    this.openid,
+    this.unionid,
+    this.scope,
+    this.accessToken,
+    this.refreshToken,
+    this.expiresIn,
+  }) : super(
+          errcode: errcode,
+          errmsg: errmsg,
+        );
+
+  factory WechatAccessTokenResp.fromJson(Map<String, dynamic> json) =>
+      _$WechatAccessTokenRespFromJson(json);
+
+  final String? openid;
+  final String? unionid;
+  final String? scope;
+  final String? accessToken;
+  final String? refreshToken;
+  final int? expiresIn; // 单位：秒
+
+  @override
+  Map<String, dynamic> toJson() => _$WechatAccessTokenRespToJson(this);
+}
+
+@JsonSerializable(
+  explicitToJson: true,
+  fieldRename: FieldRename.snake,
+)
+class WechatTicketResp extends WechatApiResp {
+  const WechatTicketResp({
+    required int errcode,
+    String? errmsg,
+    this.ticket,
+    this.expiresIn,
+  }) : super(
+          errcode: errcode,
+          errmsg: errmsg,
+        );
+
+  factory WechatTicketResp.fromJson(Map<String, dynamic> json) =>
+      _$WechatTicketRespFromJson(json);
+
+  final String? ticket;
+  final int? expiresIn;
+
+  @override
+  Map<String, dynamic> toJson() => _$WechatTicketRespToJson(this);
+}
+
+@JsonSerializable(
+  explicitToJson: true,
+  fieldRename: FieldRename.snake,
+)
+class WechatUserInfoResp extends WechatApiResp {
+  const WechatUserInfoResp({
+    required int errcode,
+    String? errmsg,
+    this.openid,
+    this.nickname,
+    this.sex,
+    this.province,
+    this.city,
+    this.country,
+    this.headimgurl,
+    this.privilege,
+    this.unionid,
+  }) : super(
+          errcode: errcode,
+          errmsg: errmsg,
+        );
+
+  factory WechatUserInfoResp.fromJson(Map<String, dynamic> json) =>
+      _$WechatUserInfoRespFromJson(json);
+
+  final String? openid;
+  final String? nickname;
+  final int? sex; // 1为男性，2为女性
+  final String? province;
+  final String? city;
+  final String? country;
+  final String? headimgurl;
+  final List<dynamic>? privilege;
+  final String? unionid;
+
+  bool get isMale => sex == 1;
+
+  bool get isFemale => sex == 2;
+
+  @override
+  Map<String, dynamic> toJson() => _$WechatUserInfoRespToJson(this);
 }

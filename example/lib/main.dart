@@ -8,10 +8,7 @@ import 'package:image/image.dart' as image;
 import 'package:path/path.dart' as path;
 import 'package:uuid/uuid.dart';
 import 'package:wechat_kit/wechat_kit.dart';
-import 'package:wechat_kit_example/api/model/wechat_access_token_resp.dart';
 import 'package:wechat_kit_example/api/model/wechat_api_resp.dart';
-import 'package:wechat_kit_example/api/model/wechat_ticket_resp.dart';
-import 'package:wechat_kit_example/api/model/wechat_user_info_resp.dart';
 import 'package:wechat_kit_example/api/wechat_api.dart';
 
 const String WECHAT_APPID = 'your wechat appId';
@@ -45,49 +42,31 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late final StreamSubscription<WechatAuthResp> _auth =
-      Wechat.instance.authResp().listen(_listenAuth);
-  late final StreamSubscription<WechatSdkResp> _share =
-      Wechat.instance.shareMsgResp().listen(_listenShareMsg);
-  late final StreamSubscription<WechatPayResp> _pay =
-      Wechat.instance.payResp().listen(_listenPay);
-  late final StreamSubscription<WechatLaunchMiniProgramResp> _miniProgram =
-      Wechat.instance.launchMiniProgramResp().listen(_listenMiniProgram);
+  late final StreamSubscription<BaseResp> _respSubs =
+      Wechat.instance.respStream().listen(_listenResp);
 
-  WechatAuthResp? _authResp;
+  AuthResp? _authResp;
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void _listenAuth(WechatAuthResp resp) {
-    _authResp = resp;
-    final String content = 'auth: ${resp.errorCode} ${resp.errorMsg}';
-    _showTips('登录', content);
-  }
-
-  void _listenShareMsg(WechatSdkResp resp) {
-    final String content = 'share: ${resp.errorCode} ${resp.errorMsg}';
-    _showTips('分享', content);
-  }
-
-  void _listenPay(WechatPayResp resp) {
-    final String content = 'pay: ${resp.errorCode} ${resp.errorMsg}';
-    _showTips('支付', content);
-  }
-
-  void _listenMiniProgram(WechatLaunchMiniProgramResp resp) {
-    final String content = 'mini program: ${resp.errorCode} ${resp.errorMsg}';
-    _showTips('拉起小程序', content);
+  void _listenResp(BaseResp resp) {
+    if (resp is AuthResp) {
+      _authResp = resp;
+      final String content = 'auth: ${resp.errorCode} ${resp.errorMsg}';
+      _showTips('登录', content);
+    } else if (resp is ShareMsgResp) {
+      final String content = 'share: ${resp.errorCode} ${resp.errorMsg}';
+      _showTips('分享', content);
+    } else if (resp is PayResp) {
+      final String content = 'pay: ${resp.errorCode} ${resp.errorMsg}';
+      _showTips('支付', content);
+    } else if (resp is LaunchMiniProgramResp) {
+      final String content = 'mini program: ${resp.errorCode} ${resp.errorMsg}';
+      _showTips('拉起小程序', content);
+    }
   }
 
   @override
   void dispose() {
-    _auth.cancel();
-    _share.cancel();
-    _pay.cancel();
-    _miniProgram.cancel();
+    _respSubs.cancel();
     super.dispose();
   }
 
@@ -127,22 +106,20 @@ class _HomeState extends State<Home> {
           ListTile(
             title: const Text('获取用户信息'),
             onTap: () async {
-              if (_authResp != null &&
-                  _authResp!.errorCode == WechatSdkResp.ERRORCODE_SUCCESS) {
+              if (_authResp != null && _authResp!.isSuccessful) {
                 final WechatAccessTokenResp accessTokenResp =
                     await WechatApi.getAccessTokenUnionID(
                   appId: WECHAT_APPID,
                   appSecret: WECHAT_APPSECRET,
                   code: _authResp!.code!,
                 );
-                if (accessTokenResp.errcode ==
-                    WechatApiResp.ERRORCODE_SUCCESS) {
+                if (accessTokenResp.isSuccessful) {
                   final WechatUserInfoResp userInfoResp =
                       await WechatApi.getUserInfoUnionID(
                     openId: accessTokenResp.openid!,
                     accessToken: accessTokenResp.accessToken!,
                   );
-                  if (userInfoResp.errcode == WechatApiResp.ERRORCODE_SUCCESS) {
+                  if (userInfoResp.isSuccessful) {
                     _showTips('用户信息',
                         '${userInfoResp.nickname} - ${userInfoResp.sex}');
                   }
@@ -266,39 +243,26 @@ class Qrauth extends StatefulWidget {
 }
 
 class _QrauthState extends State<Qrauth> {
-  late final StreamSubscription<Uint8List> _authGotQrcode =
-      Wechat.instance.authGotQrcodeResp().listen(_listenAuthGotQrcode);
-  late final StreamSubscription<String> _authQrcodeScanned =
-      Wechat.instance.authQrcodeScannedResp().listen(_listenAuthQrcodeScanned);
-  late final StreamSubscription<QrauthResp> _authFinish =
-      Wechat.instance.authFinishResp().listen(_listenAuthFinish);
+  late final StreamSubscription<QrauthResp> _qrauthRespSubs =
+      Wechat.instance.qrauthRespStream().listen(_listenQrauthResp);
 
-  Uint8List? _qrcod;
+  Uint8List? _qrcode;
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void _listenAuthGotQrcode(Uint8List qrcode) {
-    setState(() {
-      _qrcod = qrcode;
-    });
-  }
-
-  void _listenAuthQrcodeScanned(String msg) {
-    print('msg: $msg');
-  }
-
-  void _listenAuthFinish(QrauthResp qrauthResp) {
-    print('resp: ${qrauthResp.errorCode} - ${qrauthResp.authCode}');
+  void _listenQrauthResp(QrauthResp resp) {
+    if (resp is GotQrcodeResp) {
+      setState(() {
+        _qrcode = resp.imageData;
+      });
+    } else if (resp is QrcodeScannedResp) {
+      print('QrcodeScanned');
+    } else if (resp is FinishResp) {
+      print('resp: ${resp.errorCode} - ${resp.authCode}');
+    }
   }
 
   @override
   void dispose() {
-    _authGotQrcode.cancel();
-    _authQrcodeScanned.cancel();
-    _authFinish.cancel();
+    _qrauthRespSubs.cancel();
     super.dispose();
   }
 
@@ -335,8 +299,8 @@ class _QrauthState extends State<Qrauth> {
       ),
       body: GestureDetector(
         child: Center(
-          child: _qrcod != null
-              ? Image.memory(_qrcod!)
+          child: _qrcode != null
+              ? Image.memory(_qrcode!)
               : const Text('got qr code'),
         ),
       ),

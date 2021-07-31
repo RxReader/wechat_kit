@@ -112,7 +112,7 @@ class Wechat {
   final StreamController<BaseResp> _respStreamController =
       StreamController<BaseResp>.broadcast();
 
-  final StreamController<QrauthResp> _qrauthStreamController =
+  final StreamController<QrauthResp> _qrauthRespStreamController =
       StreamController<QrauthResp>.broadcast();
 
   /// 向微信注册应用
@@ -172,14 +172,14 @@ class Wechat {
         break;
       // onQrauth
       case _METHOD_ONAUTHGOTQRCODE:
-        _qrauthStreamController.add(GotQrcodeResp.fromJson(
+        _qrauthRespStreamController.add(GotQrcodeResp.fromJson(
             (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
       case _METHOD_ONAUTHQRCODESCANNED:
-        _qrauthStreamController.add(const QrcodeScannedResp());
+        _qrauthRespStreamController.add(const QrcodeScannedResp());
         break;
       case _METHOD_ONAUTHFINISH:
-        _qrauthStreamController.add(FinishResp.fromJson(
+        _qrauthRespStreamController.add(FinishResp.fromJson(
             (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
     }
@@ -196,8 +196,8 @@ class Wechat {
   }
 
   /// 扫码登录
-  Stream<QrauthResp> authGotQrcodeResp() {
-    return _qrauthStreamController.stream;
+  Stream<QrauthResp> qrauthRespStream() {
+    return _qrauthRespStreamController.stream;
   }
 
   /// 检测微信是否已安装
