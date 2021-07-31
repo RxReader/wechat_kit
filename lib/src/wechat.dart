@@ -132,7 +132,7 @@ class Wechat {
     );
   }
 
-  ///
+  /// 微信回调 - 冷启
   Future<void> handleInitialWXReq() {
     return _channel.invokeMethod<void>(_METHOD_HANDLEINITIALWXREQ);
   }

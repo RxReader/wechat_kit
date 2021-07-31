@@ -7,6 +7,8 @@
 #import <WechatAuthSDK.h>
 #endif
 
+typedef void(^WechatKitWXReqRunnable)(void);
+
 @interface WechatKitPlugin () <WXApiDelegate, WechatAuthAPIDelegate>
 
 @end
@@ -14,6 +16,9 @@
 @implementation WechatKitPlugin {
     FlutterMethodChannel *_channel;
     WechatAuthSDK *_qrauth;
+    BOOL _isRunning;
+    BOOL _handleInitialWXReqFlag;
+    WechatKitWXReqRunnable _initialWXReqRunnable;
 }
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
@@ -26,6 +31,7 @@
 }
 
 static NSString *const METHOD_REGISTERAPP = @"registerApp";
+static NSString *const METHOD_HANDLEINITIALWXREQ = @"handleInitialWXReq";
 static NSString *const METHOD_ISINSTALLED = @"isInstalled";
 static NSString *const METHOD_ISSUPPORTAPI = @"isSupportApi";
 static NSString *const METHOD_ISSUPPORTSTATEAPI = @"isSupportStateAPI";
@@ -49,8 +55,9 @@ static NSString *const METHOD_OPENCUSTOMERSERVICECHAT = @"openCustomerServiceCha
 #ifndef NO_PAY
 static NSString *const METHOD_PAY = @"pay";
 #endif
-static NSString *const METHOD_LAUNCHFROMWX = @"launchFromWX";
-static NSString *const METHOD_SHOWMESSAGEFROMWX = @"showMessageFromWX";
+
+static NSString *const METHOD_ONLAUNCHFROMWXREQ = @"onLaunchFromWXReq";
+static NSString *const METHOD_ONSHOWMESSAGEFROMWXREQ = @"onShowMessageFromWXReq";
 
 static NSString *const METHOD_ONAUTHRESP = @"onAuthResp";
 static NSString *const METHOD_ONOPENURLRESP = @"onOpenUrlResp";
@@ -135,6 +142,8 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
         _channel = channel;
         _qrauth = [[WechatAuthSDK alloc] init];
         _qrauth.delegate = self;
+        _isRunning = NO;
+        _handleInitialWXReqFlag = NO;
     }
     return self;
 }
@@ -145,7 +154,19 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
         NSString *appId = call.arguments[ARGUMENT_KEY_APPID];
         NSString *universalLink = call.arguments[ARGUMENT_KEY_UNIVERSALLINK];
         [WXApi registerApp:appId universalLink:universalLink];
+        _isRunning = YES;
         result(nil);
+    } else if ([METHOD_HANDLEINITIALWXREQ isEqualToString:call.method]) {
+        if (!_handleInitialWXReqFlag) {
+            _handleInitialWXReqFlag = YES;
+            if (_initialWXReqRunnable != nil) {
+                _initialWXReqRunnable();
+                _initialWXReqRunnable = nil;
+            }
+            result(nil);
+        } else {
+            result([FlutterError errorWithCode:@"FAILED" message:nil details:nil]);
+        }
     } else if ([METHOD_ISINSTALLED isEqualToString:call.method]) {
         result([NSNumber numberWithBool:[WXApi isWXAppInstalled]]);
     } else if ([METHOD_ISSUPPORTAPI isEqualToString:call.method]) {
@@ -447,14 +468,30 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
         [dictionary setValue:launchFromWXReq.message.messageExt forKey:ARGUMENT_KEY_RESULT_MESSAGEEXT];
         [dictionary setValue:launchFromWXReq.lang forKey:ARGUMENT_KEY_RESULT_LANG];
         [dictionary setValue:launchFromWXReq.country forKey:ARGUMENT_KEY_RESULT_COUNTRY];
-        //
+        if (_isRunning) {
+            [_channel invokeMethod:METHOD_ONLAUNCHFROMWXREQ arguments:dictionary];
+        } else {
+            __weak typeof(self) weakSelf = self;
+            _initialWXReqRunnable = ^() {
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                [strongSelf -> _channel invokeMethod:METHOD_ONLAUNCHFROMWXREQ arguments:dictionary];
+            };
+        }
     } else if ([req isKindOfClass:[ShowMessageFromWXReq class]]) {
         ShowMessageFromWXReq *showMessageFromWXReq = (ShowMessageFromWXReq *)req;
         [dictionary setValue:showMessageFromWXReq.message.messageAction forKey:ARGUMENT_KEY_RESULT_MESSAGEACTION];
         [dictionary setValue:showMessageFromWXReq.message.messageExt forKey:ARGUMENT_KEY_RESULT_MESSAGEEXT];
         [dictionary setValue:showMessageFromWXReq.lang forKey:ARGUMENT_KEY_RESULT_LANG];
         [dictionary setValue:showMessageFromWXReq.country forKey:ARGUMENT_KEY_RESULT_COUNTRY];
-        //
+        if (_isRunning) {
+            [_channel invokeMethod:METHOD_ONSHOWMESSAGEFROMWXREQ arguments:dictionary];
+        } else {
+            __weak typeof(self) weakSelf = self;
+            _initialWXReqRunnable = ^() {
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                [strongSelf -> _channel invokeMethod:METHOD_ONSHOWMESSAGEFROMWXREQ arguments:dictionary];
+            };
+        }
     }
 }
 

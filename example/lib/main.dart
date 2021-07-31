@@ -79,6 +79,12 @@ class _HomeState extends State<Home> {
       body: ListView(
         children: <Widget>[
           ListTile(
+            title: const Text('微信回调 - 冷启'),
+            onTap: () async {
+              await Wechat.instance.handleInitialWXReq();
+            },
+          ),
+          ListTile(
             title: const Text('环境检查'),
             onTap: () async {
               final String content =

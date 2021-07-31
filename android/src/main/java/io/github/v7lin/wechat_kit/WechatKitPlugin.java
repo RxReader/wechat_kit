@@ -45,6 +45,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
@@ -170,6 +171,7 @@ public final class WechatKitPlugin implements FlutterPlugin, ActivityAware, Plug
     private final IDiffDevOAuth qrauth = DiffDevOAuthFactory.getDiffDevOAuth();
 
     private IWXAPI iwxapi;
+    private AtomicBoolean handleInitialWXReqFlag = new AtomicBoolean(false);
 
     // --- FlutterPlugin
 
@@ -377,16 +379,20 @@ public final class WechatKitPlugin implements FlutterPlugin, ActivityAware, Plug
     }
 
     private void handleInitialWXReq(@NonNull MethodCall call, @NonNull Result result) {
-        final Activity activity = activityPluginBinding != null ? activityPluginBinding.getActivity() : null;
-        if (activity != null) {
-            final Intent resp = WechatCallbackActivity.extraCallback(activity.getIntent());
-            if (resp != null) {
-                if (iwxapi != null) {
-                    iwxapi.handleIntent(resp, iwxapiEventHandler);
+        if (handleInitialWXReqFlag.compareAndSet(false, true)) {
+            final Activity activity = activityPluginBinding != null ? activityPluginBinding.getActivity() : null;
+            if (activity != null) {
+                final Intent resp = WechatCallbackActivity.extraCallback(activity.getIntent());
+                if (resp != null) {
+                    if (iwxapi != null) {
+                        iwxapi.handleIntent(resp, iwxapiEventHandler);
+                    }
                 }
             }
+            result.success(null);
+        } else {
+            result.error("FAILED", null, null);
         }
-        result.success(null);
     }
 
     private void handleAuthCall(@NonNull MethodCall call, @NonNull Result result) {
