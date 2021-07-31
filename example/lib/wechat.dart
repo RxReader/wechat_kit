@@ -5,7 +5,6 @@ import 'package:wechat_kit/wechat_kit.dart';
 import 'package:wechat_kit_example/model/wechat_api_resp.dart';
 
 extension ApiWechat on Wechat {
-
   // --- 微信APP授权登录
 
   /// 获取 access_token（UnionID）
