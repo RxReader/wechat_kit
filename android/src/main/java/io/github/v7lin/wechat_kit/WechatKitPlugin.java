@@ -9,7 +9,6 @@ import android.content.pm.ProviderInfo;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 
 import com.tencent.mm.opensdk.constants.Build;

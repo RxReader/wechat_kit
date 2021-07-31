@@ -89,18 +89,20 @@ void main() {
   });
 
   test('auth', () async {
-    final StreamSubscription<WechatAuthResp> sub =
-        Wechat.instance.authResp().listen((WechatAuthResp resp) {
-      expect(resp.errorCode, WechatSdkResp.ERRORCODE_USERCANCEL);
+    final StreamSubscription<BaseResp> sub =
+        Wechat.instance.respStream().listen((BaseResp resp) {
+      expect(resp.runtimeType, AuthResp);
+      expect(resp.errorCode, BaseResp.ERRORCODE_USERCANCEL);
     });
     await Wechat.instance.auth(scope: <String>[WechatScope.SNSAPI_USERINFO]);
     await sub.cancel();
   });
 
   test('share', () async {
-    final StreamSubscription<WechatSdkResp> sub =
-        Wechat.instance.shareMsgResp().listen((WechatSdkResp resp) {
-      expect(resp.errorCode, WechatSdkResp.ERRORCODE_SUCCESS);
+    final StreamSubscription<BaseResp> sub =
+        Wechat.instance.respStream().listen((BaseResp resp) {
+      expect(resp.runtimeType, ShareMsgResp);
+      expect(resp.errorCode, BaseResp.ERRORCODE_SUCCESS);
     });
     await Wechat.instance
         .shareText(scene: WechatScene.SESSION, text: 'share text');
@@ -108,9 +110,10 @@ void main() {
   });
 
   test('pay', () async {
-    final StreamSubscription<WechatPayResp> sub =
-        Wechat.instance.payResp().listen((WechatPayResp resp) {
-      expect(resp.errorCode, WechatSdkResp.ERRORCODE_USERCANCEL);
+    final StreamSubscription<BaseResp> sub =
+        Wechat.instance.respStream().listen((BaseResp resp) {
+      expect(resp.runtimeType, PayResp);
+      expect(resp.errorCode, BaseResp.ERRORCODE_USERCANCEL);
     });
     await Wechat.instance.pay(
       appId: 'mock',

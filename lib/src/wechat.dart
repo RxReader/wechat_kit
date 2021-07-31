@@ -6,13 +6,9 @@ import 'dart:typed_data';
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/services.dart';
-import 'package:wechat_kit/src/model/qrauth/qrauth_resp.dart';
-import 'package:wechat_kit/src/model/sdk/wechat_auth_resp.dart';
-import 'package:wechat_kit/src/model/sdk/wechat_launch_from_wx_req.dart';
-import 'package:wechat_kit/src/model/sdk/wechat_launch_mini_program_resp.dart';
-import 'package:wechat_kit/src/model/sdk/wechat_pay_resp.dart';
-import 'package:wechat_kit/src/model/sdk/wechat_sdk_resp.dart';
-import 'package:wechat_kit/src/model/sdk/wechat_subscribe_msg_resp.dart';
+import 'package:wechat_kit/src/model/qrauth.dart';
+import 'package:wechat_kit/src/model/req.dart';
+import 'package:wechat_kit/src/model/resp.dart';
 import 'package:wechat_kit/src/wechat_constant.dart';
 
 ///
@@ -48,6 +44,7 @@ class Wechat {
       'openCustomerServiceChat';
   static const String _METHOD_PAY = 'pay';
   static const String _METHOD_LAUNCHFROMWX = 'launchFromWX';
+  static const String _METHOD_SHOWMESSAGEFROMWX = 'showMessageFromWX';
 
   static const String _METHOD_ONAUTHRESP = 'onAuthResp';
   static const String _METHOD_ONOPENURLRESP = 'onOpenUrlResp';
@@ -100,13 +97,8 @@ class Wechat {
   static const String _ARGUMENT_KEY_CORPID = 'corpId';
   static const String _ARGUMENT_KEY_PARTNERID = 'partnerId';
   static const String _ARGUMENT_KEY_PREPAYID = 'prepayId';
-
-//  static const String _ARGUMENT_KEY_NONCESTR = 'noncestr';
-//  static const String _ARGUMENT_KEY_TIMESTAMP = 'timestamp';
   static const String _ARGUMENT_KEY_PACKAGE = 'package';
   static const String _ARGUMENT_KEY_SIGN = 'sign';
-
-  static const String _ARGUMENT_KEY_RESULT_IMAGEDATA = 'imageData';
 
   static const String _SCHEME_FILE = 'file';
 
@@ -114,41 +106,13 @@ class Wechat {
       const MethodChannel('v7lin.github.io/wechat_kit')
         ..setMethodCallHandler(_handleMethod);
 
-  final StreamController<WechatLaunchFromWXReq>
-      _launchFromWXReqStreamController =
-      StreamController<WechatLaunchFromWXReq>.broadcast();
+  final StreamController<BaseReq> _reqStreamController =
+      StreamController<BaseReq>.broadcast();
 
-  final StreamController<WechatAuthResp> _authRespStreamController =
-      StreamController<WechatAuthResp>.broadcast();
+  final StreamController<BaseResp> _respStreamController =
+      StreamController<BaseResp>.broadcast();
 
-  final StreamController<WechatSdkResp> _openUrlRespStreamController =
-      StreamController<WechatSdkResp>.broadcast();
-
-  final StreamController<WechatSdkResp> _shareMsgRespStreamController =
-      StreamController<WechatSdkResp>.broadcast();
-
-  final StreamController<WechatSubscribeMsgResp>
-      _subscribeMsgRespStreamController =
-      StreamController<WechatSubscribeMsgResp>.broadcast();
-
-  final StreamController<WechatLaunchMiniProgramResp>
-      _launchMiniProgramRespStreamController =
-      StreamController<WechatLaunchMiniProgramResp>.broadcast();
-
-  final StreamController<WechatSdkResp>
-      _openCustomerServiceChatRespStreamController =
-      StreamController<WechatSdkResp>.broadcast();
-
-  final StreamController<WechatPayResp> _payRespStreamController =
-      StreamController<WechatPayResp>.broadcast();
-
-  final StreamController<Uint8List> _authGotQrcodeRespStreamController =
-      StreamController<Uint8List>.broadcast();
-
-  final StreamController<String> _authQrcodeScannedRespStreamController =
-      StreamController<String>.broadcast();
-
-  final StreamController<QrauthResp> _authFinishRespStreamController =
+  final StreamController<QrauthResp> _qrauthStreamController =
       StreamController<QrauthResp>.broadcast();
 
   /// 向微信注册应用
@@ -170,103 +134,70 @@ class Wechat {
     switch (call.method) {
       // onReq
       case _METHOD_LAUNCHFROMWX:
-        _launchFromWXReqStreamController.add(WechatLaunchFromWXReq.fromJson(
+        _reqStreamController.add(LaunchFromWXReq.fromJson(
+            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
+        break;
+      case _METHOD_SHOWMESSAGEFROMWX:
+        _reqStreamController.add(ShowMessageFromWXReq.fromJson(
             (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
       // onResp
       case _METHOD_ONAUTHRESP:
-        _authRespStreamController.add(WechatAuthResp.fromJson(
+        _respStreamController.add(AuthResp.fromJson(
             (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
       case _METHOD_ONOPENURLRESP:
-        _openUrlRespStreamController.add(WechatSdkResp.fromJson(
+        _respStreamController.add(OpenUrlResp.fromJson(
             (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
       case _METHOD_ONSHAREMSGRESP:
-        _shareMsgRespStreamController.add(WechatSdkResp.fromJson(
+        _respStreamController.add(ShareMsgResp.fromJson(
             (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
       case _METHOD_ONSUBSCRIBEMSGRESP:
-        _subscribeMsgRespStreamController.add(WechatSubscribeMsgResp.fromJson(
+        _respStreamController.add(SubscribeMsgResp.fromJson(
             (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
       case _METHOD_ONLAUNCHMINIPROGRAMRESP:
-        _launchMiniProgramRespStreamController.add(
-            WechatLaunchMiniProgramResp.fromJson(
-                (call.arguments as Map<dynamic, dynamic>)
-                    .cast<String, dynamic>()));
+        _respStreamController.add(LaunchMiniProgramResp.fromJson(
+            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
       case _METHOD_ONOPENCUSTOMERSERVICECHATRESP:
-        _openCustomerServiceChatRespStreamController.add(WechatSdkResp.fromJson(
+        _respStreamController.add(OpenCustomerServiceChatResp.fromJson(
             (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
       case _METHOD_ONPAYRESP:
-        _payRespStreamController.add(WechatPayResp.fromJson(
+        _respStreamController.add(PayResp.fromJson(
             (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
-      // Qrauth
+      // onQrauth
       case _METHOD_ONAUTHGOTQRCODE:
-        _authGotQrcodeRespStreamController
-            .add(call.arguments[_ARGUMENT_KEY_RESULT_IMAGEDATA] as Uint8List);
+        _qrauthStreamController.add(GotQrcodeResp.fromJson(
+            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
       case _METHOD_ONAUTHQRCODESCANNED:
-        _authQrcodeScannedRespStreamController.add('QrcodeScanned');
+        _qrauthStreamController.add(const QrcodeScannedResp());
         break;
       case _METHOD_ONAUTHFINISH:
-        _authFinishRespStreamController.add(QrauthResp.fromJson(
+        _qrauthStreamController.add(FinishResp.fromJson(
             (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
     }
   }
 
-  /// 登录
-  Stream<WechatAuthResp> authResp() {
-    return _authRespStreamController.stream;
+  ///
+  Stream<BaseReq> reqStream() {
+    return _reqStreamController.stream;
   }
 
-  /// 打开浏览器
-  Stream<WechatSdkResp> openUrlResp() {
-    return _openUrlRespStreamController.stream;
+  ///
+  Stream<BaseResp> respStream() {
+    return _respStreamController.stream;
   }
 
-  /// 分享
-  Stream<WechatSdkResp> shareMsgResp() {
-    return _shareMsgRespStreamController.stream;
-  }
-
-  /// 一次性订阅消息
-  Stream<WechatSubscribeMsgResp> subscribeMsgResp() {
-    return _subscribeMsgRespStreamController.stream;
-  }
-
-  /// 打开小程序
-  Stream<WechatLaunchMiniProgramResp> launchMiniProgramResp() {
-    return _launchMiniProgramRespStreamController.stream;
-  }
-
-  /// 打开微信客服
-  Stream<WechatSdkResp> openCustomerServiceChatResp() {
-    return _openCustomerServiceChatRespStreamController.stream;
-  }
-
-  /// 支付
-  Stream<WechatPayResp> payResp() {
-    return _payRespStreamController.stream;
-  }
-
-  /// 扫码登录 - 获取二维码
-  Stream<Uint8List> authGotQrcodeResp() {
-    return _authGotQrcodeRespStreamController.stream;
-  }
-
-  /// 扫码登录 - 用户扫描二维码
-  Stream<String> authQrcodeScannedResp() {
-    return _authQrcodeScannedRespStreamController.stream;
-  }
-
-  /// 扫码登录 - 用户点击授权
-  Stream<QrauthResp> authFinishResp() {
-    return _authFinishRespStreamController.stream;
+  /// 扫码登录
+  Stream<QrauthResp> authGotQrcodeResp() {
+    return _qrauthStreamController.stream;
   }
 
   /// 检测微信是否已安装
