@@ -97,6 +97,10 @@ Capabilities -> Associated Domain -> Domain -> applinks:${your applinks}
 ## flutter
 
 * break change
+    * 3.0.0: 
+        * Flutter实现重构，合并多个 StreamController，简化类名，并支持微信回调 onReq
+        * Android实现重构，使用 startActivity 替换 Broadcast，兼容微信回调 onReq/onResp
+        * iOS实现，支持微信回调 onReq
     * 2.2.0: Wechat 单例
     * 2.1.0: nullsafety & 不再支持 Android embedding v1
 
