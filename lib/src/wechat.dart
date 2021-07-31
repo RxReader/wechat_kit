@@ -21,6 +21,7 @@ class Wechat {
   static final Wechat _instance = Wechat._();
 
   static const String _METHOD_REGISTERAPP = 'registerApp';
+  static const String _METHOD_HANDLEINITIALWXREQ = 'handleInitialWXReq';
   static const String _METHOD_ISINSTALLED = 'isInstalled';
   static const String _METHOD_ISSUPPORTAPI = 'isSupportApi';
   static const String _METHOD_ISSUPPORTSTATEAPI = 'isSupportStateAPI';
@@ -43,8 +44,9 @@ class Wechat {
   static const String _METHOD_OPENCUSTOMERSERVICECHAT =
       'openCustomerServiceChat';
   static const String _METHOD_PAY = 'pay';
-  static const String _METHOD_LAUNCHFROMWX = 'launchFromWX';
-  static const String _METHOD_SHOWMESSAGEFROMWX = 'showMessageFromWX';
+
+  static const String _METHOD_ONLAUNCHFROMWXREQ = 'onLaunchFromWXReq';
+  static const String _METHOD_ONSHOWMESSAGEFROMWXREQ = 'onShowMessageFromWXReq';
 
   static const String _METHOD_ONAUTHRESP = 'onAuthResp';
   static const String _METHOD_ONOPENURLRESP = 'onOpenUrlResp';
@@ -130,14 +132,19 @@ class Wechat {
     );
   }
 
+  ///
+  Future<void> handleInitialWXReq() {
+    return _channel.invokeMethod<void>(_METHOD_HANDLEINITIALWXREQ);
+  }
+
   Future<dynamic> _handleMethod(MethodCall call) async {
     switch (call.method) {
       // onReq
-      case _METHOD_LAUNCHFROMWX:
+      case _METHOD_ONLAUNCHFROMWXREQ:
         _reqStreamController.add(LaunchFromWXReq.fromJson(
             (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
-      case _METHOD_SHOWMESSAGEFROMWX:
+      case _METHOD_ONSHOWMESSAGEFROMWXREQ:
         _reqStreamController.add(ShowMessageFromWXReq.fromJson(
             (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;

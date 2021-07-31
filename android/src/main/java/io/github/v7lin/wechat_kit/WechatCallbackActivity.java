@@ -4,10 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-public class WechatCallbackActivity extends Activity {
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+public final class WechatCallbackActivity extends Activity {
+    private static final String KEY_WECHAT_CALLBACK = "wechat_callback";
+    private static final String KEY_WECHAT_RESP = "wechat_resp";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         handleIntent(getIntent());
     }
@@ -20,7 +25,20 @@ public class WechatCallbackActivity extends Activity {
     }
 
     private void handleIntent(Intent intent) {
-        WechatReceiver.sendWechatResp(this, intent);
+        final Intent launchIntent = getPackageManager().getLaunchIntentForPackage(getPackageName());
+        launchIntent.putExtra(KEY_WECHAT_CALLBACK, true);
+        launchIntent.putExtra(KEY_WECHAT_RESP, intent);
+//        launchIntent.setPackage(getPackageName());
+        launchIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(launchIntent);
         finish();
+    }
+
+    public static Intent extraCallback(@NonNull Intent intent) {
+        if (intent.getExtras() != null && intent.getBooleanExtra(KEY_WECHAT_CALLBACK, false)) {
+            final Intent resp = intent.getParcelableExtra(KEY_WECHAT_RESP);
+            return resp;
+        }
+        return null;
     }
 }
