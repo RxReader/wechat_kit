@@ -43,6 +43,7 @@ class Wechat {
   static const String _METHOD_LAUNCHMINIPROGRAM = 'launchMiniProgram';
   static const String _METHOD_OPENCUSTOMERSERVICECHAT =
       'openCustomerServiceChat';
+  static const String _METHOD_OPENBUSINESSVIEW = 'openBusinessView';
   static const String _METHOD_PAY = 'pay';
 
   static const String _METHOD_ONLAUNCHFROMWXREQ = 'onLaunchFromWXReq';
@@ -56,6 +57,7 @@ class Wechat {
       'onLaunchMiniProgramResp';
   static const String _METHOD_ONOPENCUSTOMERSERVICECHATRESP =
       'onOpenCustomerServiceChatResp';
+  static const String _METHOD_ONOPENBUSINESSVIEWRESP = 'onOpenBusinessViewResp';
   static const String _METHOD_ONPAYRESP = 'onPayResp';
   static const String _METHOD_ONAUTHGOTQRCODE = 'onAuthGotQrcode';
   static const String _METHOD_ONAUTHQRCODESCANNED = 'onAuthQrcodeScanned';
@@ -69,6 +71,7 @@ class Wechat {
   static const String _ARGUMENT_KEY_TIMESTAMP = 'timestamp';
   static const String _ARGUMENT_KEY_SIGNATURE = 'signature';
   static const String _ARGUMENT_KEY_URL = 'url';
+  static const String _ARGUMENT_KEY_QUERY = 'query';
   static const String _ARGUMENT_KEY_USERNAME = 'username';
   static const String _ARGUMENT_KEY_SCENE = 'scene';
   static const String _ARGUMENT_KEY_TEXT = 'text';
@@ -97,10 +100,12 @@ class Wechat {
   static const String _ARGUMENT_KEY_TEMPLATEID = 'templateId';
   static const String _ARGUMENT_KEY_RESERVED = 'reserved';
   static const String _ARGUMENT_KEY_CORPID = 'corpId';
+  static const String _ARGUMENT_KEY_BUSINESSTYPE = 'businessType';
   static const String _ARGUMENT_KEY_PARTNERID = 'partnerId';
   static const String _ARGUMENT_KEY_PREPAYID = 'prepayId';
   static const String _ARGUMENT_KEY_PACKAGE = 'package';
   static const String _ARGUMENT_KEY_SIGN = 'sign';
+  static const String _ARGUMENT_KEY_EXTINFO = 'extInfo';
 
   static const String _SCHEME_FILE = 'file';
 
@@ -171,6 +176,10 @@ class Wechat {
         break;
       case _METHOD_ONOPENCUSTOMERSERVICECHATRESP:
         _respStreamController.add(OpenCustomerServiceChatResp.fromJson(
+            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
+        break;
+      case _METHOD_ONOPENBUSINESSVIEWRESP:
+        _respStreamController.add(OpenBusinessViewResp.fromJson(
             (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
       case _METHOD_ONPAYRESP:
@@ -565,6 +574,32 @@ class Wechat {
       <String, dynamic>{
         _ARGUMENT_KEY_CORPID: corpId,
         _ARGUMENT_KEY_URL: url,
+      },
+    );
+  }
+
+  /// 打开支付分小程序
+  Future<void> openBusinessView({
+    String type = 'wxpayScoreUse',
+    required String mchId,
+    required String package,
+    required String timestamp,
+    required String nonceStr,
+    required String sign,
+    String signType = 'HMAC-SHA256',
+    String? extInfo,
+  }) {
+    return _channel.invokeMethod<void>(
+      _METHOD_OPENBUSINESSVIEW,
+      <String, dynamic>{
+        _ARGUMENT_KEY_BUSINESSTYPE: type,
+        _ARGUMENT_KEY_QUERY: 'mch_id=$mchId'
+            '&package=$package'
+            '&timestamp=$timestamp'
+            '&nonceStr=$nonceStr'
+            '&sign_type=$signType'
+            '&sign=$sign',
+        if (extInfo != null) _ARGUMENT_KEY_EXTINFO: extInfo,
       },
     );
   }
