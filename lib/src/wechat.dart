@@ -578,28 +578,20 @@ class Wechat {
     );
   }
 
-  /// 打开支付分小程序
-  /// 参数说明：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter6_1_11.shtml
+  /// 调起支付分
+  ///  * 免确认模式：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter6_1_7.shtml
+  ///  * 需确认授权：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter6_1_11.shtml
+  ///  * 拉起小程序：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter6_1_23.shtml
   Future<void> openBusinessView({
-    String type = 'wxpayScoreUse',
-    required String mchId,
-    required String package,
-    required String timestamp,
-    required String nonceStr,
-    required String sign,
-    String signType = 'HMAC-SHA256',
+    required String businessType,
+    required String query,
     String? extInfo,
   }) {
     return _channel.invokeMethod<void>(
       _METHOD_OPENBUSINESSVIEW,
       <String, dynamic>{
-        _ARGUMENT_KEY_BUSINESSTYPE: type,
-        _ARGUMENT_KEY_QUERY: 'mch_id=$mchId'
-            '&package=$package'
-            '&timestamp=$timestamp'
-            '&nonceStr=$nonceStr'
-            '&sign_type=$signType'
-            '&sign=$sign',
+        _ARGUMENT_KEY_BUSINESSTYPE: businessType,
+        _ARGUMENT_KEY_QUERY: query,
         if (extInfo != null) _ARGUMENT_KEY_EXTINFO: extInfo,
       },
     );
