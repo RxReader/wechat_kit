@@ -579,6 +579,7 @@ class Wechat {
   }
 
   /// 打开支付分小程序
+  /// 参数说明：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter6_1_11.shtml
   Future<void> openBusinessView({
     String type = 'wxpayScoreUse',
     required String mchId,
