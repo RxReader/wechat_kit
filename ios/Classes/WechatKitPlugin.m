@@ -206,7 +206,7 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
     } else if ([METHOD_OPENCUSTOMERSERVICECHAT isEqualToString:call.method]) {
         [self handleOpenCustomerServiceChatCall: call result:result];
     } else if ([METHOD_OPENBUSINESSVIEW isEqualToString:call.method]) {
-        [self handleOpenBusinessView: call result:result];
+        [self handleOpenBusinessViewCall: call result:result];
     }
 #ifndef NO_PAY
     else if ([METHOD_PAY isEqualToString:call.method]) {
