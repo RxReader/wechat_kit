@@ -319,7 +319,7 @@ public final class WechatKitPlugin implements FlutterPlugin, ActivityAware, Plug
                 if (resp.errCode == BaseResp.ErrCode.ERR_OK) {
                     WXOpenBusinessView.Resp openBusinessViewResp = (WXOpenBusinessView.Resp) resp;
                     map.put(ARGUMENT_KEY_BUSINESSTYPE, openBusinessViewResp.businessType);
-                    map.put(ARGUMENT_KEY_EXTINFO, openBusinessViewResp.extInfo);
+                    map.put(ARGUMENT_KEY_RESULT_EXTMSG, openBusinessViewResp.extMsg);
                 }
                 if (channel != null) {
                     channel.invokeMethod(METHOD_ONOPENBUSINESSVIEWRESP, map);

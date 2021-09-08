@@ -570,7 +570,7 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
         if (resp.errCode == WXSuccess) {
             WXOpenBusinessViewResp *openBusinessViewResp = (WXOpenBusinessViewResp *)resp;
             [dictionary setValue:openBusinessViewResp.businessType forKey:ARGUMENT_KEY_BUSINESSTYPE];
-            [dictionary setValue:openBusinessViewResp.extInfo forKey:ARGUMENT_KEY_EXTINFO];
+            [dictionary setValue:openBusinessViewResp.extMsg forKey:ARGUMENT_KEY_RESULT_EXTMSG];
         }
         [_channel invokeMethod:METHOD_ONOPENBUSINESSVIEWRESP arguments:dictionary];
     } else {
