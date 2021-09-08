@@ -107,8 +107,7 @@ Map<String, dynamic> _$OpenCustomerServiceChatRespToJson(
       'errorMsg': instance.errorMsg,
     };
 
-OpenBusinessViewResp _$OpenBusinessViewRespFromJson(
-    Map<String, dynamic> json) {
+OpenBusinessViewResp _$OpenBusinessViewRespFromJson(Map<String, dynamic> json) {
   return OpenBusinessViewResp(
     businessType: json['businessType'] as String,
     extMsg: json['extMsg'] as String,
