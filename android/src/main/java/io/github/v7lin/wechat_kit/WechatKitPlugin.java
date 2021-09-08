@@ -23,6 +23,7 @@ import com.tencent.mm.opensdk.modelbiz.OpenWebview;
 import com.tencent.mm.opensdk.modelbiz.SubscribeMessage;
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
 import com.tencent.mm.opensdk.modelbiz.WXOpenCustomerServiceChat;
+import com.tencent.mm.opensdk.modelbiz.WXOpenBusinessView;
 import com.tencent.mm.opensdk.modelmsg.LaunchFromWX;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
@@ -85,6 +86,7 @@ public final class WechatKitPlugin implements FlutterPlugin, ActivityAware, Plug
     private static final String METHOD_SUBSCRIBEMSG = "subscribeMsg";
     private static final String METHOD_LAUNCHMINIPROGRAM = "launchMiniProgram";
     private static final String METHOD_OPENCUSTOMERSERVICECHAT = "openCustomerServiceChat";
+    private static final String METHOD_OPENBUSINESSVIEW = "openBusinessView";
     private static final String METHOD_PAY = "pay";
 
     private static final String METHOD_ONLAUNCHFROMWXREQ = "onLaunchFromWXReq";
@@ -96,6 +98,7 @@ public final class WechatKitPlugin implements FlutterPlugin, ActivityAware, Plug
     private static final String METHOD_ONSUBSCRIBEMSGRESP = "onSubscribeMsgResp";
     private static final String METHOD_ONLAUNCHMINIPROGRAMRESP = "onLaunchMiniProgramResp";
     private static final String METHOD_ONOPENCUSTOMERSERVICECHATRESP = "onOpenCustomerServiceChatResp";
+    private static final String METHOD_ONOPENBUSINESSVIEWRESP = "onOpenBusinessViewResp";
     private static final String METHOD_ONPAYRESP = "onPayResp";
     private static final String METHOD_ONAUTHGOTQRCODE = "onAuthGotQrcode";
     private static final String METHOD_ONAUTHQRCODESCANNED = "onAuthQrcodeScanned";
@@ -109,6 +112,7 @@ public final class WechatKitPlugin implements FlutterPlugin, ActivityAware, Plug
     private static final String ARGUMENT_KEY_TIMESTAMP = "timestamp";
     private static final String ARGUMENT_KEY_SIGNATURE = "signature";
     private static final String ARGUMENT_KEY_URL = "url";
+    private static final String ARGUMENT_KEY_QUERY = "query";
     private static final String ARGUMENT_KEY_USERNAME = "username";
     private static final String ARGUMENT_KEY_SCENE = "scene";
     private static final String ARGUMENT_KEY_TEXT = "text";
@@ -137,10 +141,12 @@ public final class WechatKitPlugin implements FlutterPlugin, ActivityAware, Plug
     private static final String ARGUMENT_KEY_TEMPLATEID = "templateId";
     private static final String ARGUMENT_KEY_RESERVED = "reserved";
     private static final String ARGUMENT_KEY_CORPID = "corpId";
+    private static final String ARGUMENT_KEY_BUSINESSTYPE = "businessType";
     private static final String ARGUMENT_KEY_PARTNERID = "partnerId";
     private static final String ARGUMENT_KEY_PREPAYID = "prepayId";
     private static final String ARGUMENT_KEY_PACKAGE = "package";
     private static final String ARGUMENT_KEY_SIGN = "sign";
+    private static final String ARGUMENT_KEY_EXTINFO = "extInfo";
 
     private static final String ARGUMENT_KEY_RESULT_ERRORCODE = "errorCode";
     private static final String ARGUMENT_KEY_RESULT_ERRORMSG = "errorMsg";
@@ -309,6 +315,15 @@ public final class WechatKitPlugin implements FlutterPlugin, ActivityAware, Plug
                 if (channel != null) {
                     channel.invokeMethod(METHOD_ONOPENCUSTOMERSERVICECHATRESP, map);
                 }
+            } else if (resp instanceof WXOpenBusinessView.Resp) {
+                if (resp.errCode == BaseResp.ErrCode.ERR_OK) {
+                    WXOpenBusinessView.Resp openBusinessViewResp = (WXOpenBusinessView.Resp) resp;
+                    map.put(ARGUMENT_KEY_BUSINESSTYPE, openBusinessViewResp.businessType);
+                    map.put(ARGUMENT_KEY_RESULT_EXTMSG, openBusinessViewResp.extMsg);
+                }
+                if (channel != null) {
+                    channel.invokeMethod(METHOD_ONOPENBUSINESSVIEWRESP, map);
+                }
             } else if (resp instanceof PayResp) {
                 // 支付
                 if (resp.errCode == BaseResp.ErrCode.ERR_OK) {
@@ -363,6 +378,8 @@ public final class WechatKitPlugin implements FlutterPlugin, ActivityAware, Plug
             handleLaunchMiniProgramCall(call, result);
         } else if (METHOD_OPENCUSTOMERSERVICECHAT.equals(call.method)) {
             handleOpenCustomerServiceChat(call, result);
+        } else if (METHOD_OPENBUSINESSVIEW.equals(call.method)) {
+            handleOpenBusinessView(call, result);
         } else if (METHOD_PAY.equals(call.method)) {
             handlePayCall(call, result);
         } else {
@@ -581,6 +598,17 @@ public final class WechatKitPlugin implements FlutterPlugin, ActivityAware, Plug
         final WXOpenCustomerServiceChat.Req req = new WXOpenCustomerServiceChat.Req();
         req.corpId = call.argument(ARGUMENT_KEY_CORPID);
         req.url = call.argument(ARGUMENT_KEY_URL);
+        if (iwxapi != null) {
+            iwxapi.sendReq(req);
+        }
+        result.success(null);
+    }
+
+    private void handleOpenBusinessView(@NonNull MethodCall call, @NonNull Result result) {
+        final WXOpenBusinessView.Req req = new WXOpenBusinessView.Req();
+        req.businessType = call.argument(ARGUMENT_KEY_BUSINESSTYPE);
+        req.query = call.argument(ARGUMENT_KEY_QUERY);
+        req.extInfo = call.argument(ARGUMENT_KEY_EXTINFO);
         if (iwxapi != null) {
             iwxapi.sendReq(req);
         }

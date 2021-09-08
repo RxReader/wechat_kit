@@ -182,6 +182,28 @@ class OpenCustomerServiceChatResp extends BaseResp {
   Map<String, dynamic> toJson() => _$OpenCustomerServiceChatRespToJson(this);
 }
 
+@JsonSerializable(explicitToJson: true)
+class OpenBusinessViewResp extends BaseResp {
+  const OpenBusinessViewResp({
+    required this.businessType,
+    required this.extMsg,
+    required int errorCode,
+    String? errorMsg,
+  }) : super(
+          errorCode: errorCode,
+          errorMsg: errorMsg,
+        );
+
+  factory OpenBusinessViewResp.fromJson(Map<String, dynamic> json) =>
+      _$OpenBusinessViewRespFromJson(json);
+
+  final String businessType;
+  final String extMsg;
+
+  @override
+  Map<String, dynamic> toJson() => _$OpenBusinessViewRespToJson(this);
+}
+
 @JsonSerializable(
   explicitToJson: true,
 )

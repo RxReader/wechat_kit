@@ -107,6 +107,24 @@ Map<String, dynamic> _$OpenCustomerServiceChatRespToJson(
       'errorMsg': instance.errorMsg,
     };
 
+OpenBusinessViewResp _$OpenBusinessViewRespFromJson(Map<String, dynamic> json) {
+  return OpenBusinessViewResp(
+    businessType: json['businessType'] as String,
+    extMsg: json['extMsg'] as String,
+    errorCode: json['errorCode'] as int? ?? 0,
+    errorMsg: json['errorMsg'] as String?,
+  );
+}
+
+Map<String, dynamic> _$OpenBusinessViewRespToJson(
+        OpenBusinessViewResp instance) =>
+    <String, dynamic>{
+      'businessType': instance.businessType,
+      'extMsg': instance.extMsg,
+      'errorCode': instance.errorCode,
+      'errorMsg': instance.errorMsg,
+    };
+
 PayResp _$PayRespFromJson(Map<String, dynamic> json) {
   return PayResp(
     errorCode: json['errorCode'] as int? ?? 0,

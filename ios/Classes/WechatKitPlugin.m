@@ -52,6 +52,7 @@ static NSString *const METHOD_SHAREMINIPROGRAM = @"shareMiniProgram";
 static NSString *const METHOD_SUBSCRIBEMSG = @"subscribeMsg";
 static NSString *const METHOD_LAUNCHMINIPROGRAM = @"launchMiniProgram";
 static NSString *const METHOD_OPENCUSTOMERSERVICECHAT = @"openCustomerServiceChat";
+static NSString *const METHOD_OPENBUSINESSVIEW = @"openBusinessView";
 #ifndef NO_PAY
 static NSString *const METHOD_PAY = @"pay";
 #endif
@@ -65,6 +66,7 @@ static NSString *const METHOD_ONSHAREMSGRESP = @"onShareMsgResp";
 static NSString *const METHOD_ONSUBSCRIBEMSGRESP = @"onSubscribeMsgResp";
 static NSString *const METHOD_ONLAUNCHMINIPROGRAMRESP = @"onLaunchMiniProgramResp";
 static NSString *const METHOD_ONOPENCUSTOMERSERVICECHATRESP = @"onOpenCustomerServiceChatResp";
+static NSString *const METHOD_ONOPENBUSINESSVIEWRESP = @"onOpenBusinessViewResp";
 #ifndef NO_PAY
 static NSString *const METHOD_ONPAYRESP = @"onPayResp";
 #endif
@@ -80,6 +82,7 @@ static NSString *const ARGUMENT_KEY_NONCESTR = @"noncestr";
 static NSString *const ARGUMENT_KEY_TIMESTAMP = @"timestamp";
 static NSString *const ARGUMENT_KEY_SIGNATURE = @"signature";
 static NSString *const ARGUMENT_KEY_URL = @"url";
+static NSString *const ARGUMENT_KEY_QUERY = @"query";
 static NSString *const ARGUMENT_KEY_USERNAME = @"username";
 static NSString *const ARGUMENT_KEY_SCENE = @"scene";
 static NSString *const ARGUMENT_KEY_TEXT = @"text";
@@ -109,6 +112,7 @@ static NSString *const ARGUMENT_KEY_DISABLEFORWARD = @"disableForward";
 static NSString *const ARGUMENT_KEY_TEMPLATEID = @"templateId";
 static NSString *const ARGUMENT_KEY_RESERVED = @"reserved";
 static NSString *const ARGUMENT_KEY_CORPID = @"corpId";
+static NSString *const ARGUMENT_KEY_BUSINESSTYPE = @"businessType";
 #ifndef NO_PAY
 static NSString *const ARGUMENT_KEY_PARTNERID = @"partnerId";
 static NSString *const ARGUMENT_KEY_PREPAYID = @"prepayId";
@@ -117,6 +121,7 @@ static NSString *const ARGUMENT_KEY_PREPAYID = @"prepayId";
 static NSString *const ARGUMENT_KEY_PACKAGE = @"package";
 static NSString *const ARGUMENT_KEY_SIGN = @"sign";
 #endif
+static NSString *const ARGUMENT_KEY_EXTINFO = @"extInfo";
 
 static NSString *const ARGUMENT_KEY_RESULT_ERRORCODE = @"errorCode";
 static NSString *const ARGUMENT_KEY_RESULT_ERRORMSG = @"errorMsg";
@@ -200,6 +205,8 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
         [self handleLaunchMiniProgramCall:call result:result];
     } else if ([METHOD_OPENCUSTOMERSERVICECHAT isEqualToString:call.method]) {
         [self handleOpenCustomerServiceChatCall: call result:result];
+    } else if ([METHOD_OPENBUSINESSVIEW isEqualToString:call.method]) {
+        [self handleOpenBusinessViewCall: call result:result];
     }
 #ifndef NO_PAY
     else if ([METHOD_PAY isEqualToString:call.method]) {
@@ -413,6 +420,19 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
     result(nil);
 }
 
+- (void)handleOpenBusinessViewCall:(FlutterMethodCall *)call
+                            result:(FlutterResult)result {
+    WXOpenBusinessViewReq *req = [[WXOpenBusinessViewReq alloc] init];
+    req.businessType = call.arguments[ARGUMENT_KEY_BUSINESSTYPE];
+    req.query = call.arguments[ARGUMENT_KEY_QUERY];
+    req.extInfo = call.arguments[ARGUMENT_KEY_EXTINFO];
+    [WXApi sendReq:req
+        completion:^(BOOL success){
+            // do nothing
+        }];
+    result(nil);
+}
+
 #ifndef NO_PAY
 - (void)handlePayCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     PayReq *req = [[PayReq alloc] init];
@@ -546,6 +566,13 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
         [_channel invokeMethod:METHOD_ONLAUNCHMINIPROGRAMRESP arguments:dictionary];
     } else if ([resp isKindOfClass:[WXOpenCustomerServiceResp class]]) {
         [_channel invokeMethod:METHOD_ONOPENCUSTOMERSERVICECHATRESP arguments:dictionary];
+    } else if ([resp isKindOfClass:[WXOpenBusinessViewResp class]]) {
+        if (resp.errCode == WXSuccess) {
+            WXOpenBusinessViewResp *openBusinessViewResp = (WXOpenBusinessViewResp *)resp;
+            [dictionary setValue:openBusinessViewResp.businessType forKey:ARGUMENT_KEY_BUSINESSTYPE];
+            [dictionary setValue:openBusinessViewResp.extMsg forKey:ARGUMENT_KEY_RESULT_EXTMSG];
+        }
+        [_channel invokeMethod:METHOD_ONOPENBUSINESSVIEWRESP arguments:dictionary];
     } else {
 #ifndef NO_PAY
         if ([resp isKindOfClass:[PayResp class]]) {
