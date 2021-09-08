@@ -567,6 +567,11 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
     } else if ([resp isKindOfClass:[WXOpenCustomerServiceResp class]]) {
         [_channel invokeMethod:METHOD_ONOPENCUSTOMERSERVICECHATRESP arguments:dictionary];
     } else if ([resp isKindOfClass:[WXOpenBusinessViewResp class]]) {
+        if (resp.errCode == WXSuccess) {
+            WXOpenBusinessViewResp *openBusinessViewResp = (WXOpenBusinessViewResp *)resp;
+            [dictionary setValue:openBusinessViewResp.businessType forKey:ARGUMENT_KEY_BUSINESSTYPE];
+            [dictionary setValue:openBusinessViewResp.extInfo forKey:ARGUMENT_KEY_EXTINFO];
+        }
         [_channel invokeMethod:METHOD_ONOPENBUSINESSVIEWRESP arguments:dictionary];
     } else {
 #ifndef NO_PAY
