@@ -1,20 +1,12 @@
-## 3.0.0-iOS-NoPay
+## 3.0.0
 
-* 重构
+* 重构并抽离 WechatApiResp
 
 ## 2.3.1
-
-* 同 2.3.1-iOS-NoPay
-
-## 2.3.1-iOS-NoPay
 
 * bugfix
 
 ## 2.3.0
-
-* 同 2.3.0-iOS-NoPay
-
-## 2.3.0-iOS-NoPay
 
 * fix ios dependency
 
@@ -22,19 +14,11 @@
 
 * 优化小程序分享
 
-## 2.2.0-iOS-NoPay
-
-* 同 2.2.0
-
 ## 2.2.0
 
 * break change: Wechat 单例
 
 ## 2.1.0
-
-* 同 2.1.0-iOS-NoPay
-
-## 2.1.0-iOS-NoPay
 
 * nullsafety
 * 不再支持 Android embedding v1
@@ -45,24 +29,16 @@
 
 ## 2.0.0
 
-* 同 2.0.0-iOS-NoPay
-
-## 2.0.0-iOS-NoPay
-
 * Android FileProvider
 
 ## 1.1.3
-
-* 切换微信支付版
-
-## 1.1.3-iOS-NoPay
 
 * 升级SDK
 * 优化
 
 ## 1.1.2
 
-* [issues#49](https://github.com/rxreader/wechat_kit/issues/49)
+* Fix #49
 
 ## 1.1.1
 
@@ -84,7 +60,7 @@
 
 * 修正 homepage
 * 适配 Android Q 本地分享（targetSdkVersion >= 29，豁免外部存储沙箱限制，微信SDK并没有提供 FileProvider 方式）
-* 修正小程序分享（by [Ycong](https://github.com/Ycong)）
+* 修正小程序分享 (Thanks to @Ycong)
 
 ## 1.0.0
 
@@ -93,8 +69,8 @@
 
 ## 0.3.4
 
-* 升级Android/iOS SDK
-* 修正 Universal Links 文档（by [kenleemyth](https://github.com/kenleemyth)）
+* 升级 Android/iOS SDK
+* 修正 Universal Links 文档 (Thanks to @kenleemyth)
 
 ## 0.3.3
 
