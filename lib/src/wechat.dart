@@ -141,6 +141,12 @@ class Wechat {
   }
 
   Future<dynamic> _handleMethod(MethodCall call) async {
+    // 优先处理不需要参数的请求
+    if (call.method == _METHOD_ONAUTHQRCODESCANNED) {
+      _qrauthRespStreamController.add(const QrcodeScannedResp());
+      return;
+    }
+
     final Map<String, dynamic> _data =
         (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>();
 
@@ -180,9 +186,6 @@ class Wechat {
       // onQrauth
       case _METHOD_ONAUTHGOTQRCODE:
         _qrauthRespStreamController.add(GotQrcodeResp.fromJson(_data));
-        break;
-      case _METHOD_ONAUTHQRCODESCANNED:
-        _qrauthRespStreamController.add(const QrcodeScannedResp());
         break;
       case _METHOD_ONAUTHFINISH:
         _qrauthRespStreamController.add(FinishResp.fromJson(_data));
