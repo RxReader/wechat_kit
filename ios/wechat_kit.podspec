@@ -5,13 +5,13 @@
 Pod::Spec.new do |s|
   s.name             = 'wechat_kit'
   s.version          = '3.0.0'
-  s.summary          = 'A powerful Flutter plugin allowing developers to auth/share/pay with natvie Android & iOS Wechat SDKs.'
+  s.summary          = 'WeChat SDKs as Flutter plugin.'
   s.description      = <<-DESC
-A powerful Flutter plugin allowing developers to auth/share/pay with natvie Android & iOS Wechat SDKs.
+A powerful Flutter plugin allowing developers to auth/share/pay with natvie Android & iOS WeChat SDKs.
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'https://github.com/RxReader/wechat_kit'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { 'RxReader' => 'email@example.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
