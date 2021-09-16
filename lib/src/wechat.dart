@@ -11,14 +11,12 @@ import 'package:wechat_kit/src/model/req.dart';
 import 'package:wechat_kit/src/model/resp.dart';
 import 'package:wechat_kit/src/wechat_constant.dart';
 
-///
+/// The Wechat instance.
 class Wechat {
-  ///
   Wechat._();
 
   static Wechat get instance => _instance;
-
-  static final Wechat _instance = Wechat._();
+  static late final Wechat _instance = Wechat._();
 
   static const String _METHOD_REGISTERAPP = 'registerApp';
   static const String _METHOD_HANDLEINITIALWXREQ = 'handleInitialWXReq';
@@ -143,60 +141,51 @@ class Wechat {
   }
 
   Future<dynamic> _handleMethod(MethodCall call) async {
+    final Map<String, dynamic> _data =
+        (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>();
+
     switch (call.method) {
       // onReq
       case _METHOD_ONLAUNCHFROMWXREQ:
-        _reqStreamController.add(LaunchFromWXReq.fromJson(
-            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
+        _reqStreamController.add(LaunchFromWXReq.fromJson(_data));
         break;
       case _METHOD_ONSHOWMESSAGEFROMWXREQ:
-        _reqStreamController.add(ShowMessageFromWXReq.fromJson(
-            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
+        _reqStreamController.add(ShowMessageFromWXReq.fromJson(_data));
         break;
       // onResp
       case _METHOD_ONAUTHRESP:
-        _respStreamController.add(AuthResp.fromJson(
-            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
+        _respStreamController.add(AuthResp.fromJson(_data));
         break;
       case _METHOD_ONOPENURLRESP:
-        _respStreamController.add(OpenUrlResp.fromJson(
-            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
+        _respStreamController.add(OpenUrlResp.fromJson(_data));
         break;
       case _METHOD_ONSHAREMSGRESP:
-        _respStreamController.add(ShareMsgResp.fromJson(
-            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
+        _respStreamController.add(ShareMsgResp.fromJson(_data));
         break;
       case _METHOD_ONSUBSCRIBEMSGRESP:
-        _respStreamController.add(SubscribeMsgResp.fromJson(
-            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
+        _respStreamController.add(SubscribeMsgResp.fromJson(_data));
         break;
       case _METHOD_ONLAUNCHMINIPROGRAMRESP:
-        _respStreamController.add(LaunchMiniProgramResp.fromJson(
-            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
+        _respStreamController.add(LaunchMiniProgramResp.fromJson(_data));
         break;
       case _METHOD_ONOPENCUSTOMERSERVICECHATRESP:
-        _respStreamController.add(OpenCustomerServiceChatResp.fromJson(
-            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
+        _respStreamController.add(OpenCustomerServiceChatResp.fromJson(_data));
         break;
       case _METHOD_ONOPENBUSINESSVIEWRESP:
-        _respStreamController.add(OpenBusinessViewResp.fromJson(
-            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
+        _respStreamController.add(OpenBusinessViewResp.fromJson(_data));
         break;
       case _METHOD_ONPAYRESP:
-        _respStreamController.add(PayResp.fromJson(
-            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
+        _respStreamController.add(PayResp.fromJson(_data));
         break;
       // onQrauth
       case _METHOD_ONAUTHGOTQRCODE:
-        _qrauthRespStreamController.add(GotQrcodeResp.fromJson(
-            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
+        _qrauthRespStreamController.add(GotQrcodeResp.fromJson(_data));
         break;
       case _METHOD_ONAUTHQRCODESCANNED:
         _qrauthRespStreamController.add(const QrcodeScannedResp());
         break;
       case _METHOD_ONAUTHFINISH:
-        _qrauthRespStreamController.add(FinishResp.fromJson(
-            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
+        _qrauthRespStreamController.add(FinishResp.fromJson(_data));
         break;
     }
   }
@@ -259,12 +248,14 @@ class Wechat {
     required String noncestr,
     required String ticket,
   }) {
-    // final String noncestr = const Uuid().v1().toString().replaceAll('-', '');
     final String timestamp = '${DateTime.now().millisecondsSinceEpoch}';
-    final String content =
-        'appid=$appId&noncestr=$noncestr&sdk_ticket=$ticket&timestamp=$timestamp';
-    final String signature =
-        hex.encode(sha1.convert(utf8.encode(content)).bytes);
+    final String content = 'appid=$appId'
+        '&noncestr=$noncestr'
+        '&sdk_ticket=$ticket'
+        '&timestamp=$timestamp';
+    final String signature = hex.encode(
+      sha1.convert(utf8.encode(content)).bytes,
+    );
     return _channel.invokeMethod<void>(
       _METHOD_STARTQRAUTH,
       <String, dynamic>{
@@ -327,11 +318,13 @@ class Wechat {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
-    assert((imageData != null && imageData.lengthInBytes <= 25 * 1024 * 1024) ||
-        (imageUri != null &&
-            imageUri.isScheme(_SCHEME_FILE) &&
-            imageUri.toFilePath().length <= 10 * 1024 &&
-            File.fromUri(imageUri).lengthSync() <= 25 * 1024 * 1024));
+    assert(
+      (imageData != null && imageData.lengthInBytes <= 25 * 1024 * 1024) ||
+          (imageUri != null &&
+              imageUri.isScheme(_SCHEME_FILE) &&
+              imageUri.toFilePath().length <= 10 * 1024 &&
+              File.fromUri(imageUri).lengthSync() <= 25 * 1024 * 1024),
+    );
     return _channel.invokeMethod<void>(
       _METHOD_SHAREIMAGE,
       <String, dynamic>{
@@ -358,11 +351,13 @@ class Wechat {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
-    assert((fileData != null && fileData.lengthInBytes <= 10 * 1024 * 1024) ||
-        (fileUri != null &&
-            fileUri.isScheme(_SCHEME_FILE) &&
-            fileUri.toFilePath().length <= 10 * 1024 &&
-            File.fromUri(fileUri).lengthSync() <= 10 * 1024 * 1024));
+    assert(
+      (fileData != null && fileData.lengthInBytes <= 10 * 1024 * 1024) ||
+          (fileUri != null &&
+              fileUri.isScheme(_SCHEME_FILE) &&
+              fileUri.toFilePath().length <= 10 * 1024 &&
+              File.fromUri(fileUri).lengthSync() <= 10 * 1024 * 1024),
+    );
     assert(Platform.isAndroid || (fileExtension?.isNotEmpty ?? false));
     return _channel.invokeMethod<void>(
       _METHOD_SHAREFILE,
@@ -390,11 +385,13 @@ class Wechat {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
     assert(thumbData.lengthInBytes <= 32 * 1024);
-    assert((emojiData != null && emojiData.lengthInBytes <= 10 * 1024 * 1024) ||
-        (emojiUri != null &&
-            emojiUri.isScheme(_SCHEME_FILE) &&
-            emojiUri.toFilePath().length <= 10 * 1024 &&
-            File.fromUri(emojiUri).lengthSync() <= 10 * 1024 * 1024));
+    assert(
+      (emojiData != null && emojiData.lengthInBytes <= 10 * 1024 * 1024) ||
+          (emojiUri != null &&
+              emojiUri.isScheme(_SCHEME_FILE) &&
+              emojiUri.toFilePath().length <= 10 * 1024 &&
+              File.fromUri(emojiUri).lengthSync() <= 10 * 1024 * 1024),
+    );
     return _channel.invokeMethod<void>(
       _METHOD_SHAREEMOJI,
       <String, dynamic>{
@@ -422,8 +419,10 @@ class Wechat {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
-    assert((musicUrl != null && musicUrl.length <= 10 * 1024) ||
-        (musicLowBandUrl != null && musicLowBandUrl.length <= 10 * 1024));
+    assert(
+      (musicUrl != null && musicUrl.length <= 10 * 1024) ||
+          (musicLowBandUrl != null && musicLowBandUrl.length <= 10 * 1024),
+    );
     return _channel.invokeMethod<void>(
       _METHOD_SHAREMUSIC,
       <String, dynamic>{
@@ -453,8 +452,10 @@ class Wechat {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
-    assert((videoUrl != null && videoUrl.length <= 10 * 1024) ||
-        (videoLowBandUrl != null && videoLowBandUrl.length <= 10 * 1024));
+    assert(
+      (videoUrl != null && videoUrl.length <= 10 * 1024) ||
+          (videoLowBandUrl != null && videoLowBandUrl.length <= 10 * 1024),
+    );
     return _channel.invokeMethod<void>(
       _METHOD_SHAREVIDEO,
       <String, dynamic>{

@@ -45,9 +45,7 @@ abstract class BaseResp {
   String toString() => const JsonEncoder.withIndent('  ').convert(toJson());
 }
 
-@JsonSerializable(
-  explicitToJson: true,
-)
+@JsonSerializable()
 class AuthResp extends BaseResp {
   const AuthResp({
     required int errorCode,
@@ -56,10 +54,7 @@ class AuthResp extends BaseResp {
     this.state,
     this.lang,
     this.country,
-  }) : super(
-          errorCode: errorCode,
-          errorMsg: errorMsg,
-        );
+  }) : super(errorCode: errorCode, errorMsg: errorMsg);
 
   factory AuthResp.fromJson(Map<String, dynamic> json) =>
       _$AuthRespFromJson(json);
@@ -73,17 +68,12 @@ class AuthResp extends BaseResp {
   Map<String, dynamic> toJson() => _$AuthRespToJson(this);
 }
 
-@JsonSerializable(
-  explicitToJson: true,
-)
+@JsonSerializable()
 class OpenUrlResp extends BaseResp {
   const OpenUrlResp({
     required int errorCode,
     String? errorMsg,
-  }) : super(
-          errorCode: errorCode,
-          errorMsg: errorMsg,
-        );
+  }) : super(errorCode: errorCode, errorMsg: errorMsg);
 
   factory OpenUrlResp.fromJson(Map<String, dynamic> json) =>
       _$OpenUrlRespFromJson(json);
@@ -92,17 +82,12 @@ class OpenUrlResp extends BaseResp {
   Map<String, dynamic> toJson() => _$OpenUrlRespToJson(this);
 }
 
-@JsonSerializable(
-  explicitToJson: true,
-)
+@JsonSerializable()
 class ShareMsgResp extends BaseResp {
   const ShareMsgResp({
     required int errorCode,
     String? errorMsg,
-  }) : super(
-          errorCode: errorCode,
-          errorMsg: errorMsg,
-        );
+  }) : super(errorCode: errorCode, errorMsg: errorMsg);
 
   factory ShareMsgResp.fromJson(Map<String, dynamic> json) =>
       _$ShareMsgRespFromJson(json);
@@ -111,9 +96,7 @@ class ShareMsgResp extends BaseResp {
   Map<String, dynamic> toJson() => _$ShareMsgRespToJson(this);
 }
 
-@JsonSerializable(
-  explicitToJson: true,
-)
+@JsonSerializable()
 class SubscribeMsgResp extends BaseResp {
   const SubscribeMsgResp({
     required int errorCode,
@@ -123,10 +106,7 @@ class SubscribeMsgResp extends BaseResp {
     this.action,
     this.reserved,
     this.openId,
-  }) : super(
-          errorCode: errorCode,
-          errorMsg: errorMsg,
-        );
+  }) : super(errorCode: errorCode, errorMsg: errorMsg);
 
   factory SubscribeMsgResp.fromJson(Map<String, dynamic> json) =>
       _$SubscribeMsgRespFromJson(json);
@@ -141,18 +121,13 @@ class SubscribeMsgResp extends BaseResp {
   Map<String, dynamic> toJson() => _$SubscribeMsgRespToJson(this);
 }
 
-@JsonSerializable(
-  explicitToJson: true,
-)
+@JsonSerializable()
 class LaunchMiniProgramResp extends BaseResp {
   const LaunchMiniProgramResp({
     required int errorCode,
     String? errorMsg,
     this.extMsg,
-  }) : super(
-          errorCode: errorCode,
-          errorMsg: errorMsg,
-        );
+  }) : super(errorCode: errorCode, errorMsg: errorMsg);
 
   factory LaunchMiniProgramResp.fromJson(Map<String, dynamic> json) =>
       _$LaunchMiniProgramRespFromJson(json);
@@ -163,17 +138,12 @@ class LaunchMiniProgramResp extends BaseResp {
   Map<String, dynamic> toJson() => _$LaunchMiniProgramRespToJson(this);
 }
 
-@JsonSerializable(
-  explicitToJson: true,
-)
+@JsonSerializable()
 class OpenCustomerServiceChatResp extends BaseResp {
   const OpenCustomerServiceChatResp({
     required int errorCode,
     String? errorMsg,
-  }) : super(
-          errorCode: errorCode,
-          errorMsg: errorMsg,
-        );
+  }) : super(errorCode: errorCode, errorMsg: errorMsg);
 
   factory OpenCustomerServiceChatResp.fromJson(Map<String, dynamic> json) =>
       _$OpenCustomerServiceChatRespFromJson(json);
@@ -182,17 +152,14 @@ class OpenCustomerServiceChatResp extends BaseResp {
   Map<String, dynamic> toJson() => _$OpenCustomerServiceChatRespToJson(this);
 }
 
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable()
 class OpenBusinessViewResp extends BaseResp {
   const OpenBusinessViewResp({
     required this.businessType,
     required this.extMsg,
     required int errorCode,
     String? errorMsg,
-  }) : super(
-          errorCode: errorCode,
-          errorMsg: errorMsg,
-        );
+  }) : super(errorCode: errorCode, errorMsg: errorMsg);
 
   factory OpenBusinessViewResp.fromJson(Map<String, dynamic> json) =>
       _$OpenBusinessViewRespFromJson(json);
@@ -204,18 +171,13 @@ class OpenBusinessViewResp extends BaseResp {
   Map<String, dynamic> toJson() => _$OpenBusinessViewRespToJson(this);
 }
 
-@JsonSerializable(
-  explicitToJson: true,
-)
+@JsonSerializable()
 class PayResp extends BaseResp {
   const PayResp({
     required int errorCode,
     String? errorMsg,
     this.returnKey,
-  }) : super(
-          errorCode: errorCode,
-          errorMsg: errorMsg,
-        );
+  }) : super(errorCode: errorCode, errorMsg: errorMsg);
 
   factory PayResp.fromJson(Map<String, dynamic> json) =>
       _$PayRespFromJson(json);

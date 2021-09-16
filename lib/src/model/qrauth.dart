@@ -14,9 +14,7 @@ abstract class QrauthResp {
   String toString() => const JsonEncoder.withIndent('  ').convert(toJson());
 }
 
-@JsonSerializable(
-  explicitToJson: true,
-)
+@JsonSerializable()
 class GotQrcodeResp extends QrauthResp {
   const GotQrcodeResp({
     required this.imageData,
@@ -36,9 +34,7 @@ class GotQrcodeResp extends QrauthResp {
   }
 }
 
-@JsonSerializable(
-  explicitToJson: true,
-)
+@JsonSerializable()
 class QrcodeScannedResp extends QrauthResp {
   const QrcodeScannedResp();
 
@@ -49,9 +45,7 @@ class QrcodeScannedResp extends QrauthResp {
   Map<String, dynamic> toJson() => _$QrcodeScannedRespToJson(this);
 }
 
-@JsonSerializable(
-  explicitToJson: true,
-)
+@JsonSerializable()
 class FinishResp extends QrauthResp {
   const FinishResp({
     required this.errorCode,

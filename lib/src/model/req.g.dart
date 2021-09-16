@@ -6,15 +6,14 @@ part of 'req.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-LaunchFromWXReq _$LaunchFromWXReqFromJson(Map<String, dynamic> json) {
-  return LaunchFromWXReq(
-    openId: json['openId'] as String,
-    messageAction: json['messageAction'] as String?,
-    messageExt: json['messageExt'] as String?,
-    lang: json['lang'] as String,
-    country: json['country'] as String,
-  );
-}
+LaunchFromWXReq _$LaunchFromWXReqFromJson(Map<String, dynamic> json) =>
+    LaunchFromWXReq(
+      openId: json['openId'] as String,
+      messageAction: json['messageAction'] as String?,
+      messageExt: json['messageExt'] as String?,
+      lang: json['lang'] as String,
+      country: json['country'] as String,
+    );
 
 Map<String, dynamic> _$LaunchFromWXReqToJson(LaunchFromWXReq instance) =>
     <String, dynamic>{
@@ -25,15 +24,15 @@ Map<String, dynamic> _$LaunchFromWXReqToJson(LaunchFromWXReq instance) =>
       'country': instance.country,
     };
 
-ShowMessageFromWXReq _$ShowMessageFromWXReqFromJson(Map<String, dynamic> json) {
-  return ShowMessageFromWXReq(
-    openId: json['openId'] as String,
-    messageAction: json['messageAction'] as String?,
-    messageExt: json['messageExt'] as String?,
-    lang: json['lang'] as String,
-    country: json['country'] as String,
-  );
-}
+ShowMessageFromWXReq _$ShowMessageFromWXReqFromJson(
+        Map<String, dynamic> json) =>
+    ShowMessageFromWXReq(
+      openId: json['openId'] as String,
+      messageAction: json['messageAction'] as String?,
+      messageExt: json['messageExt'] as String?,
+      lang: json['lang'] as String,
+      country: json['country'] as String,
+    );
 
 Map<String, dynamic> _$ShowMessageFromWXReqToJson(
         ShowMessageFromWXReq instance) =>
