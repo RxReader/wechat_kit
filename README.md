@@ -1,12 +1,13 @@
 # wechat_kit
 
-[![GitHub Tag](https://img.shields.io/github/tag/rxreader/wechat_kit.svg)](https://github.com/rxreader/wechat_kit/releases)
-[![Pub Package](https://img.shields.io/pub/v/wechat_kit.svg)](https://pub.dartlang.org/packages/wechat_kit)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/rxreader/wechat_kit/blob/master/LICENSE)
+[![Pub Package](https://img.shields.io/pub/v/wechat_kit.svg)](https://pub.flutter-io.cn/packages/wechat_kit)
+[![License](https://img.shields.io/github/license/RxReader/wechat_kit)](https://github.com/rxreader/wechat_kit/blob/master/LICENSE)
 
-flutter版微信SDK
+Flutter 版微信登录/分享/支付 SDK。
 
-## flutter toolkit
+若需使用 API 接口方法，请使用 [wechat_kit_extension](https://pub.flutter-io.cn/packages/wechat_kit_extension) 。
+
+## 相关工具
 
 * [flutter版微信SDK](https://github.com/rxreader/wechat_kit)
 * [flutter版腾讯(QQ)SDK](https://github.com/rxreader/tencent_kit)
@@ -14,11 +15,11 @@ flutter版微信SDK
 * [flutter版支付宝SDK](https://github.com/rxreader/alipay_kit)
 * [flutter版walle渠道打包工具](https://github.com/rxreader/walle_kit)
 
-## dart/flutter 私服
+## Dart/Flutter Pub 私服
 
 * [simple_pub_server](https://github.com/rxreader/simple_pub_server)
 
-## docs
+## 相关文档
 
 * [微信开放平台](https://open.weixin.qq.com/)
 * [微信登录](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419317851&token=&lang=zh_CN)
@@ -26,23 +27,16 @@ flutter版微信SDK
 * [微信支付](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419317780&token=&lang=zh_CN)
 * [Universal Links](https://developer.apple.com/documentation/uikit/inter-process_communication/allowing_apps_and_websites_to_link_to_your_content)
 
-## android
+## 开始使用
 
-```groovy
-buildscript {
-    dependencies {
-        // 3.5.4/3.6.4/4.x.x
-        classpath 'com.android.tools.build:gradle:3.5.4'
-    }
-}
-```
+### Android
 
 ```
 # 不需要做任何额外接入工作
 # 混淆已打入 Library，随 Library 引用，自动添加到 apk 打包混淆
 ```
 
-#### 获取 android 微信签名信息
+#### 获取 Android 微信签名信息
 
 非官方方法 -> 反编译 Gen_Signature_Android2.apk 所得
 
@@ -56,26 +50,23 @@ keytool -list -v -keystore ${your_keystore_path} -storepass ${your_keystore_pass
 
 ```shell
 keytool -list -v -keystore example/android/app/infos/dev.jks -storepass 123456 2>/dev/null | grep -p 'MD5:.*' -o | sed 's/MD5://' | sed 's/ //g' | sed 's/://g' | awk '{print tolower($0)}'
+> 28424130a4416d519e00946651d53a46
 ```
 
-```shell
-28424130a4416d519e00946651d53a46
-```
+### iOS
 
-## ios
+> 暂不支持 SceneDelegate，详见文档 [微信-iOS接入指南](https://developers.weixin.qq.com/doc/oplatform/Mobile_App/Access_Guide/iOS.html)
 
-> 暂不支持 SceneDelegate 见文档[微信-iOS接入指南](https://developers.weixin.qq.com/doc/oplatform/Mobile_App/Access_Guide/iOS.html)
+在Xcode中，选择你的工程设置项，选中「TARGETS」一栏，在「info」标签栏的「URL type」添加「URL scheme」为你所注册的应用程序 id。
 
 ```
-在Xcode中，选择你的工程设置项，选中“TARGETS”一栏，在“info”标签栏的“URL type“添加“URL scheme”为你所注册的应用程序id
-
 URL Types
 weixin: identifier=weixin schemes=${appId}
 ```
 
-```
 iOS 9系统策略更新，限制了http协议的访问，此外应用需要在“Info.plist”中将要使用的URL Schemes列为白名单，才可正常检查其他应用是否安装。
 
+```plist
 <key>LSApplicationQueriesSchemes</key>
 <array>
     <string>weixin</string>
@@ -88,21 +79,28 @@ iOS 9系统策略更新，限制了http协议的访问，此外应用需要在�
 </dict>
 ```
 
-```
 Universal Links
 
+```
 Capabilities -> Associated Domain -> Domain -> applinks:${your applinks}
 ```
 
-## flutter
+### Flutter
 
-* break change
-    * 3.0.0: 
-        * Flutter实现重构，合并多个 StreamController，简化类名，并支持微信回调 onReq
-        * Android实现重构，使用 startActivity 替换 Broadcast，兼容微信回调 onReq/onResp
-        * iOS实现，支持微信回调 onReq
-    * 2.2.0: Wechat 单例
-    * 2.1.0: nullsafety & 不再支持 Android embedding v1
+* 已发布的 pub 版本
+
+```
+dependencies:
+  wechat_kit: ^${latestTag}
+```
+
+或使用不包含 iOS 支付的版本：
+
+```
+dependencies:
+  # 请不要加 ^
+  wechat_kit: ${latestTag}-iOS-NoPay
+```
 
 * snapshot
 
@@ -113,20 +111,7 @@ dependencies:
       url: https://github.com/rxreader/wechat_kit.git
 ```
 
-* release
-
-```
-dependencies:
-  wechat_kit: ^${latestTag}
-```
-
-```
-dependencies:
-  # 请不要加 ^
-  wechat_kit: ${latestTag}-iOS-NoPay
-```
-
-* example
+## 示例
 
 [示例](./example/lib/main.dart)
 
