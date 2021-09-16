@@ -5,9 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'req.g.dart';
 
 abstract class BaseReq {
-  const BaseReq({
-    required this.openId,
-  });
+  const BaseReq({required this.openId});
 
   final String openId;
 
@@ -17,9 +15,7 @@ abstract class BaseReq {
   String toString() => const JsonEncoder.withIndent('  ').convert(toJson());
 }
 
-@JsonSerializable(
-  explicitToJson: true,
-)
+@JsonSerializable()
 class LaunchFromWXReq extends BaseReq {
   const LaunchFromWXReq({
     required String openId,
@@ -41,9 +37,7 @@ class LaunchFromWXReq extends BaseReq {
   Map<String, dynamic> toJson() => _$LaunchFromWXReqToJson(this);
 }
 
-@JsonSerializable(
-  explicitToJson: true,
-)
+@JsonSerializable()
 class ShowMessageFromWXReq extends BaseReq {
   const ShowMessageFromWXReq({
     required String openId,
