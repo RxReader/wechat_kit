@@ -41,8 +41,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late final StreamSubscription<BaseResp> _respSubs =
-      Wechat.instance.respStream().listen(_listenResp);
+  late final StreamSubscription<BaseResp> _respSubs;
 
   AuthResp? _authResp;
 
@@ -61,6 +60,12 @@ class _HomeState extends State<Home> {
       final String content = 'mini program: ${resp.errorCode} ${resp.errorMsg}';
       _showTips('拉起小程序', content);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _respSubs = Wechat.instance.respStream().listen(_listenResp);
   }
 
   @override
