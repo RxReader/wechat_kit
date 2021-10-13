@@ -20,6 +20,7 @@ jobs:
       - run: dart --version
       - run: flutter --version
       - run: flutter pub get
+      - run: flutter pub publish --dry-run
       - run: flutter analyze lib example/lib
       - run: cd example; flutter build ios --no-codesign
 
@@ -40,6 +41,7 @@ jobs:
       - run: dart --version
       - run: flutter --version
       - run: flutter pub get
+      - run: flutter pub publish --dry-run
       - run: flutter analyze lib example/lib
       - run: sudo echo "y" | sudo $ANDROID_HOME/tools/bin/sdkmanager "ndk;20.0.5594570"
       - run: cd example; flutter build apk --debug
