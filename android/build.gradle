@@ -22,7 +22,7 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 31
 
     resourcePrefix 'wechat_kit'
 
@@ -51,6 +51,6 @@ android {
 
 dependencies {
     //
-    vendorImplementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.7.9'
+    vendorImplementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.8.0'
 }
 

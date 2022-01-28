@@ -20,17 +20,17 @@ A powerful Flutter plugin allowing developers to auth/share/pay with natvie Andr
 
   s.static_framework = true
   s.subspec 'vendor' do |sp|
-    sp.source_files = 'Libraries/OpenSDK1.9.2/*.h' # For regular pay
-    sp.public_header_files = 'Libraries/OpenSDK1.9.2/*.h' # For regular pay
-    sp.vendored_libraries = 'Libraries/OpenSDK1.9.2/*.a' # For regular pay
-#     sp.source_files = 'Libraries/OpenSDK1.9.2_NoPay/*.h' # For NoPay
-#     sp.public_header_files = 'Libraries/OpenSDK1.9.2_NoPay/*.h' # For NoPay
-#     sp.vendored_libraries = 'Libraries/OpenSDK1.9.2_NoPay/*.a' # For NoPay
+#    sp.source_files = 'Libraries/OpenSDK1.9.2/*.h' # For regular pay
+#    sp.public_header_files = 'Libraries/OpenSDK1.9.2/*.h' # For regular pay
+#    sp.vendored_libraries = 'Libraries/OpenSDK1.9.2/*.a' # For regular pay
+    sp.source_files = 'Libraries/OpenSDK1.9.2_NoPay/*.h' # For NoPay
+    sp.public_header_files = 'Libraries/OpenSDK1.9.2_NoPay/*.h' # For NoPay
+    sp.vendored_libraries = 'Libraries/OpenSDK1.9.2_NoPay/*.a' # For NoPay
     sp.frameworks = 'CoreGraphics', 'Security', 'WebKit'
     sp.libraries = 'c++', 'z', 'sqlite3.0'
     sp.pod_target_xcconfig = {
-        'OTHER_LDFLAGS' => '$(inherited) -ObjC -all_load'
-#         'GCC_PREPROCESSOR_DEFINITIONS' => 'NO_PAY=1' # For NoPay
+        'OTHER_LDFLAGS' => '$(inherited) -ObjC -all_load',
+        'GCC_PREPROCESSOR_DEFINITIONS' => 'NO_PAY=1' # For NoPay
     }
   end
 
