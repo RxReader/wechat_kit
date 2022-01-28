@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'wechat_kit'
-  s.version          = '3.0.0'
+  s.version          = '3.1.0'
   s.summary          = 'WeChat SDKs as Flutter plugin.'
   s.description      = <<-DESC
 A powerful Flutter plugin allowing developers to auth/share/pay with natvie Android & iOS WeChat SDKs.
