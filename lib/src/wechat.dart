@@ -39,7 +39,8 @@ class Wechat {
   static const String _METHOD_SHAREMINIPROGRAM = 'shareMiniProgram';
   static const String _METHOD_SUBSCRIBEMSG = 'subscribeMsg';
   static const String _METHOD_LAUNCHMINIPROGRAM = 'launchMiniProgram';
-  static const String _METHOD_OPENCUSTOMERSERVICECHAT = 'openCustomerServiceChat';
+  static const String _METHOD_OPENCUSTOMERSERVICECHAT =
+      'openCustomerServiceChat';
   static const String _METHOD_OPENBUSINESSVIEW = 'openBusinessView';
   static const String _METHOD_OPENBUSINESSWEBVIEW = 'openBusinessWebview';
   static const String _METHOD_PAY = 'pay';
@@ -51,10 +52,13 @@ class Wechat {
   static const String _METHOD_ONOPENURLRESP = 'onOpenUrlResp';
   static const String _METHOD_ONSHAREMSGRESP = 'onShareMsgResp';
   static const String _METHOD_ONSUBSCRIBEMSGRESP = 'onSubscribeMsgResp';
-  static const String _METHOD_ONLAUNCHMINIPROGRAMRESP = 'onLaunchMiniProgramResp';
-  static const String _METHOD_ONOPENCUSTOMERSERVICECHATRESP = 'onOpenCustomerServiceChatResp';
+  static const String _METHOD_ONLAUNCHMINIPROGRAMRESP =
+      'onLaunchMiniProgramResp';
+  static const String _METHOD_ONOPENCUSTOMERSERVICECHATRESP =
+      'onOpenCustomerServiceChatResp';
   static const String _METHOD_ONOPENBUSINESSVIEWRESP = 'onOpenBusinessViewResp';
-  static const String _METHOD_ONOPENBUSINESSWEBVIEWRESP = 'onOpenBusinessWebviewResp';
+  static const String _METHOD_ONOPENBUSINESSWEBVIEWRESP =
+      'onOpenBusinessWebviewResp';
   static const String _METHOD_ONPAYRESP = 'onPayResp';
   static const String _METHOD_ONAUTHGOTQRCODE = 'onAuthGotQrcode';
   static const String _METHOD_ONAUTHQRCODESCANNED = 'onAuthQrcodeScanned';
@@ -107,13 +111,18 @@ class Wechat {
 
   static const String _SCHEME_FILE = 'file';
 
-  late final MethodChannel _channel = const MethodChannel('v7lin.github.io/wechat_kit')..setMethodCallHandler(_handleMethod);
+  late final MethodChannel _channel =
+      const MethodChannel('v7lin.github.io/wechat_kit')
+        ..setMethodCallHandler(_handleMethod);
 
-  final StreamController<BaseReq> _reqStreamController = StreamController<BaseReq>.broadcast();
+  final StreamController<BaseReq> _reqStreamController =
+      StreamController<BaseReq>.broadcast();
 
-  final StreamController<BaseResp> _respStreamController = StreamController<BaseResp>.broadcast();
+  final StreamController<BaseResp> _respStreamController =
+      StreamController<BaseResp>.broadcast();
 
-  final StreamController<QrauthResp> _qrauthRespStreamController = StreamController<QrauthResp>.broadcast();
+  final StreamController<QrauthResp> _qrauthRespStreamController =
+      StreamController<QrauthResp>.broadcast();
 
   /// 向微信注册应用
   Future<void> registerApp({
@@ -142,7 +151,8 @@ class Wechat {
       return;
     }
 
-    final Map<String, dynamic> _data = (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>();
+    final Map<String, dynamic> _data =
+        (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>();
 
     switch (call.method) {
       // onReq
@@ -217,7 +227,8 @@ class Wechat {
 
   /// 判断当前微信的版本是否支持分享微信状态功能
   Future<bool> isSupportStateAPI() async {
-    return await _channel.invokeMethod<bool>(_METHOD_ISSUPPORTSTATEAPI) ?? false;
+    return await _channel.invokeMethod<bool>(_METHOD_ISSUPPORTSTATEAPI) ??
+        false;
   }
 
   /// 打开微信
@@ -331,7 +342,10 @@ class Wechat {
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
     assert(
       (imageData != null && imageData.lengthInBytes <= 25 * 1024 * 1024) ||
-          (imageUri != null && imageUri.isScheme(_SCHEME_FILE) && imageUri.toFilePath().length <= 10 * 1024 && File.fromUri(imageUri).lengthSync() <= 25 * 1024 * 1024),
+          (imageUri != null &&
+              imageUri.isScheme(_SCHEME_FILE) &&
+              imageUri.toFilePath().length <= 10 * 1024 &&
+              File.fromUri(imageUri).lengthSync() <= 25 * 1024 * 1024),
     );
     return _channel.invokeMethod<void>(
       _METHOD_SHAREIMAGE,
@@ -361,7 +375,10 @@ class Wechat {
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
     assert(
       (fileData != null && fileData.lengthInBytes <= 10 * 1024 * 1024) ||
-          (fileUri != null && fileUri.isScheme(_SCHEME_FILE) && fileUri.toFilePath().length <= 10 * 1024 && File.fromUri(fileUri).lengthSync() <= 10 * 1024 * 1024),
+          (fileUri != null &&
+              fileUri.isScheme(_SCHEME_FILE) &&
+              fileUri.toFilePath().length <= 10 * 1024 &&
+              File.fromUri(fileUri).lengthSync() <= 10 * 1024 * 1024),
     );
     assert(Platform.isAndroid || (fileExtension?.isNotEmpty ?? false));
     return _channel.invokeMethod<void>(
@@ -392,7 +409,10 @@ class Wechat {
     assert(thumbData.lengthInBytes <= 32 * 1024);
     assert(
       (emojiData != null && emojiData.lengthInBytes <= 10 * 1024 * 1024) ||
-          (emojiUri != null && emojiUri.isScheme(_SCHEME_FILE) && emojiUri.toFilePath().length <= 10 * 1024 && File.fromUri(emojiUri).lengthSync() <= 10 * 1024 * 1024),
+          (emojiUri != null &&
+              emojiUri.isScheme(_SCHEME_FILE) &&
+              emojiUri.toFilePath().length <= 10 * 1024 &&
+              File.fromUri(emojiUri).lengthSync() <= 10 * 1024 * 1024),
     );
     return _channel.invokeMethod<void>(
       _METHOD_SHAREEMOJI,
@@ -422,7 +442,8 @@ class Wechat {
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
     assert(
-      (musicUrl != null && musicUrl.length <= 10 * 1024) || (musicLowBandUrl != null && musicLowBandUrl.length <= 10 * 1024),
+      (musicUrl != null && musicUrl.length <= 10 * 1024) ||
+          (musicLowBandUrl != null && musicLowBandUrl.length <= 10 * 1024),
     );
     return _channel.invokeMethod<void>(
       _METHOD_SHAREMUSIC,
@@ -433,8 +454,10 @@ class Wechat {
         if (thumbData != null) _ARGUMENT_KEY_THUMBDATA: thumbData,
         if (musicUrl != null) _ARGUMENT_KEY_MUSICURL: musicUrl,
         if (musicDataUrl != null) _ARGUMENT_KEY_MUSICDATAURL: musicDataUrl,
-        if (musicLowBandUrl != null) _ARGUMENT_KEY_MUSICLOWBANDURL: musicLowBandUrl,
-        if (musicLowBandDataUrl != null) _ARGUMENT_KEY_MUSICLOWBANDDATAURL: musicLowBandDataUrl,
+        if (musicLowBandUrl != null)
+          _ARGUMENT_KEY_MUSICLOWBANDURL: musicLowBandUrl,
+        if (musicLowBandDataUrl != null)
+          _ARGUMENT_KEY_MUSICLOWBANDDATAURL: musicLowBandDataUrl,
       },
     );
   }
@@ -452,7 +475,8 @@ class Wechat {
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
     assert(
-      (videoUrl != null && videoUrl.length <= 10 * 1024) || (videoLowBandUrl != null && videoLowBandUrl.length <= 10 * 1024),
+      (videoUrl != null && videoUrl.length <= 10 * 1024) ||
+          (videoLowBandUrl != null && videoLowBandUrl.length <= 10 * 1024),
     );
     return _channel.invokeMethod<void>(
       _METHOD_SHAREVIDEO,
@@ -462,7 +486,8 @@ class Wechat {
         if (description != null) _ARGUMENT_KEY_DESCRIPTION: description,
         if (thumbData != null) _ARGUMENT_KEY_THUMBDATA: thumbData,
         if (videoUrl != null) _ARGUMENT_KEY_VIDEOURL: videoUrl,
-        if (videoLowBandUrl != null) _ARGUMENT_KEY_VIDEOLOWBANDURL: videoLowBandUrl,
+        if (videoLowBandUrl != null)
+          _ARGUMENT_KEY_VIDEOLOWBANDURL: videoLowBandUrl,
       },
     );
   }

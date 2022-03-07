@@ -56,7 +56,8 @@ class AuthResp extends BaseResp {
     this.country,
   }) : super(errorCode: errorCode, errorMsg: errorMsg);
 
-  factory AuthResp.fromJson(Map<String, dynamic> json) => _$AuthRespFromJson(json);
+  factory AuthResp.fromJson(Map<String, dynamic> json) =>
+      _$AuthRespFromJson(json);
 
   final String? code;
   final String? state;
@@ -74,7 +75,8 @@ class OpenUrlResp extends BaseResp {
     String? errorMsg,
   }) : super(errorCode: errorCode, errorMsg: errorMsg);
 
-  factory OpenUrlResp.fromJson(Map<String, dynamic> json) => _$OpenUrlRespFromJson(json);
+  factory OpenUrlResp.fromJson(Map<String, dynamic> json) =>
+      _$OpenUrlRespFromJson(json);
 
   @override
   Map<String, dynamic> toJson() => _$OpenUrlRespToJson(this);
@@ -87,7 +89,8 @@ class ShareMsgResp extends BaseResp {
     String? errorMsg,
   }) : super(errorCode: errorCode, errorMsg: errorMsg);
 
-  factory ShareMsgResp.fromJson(Map<String, dynamic> json) => _$ShareMsgRespFromJson(json);
+  factory ShareMsgResp.fromJson(Map<String, dynamic> json) =>
+      _$ShareMsgRespFromJson(json);
 
   @override
   Map<String, dynamic> toJson() => _$ShareMsgRespToJson(this);
@@ -104,7 +107,8 @@ class SubscribeMsgResp extends BaseResp {
     this.reserved,
   }) : super(errorCode: errorCode, errorMsg: errorMsg);
 
-  factory SubscribeMsgResp.fromJson(Map<String, dynamic> json) => _$SubscribeMsgRespFromJson(json);
+  factory SubscribeMsgResp.fromJson(Map<String, dynamic> json) =>
+      _$SubscribeMsgRespFromJson(json);
 
   final String? templateId;
   final int? scene;
@@ -123,7 +127,8 @@ class LaunchMiniProgramResp extends BaseResp {
     this.extMsg,
   }) : super(errorCode: errorCode, errorMsg: errorMsg);
 
-  factory LaunchMiniProgramResp.fromJson(Map<String, dynamic> json) => _$LaunchMiniProgramRespFromJson(json);
+  factory LaunchMiniProgramResp.fromJson(Map<String, dynamic> json) =>
+      _$LaunchMiniProgramRespFromJson(json);
 
   final String? extMsg;
 
@@ -138,7 +143,8 @@ class OpenCustomerServiceChatResp extends BaseResp {
     String? errorMsg,
   }) : super(errorCode: errorCode, errorMsg: errorMsg);
 
-  factory OpenCustomerServiceChatResp.fromJson(Map<String, dynamic> json) => _$OpenCustomerServiceChatRespFromJson(json);
+  factory OpenCustomerServiceChatResp.fromJson(Map<String, dynamic> json) =>
+      _$OpenCustomerServiceChatRespFromJson(json);
 
   @override
   Map<String, dynamic> toJson() => _$OpenCustomerServiceChatRespToJson(this);
@@ -153,7 +159,8 @@ class OpenBusinessViewResp extends BaseResp {
     this.extMsg,
   }) : super(errorCode: errorCode, errorMsg: errorMsg);
 
-  factory OpenBusinessViewResp.fromJson(Map<String, dynamic> json) => _$OpenBusinessViewRespFromJson(json);
+  factory OpenBusinessViewResp.fromJson(Map<String, dynamic> json) =>
+      _$OpenBusinessViewRespFromJson(json);
 
   final String businessType;
   final String? extMsg;
@@ -171,7 +178,8 @@ class OpenBusinessWebviewResp extends BaseResp {
     this.resultInfo,
   }) : super(errorCode: errorCode, errorMsg: errorMsg);
 
-  factory OpenBusinessWebviewResp.fromJson(Map<String, dynamic> json) => _$OpenBusinessWebviewRespFromJson(json);
+  factory OpenBusinessWebviewResp.fromJson(Map<String, dynamic> json) =>
+      _$OpenBusinessWebviewRespFromJson(json);
 
   final int businessType;
   final String? resultInfo;
@@ -188,7 +196,8 @@ class PayResp extends BaseResp {
     this.returnKey,
   }) : super(errorCode: errorCode, errorMsg: errorMsg);
 
-  factory PayResp.fromJson(Map<String, dynamic> json) => _$PayRespFromJson(json);
+  factory PayResp.fromJson(Map<String, dynamic> json) =>
+      _$PayRespFromJson(json);
 
   final String? returnKey;
 
