@@ -583,7 +583,9 @@ class Wechat {
     );
   }
 
-  ///
+  /// APP纯签约
+  /// * APP纯签约-预签约接口：https://pay.weixin.qq.com/wiki/doc/api/xiaowei.php?chapter=19_5
+  /// * APP纯签约-预签约接口：https://pay.weixin.qq.com/wiki/doc/api/pap_jt_v2.php?chapter=19_5&index=2_2
   Future<void> openBusinessWebview({
     required int businessType,
     Map<String, String>? resultInfo,
