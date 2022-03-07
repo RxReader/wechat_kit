@@ -54,7 +54,6 @@ SubscribeMsgResp _$SubscribeMsgRespFromJson(Map<String, dynamic> json) =>
       scene: json['scene'] as int?,
       action: json['action'] as String?,
       reserved: json['reserved'] as String?,
-      openId: json['openId'] as String?,
     );
 
 Map<String, dynamic> _$SubscribeMsgRespToJson(SubscribeMsgResp instance) =>
@@ -65,7 +64,6 @@ Map<String, dynamic> _$SubscribeMsgRespToJson(SubscribeMsgResp instance) =>
       'scene': instance.scene,
       'action': instance.action,
       'reserved': instance.reserved,
-      'openId': instance.openId,
     };
 
 LaunchMiniProgramResp _$LaunchMiniProgramRespFromJson(
@@ -101,10 +99,10 @@ Map<String, dynamic> _$OpenCustomerServiceChatRespToJson(
 OpenBusinessViewResp _$OpenBusinessViewRespFromJson(
         Map<String, dynamic> json) =>
     OpenBusinessViewResp(
-      businessType: json['businessType'] as String,
-      extMsg: json['extMsg'] as String,
       errorCode: json['errorCode'] as int? ?? 0,
       errorMsg: json['errorMsg'] as String?,
+      businessType: json['businessType'] as String,
+      extMsg: json['extMsg'] as String?,
     );
 
 Map<String, dynamic> _$OpenBusinessViewRespToJson(
@@ -114,6 +112,24 @@ Map<String, dynamic> _$OpenBusinessViewRespToJson(
       'errorMsg': instance.errorMsg,
       'businessType': instance.businessType,
       'extMsg': instance.extMsg,
+    };
+
+OpenBusinessWebviewResp _$OpenBusinessWebviewRespFromJson(
+        Map<String, dynamic> json) =>
+    OpenBusinessWebviewResp(
+      errorCode: json['errorCode'] as int? ?? 0,
+      errorMsg: json['errorMsg'] as String?,
+      businessType: json['businessType'] as int,
+      resultInfo: json['resultInfo'] as String?,
+    );
+
+Map<String, dynamic> _$OpenBusinessWebviewRespToJson(
+        OpenBusinessWebviewResp instance) =>
+    <String, dynamic>{
+      'errorCode': instance.errorCode,
+      'errorMsg': instance.errorMsg,
+      'businessType': instance.businessType,
+      'resultInfo': instance.resultInfo,
     };
 
 PayResp _$PayRespFromJson(Map<String, dynamic> json) => PayResp(

@@ -8,7 +8,6 @@ part of 'req.dart';
 
 LaunchFromWXReq _$LaunchFromWXReqFromJson(Map<String, dynamic> json) =>
     LaunchFromWXReq(
-      openId: json['openId'] as String,
       messageAction: json['messageAction'] as String?,
       messageExt: json['messageExt'] as String?,
       lang: json['lang'] as String,
@@ -17,7 +16,6 @@ LaunchFromWXReq _$LaunchFromWXReqFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$LaunchFromWXReqToJson(LaunchFromWXReq instance) =>
     <String, dynamic>{
-      'openId': instance.openId,
       'messageAction': instance.messageAction,
       'messageExt': instance.messageExt,
       'lang': instance.lang,
@@ -27,7 +25,6 @@ Map<String, dynamic> _$LaunchFromWXReqToJson(LaunchFromWXReq instance) =>
 ShowMessageFromWXReq _$ShowMessageFromWXReqFromJson(
         Map<String, dynamic> json) =>
     ShowMessageFromWXReq(
-      openId: json['openId'] as String,
       messageAction: json['messageAction'] as String?,
       messageExt: json['messageExt'] as String?,
       lang: json['lang'] as String,
@@ -37,7 +34,6 @@ ShowMessageFromWXReq _$ShowMessageFromWXReqFromJson(
 Map<String, dynamic> _$ShowMessageFromWXReqToJson(
         ShowMessageFromWXReq instance) =>
     <String, dynamic>{
-      'openId': instance.openId,
       'messageAction': instance.messageAction,
       'messageExt': instance.messageExt,
       'lang': instance.lang,

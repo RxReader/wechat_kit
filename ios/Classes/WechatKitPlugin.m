@@ -53,6 +53,7 @@ static NSString *const METHOD_SUBSCRIBEMSG = @"subscribeMsg";
 static NSString *const METHOD_LAUNCHMINIPROGRAM = @"launchMiniProgram";
 static NSString *const METHOD_OPENCUSTOMERSERVICECHAT = @"openCustomerServiceChat";
 static NSString *const METHOD_OPENBUSINESSVIEW = @"openBusinessView";
+static NSString *const METHOD_OPENBUSINESSWEBVIEW = @"openBusinessWebview";
 #ifndef NO_PAY
 static NSString *const METHOD_PAY = @"pay";
 #endif
@@ -67,6 +68,7 @@ static NSString *const METHOD_ONSUBSCRIBEMSGRESP = @"onSubscribeMsgResp";
 static NSString *const METHOD_ONLAUNCHMINIPROGRAMRESP = @"onLaunchMiniProgramResp";
 static NSString *const METHOD_ONOPENCUSTOMERSERVICECHATRESP = @"onOpenCustomerServiceChatResp";
 static NSString *const METHOD_ONOPENBUSINESSVIEWRESP = @"onOpenBusinessViewResp";
+static NSString *const METHOD_ONOPENBUSINESSWEBVIEWRESP = @"onOpenBusinessWebviewResp";
 #ifndef NO_PAY
 static NSString *const METHOD_ONPAYRESP = @"onPayResp";
 #endif
@@ -113,6 +115,7 @@ static NSString *const ARGUMENT_KEY_TEMPLATEID = @"templateId";
 static NSString *const ARGUMENT_KEY_RESERVED = @"reserved";
 static NSString *const ARGUMENT_KEY_CORPID = @"corpId";
 static NSString *const ARGUMENT_KEY_BUSINESSTYPE = @"businessType";
+static NSString *const ARGUMENT_KEY_QUERYINFO = @"queryInfo";
 #ifndef NO_PAY
 static NSString *const ARGUMENT_KEY_PARTNERID = @"partnerId";
 static NSString *const ARGUMENT_KEY_PREPAYID = @"prepayId";
@@ -133,8 +136,9 @@ static NSString *const ARGUMENT_KEY_RESULT_TEMPLATEID = @"templateId";
 static NSString *const ARGUMENT_KEY_RESULT_SCENE = @"scene";
 static NSString *const ARGUMENT_KEY_RESULT_ACTION = @"action";
 static NSString *const ARGUMENT_KEY_RESULT_RESERVED = @"reserved";
-static NSString *const ARGUMENT_KEY_RESULT_OPENID = @"openId";
 static NSString *const ARGUMENT_KEY_RESULT_EXTMSG = @"extMsg";
+static NSString *const ARGUMENT_KEY_RESULT_BUSINESSTYPE = @"businessType";
+static NSString *const ARGUMENT_KEY_RESULT_RESULTINFO = @"resultInfo";
 static NSString *const ARGUMENT_KEY_RESULT_MESSAGEACTION = @"messageAction";
 static NSString *const ARGUMENT_KEY_RESULT_MESSAGEEXT = @"messageExt";
 static NSString *const ARGUMENT_KEY_RESULT_RETURNKEY = @"returnKey";
@@ -207,6 +211,8 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
         [self handleOpenCustomerServiceChatCall: call result:result];
     } else if ([METHOD_OPENBUSINESSVIEW isEqualToString:call.method]) {
         [self handleOpenBusinessViewCall: call result:result];
+    } else if ([METHOD_OPENBUSINESSWEBVIEW isEqualToString:call.method]) {
+        [self handleOpenBusinessWebviewCall:call result:result];
     }
 #ifndef NO_PAY
     else if ([METHOD_PAY isEqualToString:call.method]) {
@@ -433,6 +439,19 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
     result(nil);
 }
 
+- (void)handleOpenBusinessWebviewCall:(FlutterMethodCall *)call
+                            result:(FlutterResult)result {
+    WXOpenBusinessWebViewReq *req = [[WXOpenBusinessWebViewReq alloc] init];
+    NSNumber *businessType = call.arguments[ARGUMENT_KEY_BUSINESSTYPE];
+#if __LP64__
+    req.businessType = [businessType unsignedIntValue];
+#else
+    req.businessType = [businessType unsignedLongValue];
+#endif
+    req.queryInfoDic = call.arguments[ARGUMENT_KEY_QUERYINFO];
+    result(nil);
+}
+
 #ifndef NO_PAY
 - (void)handlePayCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     PayReq *req = [[PayReq alloc] init];
@@ -481,7 +500,6 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
 
 - (void)onReq:(BaseReq *)req {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-    [dictionary setValue: req.openID forKey:ARGUMENT_KEY_RESULT_OPENID];
     if ([req isKindOfClass:[LaunchFromWXReq class]]) {
         LaunchFromWXReq *launchFromWXReq = (LaunchFromWXReq *)req;
         [dictionary setValue:launchFromWXReq.message.messageAction forKey:ARGUMENT_KEY_RESULT_MESSAGEACTION];
@@ -551,8 +569,6 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
                           forKey:ARGUMENT_KEY_RESULT_ACTION];
             [dictionary setValue:subscribeMsgResp.reserved
                           forKey:ARGUMENT_KEY_RESULT_RESERVED];
-            [dictionary setValue:subscribeMsgResp.openId
-                          forKey:ARGUMENT_KEY_RESULT_OPENID];
         }
         [_channel invokeMethod:METHOD_ONSUBSCRIBEMSGRESP arguments:dictionary];
     } else if ([resp isKindOfClass:[WXLaunchMiniProgramResp class]]) {
@@ -569,10 +585,17 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
     } else if ([resp isKindOfClass:[WXOpenBusinessViewResp class]]) {
         if (resp.errCode == WXSuccess) {
             WXOpenBusinessViewResp *openBusinessViewResp = (WXOpenBusinessViewResp *)resp;
-            [dictionary setValue:openBusinessViewResp.businessType forKey:ARGUMENT_KEY_BUSINESSTYPE];
+            [dictionary setValue:openBusinessViewResp.businessType forKey:ARGUMENT_KEY_RESULT_BUSINESSTYPE];
             [dictionary setValue:openBusinessViewResp.extMsg forKey:ARGUMENT_KEY_RESULT_EXTMSG];
         }
         [_channel invokeMethod:METHOD_ONOPENBUSINESSVIEWRESP arguments:dictionary];
+    } else if ([resp isKindOfClass:[WXOpenBusinessWebViewResp class]]) {
+        if (resp.errCode == WXSuccess) {
+            WXOpenBusinessWebViewResp *openBusinessWebviewResp = (WXOpenBusinessWebViewResp *)resp;
+            [dictionary setValue:[NSNumber numberWithUnsignedInt:openBusinessWebviewResp.businessType] forKey:ARGUMENT_KEY_RESULT_BUSINESSTYPE];
+            [dictionary setValue:openBusinessWebviewResp.result forKey:ARGUMENT_KEY_RESULT_RESULTINFO];
+        }
+        [_channel invokeMethod:METHOD_ONOPENBUSINESSWEBVIEWRESP arguments:dictionary];
     } else {
 #ifndef NO_PAY
         if ([resp isKindOfClass:[PayResp class]]) {
