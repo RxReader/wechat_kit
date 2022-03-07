@@ -238,6 +238,18 @@ class Wechat {
     });
   }
 
+  /// iOS：未安装微信，授权登录
+  Future<void> sendAuth({
+    required List<String> scope,
+    String? state,
+  }) {
+    assert(Platform.isIOS);
+    return _channel.invokeMethod<void>('sendAuth', <String, dynamic>{
+      _ARGUMENT_KEY_SCOPE: scope.join(','), // Scope
+      if (state != null) _ARGUMENT_KEY_STATE: state,
+    });
+  }
+
   // --- 微信APP扫码登录
 
   /// 调用微信 API 获得 ticket，开始扫码登录

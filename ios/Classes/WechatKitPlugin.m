@@ -186,7 +186,9 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
         result([NSNumber numberWithBool:[WXApi openWXApp]]);
     } else if ([METHOD_AUTH isEqualToString:call.method]) {
         [self handleAuthCall:call result:result];
-    } else if ([METHOD_STARTQRAUTH isEqualToString:call.method] ||
+    } else if ([@"sendAuth" isEqualToString:call.method]) {
+        [self handleSendAuthCall:call result:result];
+    }else if ([METHOD_STARTQRAUTH isEqualToString:call.method] ||
                [METHOD_STOPQRAUTH isEqualToString:call.method]) {
         [self handleQRAuthCall:call result:result];
     } else if ([METHOD_OPENURL isEqualToString:call.method]) {
@@ -232,6 +234,20 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
         completion:^(BOOL success){
             // do nothing
         }];
+    result(nil);
+}
+
+- (void)handleSendAuthCall:(FlutterMethodCall *)call result:(FlutterResult)result {
+    SendAuthReq *req = [[SendAuthReq alloc] init];
+    req.scope = call.arguments[ARGUMENT_KEY_SCOPE];
+    req.state = call.arguments[ARGUMENT_KEY_STATE];
+    UIViewController *viewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    [WXApi sendAuthReq:req
+        viewController:viewController
+              delegate:self
+            completion:^(BOOL success) {
+        // do nothing
+    }];
     result(nil);
 }
 
