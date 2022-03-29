@@ -260,7 +260,8 @@ class _QrauthState extends State<Qrauth> {
   @override
   void initState() {
     super.initState();
-    _qrauthRespSubs = Wechat.instance.qrauthRespStream().listen(_listenQrauthResp)
+    _qrauthRespSubs =
+        Wechat.instance.qrauthRespStream().listen(_listenQrauthResp);
   }
 
   void _listenQrauthResp(QrauthResp resp) {
