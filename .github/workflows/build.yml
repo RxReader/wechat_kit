@@ -1,10 +1,10 @@
-name: Build test
+name: build
 
 on: [push, pull_request]
 
 jobs:
-  test_iOS:
-    name: Test iOS on ${{ matrix.os }}
+  build_ios:
+    name: Build iOS on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -20,12 +20,13 @@ jobs:
       - run: dart --version
       - run: flutter --version
       - run: flutter pub get
+      - run: flutter format --dry-run --set-exit-if-changed .
       - run: flutter pub publish --dry-run
       - run: flutter analyze lib example/lib
       - run: cd example; flutter build ios --no-codesign
 
-  test_android:
-    name: Test android on ${{ matrix.os }}
+  build_android:
+    name: Build Android on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -41,6 +42,7 @@ jobs:
       - run: dart --version
       - run: flutter --version
       - run: flutter pub get
+      - run: flutter format --dry-run --set-exit-if-changed .
       - run: flutter pub publish --dry-run
       - run: flutter analyze lib example/lib
       - run: sudo echo "y" | sudo $ANDROID_HOME/tools/bin/sdkmanager "ndk;20.0.5594570"
