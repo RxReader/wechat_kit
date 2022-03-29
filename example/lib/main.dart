@@ -45,6 +45,12 @@ class _HomeState extends State<Home> {
 
   AuthResp? _authResp;
 
+  @override
+  void initState() {
+    super.initState();
+    _respSubs = Wechat.instance.respStream().listen(_listenResp);
+  }
+
   void _listenResp(BaseResp resp) {
     if (resp is AuthResp) {
       _authResp = resp;
@@ -60,12 +66,6 @@ class _HomeState extends State<Home> {
       final String content = 'mini program: ${resp.errorCode} ${resp.errorMsg}';
       _showTips('拉起小程序', content);
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _respSubs = Wechat.instance.respStream().listen(_listenResp);
   }
 
   @override
@@ -253,10 +253,15 @@ class Qrauth extends StatefulWidget {
 }
 
 class _QrauthState extends State<Qrauth> {
-  late final StreamSubscription<QrauthResp> _qrauthRespSubs =
-      Wechat.instance.qrauthRespStream().listen(_listenQrauthResp);
+  late final StreamSubscription<QrauthResp> _qrauthRespSubs;
 
   Uint8List? _qrcode;
+
+  @override
+  void initState() {
+    super.initState();
+    _qrauthRespSubs = Wechat.instance.qrauthRespStream().listen(_listenQrauthResp)
+  }
 
   void _listenQrauthResp(QrauthResp resp) {
     if (resp is GotQrcodeResp) {
