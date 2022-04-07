@@ -612,19 +612,17 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
             [dictionary setValue:openBusinessWebviewResp.result forKey:ARGUMENT_KEY_RESULT_RESULTINFO];
         }
         [_channel invokeMethod:METHOD_ONOPENBUSINESSWEBVIEWRESP arguments:dictionary];
-    } else {
-#ifndef NO_PAY
-        if ([resp isKindOfClass:[PayResp class]]) {
-            // 支付
-            if (resp.errCode == WXSuccess) {
-                PayResp *payResp = (PayResp *)resp;
-                [dictionary setValue:payResp.returnKey
-                              forKey:ARGUMENT_KEY_RESULT_RETURNKEY];
-            }
-            [_channel invokeMethod:METHOD_ONPAYRESP arguments:dictionary];
-        }
-#endif
     }
+#ifndef NO_PAY
+    else if ([resp isKindOfClass:[PayResp class]]) {
+        // 支付
+        if (resp.errCode == WXSuccess) {
+            PayResp *payResp = (PayResp *)resp;
+            [dictionary setValue:payResp.returnKey forKey:ARGUMENT_KEY_RESULT_RETURNKEY];
+        }
+        [_channel invokeMethod:METHOD_ONPAYRESP arguments:dictionary];
+    }
+#endif
 }
 
 #pragma mark - WechatAuthAPIDelegate
