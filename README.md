@@ -94,12 +94,12 @@ dependencies:
   wechat_kit: ^${latestTag}
 ```
 
-或使用不包含 iOS 支付的版本：
+使用包含 iOS 支付：
 
 ```
-dependencies:
-  # 请不要加 ^
-  wechat_kit: ${latestTag}-iOS-NoPay
+# 参考 https://github.com/RxReader/wechat_kit/blob/master/example/ios/Podfile
+# 默认 no_pay
+$WechatKitSubspec = 'pay'
 ```
 
 * snapshot

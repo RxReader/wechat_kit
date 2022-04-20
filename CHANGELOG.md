@@ -1,3 +1,7 @@
+## 3.2.0
+
+* 合并 pay 和 no_pay
+
 ## 3.1.0
 
 * 升级 Android SDK
