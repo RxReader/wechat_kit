@@ -69,13 +69,13 @@ iOS 9系统策略更新，限制了http协议的访问，此外应用需要在�
 ```plist
 <key>LSApplicationQueriesSchemes</key>
 <array>
-    <string>weixin</string>
-    <string>weixinULAPI</string>
+	<string>weixin</string>
+	<string>weixinULAPI</string>
 </array>
 <key>NSAppTransportSecurity</key>
 <dict>
-    <key>NSAllowsArbitraryLoads</key>
-    <true/>
+	<key>NSAllowsArbitraryLoads</key>
+	<true/>
 </dict>
 ```
 
@@ -94,12 +94,10 @@ dependencies:
   wechat_kit: ^${latestTag}
 ```
 
-使用包含 iOS 支付：
+若需要不包含支付的 iOS SDK，请修改项目下的 `ios/Podfile`：
 
-```
-# 参考 https://github.com/RxReader/wechat_kit/blob/master/example/ios/Podfile
-# 默认 no_pay
-$WechatKitSubspec = 'pay'
+```diff 
++ $WechatKitSubspec = 'no_pay'
 ```
 
 * snapshot
