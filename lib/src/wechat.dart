@@ -636,11 +636,13 @@ class Wechat {
     );
   }
 
-  /// 支付 - 不含「iOS 支付」调用会直接抛出异常 No implementation [MissingPluginException]
+  /// 支付
+  ///
   /// 参数说明：https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_12&index=2
   ///
-  /// # 默认 no_pay，参考 https://github.com/RxReader/wechat_kit/blob/master/example/ios/Podfile
-  /// $WechatKitSubspec = 'pay'
+  /// * 默认包含支付，参考 https://github.com/RxReader/wechat_kit/blob/master/example/ios/Podfile
+  ///   修改 `$WechatKitSubspec = 'no_pay'` 可切换为不包含支付。
+  /// * 不含「iOS 支付」调用会抛出 [MissingPluginException]。
   Future<void> pay({
     required String appId,
     required String partnerId,

@@ -6,15 +6,15 @@
 if defined?($WechatKitSubspec)
   wechat_kit_subspec = $WechatKitSubspec
 else
-  wechat_kit_subspec = 'no_pay'
+  wechat_kit_subspec = 'pay'
 end
 
 Pod::Spec.new do |s|
   s.name             = 'wechat_kit'
   s.version          = '3.2.0'
-  s.summary          = 'WeChat SDKs as Flutter plugin.'
+  s.summary          = 'The Flutter plugin for WeChat SDKs.'
   s.description      = <<-DESC
-A powerful Flutter plugin allowing developers to auth/share/pay with natvie Android & iOS WeChat SDKs.
+A powerful Flutter plugin allowing developers to auth/pay/share with native Android & iOS WeChat SDKs.
                        DESC
   s.homepage         = 'https://github.com/RxReader/wechat_kit'
   s.license          = { :file => '../LICENSE' }
