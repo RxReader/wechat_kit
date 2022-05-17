@@ -266,7 +266,7 @@ void main() {
     expect(initialPlatform, isInstanceOf<MethodChannelWechatKit>());
   });
 
-  test('getPlatformVersion', () async {
+  test('isInstalled', () async {
     final MockWechatKitPlatform fakePlatform = MockWechatKitPlatform();
     WechatKitPlatform.instance = fakePlatform;
 
