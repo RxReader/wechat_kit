@@ -71,8 +71,6 @@ typedef void (^WechatKitWXReqRunnable)(void);
         result([NSNumber numberWithBool:[WXApi openWXApp]]);
     } else if ([@"auth" isEqualToString:call.method]) {
         [self handleAuthCall:call result:result];
-    } else if ([@"sendAuth" isEqualToString:call.method]) {
-        [self handleSendAuthCall:call result:result];
     } else if ([@"startQrauth" isEqualToString:call.method] ||
                [@"stopQrauth" isEqualToString:call.method]) {
         [self handleQRAuthCall:call result:result];
@@ -115,24 +113,21 @@ typedef void (^WechatKitWXReqRunnable)(void);
     SendAuthReq *req = [[SendAuthReq alloc] init];
     req.scope = call.arguments[@"scope"];
     req.state = call.arguments[@"state"];
-    [WXApi sendReq:req
-        completion:^(BOOL success){
-            // do nothing
-        }];
-    result(nil);
-}
-
-- (void)handleSendAuthCall:(FlutterMethodCall *)call result:(FlutterResult)result {
-    SendAuthReq *req = [[SendAuthReq alloc] init];
-    req.scope = call.arguments[@"scope"];
-    req.state = call.arguments[@"state"];
-    UIViewController *viewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    [WXApi sendAuthReq:req
-        viewController:viewController
-              delegate:self
+    NSNumber *type = call.arguments[@"type"];
+    if ([type intValue] == 0) {
+        [WXApi sendReq:req
             completion:^(BOOL success){
                 // do nothing
             }];
+    } else if ([type intValue] == 1) {
+        UIViewController *viewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+        [WXApi sendAuthReq:req
+            viewController:viewController
+                  delegate:self
+                completion:^(BOOL success){
+                    // do nothing
+                }];
+    }
     result(nil);
 }
 
