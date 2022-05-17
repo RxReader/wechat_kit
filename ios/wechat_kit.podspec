@@ -1,6 +1,6 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint wechat_kit.podspec' to validate before publishing.
+# Run `pod lib lint wechat_kit.podspec` to validate before publishing.
 #
 
 if defined?($WechatKitSubspec)
@@ -11,19 +11,19 @@ end
 
 Pod::Spec.new do |s|
   s.name             = 'wechat_kit'
-  s.version          = '3.2.0'
+  s.version          = '4.0.0'
   s.summary          = 'The Flutter plugin for WeChat SDKs.'
   s.description      = <<-DESC
 A powerful Flutter plugin allowing developers to auth/pay/share with native Android & iOS WeChat SDKs.
                        DESC
-  s.homepage         = 'https://github.com/RxReader/wechat_kit'
+  s.homepage         = 'http://example.com'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'RxReader' => 'email@example.com' }
+  s.author           = { 'Your Company' => 'email@example.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.platform = :ios, '8.0'
+  s.platform = :ios, '9.0'
 
   s.static_framework = true
   # s.default_subspecs = :none

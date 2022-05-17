@@ -1,27 +1,27 @@
 name: wechat_kit
 description: A powerful Flutter plugin allowing developers to auth/share/pay with natvie Android & iOS Wechat SDKs.
-version: 3.2.0
+version: 4.0.0
 # author: v7lin <v7lin@qq.com>
 homepage: https://github.com/rxreader/wechat_kit
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
-  flutter: ">=2.0.0"
+  sdk: ">=2.17.0 <3.0.0"
+  flutter: ">=2.5.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  plugin_platform_interface: ^2.0.2
 
-  convert: ^3.0.0
-  crypto: ^3.0.0
+  convert: ^3.0.1
+  crypto: ^3.0.2
 
-  json_annotation: ^4.0.0
+  json_annotation: ^4.5.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-  pedantic:
+  flutter_lints: ^2.0.0
 
   build_runner:
   json_serializable:
@@ -29,11 +29,17 @@ dev_dependencies:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
-# The following section is specific to Flutter.
+# The following section is specific to Flutter packages.
 flutter:
   # This section identifies this Flutter project as a plugin project.
-  # The 'pluginClass' and Android 'package' identifiers should not ordinarily
-  # be modified. They are used by the tooling to maintain consistency when
+  # The 'pluginClass' specifies the class (in Java, Kotlin, Swift, Objective-C, etc.)
+  # which should be registered in the plugin registry. This is required for
+  # using method channels.
+  # The Android 'package' specifies package in which the registered class is.
+  # This is required for using method channels on Android.
+  # The 'ffiPlugin' specifies that native code should be built and bundled.
+  # This is required for using `dart:ffi`.
+  # All these are used by the tooling to maintain consistency when
   # adding or updating assets for this project.
   plugin:
     platforms:
@@ -52,7 +58,7 @@ flutter:
   # https://flutter.dev/assets-and-images/#from-packages
   #
   # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware.
+  # https://flutter.dev/assets-and-images/#resolution-aware
 
   # To add custom fonts to your plugin package, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a

@@ -1,8 +1,9 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/file.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:image/image.dart' as image;
 import 'package:path/path.dart' as path;
@@ -16,15 +17,14 @@ const String WECHAT_APPSECRET = 'your wechat appSecret';
 const String WECHAT_MINIAPPID = 'your wechat miniAppId';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  Wechat.instance.registerApp(
-    appId: WECHAT_APPID,
-    universalLink: WECHAT_UNIVERSAL_LINK,
-  );
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({
+    super.key,
+  });
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -34,6 +34,10 @@ class MyApp extends StatelessWidget {
 }
 
 class Home extends StatefulWidget {
+  const Home({
+    super.key,
+  });
+
   @override
   State<StatefulWidget> createState() {
     return _HomeState();
@@ -48,7 +52,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _respSubs = Wechat.instance.respStream().listen(_listenResp);
+    _respSubs = Wechat.respStream().listen(_listenResp);
   }
 
   void _listenResp(BaseResp resp) {
@@ -78,91 +82,95 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Wechat Kit Demo'),
+        title: Text('Wechat Kit Demo'),
       ),
       body: ListView(
         children: <Widget>[
           ListTile(
-            title: const Text('微信回调 - 冷启'),
+            title: Text('注册APP'),
             onTap: () async {
-              await Wechat.instance.handleInitialWXReq();
+              await Wechat.registerApp(
+                appId: WECHAT_APPID,
+                universalLink: WECHAT_UNIVERSAL_LINK,
+              );
+              _showTips('注册APP', '注册成功');
             },
           ),
           ListTile(
-            title: const Text('环境检查'),
+            title: Text('微信回调 - 冷启'),
             onTap: () async {
-              final String content =
-                  'wechat: ${await Wechat.instance.isInstalled()} - ${await Wechat.instance.isSupportApi()}';
+              await Wechat.handleInitialWXReq();
+            },
+          ),
+          ListTile(
+            title: Text('环境检查'),
+            onTap: () async {
+              final String content = 'wechat: ${await Wechat.isInstalled()} - ${await Wechat.isSupportApi()}';
               _showTips('环境检查', content);
             },
           ),
           ListTile(
-            title: const Text('登录'),
+            title: Text('登录'),
             onTap: () {
-              Wechat.instance.auth(
+              Wechat.auth(
                 scope: <String>[WechatScope.SNSAPI_USERINFO],
                 state: 'auth',
               );
             },
           ),
           ListTile(
-            title: const Text('扫码登录'),
+            title: Text('扫码登录'),
             onTap: () {
               Navigator.of(context).push<void>(MaterialPageRoute<dynamic>(
-                builder: (BuildContext context) => const Qrauth(),
+                builder: (BuildContext context) => Qrauth(),
               ));
             },
           ),
           ListTile(
-            title: const Text('获取用户信息'),
+            title: Text('获取用户信息'),
             onTap: () async {
               if (_authResp != null && _authResp!.isSuccessful) {
-                final WechatAccessTokenResp accessTokenResp =
-                    await WechatExtension.getAccessTokenUnionID(
+                final WechatAccessTokenResp accessTokenResp = await WechatExtension.getAccessTokenUnionID(
                   appId: WECHAT_APPID,
                   appSecret: WECHAT_APPSECRET,
                   code: _authResp!.code!,
                 );
                 if (accessTokenResp.isSuccessful) {
-                  final WechatUserInfoResp userInfoResp =
-                      await WechatExtension.getUserInfoUnionID(
+                  final WechatUserInfoResp userInfoResp = await WechatExtension.getUserInfoUnionID(
                     openId: accessTokenResp.openid!,
                     accessToken: accessTokenResp.accessToken!,
                   );
                   if (userInfoResp.isSuccessful) {
-                    _showTips('用户信息',
-                        '${userInfoResp.nickname} - ${userInfoResp.sex}');
+                    _showTips('用户信息', '${userInfoResp.nickname} - ${userInfoResp.sex}');
                   }
                 }
               }
             },
           ),
           ListTile(
-            title: const Text('文字分享'),
+            title: Text('文字分享'),
             onTap: () {
-              Wechat.instance.shareText(
+              Wechat.shareText(
                 scene: WechatScene.TIMELINE,
                 text: 'Share Text',
               );
             },
           ),
           ListTile(
-            title: const Text('图片分享'),
+            title: Text('图片分享'),
             onTap: () async {
-              final File file = await DefaultCacheManager().getSingleFile(
-                  'https://www.baidu.com/img/bd_logo1.png?where=super');
-              await Wechat.instance.shareImage(
+              final File file = await DefaultCacheManager().getSingleFile('https://www.baidu.com/img/bd_logo1.png?where=super');
+              await Wechat.shareImage(
                 scene: WechatScene.SESSION,
                 imageUri: Uri.file(file.path),
               );
             },
           ),
           ListTile(
-            title: const Text('文件分享'),
+            title: Text('文件分享'),
             onTap: () async {
-              final File file = await DefaultCacheManager().getSingleFile(
-                  'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
-              await Wechat.instance.shareFile(
+              final File file = await DefaultCacheManager().getSingleFile('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
+              await Wechat.shareFile(
                 scene: WechatScene.SESSION,
                 title: '测试文件',
                 fileUri: Uri.file(file.path),
@@ -171,18 +179,15 @@ class _HomeState extends State<Home> {
             },
           ),
           ListTile(
-            title: const Text('Emoji分享'),
+            title: Text('Emoji分享'),
             onTap: () async {
-              final File file = await DefaultCacheManager().getSingleFile(
-                  'https://n.sinaimg.cn/tech/transform/695/w467h228/20191119/bf27-iipztfe9404360.gif');
-              final image.Image thumbnail =
-                  image.decodeImage(file.readAsBytesSync())!;
+              final File file = await DefaultCacheManager().getSingleFile('https://n.sinaimg.cn/tech/transform/695/w467h228/20191119/bf27-iipztfe9404360.gif');
+              final image.Image thumbnail = image.decodeImage(file.readAsBytesSync())!;
               Uint8List thumbData = thumbnail.getBytes();
               if (thumbData.length > 32 * 1024) {
-                thumbData = Uint8List.fromList(image.encodeJpg(thumbnail,
-                    quality: 100 * 32 * 1024 ~/ thumbData.length));
+                thumbData = Uint8List.fromList(image.encodeJpg(thumbnail, quality: 100 * 32 * 1024 ~/ thumbData.length));
               }
-              await Wechat.instance.shareEmoji(
+              await Wechat.shareEmoji(
                 scene: WechatScene.SESSION,
                 thumbData: thumbData,
                 emojiUri: Uri.file(file.path),
@@ -190,19 +195,19 @@ class _HomeState extends State<Home> {
             },
           ),
           ListTile(
-            title: const Text('网页分享'),
+            title: Text('网页分享'),
             onTap: () {
-              Wechat.instance.shareWebpage(
+              Wechat.shareWebpage(
                 scene: WechatScene.TIMELINE,
                 webpageUrl: 'https://www.baidu.com',
               );
             },
           ),
           ListTile(
-            title: const Text('支付'),
+            title: Text('支付'),
             onTap: () {
               // 微信 Demo 例子：https://wxpay.wxutil.com/pub_v2/app/app_pay.php
-              Wechat.instance.pay(
+              Wechat.pay(
                 appId: WECHAT_APPID,
                 partnerId: '商户号',
                 prepayId: '预支付交易会话ID',
@@ -214,12 +219,12 @@ class _HomeState extends State<Home> {
             },
           ),
           ListTile(
-            title: const Text('拉起小程序'),
+            title: Text('拉起小程序'),
             onTap: () {
-              Wechat.instance.launchMiniProgram(
+              Wechat.launchMiniProgram(
                 userName: WECHAT_MINIAPPID,
                 path: 'page/page/index?uid=123',
-                type: WechatMiniProgram.preview,
+                type: WechatMiniProgram.PREVIEW,
               );
             },
           ),
@@ -243,8 +248,8 @@ class _HomeState extends State<Home> {
 
 class Qrauth extends StatefulWidget {
   const Qrauth({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -260,8 +265,7 @@ class _QrauthState extends State<Qrauth> {
   @override
   void initState() {
     super.initState();
-    _qrauthRespSubs =
-        Wechat.instance.qrauthRespStream().listen(_listenQrauthResp);
+    _qrauthRespSubs = Wechat.qrauthRespStream().listen(_listenQrauthResp);
   }
 
   void _listenQrauthResp(QrauthResp resp) {
@@ -270,9 +274,13 @@ class _QrauthState extends State<Qrauth> {
         _qrcode = resp.imageData;
       });
     } else if (resp is QrcodeScannedResp) {
-      print('QrcodeScanned');
+      if (kDebugMode) {
+        print('QrcodeScanned');
+      }
     } else if (resp is FinishResp) {
-      print('resp: ${resp.errorCode} - ${resp.authCode}');
+      if (kDebugMode) {
+        print('resp: ${resp.errorCode} - ${resp.authCode}');
+      }
     }
   }
 
@@ -286,44 +294,45 @@ class _QrauthState extends State<Qrauth> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Qrauth'),
+        title: Text('Qrauth'),
         actions: <Widget>[
           TextButton(
             onPressed: () async {
-              final WechatAccessTokenResp accessToken =
-                  await WechatExtension.getAccessToken(
+              final WechatAccessTokenResp accessToken = await WechatExtension.getAccessToken(
                 appId: WECHAT_APPID,
                 appSecret: WECHAT_APPSECRET,
               );
-              print(
-                'accessToken: ${accessToken.errorCode} - '
-                '${accessToken.errorMsg} - '
-                '${accessToken.accessToken}',
-              );
+              if (kDebugMode) {
+                print(
+                  'accessToken: ${accessToken.errorCode} - '
+                      '${accessToken.errorMsg} - '
+                      '${accessToken.accessToken}',
+                );
+              }
               final WechatTicketResp ticket = await WechatExtension.getTicket(
                 accessToken: accessToken.accessToken!,
               );
-              print(
-                'accessToken: ${ticket.errorCode} - '
-                '${ticket.errorMsg} - '
-                '${ticket.ticket}',
-              );
-              await Wechat.instance.startQrauth(
+              if (kDebugMode) {
+                print(
+                  'accessToken: ${ticket.errorCode} - '
+                      '${ticket.errorMsg} - '
+                      '${ticket.ticket}',
+                );
+              }
+              await Wechat.startQrauth(
                 appId: WECHAT_APPID,
                 scope: <String>[WechatScope.SNSAPI_USERINFO],
-                noncestr: const Uuid().v1().toString().replaceAll('-', ''),
+                noncestr: Uuid().v1().replaceAll('-', ''),
                 ticket: ticket.ticket!,
               );
             },
-            child: const Text('got qr code'),
+            child: Text('got qr code'),
           ),
         ],
       ),
       body: GestureDetector(
         child: Center(
-          child: _qrcode != null
-              ? Image.memory(_qrcode!)
-              : const Text('got qr code'),
+          child: _qrcode != null ? Image.memory(_qrcode!) : Text('got qr code'),
         ),
       ),
     );

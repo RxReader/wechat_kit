@@ -7,7 +7,7 @@
 #import <WechatAuthSDK.h>
 #endif
 
-typedef void(^WechatKitWXReqRunnable)(void);
+typedef void (^WechatKitWXReqRunnable)(void);
 
 @interface WechatKitPlugin () <WXApiDelegate, WechatAuthAPIDelegate>
 
@@ -30,121 +30,6 @@ typedef void(^WechatKitWXReqRunnable)(void);
     [registrar addMethodCallDelegate:instance channel:channel];
 }
 
-static NSString *const METHOD_REGISTERAPP = @"registerApp";
-static NSString *const METHOD_HANDLEINITIALWXREQ = @"handleInitialWXReq";
-static NSString *const METHOD_ISINSTALLED = @"isInstalled";
-static NSString *const METHOD_ISSUPPORTAPI = @"isSupportApi";
-static NSString *const METHOD_ISSUPPORTSTATEAPI = @"isSupportStateAPI";
-static NSString *const METHOD_OPENWECHAT = @"openWechat";
-static NSString *const METHOD_AUTH = @"auth";
-static NSString *const METHOD_STARTQRAUTH = @"startQrauth";
-static NSString *const METHOD_STOPQRAUTH = @"stopQrauth";
-static NSString *const METHOD_OPENURL = @"openUrl";
-static NSString *const METHOD_OPENRANKLIST = @"openRankList";
-static NSString *const METHOD_SHARETEXT = @"shareText";
-static NSString *const METHOD_SHAREIMAGE = @"shareImage";
-static NSString *const METHOD_SHAREFILE = @"shareFile";
-static NSString *const METHOD_SHAREEMOJI = @"shareEmoji";
-static NSString *const METHOD_SHAREMUSIC = @"shareMusic";
-static NSString *const METHOD_SHAREVIDEO = @"shareVideo";
-static NSString *const METHOD_SHAREWEBPAGE = @"shareWebpage";
-static NSString *const METHOD_SHAREMINIPROGRAM = @"shareMiniProgram";
-static NSString *const METHOD_SUBSCRIBEMSG = @"subscribeMsg";
-static NSString *const METHOD_LAUNCHMINIPROGRAM = @"launchMiniProgram";
-static NSString *const METHOD_OPENCUSTOMERSERVICECHAT = @"openCustomerServiceChat";
-static NSString *const METHOD_OPENBUSINESSVIEW = @"openBusinessView";
-static NSString *const METHOD_OPENBUSINESSWEBVIEW = @"openBusinessWebview";
-#ifndef NO_PAY
-static NSString *const METHOD_PAY = @"pay";
-#endif
-
-static NSString *const METHOD_ONLAUNCHFROMWXREQ = @"onLaunchFromWXReq";
-static NSString *const METHOD_ONSHOWMESSAGEFROMWXREQ = @"onShowMessageFromWXReq";
-
-static NSString *const METHOD_ONAUTHRESP = @"onAuthResp";
-static NSString *const METHOD_ONOPENURLRESP = @"onOpenUrlResp";
-static NSString *const METHOD_ONSHAREMSGRESP = @"onShareMsgResp";
-static NSString *const METHOD_ONSUBSCRIBEMSGRESP = @"onSubscribeMsgResp";
-static NSString *const METHOD_ONLAUNCHMINIPROGRAMRESP = @"onLaunchMiniProgramResp";
-static NSString *const METHOD_ONOPENCUSTOMERSERVICECHATRESP = @"onOpenCustomerServiceChatResp";
-static NSString *const METHOD_ONOPENBUSINESSVIEWRESP = @"onOpenBusinessViewResp";
-static NSString *const METHOD_ONOPENBUSINESSWEBVIEWRESP = @"onOpenBusinessWebviewResp";
-#ifndef NO_PAY
-static NSString *const METHOD_ONPAYRESP = @"onPayResp";
-#endif
-static NSString *const METHOD_ONAUTHGOTQRCODE = @"onAuthGotQrcode";
-static NSString *const METHOD_ONAUTHQRCODESCANNED = @"onAuthQrcodeScanned";
-static NSString *const METHOD_ONAUTHFINISH = @"onAuthFinish";
-
-static NSString *const ARGUMENT_KEY_APPID = @"appId";
-static NSString *const ARGUMENT_KEY_UNIVERSALLINK = @"universalLink";
-static NSString *const ARGUMENT_KEY_SCOPE = @"scope";
-static NSString *const ARGUMENT_KEY_STATE = @"state";
-static NSString *const ARGUMENT_KEY_NONCESTR = @"noncestr";
-static NSString *const ARGUMENT_KEY_TIMESTAMP = @"timestamp";
-static NSString *const ARGUMENT_KEY_SIGNATURE = @"signature";
-static NSString *const ARGUMENT_KEY_URL = @"url";
-static NSString *const ARGUMENT_KEY_QUERY = @"query";
-static NSString *const ARGUMENT_KEY_USERNAME = @"username";
-static NSString *const ARGUMENT_KEY_SCENE = @"scene";
-static NSString *const ARGUMENT_KEY_TEXT = @"text";
-static NSString *const ARGUMENT_KEY_TITLE = @"title";
-static NSString *const ARGUMENT_KEY_DESCRIPTION = @"description";
-static NSString *const ARGUMENT_KEY_THUMBDATA = @"thumbData";
-static NSString *const ARGUMENT_KEY_IMAGEDATA = @"imageData";
-static NSString *const ARGUMENT_KEY_IMAGEURI = @"imageUri";
-static NSString *const ARGUMENT_KEY_FILEDATA = @"fileData";
-static NSString *const ARGUMENT_KEY_FILEURI = @"fileUri";
-static NSString *const ARGUMENT_KEY_FILEEXTENSION = @"fileExtension";
-static NSString *const ARGUMENT_KEY_EMOJIDATA = @"emojiData";
-static NSString *const ARGUMENT_KEY_EMOJIURI = @"emojiUri";
-static NSString *const ARGUMENT_KEY_MUSICURL = @"musicUrl";
-static NSString *const ARGUMENT_KEY_MUSICDATAURL = @"musicDataUrl";
-static NSString *const ARGUMENT_KEY_MUSICLOWBANDURL = @"musicLowBandUrl";
-static NSString *const ARGUMENT_KEY_MUSICLOWBANDDATAURL =
-    @"musicLowBandDataUrl";
-static NSString *const ARGUMENT_KEY_VIDEOURL = @"videoUrl";
-static NSString *const ARGUMENT_KEY_VIDEOLOWBANDURL = @"videoLowBandUrl";
-static NSString *const ARGUMENT_KEY_WEBPAGEURL = @"webpageUrl";
-static NSString *const ARGUMENT_KEY_PATH = @"path";
-static NSString *const ARGUMENT_KEY_HDIMAGEDATA = @"hdImageData";
-static NSString *const ARGUMENT_KEY_WITHSHARETICKET = @"withShareTicket";
-static NSString *const ARGUMENT_KEY_TYPE = @"type";
-static NSString *const ARGUMENT_KEY_DISABLEFORWARD = @"disableForward";
-static NSString *const ARGUMENT_KEY_TEMPLATEID = @"templateId";
-static NSString *const ARGUMENT_KEY_RESERVED = @"reserved";
-static NSString *const ARGUMENT_KEY_CORPID = @"corpId";
-static NSString *const ARGUMENT_KEY_BUSINESSTYPE = @"businessType";
-static NSString *const ARGUMENT_KEY_QUERYINFO = @"queryInfo";
-#ifndef NO_PAY
-static NSString *const ARGUMENT_KEY_PARTNERID = @"partnerId";
-static NSString *const ARGUMENT_KEY_PREPAYID = @"prepayId";
-// static NSString *const ARGUMENT_KEY_NONCESTR = @"noncestr";
-// static NSString *const ARGUMENT_KEY_TIMESTAMP = @"timestamp";
-static NSString *const ARGUMENT_KEY_PACKAGE = @"package";
-static NSString *const ARGUMENT_KEY_SIGN = @"sign";
-#endif
-static NSString *const ARGUMENT_KEY_EXTINFO = @"extInfo";
-
-static NSString *const ARGUMENT_KEY_RESULT_ERRORCODE = @"errorCode";
-static NSString *const ARGUMENT_KEY_RESULT_ERRORMSG = @"errorMsg";
-static NSString *const ARGUMENT_KEY_RESULT_CODE = @"code";
-static NSString *const ARGUMENT_KEY_RESULT_STATE = @"state";
-static NSString *const ARGUMENT_KEY_RESULT_LANG = @"lang";
-static NSString *const ARGUMENT_KEY_RESULT_COUNTRY = @"country";
-static NSString *const ARGUMENT_KEY_RESULT_TEMPLATEID = @"templateId";
-static NSString *const ARGUMENT_KEY_RESULT_SCENE = @"scene";
-static NSString *const ARGUMENT_KEY_RESULT_ACTION = @"action";
-static NSString *const ARGUMENT_KEY_RESULT_RESERVED = @"reserved";
-static NSString *const ARGUMENT_KEY_RESULT_EXTMSG = @"extMsg";
-static NSString *const ARGUMENT_KEY_RESULT_BUSINESSTYPE = @"businessType";
-static NSString *const ARGUMENT_KEY_RESULT_RESULTINFO = @"resultInfo";
-static NSString *const ARGUMENT_KEY_RESULT_MESSAGEACTION = @"messageAction";
-static NSString *const ARGUMENT_KEY_RESULT_MESSAGEEXT = @"messageExt";
-static NSString *const ARGUMENT_KEY_RESULT_RETURNKEY = @"returnKey";
-static NSString *const ARGUMENT_KEY_RESULT_IMAGEDATA = @"imageData";
-static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
-
 - (instancetype)initWithChannel:(FlutterMethodChannel *)channel {
     self = [super init];
     if (self) {
@@ -159,13 +44,13 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
 
 - (void)handleMethodCall:(FlutterMethodCall *)call
                   result:(FlutterResult)result {
-    if ([METHOD_REGISTERAPP isEqualToString:call.method]) {
-        NSString *appId = call.arguments[ARGUMENT_KEY_APPID];
-        NSString *universalLink = call.arguments[ARGUMENT_KEY_UNIVERSALLINK];
+    if ([@"registerApp" isEqualToString:call.method]) {
+        NSString *appId = call.arguments[@"appId"];
+        NSString *universalLink = call.arguments[@"universalLink"];
         [WXApi registerApp:appId universalLink:universalLink];
         _isRunning = YES;
         result(nil);
-    } else if ([METHOD_HANDLEINITIALWXREQ isEqualToString:call.method]) {
+    } else if ([@"handleInitialWXReq" isEqualToString:call.method]) {
         if (!_handleInitialWXReqFlag) {
             _handleInitialWXReqFlag = YES;
             if (_initialWXReqRunnable != nil) {
@@ -176,48 +61,48 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
         } else {
             result([FlutterError errorWithCode:@"FAILED" message:nil details:nil]);
         }
-    } else if ([METHOD_ISINSTALLED isEqualToString:call.method]) {
+    } else if ([@"isInstalled" isEqualToString:call.method]) {
         result([NSNumber numberWithBool:[WXApi isWXAppInstalled]]);
-    } else if ([METHOD_ISSUPPORTAPI isEqualToString:call.method]) {
+    } else if ([@"isSupportApi" isEqualToString:call.method]) {
         result([NSNumber numberWithBool:[WXApi isWXAppSupportApi]]);
-    } else if ([METHOD_ISSUPPORTSTATEAPI isEqualToString:call.method]) {
+    } else if ([@"isSupportStateApi" isEqualToString:call.method]) {
         result([NSNumber numberWithBool:[WXApi isWXAppSupportStateAPI]]);
-    } else if ([METHOD_OPENWECHAT isEqualToString:call.method]) {
+    } else if ([@"openWechat" isEqualToString:call.method]) {
         result([NSNumber numberWithBool:[WXApi openWXApp]]);
-    } else if ([METHOD_AUTH isEqualToString:call.method]) {
+    } else if ([@"auth" isEqualToString:call.method]) {
         [self handleAuthCall:call result:result];
     } else if ([@"sendAuth" isEqualToString:call.method]) {
         [self handleSendAuthCall:call result:result];
-    }else if ([METHOD_STARTQRAUTH isEqualToString:call.method] ||
-               [METHOD_STOPQRAUTH isEqualToString:call.method]) {
+    } else if ([@"startQrauth" isEqualToString:call.method] ||
+               [@"stopQrauth" isEqualToString:call.method]) {
         [self handleQRAuthCall:call result:result];
-    } else if ([METHOD_OPENURL isEqualToString:call.method]) {
+    } else if ([@"openUrl" isEqualToString:call.method]) {
         [self handleOpenUrlCall:call result:result];
-    } else if ([METHOD_OPENRANKLIST isEqualToString:call.method]) {
+    } else if ([@"openRankList" isEqualToString:call.method]) {
         [self handleOpenRankListCall:call result:result];
-    } else if ([METHOD_SHARETEXT isEqualToString:call.method]) {
+    } else if ([@"shareText" isEqualToString:call.method]) {
         [self handleShareTextCall:call result:result];
-    } else if ([METHOD_SHAREIMAGE isEqualToString:call.method] ||
-               [METHOD_SHAREFILE isEqualToString:call.method] ||
-               [METHOD_SHAREEMOJI isEqualToString:call.method] ||
-               [METHOD_SHAREMUSIC isEqualToString:call.method] ||
-               [METHOD_SHAREVIDEO isEqualToString:call.method] ||
-               [METHOD_SHAREWEBPAGE isEqualToString:call.method] ||
-               [METHOD_SHAREMINIPROGRAM isEqualToString:call.method]) {
+    } else if ([@"shareImage" isEqualToString:call.method] ||
+               [@"shareFile" isEqualToString:call.method] ||
+               [@"shareEmoji" isEqualToString:call.method] ||
+               [@"shareMusic" isEqualToString:call.method] ||
+               [@"shareVideo" isEqualToString:call.method] ||
+               [@"shareWebpage" isEqualToString:call.method] ||
+               [@"shareMiniProgram" isEqualToString:call.method]) {
         [self handleShareMediaCall:call result:result];
-    } else if ([METHOD_SUBSCRIBEMSG isEqualToString:call.method]) {
+    } else if ([@"subscribeMsg" isEqualToString:call.method]) {
         [self handleSubscribeMsgCall:call result:result];
-    } else if ([METHOD_LAUNCHMINIPROGRAM isEqualToString:call.method]) {
+    } else if ([@"launchMiniProgram" isEqualToString:call.method]) {
         [self handleLaunchMiniProgramCall:call result:result];
-    } else if ([METHOD_OPENCUSTOMERSERVICECHAT isEqualToString:call.method]) {
-        [self handleOpenCustomerServiceChatCall: call result:result];
-    } else if ([METHOD_OPENBUSINESSVIEW isEqualToString:call.method]) {
-        [self handleOpenBusinessViewCall: call result:result];
-    } else if ([METHOD_OPENBUSINESSWEBVIEW isEqualToString:call.method]) {
+    } else if ([@"openCustomerServiceChat" isEqualToString:call.method]) {
+        [self handleOpenCustomerServiceChatCall:call result:result];
+    } else if ([@"openBusinessView" isEqualToString:call.method]) {
+        [self handleOpenBusinessViewCall:call result:result];
+    } else if ([@"openBusinessWebview" isEqualToString:call.method]) {
         [self handleOpenBusinessWebviewCall:call result:result];
     }
 #ifndef NO_PAY
-    else if ([METHOD_PAY isEqualToString:call.method]) {
+    else if ([@"pay" isEqualToString:call.method]) {
         [self handlePayCall:call result:result];
     }
 #endif
@@ -228,8 +113,8 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
 
 - (void)handleAuthCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     SendAuthReq *req = [[SendAuthReq alloc] init];
-    req.scope = call.arguments[ARGUMENT_KEY_SCOPE];
-    req.state = call.arguments[ARGUMENT_KEY_STATE];
+    req.scope = call.arguments[@"scope"];
+    req.state = call.arguments[@"state"];
     [WXApi sendReq:req
         completion:^(BOOL success){
             // do nothing
@@ -239,33 +124,33 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
 
 - (void)handleSendAuthCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     SendAuthReq *req = [[SendAuthReq alloc] init];
-    req.scope = call.arguments[ARGUMENT_KEY_SCOPE];
-    req.state = call.arguments[ARGUMENT_KEY_STATE];
+    req.scope = call.arguments[@"scope"];
+    req.state = call.arguments[@"state"];
     UIViewController *viewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     [WXApi sendAuthReq:req
         viewController:viewController
               delegate:self
-            completion:^(BOOL success) {
-        // do nothing
-    }];
+            completion:^(BOOL success){
+                // do nothing
+            }];
     result(nil);
 }
 
 - (void)handleQRAuthCall:(FlutterMethodCall *)call
                   result:(FlutterResult)result {
-    if ([METHOD_STARTQRAUTH isEqualToString:call.method]) {
-        NSString *appId = call.arguments[ARGUMENT_KEY_APPID];
-        NSString *scope = call.arguments[ARGUMENT_KEY_SCOPE];
-        NSString *noncestr = call.arguments[ARGUMENT_KEY_NONCESTR];
-        NSString *timestamp = call.arguments[ARGUMENT_KEY_TIMESTAMP];
-        NSString *signature = call.arguments[ARGUMENT_KEY_SIGNATURE];
+    if ([@"startQrauth" isEqualToString:call.method]) {
+        NSString *appId = call.arguments[@"appId"];
+        NSString *scope = call.arguments[@"scope"];
+        NSString *noncestr = call.arguments[@"noncestr"];
+        NSString *timestamp = call.arguments[@"timestamp"];
+        NSString *signature = call.arguments[@"signature"];
         [_qrauth Auth:appId
               nonceStr:noncestr
              timeStamp:timestamp
                  scope:scope
              signature:signature
             schemeData:nil];
-    } else if ([METHOD_STOPQRAUTH isEqualToString:call.method]) {
+    } else if ([@"stopQrauth" isEqualToString:call.method]) {
         [_qrauth StopAuth];
     }
     result(nil);
@@ -274,7 +159,7 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
 - (void)handleOpenUrlCall:(FlutterMethodCall *)call
                    result:(FlutterResult)result {
     OpenWebviewReq *req = [[OpenWebviewReq alloc] init];
-    req.url = call.arguments[ARGUMENT_KEY_URL];
+    req.url = call.arguments[@"url"];
     [WXApi sendReq:req
         completion:^(BOOL success){
             // do nothing
@@ -295,10 +180,10 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
 - (void)handleShareTextCall:(FlutterMethodCall *)call
                      result:(FlutterResult)result {
     SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
-    NSNumber *scene = call.arguments[ARGUMENT_KEY_SCENE];
+    NSNumber *scene = call.arguments[@"scene"];
     req.scene = [scene intValue];
     req.bText = YES;
-    req.text = call.arguments[ARGUMENT_KEY_TEXT];
+    req.text = call.arguments[@"text"];
     [WXApi sendReq:req
         completion:^(BOOL success){
             // do nothing
@@ -309,84 +194,84 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
 - (void)handleShareMediaCall:(FlutterMethodCall *)call
                       result:(FlutterResult)result {
     SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
-    NSNumber *scene = call.arguments[ARGUMENT_KEY_SCENE];
+    NSNumber *scene = call.arguments[@"scene"];
     req.scene = [scene intValue];
     req.bText = NO;
     WXMediaMessage *message = [WXMediaMessage message];
-    message.title = call.arguments[ARGUMENT_KEY_TITLE];
-    message.description = call.arguments[ARGUMENT_KEY_DESCRIPTION];
-    FlutterStandardTypedData *thumbData = call.arguments[ARGUMENT_KEY_THUMBDATA];
+    message.title = call.arguments[@"title"];
+    message.description = call.arguments[@"description"];
+    FlutterStandardTypedData *thumbData = call.arguments[@"thumbData"];
     if (thumbData != nil) {
         message.thumbData = thumbData.data;
     }
-    if ([METHOD_SHAREIMAGE isEqualToString:call.method]) {
+    if ([@"shareImage" isEqualToString:call.method]) {
         WXImageObject *mediaObject = [WXImageObject object];
         FlutterStandardTypedData *imageData =
-            call.arguments[ARGUMENT_KEY_IMAGEDATA];
+            call.arguments[@"imageData"];
         if (imageData != nil) {
             mediaObject.imageData = imageData.data;
         } else {
-            NSString *imageUri = call.arguments[ARGUMENT_KEY_IMAGEURI];
+            NSString *imageUri = call.arguments[@"imageUri"];
             NSURL *imageUrl = [NSURL URLWithString:imageUri];
             mediaObject.imageData = [NSData dataWithContentsOfFile:imageUrl.path];
         }
         message.mediaObject = mediaObject;
-    } else if ([METHOD_SHAREFILE isEqualToString:call.method]) {
+    } else if ([@"shareFile" isEqualToString:call.method]) {
         WXFileObject *mediaObject = [WXFileObject object];
-        FlutterStandardTypedData *fileData = call.arguments[ARGUMENT_KEY_FILEDATA];
+        FlutterStandardTypedData *fileData = call.arguments[@"fileData"];
         if (fileData != nil) {
             mediaObject.fileData = fileData.data;
         } else {
-            NSString *fileUri = call.arguments[ARGUMENT_KEY_FILEURI];
+            NSString *fileUri = call.arguments[@"fileUri"];
             NSURL *fileUrl = [NSURL URLWithString:fileUri];
             mediaObject.fileData = [NSData dataWithContentsOfFile:fileUrl.path];
         }
-        mediaObject.fileExtension = call.arguments[ARGUMENT_KEY_FILEEXTENSION];
+        mediaObject.fileExtension = call.arguments[@"fileExtension"];
         message.mediaObject = mediaObject;
-    } else if ([METHOD_SHAREEMOJI isEqualToString:call.method]) {
+    } else if ([@"shareEmoji" isEqualToString:call.method]) {
         WXEmoticonObject *mediaObject = [WXEmoticonObject object];
         FlutterStandardTypedData *emojiData =
-            call.arguments[ARGUMENT_KEY_EMOJIDATA];
+            call.arguments[@"emojiData"];
         if (emojiData != nil) {
             mediaObject.emoticonData = emojiData.data;
         } else {
-            NSString *emojiUri = call.arguments[ARGUMENT_KEY_EMOJIURI];
+            NSString *emojiUri = call.arguments[@"emojiUri"];
             NSURL *emojiUrl = [NSURL URLWithString:emojiUri];
             mediaObject.emoticonData = [NSData dataWithContentsOfFile:emojiUrl.path];
         }
         message.mediaObject = mediaObject;
-    } else if ([METHOD_SHAREMUSIC isEqualToString:call.method]) {
+    } else if ([@"shareMusic" isEqualToString:call.method]) {
         WXMusicObject *mediaObject = [WXMusicObject object];
-        mediaObject.musicUrl = call.arguments[ARGUMENT_KEY_MUSICURL];
-        mediaObject.musicDataUrl = call.arguments[ARGUMENT_KEY_MUSICDATAURL];
-        mediaObject.musicLowBandUrl = call.arguments[ARGUMENT_KEY_MUSICLOWBANDURL];
+        mediaObject.musicUrl = call.arguments[@"musicUrl"];
+        mediaObject.musicDataUrl = call.arguments[@"musicDataUrl"];
+        mediaObject.musicLowBandUrl = call.arguments[@"musicLowBandUrl"];
         mediaObject.musicLowBandDataUrl =
-            call.arguments[ARGUMENT_KEY_MUSICLOWBANDDATAURL];
+            call.arguments[@"musicLowBandDataUrl"];
         message.mediaObject = mediaObject;
-    } else if ([METHOD_SHAREVIDEO isEqualToString:call.method]) {
+    } else if ([@"shareVideo" isEqualToString:call.method]) {
         WXVideoObject *mediaObject = [WXVideoObject object];
-        mediaObject.videoUrl = call.arguments[ARGUMENT_KEY_VIDEOURL];
-        mediaObject.videoLowBandUrl = call.arguments[ARGUMENT_KEY_VIDEOLOWBANDURL];
+        mediaObject.videoUrl = call.arguments[@"videoUrl"];
+        mediaObject.videoLowBandUrl = call.arguments[@"videoLowBandUrl"];
         message.mediaObject = mediaObject;
-    } else if ([METHOD_SHAREWEBPAGE isEqualToString:call.method]) {
+    } else if ([@"shareWebpage" isEqualToString:call.method]) {
         WXWebpageObject *mediaObject = [WXWebpageObject object];
-        mediaObject.webpageUrl = call.arguments[ARGUMENT_KEY_WEBPAGEURL];
+        mediaObject.webpageUrl = call.arguments[@"webpageUrl"];
         message.mediaObject = mediaObject;
-    } else if ([METHOD_SHAREMINIPROGRAM isEqualToString:call.method]) {
+    } else if ([@"shareMiniProgram" isEqualToString:call.method]) {
         WXMiniProgramObject *mediaObject = [WXMiniProgramObject object];
-        mediaObject.webpageUrl = call.arguments[ARGUMENT_KEY_WEBPAGEURL];
-        mediaObject.userName = call.arguments[ARGUMENT_KEY_USERNAME];
-        mediaObject.path = call.arguments[ARGUMENT_KEY_PATH];
+        mediaObject.webpageUrl = call.arguments[@"webpageUrl"];
+        mediaObject.userName = call.arguments[@"username"];
+        mediaObject.path = call.arguments[@"path"];
         FlutterStandardTypedData *hdImageData =
-            call.arguments[ARGUMENT_KEY_HDIMAGEDATA];
+            call.arguments[@"hdImageData"];
         if (hdImageData != nil) {
             mediaObject.hdImageData = hdImageData.data;
         }
-        NSNumber *withShareTicket = call.arguments[ARGUMENT_KEY_WITHSHARETICKET];
+        NSNumber *withShareTicket = call.arguments[@"withShareTicket"];
         mediaObject.withShareTicket = withShareTicket.boolValue;
-        NSNumber *miniProgramType = call.arguments[ARGUMENT_KEY_TYPE];
+        NSNumber *miniProgramType = call.arguments[@"type"];
         mediaObject.miniProgramType = miniProgramType.unsignedIntegerValue;
-        NSNumber *disableForward = call.arguments[ARGUMENT_KEY_DISABLEFORWARD];
+        NSNumber *disableForward = call.arguments[@"disableForward"];
         mediaObject.disableForward = disableForward.boolValue;
         message.mediaObject = mediaObject;
     }
@@ -401,14 +286,14 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
 - (void)handleSubscribeMsgCall:(FlutterMethodCall *)call
                         result:(FlutterResult)result {
     WXSubscribeMsgReq *req = [[WXSubscribeMsgReq alloc] init];
-    NSNumber *scene = call.arguments[ARGUMENT_KEY_SCENE];
+    NSNumber *scene = call.arguments[@"scene"];
 #if __LP64__
     req.scene = [scene unsignedIntValue];
 #else
     req.scene = [scene unsignedLongValue];
 #endif
-    req.templateId = call.arguments[ARGUMENT_KEY_TEMPLATEID];
-    req.reserved = call.arguments[ARGUMENT_KEY_RESERVED];
+    req.templateId = call.arguments[@"templateId"];
+    req.reserved = call.arguments[@"reserved"];
     [WXApi sendReq:req
         completion:^(BOOL success){
             // do nothing
@@ -419,9 +304,9 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
 - (void)handleLaunchMiniProgramCall:(FlutterMethodCall *)call
                              result:(FlutterResult)result {
     WXLaunchMiniProgramReq *req = [[WXLaunchMiniProgramReq alloc] init];
-    req.userName = call.arguments[ARGUMENT_KEY_USERNAME];
-    req.path = call.arguments[ARGUMENT_KEY_PATH];
-    NSNumber *miniProgramType = call.arguments[ARGUMENT_KEY_TYPE];
+    req.userName = call.arguments[@"username"];
+    req.path = call.arguments[@"path"];
+    NSNumber *miniProgramType = call.arguments[@"type"];
     req.miniProgramType = miniProgramType.unsignedIntegerValue;
     [WXApi sendReq:req
         completion:^(BOOL success){
@@ -433,8 +318,8 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
 - (void)handleOpenCustomerServiceChatCall:(FlutterMethodCall *)call
                                    result:(FlutterResult)result {
     WXOpenCustomerServiceReq *req = [[WXOpenCustomerServiceReq alloc] init];
-    req.corpid = call.arguments[ARGUMENT_KEY_CORPID];
-    req.url = call.arguments[ARGUMENT_KEY_URL];
+    req.corpid = call.arguments[@"corpId"];
+    req.url = call.arguments[@"url"];
     [WXApi sendReq:req
         completion:^(BOOL success){
             // do nothing
@@ -445,9 +330,9 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
 - (void)handleOpenBusinessViewCall:(FlutterMethodCall *)call
                             result:(FlutterResult)result {
     WXOpenBusinessViewReq *req = [[WXOpenBusinessViewReq alloc] init];
-    req.businessType = call.arguments[ARGUMENT_KEY_BUSINESSTYPE];
-    req.query = call.arguments[ARGUMENT_KEY_QUERY];
-    req.extInfo = call.arguments[ARGUMENT_KEY_EXTINFO];
+    req.businessType = call.arguments[@"businessType"];
+    req.query = call.arguments[@"query"];
+    req.extInfo = call.arguments[@"extInfo"];
     [WXApi sendReq:req
         completion:^(BOOL success){
             // do nothing
@@ -456,28 +341,28 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
 }
 
 - (void)handleOpenBusinessWebviewCall:(FlutterMethodCall *)call
-                            result:(FlutterResult)result {
+                               result:(FlutterResult)result {
     WXOpenBusinessWebViewReq *req = [[WXOpenBusinessWebViewReq alloc] init];
-    NSNumber *businessType = call.arguments[ARGUMENT_KEY_BUSINESSTYPE];
+    NSNumber *businessType = call.arguments[@"businessType"];
 #if __LP64__
     req.businessType = [businessType unsignedIntValue];
 #else
     req.businessType = [businessType unsignedLongValue];
 #endif
-    req.queryInfoDic = call.arguments[ARGUMENT_KEY_QUERYINFO];
+    req.queryInfoDic = call.arguments[@"queryInfo"];
     result(nil);
 }
 
 #ifndef NO_PAY
 - (void)handlePayCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     PayReq *req = [[PayReq alloc] init];
-    req.partnerId = call.arguments[ARGUMENT_KEY_PARTNERID];
-    req.prepayId = call.arguments[ARGUMENT_KEY_PREPAYID];
-    req.nonceStr = call.arguments[ARGUMENT_KEY_NONCESTR];
-    NSString *timeStamp = call.arguments[ARGUMENT_KEY_TIMESTAMP];
+    req.partnerId = call.arguments[@"partnerId"];
+    req.prepayId = call.arguments[@"prepayId"];
+    req.nonceStr = call.arguments[@"noncestr"];
+    NSString *timeStamp = call.arguments[@"timestamp"];
     req.timeStamp = [timeStamp intValue];
-    req.package = call.arguments[ARGUMENT_KEY_PACKAGE];
-    req.sign = call.arguments[ARGUMENT_KEY_SIGN];
+    req.package = call.arguments[@"package"];
+    req.sign = call.arguments[@"sign"];
     [WXApi sendReq:req
         completion:^(BOOL success){
             // do nothing
@@ -518,32 +403,32 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     if ([req isKindOfClass:[LaunchFromWXReq class]]) {
         LaunchFromWXReq *launchFromWXReq = (LaunchFromWXReq *)req;
-        [dictionary setValue:launchFromWXReq.message.messageAction forKey:ARGUMENT_KEY_RESULT_MESSAGEACTION];
-        [dictionary setValue:launchFromWXReq.message.messageExt forKey:ARGUMENT_KEY_RESULT_MESSAGEEXT];
-        [dictionary setValue:launchFromWXReq.lang forKey:ARGUMENT_KEY_RESULT_LANG];
-        [dictionary setValue:launchFromWXReq.country forKey:ARGUMENT_KEY_RESULT_COUNTRY];
+        [dictionary setValue:launchFromWXReq.message.messageAction forKey:@"messageAction"];
+        [dictionary setValue:launchFromWXReq.message.messageExt forKey:@"messageExt"];
+        [dictionary setValue:launchFromWXReq.lang forKey:@"lang"];
+        [dictionary setValue:launchFromWXReq.country forKey:@"country"];
         if (_isRunning) {
-            [_channel invokeMethod:METHOD_ONLAUNCHFROMWXREQ arguments:dictionary];
+            [_channel invokeMethod:@"onLaunchFromWXReq" arguments:dictionary];
         } else {
             __weak typeof(self) weakSelf = self;
             _initialWXReqRunnable = ^() {
                 __strong typeof(weakSelf) strongSelf = weakSelf;
-                [strongSelf -> _channel invokeMethod:METHOD_ONLAUNCHFROMWXREQ arguments:dictionary];
+                [strongSelf->_channel invokeMethod:@"onLaunchFromWXReq" arguments:dictionary];
             };
         }
     } else if ([req isKindOfClass:[ShowMessageFromWXReq class]]) {
         ShowMessageFromWXReq *showMessageFromWXReq = (ShowMessageFromWXReq *)req;
-        [dictionary setValue:showMessageFromWXReq.message.messageAction forKey:ARGUMENT_KEY_RESULT_MESSAGEACTION];
-        [dictionary setValue:showMessageFromWXReq.message.messageExt forKey:ARGUMENT_KEY_RESULT_MESSAGEEXT];
-        [dictionary setValue:showMessageFromWXReq.lang forKey:ARGUMENT_KEY_RESULT_LANG];
-        [dictionary setValue:showMessageFromWXReq.country forKey:ARGUMENT_KEY_RESULT_COUNTRY];
+        [dictionary setValue:showMessageFromWXReq.message.messageAction forKey:@"messageAction"];
+        [dictionary setValue:showMessageFromWXReq.message.messageExt forKey:@"messageExt"];
+        [dictionary setValue:showMessageFromWXReq.lang forKey:@"lang"];
+        [dictionary setValue:showMessageFromWXReq.country forKey:@"country"];
         if (_isRunning) {
-            [_channel invokeMethod:METHOD_ONSHOWMESSAGEFROMWXREQ arguments:dictionary];
+            [_channel invokeMethod:@"onShowMessageFromWXReq" arguments:dictionary];
         } else {
             __weak typeof(self) weakSelf = self;
             _initialWXReqRunnable = ^() {
                 __strong typeof(weakSelf) strongSelf = weakSelf;
-                [strongSelf -> _channel invokeMethod:METHOD_ONSHOWMESSAGEFROMWXREQ arguments:dictionary];
+                [strongSelf->_channel invokeMethod:@"onShowMessageFromWXReq" arguments:dictionary];
             };
         }
     }
@@ -552,75 +437,75 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
 - (void)onResp:(BaseResp *)resp {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     [dictionary setValue:[NSNumber numberWithInt:resp.errCode]
-                  forKey:ARGUMENT_KEY_RESULT_ERRORCODE];
+                  forKey:@"errorCode"];
     if (resp.errStr != nil) {
-        [dictionary setValue:resp.errStr forKey:ARGUMENT_KEY_RESULT_ERRORMSG];
+        [dictionary setValue:resp.errStr forKey:@"errorMsg"];
     }
     if ([resp isKindOfClass:[SendAuthResp class]]) {
         // 授权
         if (resp.errCode == WXSuccess) {
             SendAuthResp *authResp = (SendAuthResp *)resp;
-            [dictionary setValue:authResp.code forKey:ARGUMENT_KEY_RESULT_CODE];
-            [dictionary setValue:authResp.state forKey:ARGUMENT_KEY_RESULT_STATE];
-            [dictionary setValue:authResp.lang forKey:ARGUMENT_KEY_RESULT_LANG];
-            [dictionary setValue:authResp.country forKey:ARGUMENT_KEY_RESULT_COUNTRY];
+            [dictionary setValue:authResp.code forKey:@"code"];
+            [dictionary setValue:authResp.state forKey:@"state"];
+            [dictionary setValue:authResp.lang forKey:@"lang"];
+            [dictionary setValue:authResp.country forKey:@"country"];
         }
-        [_channel invokeMethod:METHOD_ONAUTHRESP arguments:dictionary];
+        [_channel invokeMethod:@"onAuthResp" arguments:dictionary];
     } else if ([resp isKindOfClass:[OpenWebviewResp class]]) {
         // 浏览器
-        [_channel invokeMethod:METHOD_ONOPENURLRESP arguments:dictionary];
+        [_channel invokeMethod:@"onOpenUrlResp" arguments:dictionary];
     } else if ([resp isKindOfClass:[SendMessageToWXResp class]]) {
         // 分享
-        [_channel invokeMethod:METHOD_ONSHAREMSGRESP arguments:dictionary];
+        [_channel invokeMethod:@"onShareMsgResp" arguments:dictionary];
     } else if ([resp isKindOfClass:[WXSubscribeMsgResp class]]) {
         // 一次性订阅消息
         if (resp.errCode == WXSuccess) {
             WXSubscribeMsgResp *subscribeMsgResp = (WXSubscribeMsgResp *)resp;
             [dictionary setValue:subscribeMsgResp.templateId
-                          forKey:ARGUMENT_KEY_RESULT_TEMPLATEID];
+                          forKey:@"templateId"];
             [dictionary
                 setValue:[NSNumber numberWithUnsignedInt:subscribeMsgResp.scene]
-                  forKey:ARGUMENT_KEY_RESULT_SCENE];
+                  forKey:@"scene"];
             [dictionary setValue:subscribeMsgResp.action
-                          forKey:ARGUMENT_KEY_RESULT_ACTION];
+                          forKey:@"action"];
             [dictionary setValue:subscribeMsgResp.reserved
-                          forKey:ARGUMENT_KEY_RESULT_RESERVED];
+                          forKey:@"reserved"];
         }
-        [_channel invokeMethod:METHOD_ONSUBSCRIBEMSGRESP arguments:dictionary];
+        [_channel invokeMethod:@"onSubscribeMsgResp" arguments:dictionary];
     } else if ([resp isKindOfClass:[WXLaunchMiniProgramResp class]]) {
         // 打开小程序
         if (resp.errCode == WXSuccess) {
             WXLaunchMiniProgramResp *launchMiniProgramResp =
                 (WXLaunchMiniProgramResp *)resp;
             [dictionary setValue:launchMiniProgramResp.extMsg
-                          forKey:ARGUMENT_KEY_RESULT_EXTMSG];
+                          forKey:@"extMsg"];
         }
-        [_channel invokeMethod:METHOD_ONLAUNCHMINIPROGRAMRESP arguments:dictionary];
+        [_channel invokeMethod:@"onLaunchMiniProgramResp" arguments:dictionary];
     } else if ([resp isKindOfClass:[WXOpenCustomerServiceResp class]]) {
-        [_channel invokeMethod:METHOD_ONOPENCUSTOMERSERVICECHATRESP arguments:dictionary];
+        [_channel invokeMethod:@"onOpenCustomerServiceChatResp" arguments:dictionary];
     } else if ([resp isKindOfClass:[WXOpenBusinessViewResp class]]) {
         if (resp.errCode == WXSuccess) {
             WXOpenBusinessViewResp *openBusinessViewResp = (WXOpenBusinessViewResp *)resp;
-            [dictionary setValue:openBusinessViewResp.businessType forKey:ARGUMENT_KEY_RESULT_BUSINESSTYPE];
-            [dictionary setValue:openBusinessViewResp.extMsg forKey:ARGUMENT_KEY_RESULT_EXTMSG];
+            [dictionary setValue:openBusinessViewResp.businessType forKey:@"businessType"];
+            [dictionary setValue:openBusinessViewResp.extMsg forKey:@"extMsg"];
         }
-        [_channel invokeMethod:METHOD_ONOPENBUSINESSVIEWRESP arguments:dictionary];
+        [_channel invokeMethod:@"onOpenBusinessViewResp" arguments:dictionary];
     } else if ([resp isKindOfClass:[WXOpenBusinessWebViewResp class]]) {
         if (resp.errCode == WXSuccess) {
             WXOpenBusinessWebViewResp *openBusinessWebviewResp = (WXOpenBusinessWebViewResp *)resp;
-            [dictionary setValue:[NSNumber numberWithUnsignedInt:openBusinessWebviewResp.businessType] forKey:ARGUMENT_KEY_RESULT_BUSINESSTYPE];
-            [dictionary setValue:openBusinessWebviewResp.result forKey:ARGUMENT_KEY_RESULT_RESULTINFO];
+            [dictionary setValue:[NSNumber numberWithUnsignedInt:openBusinessWebviewResp.businessType] forKey:@"businessType"];
+            [dictionary setValue:openBusinessWebviewResp.result forKey:@"resultInfo"];
         }
-        [_channel invokeMethod:METHOD_ONOPENBUSINESSWEBVIEWRESP arguments:dictionary];
+        [_channel invokeMethod:@"onOpenBusinessWebviewResp" arguments:dictionary];
     }
 #ifndef NO_PAY
     else if ([resp isKindOfClass:[PayResp class]]) {
         // 支付
         if (resp.errCode == WXSuccess) {
             PayResp *payResp = (PayResp *)resp;
-            [dictionary setValue:payResp.returnKey forKey:ARGUMENT_KEY_RESULT_RETURNKEY];
+            [dictionary setValue:payResp.returnKey forKey:@"returnKey"];
         }
-        [_channel invokeMethod:METHOD_ONPAYRESP arguments:dictionary];
+        [_channel invokeMethod:@"onPayResp" arguments:dictionary];
     }
 #endif
 }
@@ -633,21 +518,21 @@ static NSString *const ARGUMENT_KEY_RESULT_AUTHCODE = @"authCode";
         imageData = UIImageJPEGRepresentation(image, 1);
     }
     NSDictionary *dictionary = @{
-        ARGUMENT_KEY_RESULT_IMAGEDATA : imageData,
+        @"imageData" : imageData,
     };
-    [_channel invokeMethod:METHOD_ONAUTHGOTQRCODE arguments:dictionary];
+    [_channel invokeMethod:@"onAuthGotQrcode" arguments:dictionary];
 }
 
 - (void)onQrcodeScanned {
-    [_channel invokeMethod:METHOD_ONAUTHQRCODESCANNED arguments:nil];
+    [_channel invokeMethod:@"onAuthQrcodeScanned" arguments:nil];
 }
 
 - (void)onAuthFinish:(int)errCode AuthCode:(NSString *)authCode {
     NSDictionary *dictionary = @{
-        ARGUMENT_KEY_RESULT_ERRORCODE : [NSNumber numberWithInt:errCode],
-        ARGUMENT_KEY_RESULT_AUTHCODE : authCode,
+        @"errorCode" : [NSNumber numberWithInt:errCode],
+        @"authCode" : authCode,
     };
-    [_channel invokeMethod:METHOD_ONAUTHFINISH arguments:dictionary];
+    [_channel invokeMethod:@"onAuthFinish" arguments:dictionary];
 }
 
 @end

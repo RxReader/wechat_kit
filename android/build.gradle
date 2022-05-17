@@ -1,5 +1,5 @@
 group 'io.github.v7lin.wechat_kit'
-version '3.2.0'
+version '4.0.0'
 
 buildscript {
     repositories {
@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath 'com.android.tools.build:gradle:7.1.2'
     }
 }
 
@@ -24,6 +24,11 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 31
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     resourcePrefix 'wechat_kit'
 
     defaultConfig {
@@ -31,10 +36,6 @@ android {
 
         // library 混淆 -> 随 library 引用，自动添加到 apk 打包混淆
         consumerProguardFiles 'consumer-rules.pro'
-    }
-
-    lintOptions {
-        disable 'InvalidPackage'
     }
 
     flavorDimensions 'vendor'
@@ -53,4 +54,3 @@ dependencies {
     //
     vendorImplementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.8.0'
 }
-

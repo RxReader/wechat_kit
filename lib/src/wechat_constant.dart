@@ -8,6 +8,16 @@ class WechatScope {
   static const String SNSAPI_USERINFO = 'snsapi_userinfo';
 }
 
+class WechatAuthType {
+  const WechatAuthType._();
+
+  /// APP授权
+  static const int NORMAL = 0;
+
+  /// WEB授权
+  static const int WEB = 1;
+}
+
 class WechatScene {
   const WechatScene._();
 
@@ -42,11 +52,11 @@ class WechatMiniProgram {
   const WechatMiniProgram._();
 
   /// 正式版
-  static const int release = 0;
+  static const int RELEASE = 0;
 
   /// 测试版
-  static const int test = 1;
+  static const int TEST = 1;
 
   /// 体验版
-  static const int preview = 2;
+  static const int PREVIEW = 2;
 }
