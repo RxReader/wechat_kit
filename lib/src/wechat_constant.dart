@@ -14,7 +14,7 @@ class WechatAuthType {
   /// APP授权
   static const int NORMAL = 0;
 
-  /// WEB授权
+  /// WEB授权 - 仅iOS
   static const int WEB = 1;
 }
 
