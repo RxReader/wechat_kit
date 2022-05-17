@@ -27,6 +27,30 @@ jobs:
       - run: flutter analyze lib example/lib
       - run: cd example; flutter build ios --no-codesign
 
+  build_ios_no_pay:
+    name: Build iOS on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+          cache: 'gradle'
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable'
+      - run: dart --version
+      - run: flutter --version
+      - run: flutter pub get
+      - run: flutter format --dry-run --set-exit-if-changed .
+      - run: flutter pub publish --dry-run
+      - run: flutter analyze lib example/lib
+      - run: cd example; sed -i.bak 's/# $WechatKitSubspec/$WechatKitSubspec/' ./ios/Podfile; flutter build ios --no-codesign
+
   build_android:
     name: Build Android on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
