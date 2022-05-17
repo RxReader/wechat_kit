@@ -28,7 +28,7 @@ jobs:
       - run: cd example; flutter build ios --no-codesign
 
   build_ios_no_pay:
-    name: Build iOS on ${{ matrix.os }}
+    name: Build iOS NoPay on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
