@@ -105,7 +105,8 @@ class _HomeState extends State<Home> {
           ListTile(
             title: Text('环境检查'),
             onTap: () async {
-              final String content = 'wechat: ${await Wechat.isInstalled()} - ${await Wechat.isSupportApi()}';
+              final String content =
+                  'wechat: ${await Wechat.isInstalled()} - ${await Wechat.isSupportApi()}';
               _showTips('环境检查', content);
             },
           ),
@@ -130,18 +131,21 @@ class _HomeState extends State<Home> {
             title: Text('获取用户信息'),
             onTap: () async {
               if (_authResp != null && _authResp!.isSuccessful) {
-                final WechatAccessTokenResp accessTokenResp = await WechatExtension.getAccessTokenUnionID(
+                final WechatAccessTokenResp accessTokenResp =
+                    await WechatExtension.getAccessTokenUnionID(
                   appId: WECHAT_APPID,
                   appSecret: WECHAT_APPSECRET,
                   code: _authResp!.code!,
                 );
                 if (accessTokenResp.isSuccessful) {
-                  final WechatUserInfoResp userInfoResp = await WechatExtension.getUserInfoUnionID(
+                  final WechatUserInfoResp userInfoResp =
+                      await WechatExtension.getUserInfoUnionID(
                     openId: accessTokenResp.openid!,
                     accessToken: accessTokenResp.accessToken!,
                   );
                   if (userInfoResp.isSuccessful) {
-                    _showTips('用户信息', '${userInfoResp.nickname} - ${userInfoResp.sex}');
+                    _showTips('用户信息',
+                        '${userInfoResp.nickname} - ${userInfoResp.sex}');
                   }
                 }
               }
@@ -159,7 +163,8 @@ class _HomeState extends State<Home> {
           ListTile(
             title: Text('图片分享'),
             onTap: () async {
-              final File file = await DefaultCacheManager().getSingleFile('https://www.baidu.com/img/bd_logo1.png?where=super');
+              final File file = await DefaultCacheManager().getSingleFile(
+                  'https://www.baidu.com/img/bd_logo1.png?where=super');
               await Wechat.shareImage(
                 scene: WechatScene.SESSION,
                 imageUri: Uri.file(file.path),
@@ -169,7 +174,8 @@ class _HomeState extends State<Home> {
           ListTile(
             title: Text('文件分享'),
             onTap: () async {
-              final File file = await DefaultCacheManager().getSingleFile('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
+              final File file = await DefaultCacheManager().getSingleFile(
+                  'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
               await Wechat.shareFile(
                 scene: WechatScene.SESSION,
                 title: '测试文件',
@@ -181,11 +187,14 @@ class _HomeState extends State<Home> {
           ListTile(
             title: Text('Emoji分享'),
             onTap: () async {
-              final File file = await DefaultCacheManager().getSingleFile('https://n.sinaimg.cn/tech/transform/695/w467h228/20191119/bf27-iipztfe9404360.gif');
-              final image.Image thumbnail = image.decodeImage(file.readAsBytesSync())!;
+              final File file = await DefaultCacheManager().getSingleFile(
+                  'https://n.sinaimg.cn/tech/transform/695/w467h228/20191119/bf27-iipztfe9404360.gif');
+              final image.Image thumbnail =
+                  image.decodeImage(file.readAsBytesSync())!;
               Uint8List thumbData = thumbnail.getBytes();
               if (thumbData.length > 32 * 1024) {
-                thumbData = Uint8List.fromList(image.encodeJpg(thumbnail, quality: 100 * 32 * 1024 ~/ thumbData.length));
+                thumbData = Uint8List.fromList(image.encodeJpg(thumbnail,
+                    quality: 100 * 32 * 1024 ~/ thumbData.length));
               }
               await Wechat.shareEmoji(
                 scene: WechatScene.SESSION,
@@ -298,15 +307,16 @@ class _QrauthState extends State<Qrauth> {
         actions: <Widget>[
           TextButton(
             onPressed: () async {
-              final WechatAccessTokenResp accessToken = await WechatExtension.getAccessToken(
+              final WechatAccessTokenResp accessToken =
+                  await WechatExtension.getAccessToken(
                 appId: WECHAT_APPID,
                 appSecret: WECHAT_APPSECRET,
               );
               if (kDebugMode) {
                 print(
                   'accessToken: ${accessToken.errorCode} - '
-                      '${accessToken.errorMsg} - '
-                      '${accessToken.accessToken}',
+                  '${accessToken.errorMsg} - '
+                  '${accessToken.accessToken}',
                 );
               }
               final WechatTicketResp ticket = await WechatExtension.getTicket(
@@ -315,8 +325,8 @@ class _QrauthState extends State<Qrauth> {
               if (kDebugMode) {
                 print(
                   'accessToken: ${ticket.errorCode} - '
-                      '${ticket.errorMsg} - '
-                      '${ticket.ticket}',
+                  '${ticket.errorMsg} - '
+                  '${ticket.ticket}',
                 );
               }
               await Wechat.startQrauth(

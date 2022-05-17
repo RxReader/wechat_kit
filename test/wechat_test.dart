@@ -10,7 +10,9 @@ import 'package:wechat_kit/src/wechat_constant.dart';
 import 'package:wechat_kit/src/wechat_kit_method_channel.dart';
 import 'package:wechat_kit/src/wechat_kit_platform_interface.dart';
 
-class MockWechatKitPlatform with MockPlatformInterfaceMixin implements WechatKitPlatform {
+class MockWechatKitPlatform
+    with MockPlatformInterfaceMixin
+    implements WechatKitPlatform {
   @override
   Future<void> registerApp({
     required String appId,

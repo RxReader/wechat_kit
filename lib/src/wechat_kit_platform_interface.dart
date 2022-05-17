@@ -19,7 +19,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
   ///
   /// Defaults to [MethodChannelWechatKit].
   static WechatKitPlatform get instance => _instance;
-  
+
   /// Platform-specific implementations should set this with their own
   /// platform-specific class that extends [WechatKitPlatform] when
   /// they register themselves.
@@ -32,7 +32,8 @@ abstract class WechatKitPlatform extends PlatformInterface {
     required String appId,
     required String? universalLink,
   }) {
-    throw UnimplementedError('registerApp({required appId, required universalLink}) has not been implemented.');
+    throw UnimplementedError(
+        'registerApp({required appId, required universalLink}) has not been implemented.');
   }
 
   Stream<BaseReq> reqStream() {
@@ -74,7 +75,8 @@ abstract class WechatKitPlatform extends PlatformInterface {
     String? state,
     int type = WechatAuthType.NORMAL,
   }) {
-    throw UnimplementedError('auth({required scope, state, type}) has not been implemented.');
+    throw UnimplementedError(
+        'auth({required scope, state, type}) has not been implemented.');
   }
 
   // --- 微信APP扫码登录
@@ -85,7 +87,8 @@ abstract class WechatKitPlatform extends PlatformInterface {
     required String noncestr,
     required String ticket,
   }) {
-    throw UnimplementedError('startQrauth({required appId, required scope, required noncestr, required ticket}) has not been implemented.');
+    throw UnimplementedError(
+        'startQrauth({required appId, required scope, required noncestr, required ticket}) has not been implemented.');
   }
 
   Future<void> stopQrauth() {
@@ -97,7 +100,8 @@ abstract class WechatKitPlatform extends PlatformInterface {
   Future<void> openUrl({
     required String url,
   }) {
-    throw UnimplementedError('openUrl({required url}) has not been implemented.');
+    throw UnimplementedError(
+        'openUrl({required url}) has not been implemented.');
   }
 
   Future<void> openRankList() {
@@ -108,7 +112,8 @@ abstract class WechatKitPlatform extends PlatformInterface {
     required int scene,
     required String text,
   }) {
-    throw UnimplementedError('shareText({required scene, required text}) has not been implemented.');
+    throw UnimplementedError(
+        'shareText({required scene, required text}) has not been implemented.');
   }
 
   Future<void> shareImage({
@@ -119,7 +124,8 @@ abstract class WechatKitPlatform extends PlatformInterface {
     Uint8List? imageData,
     Uri? imageUri,
   }) {
-    throw UnimplementedError('shareImage({required scene, title, description, thumbData, imageData, imageUri}) has not been implemented.');
+    throw UnimplementedError(
+        'shareImage({required scene, title, description, thumbData, imageData, imageUri}) has not been implemented.');
   }
 
   Future<void> shareFile({
@@ -131,7 +137,8 @@ abstract class WechatKitPlatform extends PlatformInterface {
     Uri? fileUri,
     String? fileExtension,
   }) {
-    throw UnimplementedError('shareFile({required scene, title, description, thumbData, fileData, fileUri, fileExtension}) has not been implemented.');
+    throw UnimplementedError(
+        'shareFile({required scene, title, description, thumbData, fileData, fileUri, fileExtension}) has not been implemented.');
   }
 
   Future<void> shareEmoji({
@@ -142,7 +149,8 @@ abstract class WechatKitPlatform extends PlatformInterface {
     Uint8List? emojiData,
     Uri? emojiUri,
   }) {
-    throw UnimplementedError('shareEmoji({required scene, title, description, required thumbData, emojiData, emojiUri}) has not been implemented.');
+    throw UnimplementedError(
+        'shareEmoji({required scene, title, description, required thumbData, emojiData, emojiUri}) has not been implemented.');
   }
 
   Future<void> shareMediaMusic({
@@ -155,7 +163,8 @@ abstract class WechatKitPlatform extends PlatformInterface {
     String? musicLowBandUrl,
     String? musicLowBandDataUrl,
   }) {
-    throw UnimplementedError('shareMediaMusic({required scene, title, description, thumbData, musicUrl, musicDataUrl, musicLowBandUrl, musicLowBandDataUrl}) has not been implemented.');
+    throw UnimplementedError(
+        'shareMediaMusic({required scene, title, description, thumbData, musicUrl, musicDataUrl, musicLowBandUrl, musicLowBandDataUrl}) has not been implemented.');
   }
 
   Future<void> shareVideo({
@@ -166,7 +175,8 @@ abstract class WechatKitPlatform extends PlatformInterface {
     String? videoUrl,
     String? videoLowBandUrl,
   }) {
-    throw UnimplementedError('shareVideo({required scene, title, description, thumbData, videoUrl, videoLowBandUrl}) has not been implemented.');
+    throw UnimplementedError(
+        'shareVideo({required scene, title, description, thumbData, videoUrl, videoLowBandUrl}) has not been implemented.');
   }
 
   Future<void> shareWebpage({
@@ -176,7 +186,8 @@ abstract class WechatKitPlatform extends PlatformInterface {
     Uint8List? thumbData,
     required String webpageUrl,
   }) {
-    throw UnimplementedError('shareWebpage({required scene, title, description, thumbData, required webpageUrl}) has not been implemented.');
+    throw UnimplementedError(
+        'shareWebpage({required scene, title, description, thumbData, required webpageUrl}) has not been implemented.');
   }
 
   Future<void> shareMiniProgram({
@@ -192,7 +203,8 @@ abstract class WechatKitPlatform extends PlatformInterface {
     int type = WechatMiniProgram.RELEASE,
     bool disableForward = false,
   }) {
-    throw UnimplementedError('shareMiniProgram({required scene, title, description, thumbData, required webpageUrl, required userName, path, hdImageData, withShareTicket, type, disableForward}) has not been implemented.');
+    throw UnimplementedError(
+        'shareMiniProgram({required scene, title, description, thumbData, required webpageUrl, required userName, path, hdImageData, withShareTicket, type, disableForward}) has not been implemented.');
   }
 
   Future<void> subscribeMsg({
@@ -200,7 +212,8 @@ abstract class WechatKitPlatform extends PlatformInterface {
     required String templateId,
     String? reserved,
   }) {
-    throw UnimplementedError('subscribeMsg({required scene, required templateId, reserved}) has not been implemented.');
+    throw UnimplementedError(
+        'subscribeMsg({required scene, required templateId, reserved}) has not been implemented.');
   }
 
   Future<void> launchMiniProgram({
@@ -208,14 +221,16 @@ abstract class WechatKitPlatform extends PlatformInterface {
     String? path,
     int type = WechatMiniProgram.RELEASE,
   }) {
-    throw UnimplementedError('launchMiniProgram({required userName, path, type}) has not been implemented.');
+    throw UnimplementedError(
+        'launchMiniProgram({required userName, path, type}) has not been implemented.');
   }
 
   Future<void> openCustomerServiceChat({
     required String corpId,
     required String url,
   }) {
-    throw UnimplementedError('openCustomerServiceChat({required corpId, required url}) has not been implemented.');
+    throw UnimplementedError(
+        'openCustomerServiceChat({required corpId, required url}) has not been implemented.');
   }
 
   Future<void> openBusinessView({
@@ -223,14 +238,16 @@ abstract class WechatKitPlatform extends PlatformInterface {
     String? query,
     String? extInfo,
   }) {
-    throw UnimplementedError('openBusinessView({required businessType, query, extInfo}) has not been implemented.');
+    throw UnimplementedError(
+        'openBusinessView({required businessType, query, extInfo}) has not been implemented.');
   }
 
   Future<void> openBusinessWebview({
     required int businessType,
     Map<String, String>? resultInfo,
   }) {
-    throw UnimplementedError('openBusinessWebview({required businessType, resultInfo}) has not been implemented.');
+    throw UnimplementedError(
+        'openBusinessWebview({required businessType, resultInfo}) has not been implemented.');
   }
 
   Future<void> pay({
@@ -242,6 +259,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
     required String timeStamp,
     required String sign,
   }) {
-    throw UnimplementedError('pay({required appId, required partnerId, required prepayId, required package, required nonceStr, required timeStamp, required sign}) has not been implemented.');
+    throw UnimplementedError(
+        'pay({required appId, required partnerId, required prepayId, required package, required nonceStr, required timeStamp, required sign}) has not been implemented.');
   }
 }

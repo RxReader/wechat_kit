@@ -17,13 +17,18 @@ import 'package:wechat_kit/src/wechat_kit_platform_interface.dart';
 class MethodChannelWechatKit extends WechatKitPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
-  late final MethodChannel methodChannel = const MethodChannel('v7lin.github.io/wechat_kit')..setMethodCallHandler(_handleMethod);
+  late final MethodChannel methodChannel =
+      const MethodChannel('v7lin.github.io/wechat_kit')
+        ..setMethodCallHandler(_handleMethod);
 
-  final StreamController<BaseReq> _reqStreamController = StreamController<BaseReq>.broadcast();
+  final StreamController<BaseReq> _reqStreamController =
+      StreamController<BaseReq>.broadcast();
 
-  final StreamController<BaseResp> _respStreamController = StreamController<BaseResp>.broadcast();
+  final StreamController<BaseResp> _respStreamController =
+      StreamController<BaseResp>.broadcast();
 
-  final StreamController<QrauthResp> _qrauthRespStreamController = StreamController<QrauthResp>.broadcast();
+  final StreamController<QrauthResp> _qrauthRespStreamController =
+      StreamController<QrauthResp>.broadcast();
 
   Future<dynamic> _handleMethod(MethodCall call) async {
     // 优先处理不需要参数的请求
@@ -32,7 +37,8 @@ class MethodChannelWechatKit extends WechatKitPlatform {
       return;
     }
 
-    final Map<String, dynamic> data = (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>();
+    final Map<String, dynamic> data =
+        (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>();
 
     switch (call.method) {
       // onReq
@@ -143,7 +149,9 @@ class MethodChannelWechatKit extends WechatKitPlatform {
     String? state,
     int type = WechatAuthType.NORMAL,
   }) {
-    assert((Platform.isAndroid && type == WechatAuthType.NORMAL) || (Platform.isIOS && <int>[WechatAuthType.NORMAL, WechatAuthType.WEB].contains(type)));
+    assert((Platform.isAndroid && type == WechatAuthType.NORMAL) ||
+        (Platform.isIOS &&
+            <int>[WechatAuthType.NORMAL, WechatAuthType.WEB].contains(type)));
     return methodChannel.invokeMethod<void>('auth', <String, dynamic>{
       'scope': scope.join(','), // Scope
       if (state != null) 'state': state,
@@ -233,11 +241,11 @@ class MethodChannelWechatKit extends WechatKitPlatform {
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
     assert(
-    (imageData != null && imageData.lengthInBytes <= 25 * 1024 * 1024) ||
-        (imageUri != null &&
-            imageUri.isScheme('file') &&
-            imageUri.toFilePath().length <= 10 * 1024 &&
-            File.fromUri(imageUri).lengthSync() <= 25 * 1024 * 1024),
+      (imageData != null && imageData.lengthInBytes <= 25 * 1024 * 1024) ||
+          (imageUri != null &&
+              imageUri.isScheme('file') &&
+              imageUri.toFilePath().length <= 10 * 1024 &&
+              File.fromUri(imageUri).lengthSync() <= 25 * 1024 * 1024),
     );
     return methodChannel.invokeMethod<void>(
       'shareImage',
@@ -266,11 +274,11 @@ class MethodChannelWechatKit extends WechatKitPlatform {
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
     assert(
-    (fileData != null && fileData.lengthInBytes <= 10 * 1024 * 1024) ||
-        (fileUri != null &&
-            fileUri.isScheme('file') &&
-            fileUri.toFilePath().length <= 10 * 1024 &&
-            File.fromUri(fileUri).lengthSync() <= 10 * 1024 * 1024),
+      (fileData != null && fileData.lengthInBytes <= 10 * 1024 * 1024) ||
+          (fileUri != null &&
+              fileUri.isScheme('file') &&
+              fileUri.toFilePath().length <= 10 * 1024 &&
+              File.fromUri(fileUri).lengthSync() <= 10 * 1024 * 1024),
     );
     assert(Platform.isAndroid || (fileExtension?.isNotEmpty ?? false));
     return methodChannel.invokeMethod<void>(
@@ -300,11 +308,11 @@ class MethodChannelWechatKit extends WechatKitPlatform {
     assert(description == null || description.length <= 1024);
     assert(thumbData.lengthInBytes <= 32 * 1024);
     assert(
-    (emojiData != null && emojiData.lengthInBytes <= 10 * 1024 * 1024) ||
-        (emojiUri != null &&
-            emojiUri.isScheme('file') &&
-            emojiUri.toFilePath().length <= 10 * 1024 &&
-            File.fromUri(emojiUri).lengthSync() <= 10 * 1024 * 1024),
+      (emojiData != null && emojiData.lengthInBytes <= 10 * 1024 * 1024) ||
+          (emojiUri != null &&
+              emojiUri.isScheme('file') &&
+              emojiUri.toFilePath().length <= 10 * 1024 &&
+              File.fromUri(emojiUri).lengthSync() <= 10 * 1024 * 1024),
     );
     return methodChannel.invokeMethod<void>(
       'shareEmoji',
@@ -334,8 +342,8 @@ class MethodChannelWechatKit extends WechatKitPlatform {
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
     assert(
-    (musicUrl != null && musicUrl.length <= 10 * 1024) ||
-        (musicLowBandUrl != null && musicLowBandUrl.length <= 10 * 1024),
+      (musicUrl != null && musicUrl.length <= 10 * 1024) ||
+          (musicLowBandUrl != null && musicLowBandUrl.length <= 10 * 1024),
     );
     return methodChannel.invokeMethod<void>(
       'shareMusic',
@@ -346,8 +354,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
         if (thumbData != null) 'thumbData': thumbData,
         if (musicUrl != null) 'musicUrl': musicUrl,
         if (musicDataUrl != null) 'musicDataUrl': musicDataUrl,
-        if (musicLowBandUrl != null)
-          'musicLowBandUrl': musicLowBandUrl,
+        if (musicLowBandUrl != null) 'musicLowBandUrl': musicLowBandUrl,
         if (musicLowBandDataUrl != null)
           'musicLowBandDataUrl': musicLowBandDataUrl,
       },
@@ -367,8 +374,8 @@ class MethodChannelWechatKit extends WechatKitPlatform {
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
     assert(
-    (videoUrl != null && videoUrl.length <= 10 * 1024) ||
-        (videoLowBandUrl != null && videoLowBandUrl.length <= 10 * 1024),
+      (videoUrl != null && videoUrl.length <= 10 * 1024) ||
+          (videoLowBandUrl != null && videoLowBandUrl.length <= 10 * 1024),
     );
     return methodChannel.invokeMethod<void>(
       'shareVideo',
@@ -378,8 +385,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
         if (description != null) 'description': description,
         if (thumbData != null) 'thumbData': thumbData,
         if (videoUrl != null) 'videoUrl': videoUrl,
-        if (videoLowBandUrl != null)
-          'videoLowBandUrl': videoLowBandUrl,
+        if (videoLowBandUrl != null) 'videoLowBandUrl': videoLowBandUrl,
       },
     );
   }
