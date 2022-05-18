@@ -2,6 +2,7 @@
     package="io.github.v7lin.wechat_kit_example">
    <application
         android:label="wechat_kit_example"
+        android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
