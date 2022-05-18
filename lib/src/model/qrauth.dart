@@ -18,7 +18,7 @@ abstract class QrauthResp {
 class GotQrcodeResp extends QrauthResp {
   const GotQrcodeResp({
     required this.imageData,
-  }) : super();
+  });
 
   factory GotQrcodeResp.fromJson(Map<String, dynamic> json) =>
       _$GotQrcodeRespFromJson(json);
@@ -50,7 +50,7 @@ class FinishResp extends QrauthResp {
   const FinishResp({
     required this.errorCode,
     this.authCode,
-  }) : super();
+  });
 
   factory FinishResp.fromJson(Map<String, dynamic> json) =>
       _$FinishRespFromJson(json);
