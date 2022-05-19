@@ -28,6 +28,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
     _instance = instance;
   }
 
+  /// 向微信注册应用
   Future<void> registerApp({
     required String appId,
     required String? universalLink,
@@ -36,40 +37,49 @@ abstract class WechatKitPlatform extends PlatformInterface {
         'registerApp({required appId, required universalLink}) has not been implemented.');
   }
 
+  ///
   Stream<BaseReq> reqStream() {
     throw UnimplementedError('reqStream() has not been implemented.');
   }
 
+  ///
   Stream<BaseResp> respStream() {
     throw UnimplementedError('respStream() has not been implemented.');
   }
 
+  /// 扫码登录
   Stream<QrauthResp> qrauthRespStream() {
     throw UnimplementedError('qrauthRespStream() has not been implemented.');
   }
 
+  /// 微信回调 - 冷启
   Future<void> handleInitialWXReq() {
     throw UnimplementedError('handleInitialWXReq() has not been implemented.');
   }
 
+  /// 检测微信是否已安装
   Future<bool> isInstalled() {
     throw UnimplementedError('isInstalled() has not been implemented.');
   }
 
+  /// 判断当前微信的版本是否支持OpenApi
   Future<bool> isSupportApi() {
     throw UnimplementedError('isSupportApi() has not been implemented.');
   }
 
+  /// 判断当前微信的版本是否支持分享微信状态功能
   Future<bool> isSupportStateApi() {
     throw UnimplementedError('isSupportStateApi() has not been implemented.');
   }
 
+  /// 打开微信
   Future<bool> openWechat() {
     throw UnimplementedError('openWechat() has not been implemented.');
   }
 
   // --- 微信APP授权登录
 
+  /// 授权登录
   Future<void> auth({
     required List<String> scope,
     String? state,
@@ -81,6 +91,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
 
   // --- 微信APP扫码登录
 
+  /// 调用微信 API 获得 ticket，开始扫码登录
   Future<void> startQrauth({
     required String appId,
     required List<String> scope,
@@ -91,12 +102,14 @@ abstract class WechatKitPlatform extends PlatformInterface {
         'startQrauth({required appId, required scope, required noncestr, required ticket}) has not been implemented.');
   }
 
+  /// 暂停扫码登录请求
   Future<void> stopQrauth() {
     throw UnimplementedError('stopQrauth() has not been implemented.');
   }
 
   //
 
+  /// 打开指定网页
   Future<void> openUrl({
     required String url,
   }) {
@@ -104,10 +117,12 @@ abstract class WechatKitPlatform extends PlatformInterface {
         'openUrl({required url}) has not been implemented.');
   }
 
+  /// 打开硬件排行榜
   Future<void> openRankList() {
     throw UnimplementedError('openRankList() has not been implemented.');
   }
 
+  /// 分享 - 文本
   Future<void> shareText({
     required int scene,
     required String text,
@@ -116,6 +131,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
         'shareText({required scene, required text}) has not been implemented.');
   }
 
+  /// 分享 - 图片
   Future<void> shareImage({
     required int scene,
     String? title,
@@ -128,6 +144,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
         'shareImage({required scene, title, description, thumbData, imageData, imageUri}) has not been implemented.');
   }
 
+  /// 分享 - 文件
   Future<void> shareFile({
     required int scene,
     String? title,
@@ -141,6 +158,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
         'shareFile({required scene, title, description, thumbData, fileData, fileUri, fileExtension}) has not been implemented.');
   }
 
+  /// 分享 - Emoji/GIF
   Future<void> shareEmoji({
     required int scene,
     String? title,
@@ -153,6 +171,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
         'shareEmoji({required scene, title, description, required thumbData, emojiData, emojiUri}) has not been implemented.');
   }
 
+  /// 分享 - 音乐
   Future<void> shareMediaMusic({
     required int scene,
     String? title,
@@ -167,6 +186,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
         'shareMediaMusic({required scene, title, description, thumbData, musicUrl, musicDataUrl, musicLowBandUrl, musicLowBandDataUrl}) has not been implemented.');
   }
 
+  /// 分享 - 视频
   Future<void> shareVideo({
     required int scene,
     String? title,
@@ -179,6 +199,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
         'shareVideo({required scene, title, description, thumbData, videoUrl, videoLowBandUrl}) has not been implemented.');
   }
 
+  /// 分享 - 网页
   Future<void> shareWebpage({
     required int scene,
     String? title,
@@ -190,6 +211,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
         'shareWebpage({required scene, title, description, thumbData, required webpageUrl}) has not been implemented.');
   }
 
+  /// 分享 - 小程序 - 目前只支持分享到会话
   Future<void> shareMiniProgram({
     required int scene,
     String? title,
@@ -207,6 +229,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
         'shareMiniProgram({required scene, title, description, thumbData, required webpageUrl, required userName, path, hdImageData, withShareTicket, type, disableForward}) has not been implemented.');
   }
 
+  /// 一次性订阅消息
   Future<void> subscribeMsg({
     required int scene,
     required String templateId,
@@ -216,6 +239,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
         'subscribeMsg({required scene, required templateId, reserved}) has not been implemented.');
   }
 
+  /// 打开小程序
   Future<void> launchMiniProgram({
     required String userName,
     String? path,
@@ -225,6 +249,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
         'launchMiniProgram({required userName, path, type}) has not been implemented.');
   }
 
+  /// 打开微信客服
   Future<void> openCustomerServiceChat({
     required String corpId,
     required String url,
@@ -233,6 +258,10 @@ abstract class WechatKitPlatform extends PlatformInterface {
         'openCustomerServiceChat({required corpId, required url}) has not been implemented.');
   }
 
+  /// 调起支付分
+  ///  * 免确认模式：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter6_1_7.shtml
+  ///  * 需确认授权：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter6_1_11.shtml
+  ///  * 拉起小程序：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter6_1_23.shtml
   Future<void> openBusinessView({
     required String businessType,
     String? query,
@@ -242,6 +271,9 @@ abstract class WechatKitPlatform extends PlatformInterface {
         'openBusinessView({required businessType, query, extInfo}) has not been implemented.');
   }
 
+  /// APP纯签约
+  /// * APP纯签约-预签约接口：https://pay.weixin.qq.com/wiki/doc/api/xiaowei.php?chapter=19_5
+  /// * APP纯签约-预签约接口：https://pay.weixin.qq.com/wiki/doc/api/pap_jt_v2.php?chapter=19_5&index=2_2
   Future<void> openBusinessWebview({
     required int businessType,
     Map<String, String>? resultInfo,
@@ -250,6 +282,13 @@ abstract class WechatKitPlatform extends PlatformInterface {
         'openBusinessWebview({required businessType, resultInfo}) has not been implemented.');
   }
 
+  /// 支付
+  ///
+  /// 参数说明：https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_12&index=2
+  ///
+  /// * 默认包含支付，参考 https://github.com/RxReader/wechat_kit/blob/master/example/ios/Podfile
+  ///   修改 `$WechatKitSubspec = 'no_pay'` 可切换为不包含支付
+  /// * 不含「iOS 支付」调用会抛出 [MissingPluginException]
   Future<void> pay({
     required String appId,
     required String partnerId,

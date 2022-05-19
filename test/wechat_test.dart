@@ -270,6 +270,6 @@ void main() {
     final MockWechatKitPlatform fakePlatform = MockWechatKitPlatform();
     WechatKitPlatform.instance = fakePlatform;
 
-    expect(await Wechat.isInstalled(), true);
+    expect(await Wechat.instance.isInstalled(), true);
   });
 }
