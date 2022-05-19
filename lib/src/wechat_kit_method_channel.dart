@@ -33,7 +33,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
   Future<dynamic> _handleMethod(MethodCall call) async {
     // 优先处理不需要参数的请求
     if (call.method == 'onAuthQrcodeScanned') {
-      _qrauthRespStreamController.add(const QrcodeScannedResp());
+      _qrauthRespStreamController.add(QrcodeScannedResp());
       return;
     }
 
