@@ -10,46 +10,20 @@ jobs:
       matrix:
         os: [macos-latest]
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v2
-        with:
-          distribution: 'temurin'
-          java-version: '11'
-          cache: 'gradle'
-      - uses: subosito/flutter-action@v1
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-      - run: dart --version
+      - name: Run ${{ github.repository_owner }}/clang-format@shell
+        run: |
+          brew install clang-format
+      - run: clang-format -style=file -i ios/Classes/*.h ios/Classes/*.m --dry-run
       - run: flutter --version
       - run: flutter pub get
       - run: flutter format --dry-run --set-exit-if-changed .
       - run: flutter pub publish --dry-run
       - run: flutter analyze lib example/lib
       - run: cd example; flutter build ios --no-codesign
-
-  build_ios_no_pay:
-    name: Build iOS NoPay on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [macos-latest]
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v2
-        with:
-          distribution: 'temurin'
-          java-version: '11'
-          cache: 'gradle'
-      - uses: subosito/flutter-action@v1
-        with:
-          channel: 'stable'
-      - run: dart --version
-      - run: flutter --version
-      - run: flutter pub get
-      - run: flutter format --dry-run --set-exit-if-changed .
-      - run: flutter pub publish --dry-run
-      - run: flutter analyze lib example/lib
-      - run: cd example; sed -i.bak 's/# $WechatKitSubspec/$WechatKitSubspec/' ./ios/Podfile; flutter build ios --no-codesign
 
   build_android:
     name: Build Android on ${{ matrix.os }}
@@ -58,20 +32,20 @@ jobs:
       matrix:
         os: [ubuntu-latest]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-java@v2
         with:
-          distribution: 'temurin'
+          distribution: 'zulu'
           java-version: '11'
-          cache: 'gradle'
-      - uses: subosito/flutter-action@v1
+      - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-      - run: dart --version
+      - name: Run ${{ github.repository_owner }}/install-ndk@shell
+        run: |
+          sudo echo "y" | sudo $ANDROID_HOME/tools/bin/sdkmanager "ndk;21.1.6352462"
       - run: flutter --version
       - run: flutter pub get
       - run: flutter format --dry-run --set-exit-if-changed .
       - run: flutter pub publish --dry-run
       - run: flutter analyze lib example/lib
-      - run: sudo echo "y" | sudo $ANDROID_HOME/tools/bin/sdkmanager "ndk;21.1.6352462"
       - run: cd example; flutter build apk --debug

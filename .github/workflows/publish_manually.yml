@@ -7,10 +7,26 @@ jobs:
     name: Publish Manually
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: sakebook/actions-flutter-pub-publisher@v1.4.0
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
         with:
-          credential: ${{ secrets.CREDENTIAL_JSON }}
-          flutter_package: true
-          skip_test: true
-          dry_run: false
+          channel: 'stable'
+      - name: Run inject credentials
+        env:
+          CREDENTIALS: ${{ secrets.CREDENTIALS_JSON }}
+        run: |
+          if [ -z $PUB_CACHE ];then
+            PUB_CACHE=~/.pub-cache
+          fi
+          mkdir -p $PUB_CACHE
+          echo $CREDENTIALS > $PUB_CACHE/credentials.json
+      - run: flutter --version
+      - run: flutter pub get
+      - run: flutter format --dry-run --set-exit-if-changed .
+      - run: echo "y" | flutter pub publish
+      - name: Run update credentials
+        env:
+          UPDATE_SECRETS_PAT_TOKEN: ${{ secrets.UPDATE_SECRETS_PAT_TOKEN }}
+        run: |
+          gh auth login --with-token <<< $UPDATE_SECRETS_PAT_TOKEN
+          gh secret set CREDENTIALS_JSON < $PUB_CACHE/credentials.json
