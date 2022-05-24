@@ -13,7 +13,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-      - name: Run inject credentials
+      - name: Run ${{ github.repository_owner }}/inject-credentials@shell
         env:
           CREDENTIALS: ${{ secrets.CREDENTIALS_JSON }}
         run: |
@@ -26,7 +26,7 @@ jobs:
       - run: flutter pub get
       - run: flutter format --dry-run --set-exit-if-changed .
       - run: echo "y" | flutter pub publish
-      - name: Run update credentials
+      - name: Run ${{ github.repository_owner }}/update-credentials@shell
         env:
           UPDATE_SECRETS_PAT_TOKEN: ${{ secrets.UPDATE_SECRETS_PAT_TOKEN }}
         run: |
