@@ -14,7 +14,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-      - name: Run ${{ github.repository_owner }}/clang-format@shell
+      - name: Run llvm/clang-format@shell
         run: |
           brew install clang-format
       - run: clang-format -style=file -i ios/Classes/*.h ios/Classes/*.m --dry-run
@@ -40,7 +40,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-      - name: Run ${{ github.repository_owner }}/install-ndk@shell
+      - name: Run android/install-ndk@shell
         run: |
           sudo echo "y" | sudo $ANDROID_HOME/tools/bin/sdkmanager "ndk;21.1.6352462"
       - run: flutter --version
