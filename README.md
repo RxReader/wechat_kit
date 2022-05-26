@@ -1,6 +1,6 @@
 # wechat_kit
 
-[![Pub Package](https://img.shields.io/pub/v/wechat_kit.svg)](https://pub.flutter-io.cn/packages/wechat_kit)
+[![Pub Package](https://img.shields.io/pub/v/wechat_kit.svg)](https://pub.dev/packages/wechat_kit)
 [![License](https://img.shields.io/github/license/RxReader/wechat_kit)](https://github.com/rxreader/wechat_kit/blob/master/LICENSE)
 
 Flutter 版微信登录/分享/支付 SDK。
