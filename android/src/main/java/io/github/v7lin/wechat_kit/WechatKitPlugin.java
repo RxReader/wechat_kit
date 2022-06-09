@@ -186,6 +186,7 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, PluginRegi
                 // 一次性订阅消息
                 if (resp.errCode == BaseResp.ErrCode.ERR_OK) {
                     final SubscribeMessage.Resp subscribeMsgResp = (SubscribeMessage.Resp) resp;
+                    map.put("openId", subscribeMsgResp.openId);
                     map.put("templateId", subscribeMsgResp.templateID);
                     map.put("scene", subscribeMsgResp.scene);
                     map.put("action", subscribeMsgResp.action);

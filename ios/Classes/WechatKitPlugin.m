@@ -456,6 +456,8 @@ typedef void (^WechatKitWXReqRunnable)(void);
         // 一次性订阅消息
         if (resp.errCode == WXSuccess) {
             WXSubscribeMsgResp *subscribeMsgResp = (WXSubscribeMsgResp *)resp;
+            [dictionary setValue:subscribeMsgResp.openId
+                          forKey:@"openId"];
             [dictionary setValue:subscribeMsgResp.templateId
                           forKey:@"templateId"];
             [dictionary

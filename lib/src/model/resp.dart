@@ -101,6 +101,7 @@ class SubscribeMsgResp extends BaseResp {
   const SubscribeMsgResp({
     required super.errorCode,
     super.errorMsg,
+    this.openId,
     this.templateId,
     this.scene,
     this.action,
@@ -110,6 +111,7 @@ class SubscribeMsgResp extends BaseResp {
   factory SubscribeMsgResp.fromJson(Map<String, dynamic> json) =>
       _$SubscribeMsgRespFromJson(json);
 
+  final String? openId;
   final String? templateId;
   final int? scene;
   final String? action;
