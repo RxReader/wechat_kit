@@ -50,6 +50,7 @@ SubscribeMsgResp _$SubscribeMsgRespFromJson(Map<String, dynamic> json) =>
     SubscribeMsgResp(
       errorCode: json['errorCode'] as int? ?? 0,
       errorMsg: json['errorMsg'] as String?,
+      openId: json['openId'] as String?,
       templateId: json['templateId'] as String?,
       scene: json['scene'] as int?,
       action: json['action'] as String?,
@@ -60,6 +61,7 @@ Map<String, dynamic> _$SubscribeMsgRespToJson(SubscribeMsgResp instance) =>
     <String, dynamic>{
       'errorCode': instance.errorCode,
       'errorMsg': instance.errorMsg,
+      'openId': instance.openId,
       'templateId': instance.templateId,
       'scene': instance.scene,
       'action': instance.action,
