@@ -3,6 +3,9 @@
 # Run `pod lib lint wechat_kit.podspec` to validate before publishing.
 #
 
+pubspec = YAML.load_file(File.join('..', 'pubspec.yaml'))
+library_version = pubspec['version'].gsub('+', '-')
+
 if defined?($WechatKitSubspec)
   wechat_kit_subspec = $WechatKitSubspec
 else
@@ -11,7 +14,7 @@ end
 
 Pod::Spec.new do |s|
   s.name             = 'wechat_kit'
-  s.version          = '4.0.1'
+  s.version          = library_version
   s.summary          = 'The Flutter plugin for WeChat SDKs.'
   s.description      = <<-DESC
 A powerful Flutter plugin allowing developers to auth/pay/share with native Android & iOS WeChat SDKs.
