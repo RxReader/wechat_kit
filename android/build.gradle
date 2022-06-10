@@ -1,9 +1,9 @@
-String library_version = "UNKNOWN"
 File pubspec = new File(project.projectDir.parentFile,  'pubspec.yaml')
 String yaml = pubspec.text
 // Using \s*['|"]?([^\n|'|"]*)['|"]? to extract version number.
 java.util.regex.Matcher versionMatcher = java.util.regex.Pattern.compile("^version:\\s*['|\"]?([^\\n|'|\"]*)['|\"]?\$", java.util.regex.Pattern.MULTILINE).matcher(yaml)
-if (versionMatcher.find()) library_version = versionMatcher.group(1).replaceAll("\\+", "-")
+versionMatcher.find()
+String library_version = versionMatcher.group(1).replaceAll("\\+", "-")
 
 group 'io.github.v7lin.wechat_kit'
 version library_version
