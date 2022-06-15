@@ -45,7 +45,11 @@ jobs:
       - run: flutter format --dry-run --set-exit-if-changed .
       - run: flutter pub publish --dry-run
       - run: flutter analyze lib example/lib
-      - run: cd example; sed -i.bak 's/# $WechatKitSubspec/$WechatKitSubspec/' ./ios/Podfile; flutter build ios --no-codesign
+      - run: |
+          cd example
+          sed -i.bak0 's/#wechat_kit/wechat_kit/' pubspec.yaml
+          sed -i.bak1 's/#  ios: no_pay/  ios: no_pay/' pubspec.yaml
+          flutter build ios --no-codesign
 
   build_android:
     name: Build Android on ${{ matrix.os }}
@@ -68,4 +72,6 @@ jobs:
       - run: flutter format --dry-run --set-exit-if-changed .
       - run: flutter pub publish --dry-run
       - run: flutter analyze lib example/lib
-      - run: cd example; flutter build apk --debug
+      - run: |
+          cd example
+          flutter build apk --debug

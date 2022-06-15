@@ -94,9 +94,19 @@ dependencies:
   wechat_kit: ^${latestTag}
 ```
 
-若需要不包含支付的 iOS SDK，请修改项目下的 `ios/Podfile`：
+若需要不包含支付的 iOS SDK
+
+* wechat_kit: ^4.0.2 请修改项目下的 `pubspec.yaml`
+
+```diff
++wechat_kit:
++  ios: no_pay # 默认 pay
+```
+
+* wechat_kit: ^3.2.0/^4.0.0 请修改项目下的 `ios/Podfile`：
 
 ```diff 
+# 5.x.y 版本将删除
 + $WechatKitSubspec = 'no_pay'
 ```
 

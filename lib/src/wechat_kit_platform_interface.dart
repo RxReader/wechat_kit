@@ -286,8 +286,8 @@ abstract class WechatKitPlatform extends PlatformInterface {
   ///
   /// 参数说明：https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_12&index=2
   ///
-  /// * 默认包含支付，参考 https://github.com/RxReader/wechat_kit/blob/master/example/ios/Podfile
-  ///   修改 `$WechatKitSubspec = 'no_pay'` 可切换为不包含支付
+  /// * 默认包含支付，参考 https://github.com/RxReader/wechat_kit/blob/master/example/pubspec.yaml
+  ///   修改 `wechat_kit.ios = no_pay` 可切换为不包含支付
   /// * 不含「iOS 支付」调用会抛出 [MissingPluginException]
   Future<void> pay({
     required String appId,

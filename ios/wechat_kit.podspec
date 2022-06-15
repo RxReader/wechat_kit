@@ -6,11 +6,25 @@
 pubspec = YAML.load_file(File.join('..', 'pubspec.yaml'))
 library_version = pubspec['version'].gsub('+', '-')
 
-if defined?($WechatKitSubspec)
-  wechat_kit_subspec = $WechatKitSubspec
+calling_dir = File.dirname(__FILE__)
+flutter_project_dir = calling_dir.slice(0..(calling_dir.index('/ios/.symlinks')))
+# cfg = YAML.load_file(File.join(File.expand_path('../../../../..', File.dirname(__FILE__)), 'pubspec.yaml'))
+cfg = YAML.load_file(File.join(flutter_project_dir, 'pubspec.yaml'))
+if cfg['wechat_kit']
+    if cfg['wechat_kit']['ios'] == 'no_pay'
+        wechat_kit_subspec = 'no_pay'
+    else
+        wechat_kit_subspec = 'pay'
+    end
 else
-  wechat_kit_subspec = 'pay'
+    # 5.x.y 版本将删除
+    if defined?($WechatKitSubspec)
+      wechat_kit_subspec = $WechatKitSubspec
+    else
+      wechat_kit_subspec = 'pay'
+    end
 end
+Pod::UI.puts "wechatsdk #{wechat_kit_subspec}"
 
 Pod::Spec.new do |s|
   s.name             = 'wechat_kit'
