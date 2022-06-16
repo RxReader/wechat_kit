@@ -29,7 +29,7 @@ Flutter 版微信登录/分享/支付 SDK。
 
 ## FEATURE
 
-* 通过配置 pubspec.yaml 和 cli 抹平 Android/iOS 平台的复杂配置
+* 5.x.y 通过配置 pubspec.yaml 和 cli 抹平 Android/iOS 平台的复杂配置
 
 ## 开始使用
 
