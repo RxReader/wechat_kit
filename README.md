@@ -27,6 +27,10 @@ Flutter 版微信登录/分享/支付 SDK。
 * [微信支付](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419317780&token=&lang=zh_CN)
 * [Universal Links](https://developer.apple.com/documentation/uikit/inter-process_communication/allowing_apps_and_websites_to_link_to_your_content)
 
+## FEATURE
+
+* 5.x.y 通过配置 pubspec.yaml 和 cli 抹平 Android/iOS 平台的复杂配置
+
 ## 开始使用
 
 ### Android
