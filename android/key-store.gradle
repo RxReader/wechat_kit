@@ -1,0 +1,100 @@
+//
+//使用方法
+//
+//apply from: 'key-store.gradle'
+//
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.1.2'
+        classpath 'com.squareup.okio:okio:1.17.2'
+    }
+}
+
+android {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+apply plugin: KeyStorePlugin
+
+class KeyStorePlugin implements Plugin<Project> {
+
+    @Override
+    void apply(Project target) {
+        target.plugins.withId('com.android.application') {
+            target.android.applicationVariants.whenObjectAdded { variant ->
+                variant.assemble.doLast {
+                    keyStore(target, variant)
+                }
+
+                target.tasks.findByPath("bundle${variant.name.capitalize()}").doLast {
+                    keyStore(target, variant)
+                }
+            }
+        }
+        target.afterEvaluate {
+            if (!target.plugins.hasPlugin('com.android.application')) {
+                target.logger.warn("The Android Gradle Plugin was not applied. Gradle KeyStore will not be configured.")
+            }
+        }
+    }
+
+    void keyStore(Project target, variant) {
+        println '--- KeyStore ---'
+
+        File storeFile = variant.signingConfig.storeFile
+        String storePassword = variant.signingConfig.storePassword
+        String keyAlias = variant.signingConfig.keyAlias
+        String keyPassword = variant.signingConfig.keyPassword
+        //
+        java.security.KeyStore store = java.security.KeyStore.getInstance(java.security.KeyStore.getDefaultType())
+        store.load(new FileInputStream(storeFile), storePassword.toCharArray())
+        java.security.Key key = store.getKey(keyAlias, keyPassword.toCharArray())
+        java.security.cert.X509Certificate certificate = (java.security.cert.X509Certificate) store.getCertificate(keyAlias)
+        okio.ByteString string = okio.ByteString.of(certificate.getEncoded())
+        //
+        println "Alias name: " + keyAlias
+        println "Creation date: " + store.getCreationDate(keyAlias)
+        println "Owner: " + certificate.getSubjectDN().toString()
+        println "Issuer: " + certificate.getIssuerDN().toString()
+        println "Serial number: " + certificate.getSerialNumber().toString(16)
+        println "Valid from: " + certificate.getNotBefore().toString() + " until: " + certificate.getNotAfter().toString()
+        //
+        println "Certificate fingerprints:"
+        println "MD5: " + fingerprints(string.md5())
+        println "SHA1: " + fingerprints(string.sha1())
+        println "SHA256: " + fingerprints(string.sha256())
+        //
+        println "Certificate digest:"
+        println "MD5: " + string.md5().hex()
+        println "SHA1: " + string.sha1().hex()
+        println "SHA256: " + string.sha256().hex()
+        //
+        println "Certificate Third-part:"
+        println "Wechat/Weibo/Alipay MD5 HEX: " + string.md5().hex()
+        println "Firebase SHA1 HEX: " + fingerprints(string.sha1())
+        println "Facebook SHA1 BASE64: " + string.sha1().base64()
+
+        println '--- KeyStore ---'
+    }
+
+    static final char[] HEX_DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
+
+    String fingerprints(okio.ByteString string) {
+        final StringBuilder builder = new StringBuilder()
+        final byte[] data = string.toByteArray()
+        for (byte b : data) {
+            builder.append(HEX_DIGITS[(b >> 4) & 0xf])
+            builder.append(HEX_DIGITS[b & 0xf])
+            builder.append(":")
+        }
+        return builder.delete(builder.length() - 1, builder.length()).toString();
+    }
+}

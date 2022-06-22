@@ -36,21 +36,34 @@ Flutter 版微信登录/分享/支付 SDK。
 # 混淆已打入 Library，随 Library 引用，自动添加到 apk 打包混淆
 ```
 
-#### 获取 Android 微信签名信息
+* 获取 Android 签名信息
 
-非官方方法 -> 反编译 Gen_Signature_Android2.apk 所得
-
-命令：
-
-```shell
-keytool -list -v -keystore ${your_keystore_path} -storepass ${your_keystore_password} 2>/dev/null | grep -p 'MD5:.*' -o | sed 's/MD5://' | sed 's/ //g' | sed 's/://g' | awk '{print tolower($0)}'
+```groovy
+// android/app/build.gradle
+apply from: "${project(":wechat_kit").projectDir}/key-store.gradle"
 ```
 
-示例：
-
-```shell
-keytool -list -v -keystore example/android/app/infos/dev.jks -storepass 123456 2>/dev/null | grep -p 'MD5:.*' -o | sed 's/MD5://' | sed 's/ //g' | sed 's/://g' | awk '{print tolower($0)}'
-> 28424130a4416d519e00946651d53a46
+```
+--- KeyStore ---
+Alias name: dev
+Creation date: Fri May 24 17:26:21 CST 2019
+Owner: CN=lin
+Issuer: CN=lin
+Serial number: 77dcb7d8
+Valid from: Fri May 24 17:26:21 CST 2019 until: Sun Apr 30 17:26:21 CST 2119
+Certificate fingerprints:
+MD5: 28:42:41:30:A4:41:6D:51:9E:00:94:66:51:D5:3A:46
+SHA1: C9:A9:3A:28:6D:1A:8A:0A:F1:5A:DB:76:45:97:6F:C6:30:8A:FA:B9
+SHA256: EA:3A:9B:EE:3C:8B:6C:96:31:5F:B9:09:52:58:52:05:75:E2:2A:6D:5A:C2:C0:7F:07:4F:EA:90:31:DB:58:D8
+Certificate digest:
+MD5: 28424130a4416d519e00946651d53a46
+SHA1: c9a93a286d1a8a0af15adb7645976fc6308afab9
+SHA256: ea3a9bee3c8b6c96315fb9095258520575e22a6d5ac2c07f074fea9031db58d8
+Certificate Third-part:
+Wechat/Weibo/Alipay MD5 HEX: 28424130a4416d519e00946651d53a46
+Firebase SHA1 HEX: C9:A9:3A:28:6D:1A:8A:0A:F1:5A:DB:76:45:97:6F:C6:30:8A:FA:B9
+Facebook SHA1 BASE64: yak6KG0aigrxWtt2RZdvxjCK+rk=
+--- KeyStore ---
 ```
 
 ### iOS

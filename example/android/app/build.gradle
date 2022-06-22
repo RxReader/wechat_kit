@@ -24,6 +24,7 @@ if (flutterVersionName == null) {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+apply from: "${project(":wechat_kit").projectDir}/key-store.gradle"
 
 android {
     compileSdkVersion flutter.compileSdkVersion
