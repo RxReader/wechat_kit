@@ -49,12 +49,22 @@ class KeyStorePlugin implements Plugin<Project> {
     void keyStore(Project target, variant) {
         println '--- KeyStore ---'
 
+//        def certificateInfo = com.android.ide.common.signing.KeystoreHelper.getCertificateInfo(
+//                variant.signingConfig.storeType,
+//                variant.signingConfig.storeFile,
+//                variant.signingConfig.storePassword,
+//                variant.signingConfig.keyPassword,
+//                variant.signingConfig.keyAlias
+//        );
+//        java.security.cert.X509Certificate certificate = certificateInfo.getCertificate()
+
+        String storeType = variant.signingConfig.storeType
         File storeFile = variant.signingConfig.storeFile
         String storePassword = variant.signingConfig.storePassword
         String keyAlias = variant.signingConfig.keyAlias
         String keyPassword = variant.signingConfig.keyPassword
         //
-        java.security.KeyStore store = java.security.KeyStore.getInstance(java.security.KeyStore.getDefaultType())
+        java.security.KeyStore store = java.security.KeyStore.getInstance(storeType != null ? storeType : java.security.KeyStore.getDefaultType())
         store.load(new FileInputStream(storeFile), storePassword.toCharArray())
         java.security.Key key = store.getKey(keyAlias, keyPassword.toCharArray())
         java.security.cert.X509Certificate certificate = (java.security.cert.X509Certificate) store.getCertificate(keyAlias)
