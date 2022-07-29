@@ -9,11 +9,12 @@ Flutter 版微信登录/分享/支付 SDK。
 
 ## 相关工具
 
-* [flutter版微信SDK](https://github.com/rxreader/wechat_kit)
-* [flutter版腾讯(QQ)SDK](https://github.com/rxreader/tencent_kit)
-* [flutter版新浪微博SDK](https://github.com/rxreader/weibo_kit)
-* [flutter版支付宝SDK](https://github.com/rxreader/alipay_kit)
-* [flutter版walle渠道打包工具](https://github.com/rxreader/walle_kit)
+* [Flutter版微信SDK](https://github.com/RxReader/wechat_kit)
+* [Flutter版腾讯(QQ)SDK](https://github.com/RxReader/tencent_kit)
+* [Flutter版新浪微博SDK](https://github.com/RxReader/weibo_kit)
+* [Flutter版支付宝SDK](https://github.com/RxReader/alipay_kit)
+* [Flutter版深度链接](https://github.com/RxReader/link_kit)
+* [Flutter版walle渠道打包工具](https://github.com/RxReader/walle_kit)
 
 ## Dart/Flutter Pub 私服
 
