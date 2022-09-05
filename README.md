@@ -50,7 +50,7 @@ Flutter 版微信登录/分享/支付 SDK。
 apply from: "${project(":wechat_kit").projectDir}/key-store.gradle"
 ```
 
-```
+```diff
 --- KeyStore ---
 Alias name: dev
 Creation date: Fri May 24 17:26:21 CST 2019
@@ -66,10 +66,10 @@ Certificate digest:
 MD5: 28424130a4416d519e00946651d53a46
 SHA1: c9a93a286d1a8a0af15adb7645976fc6308afab9
 SHA256: ea3a9bee3c8b6c96315fb9095258520575e22a6d5ac2c07f074fea9031db58d8
-Certificate Third-part:
-Wechat/Weibo/Alipay MD5 HEX: 28424130a4416d519e00946651d53a46
-Firebase SHA1 HEX: C9:A9:3A:28:6D:1A:8A:0A:F1:5A:DB:76:45:97:6F:C6:30:8A:FA:B9
-Facebook SHA1 BASE64: yak6KG0aigrxWtt2RZdvxjCK+rk=
++ Certificate Third-part:
++ Wechat/Weibo/Alipay MD5 HEX: 28424130a4416d519e00946651d53a46
++ Firebase SHA1 HEX: C9:A9:3A:28:6D:1A:8A:0A:F1:5A:DB:76:45:97:6F:C6:30:8A:FA:B9
++ Facebook SHA1 BASE64: yak6KG0aigrxWtt2RZdvxjCK+rk=
 --- KeyStore ---
 ```
 
