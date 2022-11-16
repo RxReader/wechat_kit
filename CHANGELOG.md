@@ -1,6 +1,7 @@
 ## 4.0.4
 
 * 升级 Android SDK
+* 升级 iOS SDK
 
 ## 4.0.3
 
