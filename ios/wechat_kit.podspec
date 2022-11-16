@@ -47,9 +47,9 @@ A powerful Flutter plugin allowing developers to auth/pay/share with native Andr
   s.default_subspec = wechat_kit_subspec
 
   s.subspec 'pay' do |sp|
-    sp.source_files = 'Libraries/OpenSDK1.9.2/*.h'
-    sp.public_header_files = 'Libraries/OpenSDK1.9.2/*.h'
-    sp.vendored_libraries = 'Libraries/OpenSDK1.9.2/*.a'
+    sp.source_files = 'Libraries/OpenSDK1.9.9/*.h'
+    sp.public_header_files = 'Libraries/OpenSDK1.9.9/*.h'
+    sp.vendored_libraries = 'Libraries/OpenSDK1.9.9/*.a'
     sp.frameworks = 'CoreGraphics', 'Security', 'WebKit'
     sp.libraries = 'c++', 'z', 'sqlite3.0'
     sp.pod_target_xcconfig = {
@@ -58,9 +58,9 @@ A powerful Flutter plugin allowing developers to auth/pay/share with native Andr
   end
 
   s.subspec 'no_pay' do |sp|
-    sp.source_files = 'Libraries/OpenSDK1.9.2_NoPay/*.h'
-    sp.public_header_files = 'Libraries/OpenSDK1.9.2_NoPay/*.h'
-    sp.vendored_libraries = 'Libraries/OpenSDK1.9.2_NoPay/*.a'
+    sp.source_files = 'Libraries/OpenSDK1.9.9_NoPay/*.h'
+    sp.public_header_files = 'Libraries/OpenSDK1.9.9_NoPay/*.h'
+    sp.vendored_libraries = 'Libraries/OpenSDK1.9.9_NoPay/*.a'
     sp.frameworks = 'CoreGraphics', 'Security', 'WebKit'
     sp.libraries = 'c++', 'z', 'sqlite3.0'
     sp.pod_target_xcconfig = {
