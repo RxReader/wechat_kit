@@ -3,11 +3,22 @@
 //
 //apply from: 'key-store.gradle'
 //
+//# CI/CD
+//
+// do nothing
+//
+//# CLI
+//
+//* 签名信息
+//  ./gradlew :app:debugSigningConfig
+//  ./gradlew :app:releaseSigningConfig
+//  ./gradlew :app:profileSigningConfig
+//
 
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.1.2'
@@ -30,6 +41,16 @@ class KeyStorePlugin implements Plugin<Project> {
     void apply(Project target) {
         target.plugins.withId('com.android.application') {
             target.android.applicationVariants.whenObjectAdded { variant ->
+                target.tasks.create(name: "${variant.name}SigningConfig") {
+                    doLast {
+                        println '--- key-store-cli · signingConfig ---'
+
+                        keyStore(target, variant)
+
+                        println '--- key-store-cli · signingConfig ---'
+                    }
+                }
+
                 variant.assemble.doLast {
                     keyStore(target, variant)
                 }
@@ -47,7 +68,7 @@ class KeyStorePlugin implements Plugin<Project> {
     }
 
     void keyStore(Project target, variant) {
-        println '--- KeyStore ---'
+        println '--- key-store ---'
 
 //        def certificateInfo = com.android.ide.common.signing.KeystoreHelper.getCertificateInfo(
 //                variant.signingConfig.storeType,
@@ -92,7 +113,7 @@ class KeyStorePlugin implements Plugin<Project> {
         println "Firebase SHA1 HEX: " + fingerprints(string.sha1())
         println "Facebook SHA1 BASE64: " + string.sha1().base64()
 
-        println '--- KeyStore ---'
+        println '--- key-store ---'
     }
 
     static final char[] HEX_DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']

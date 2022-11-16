@@ -73,7 +73,7 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, PluginRegi
     private final IDiffDevOAuth qrauth = DiffDevOAuthFactory.getDiffDevOAuth();
 
     private IWXAPI iwxapi;
-    private AtomicBoolean handleInitialWXReqFlag = new AtomicBoolean(false);
+    private final AtomicBoolean handleInitialWXReqFlag = new AtomicBoolean(false);
 
     // --- FlutterPlugin
 
