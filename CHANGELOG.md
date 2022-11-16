@@ -2,6 +2,7 @@
 
 * 升级 Android SDK
 * 升级 iOS SDK
+* 弃用 Wechat 类，直接用 WechatKitPlatform 类
 
 ## 4.0.3
 

@@ -109,7 +109,7 @@ linter:
     - control_flow_in_finally
     # - curly_braces_in_flow_control_structures # not required by flutter style
     - depend_on_referenced_packages
-    - deprecated_consistency
+    # - deprecated_consistency
     # - diagnostic_describe_all_properties # enabled only at the framework level (packages/flutter/lib)
     - directives_ordering
     # - do_not_use_environment # there are appropriate times to use the environment, especially in our tests and build logic

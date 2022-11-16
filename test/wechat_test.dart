@@ -5,7 +5,6 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:wechat_kit/src/model/qrauth.dart';
 import 'package:wechat_kit/src/model/req.dart';
 import 'package:wechat_kit/src/model/resp.dart';
-import 'package:wechat_kit/src/wechat.dart';
 import 'package:wechat_kit/src/wechat_constant.dart';
 import 'package:wechat_kit/src/wechat_kit_method_channel.dart';
 import 'package:wechat_kit/src/wechat_kit_platform_interface.dart';
@@ -270,6 +269,6 @@ void main() {
     final MockWechatKitPlatform fakePlatform = MockWechatKitPlatform();
     WechatKitPlatform.instance = fakePlatform;
 
-    expect(await Wechat.instance.isInstalled(), true);
+    expect(await WechatKitPlatform.instance.isInstalled(), true);
   });
 }

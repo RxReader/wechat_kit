@@ -52,7 +52,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _respSubs = Wechat.instance.respStream().listen(_listenResp);
+    _respSubs = WechatKitPlatform.instance.respStream().listen(_listenResp);
   }
 
   void _listenResp(BaseResp resp) {
@@ -89,7 +89,7 @@ class _HomeState extends State<Home> {
           ListTile(
             title: Text('注册APP'),
             onTap: () async {
-              await Wechat.instance.registerApp(
+              await WechatKitPlatform.instance.registerApp(
                 appId: WECHAT_APPID,
                 universalLink: WECHAT_UNIVERSAL_LINK,
               );
@@ -99,21 +99,21 @@ class _HomeState extends State<Home> {
           ListTile(
             title: Text('微信回调 - 冷启'),
             onTap: () async {
-              await Wechat.instance.handleInitialWXReq();
+              await WechatKitPlatform.instance.handleInitialWXReq();
             },
           ),
           ListTile(
             title: Text('环境检查'),
             onTap: () async {
               final String content =
-                  'wechat: ${await Wechat.instance.isInstalled()} - ${await Wechat.instance.isSupportApi()}';
+                  'wechat: ${await WechatKitPlatform.instance.isInstalled()} - ${await WechatKitPlatform.instance.isSupportApi()}';
               _showTips('环境检查', content);
             },
           ),
           ListTile(
             title: Text('登录'),
             onTap: () {
-              Wechat.instance.auth(
+              WechatKitPlatform.instance.auth(
                 scope: <String>[WechatScope.SNSAPI_USERINFO],
                 state: 'auth',
               );
@@ -154,7 +154,7 @@ class _HomeState extends State<Home> {
           ListTile(
             title: Text('文字分享'),
             onTap: () {
-              Wechat.instance.shareText(
+              WechatKitPlatform.instance.shareText(
                 scene: WechatScene.TIMELINE,
                 text: 'Share Text',
               );
@@ -165,7 +165,7 @@ class _HomeState extends State<Home> {
             onTap: () async {
               final File file = await DefaultCacheManager().getSingleFile(
                   'https://www.baidu.com/img/bd_logo1.png?where=super');
-              await Wechat.instance.shareImage(
+              await WechatKitPlatform.instance.shareImage(
                 scene: WechatScene.SESSION,
                 imageUri: Uri.file(file.path),
               );
@@ -176,7 +176,7 @@ class _HomeState extends State<Home> {
             onTap: () async {
               final File file = await DefaultCacheManager().getSingleFile(
                   'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
-              await Wechat.instance.shareFile(
+              await WechatKitPlatform.instance.shareFile(
                 scene: WechatScene.SESSION,
                 title: '测试文件',
                 fileUri: Uri.file(file.path),
@@ -196,7 +196,7 @@ class _HomeState extends State<Home> {
                 thumbData = Uint8List.fromList(image.encodeJpg(thumbnail,
                     quality: 100 * 32 * 1024 ~/ thumbData.length));
               }
-              await Wechat.instance.shareEmoji(
+              await WechatKitPlatform.instance.shareEmoji(
                 scene: WechatScene.SESSION,
                 thumbData: thumbData,
                 emojiUri: Uri.file(file.path),
@@ -206,7 +206,7 @@ class _HomeState extends State<Home> {
           ListTile(
             title: Text('网页分享'),
             onTap: () {
-              Wechat.instance.shareWebpage(
+              WechatKitPlatform.instance.shareWebpage(
                 scene: WechatScene.TIMELINE,
                 webpageUrl: 'https://www.baidu.com',
               );
@@ -216,7 +216,7 @@ class _HomeState extends State<Home> {
             title: Text('支付'),
             onTap: () {
               // 微信 Demo 例子：https://wxpay.wxutil.com/pub_v2/app/app_pay.php
-              Wechat.instance.pay(
+              WechatKitPlatform.instance.pay(
                 appId: WECHAT_APPID,
                 partnerId: '商户号',
                 prepayId: '预支付交易会话ID',
@@ -230,7 +230,7 @@ class _HomeState extends State<Home> {
           ListTile(
             title: Text('拉起小程序'),
             onTap: () {
-              Wechat.instance.launchMiniProgram(
+              WechatKitPlatform.instance.launchMiniProgram(
                 userName: WECHAT_MINIAPPID,
                 path: 'page/page/index?uid=123',
                 type: WechatMiniProgram.PREVIEW,
@@ -275,7 +275,7 @@ class _QrauthState extends State<Qrauth> {
   void initState() {
     super.initState();
     _qrauthRespSubs =
-        Wechat.instance.qrauthRespStream().listen(_listenQrauthResp);
+        WechatKitPlatform.instance.qrauthRespStream().listen(_listenQrauthResp);
   }
 
   void _listenQrauthResp(QrauthResp resp) {
@@ -330,7 +330,7 @@ class _QrauthState extends State<Qrauth> {
                   '${ticket.ticket}',
                 );
               }
-              await Wechat.instance.startQrauth(
+              await WechatKitPlatform.instance.startQrauth(
                 appId: WECHAT_APPID,
                 scope: <String>[WechatScope.SNSAPI_USERINFO],
                 noncestr: Uuid().v1().replaceAll('-', ''),
