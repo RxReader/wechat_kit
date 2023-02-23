@@ -49,6 +49,7 @@ project.targets.each do |target|
     if (target.name == "Runner")
         app_id = options_dict[:app_id]
         universal_link = options_dict[:universal_link]
+        applinks = "applinks:#{URI.parse(universal_link).host}"
 
         sectionObject = {}
         project.objects.each do |object|
@@ -58,9 +59,27 @@ project.targets.each do |target|
             end
         end
         sectionObject.build_configurations.each do |config|
+            infoplist = config.build_settings["INFOPLIST_FILE"]
+            if (!infoplist)
+                puts("INFOPLIST_FILE is not exist")
+                exit(0)
+            end
+            infoplistFile = File.join(options_dict[:project_dir], infoplist)
+            if !File.exist?(infoplistFile)
+                puts("#{infoplist} is not exist")
+                exit(0)
+            end
+            result = Plist.parse_xml(codeSignEntitlementsFile, marshal: false)
+            if (!result)
+                result = {}
+            end
+            # TODO
+        end
+        sectionObject.build_configurations.each do |config|
             codeSignEntitlements = config.build_settings["CODE_SIGN_ENTITLEMENTS"]
             if (!codeSignEntitlements)
                 codeSignEntitlements = "Runner/Runner.entitlements"
+                config.build_settings["CODE_SIGN_ENTITLEMENTS"] = codeSignEntitlements
             end
             codeSignEntitlementsFile = File.join(options_dict[:project_dir], codeSignEntitlements)
             if !File.exist?(codeSignEntitlementsFile)
@@ -81,9 +100,9 @@ project.targets.each do |target|
                 domains = []
                 result["com.apple.developer.associated-domains"] = domains
             end
-            isApplinksExist = domains.include? "applinks:#{URI.parse(universal_link).host}"
+            isApplinksExist = domains.include? applinks
             if (!isApplinksExist)
-                domains << "applinks:#{URI.parse(universal_link).host}"
+                domains << applinks
                 content = Plist::Emit.dump(result)
                 File.write(codeSignEntitlementsFile, content)
             end

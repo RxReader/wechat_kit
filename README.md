@@ -73,10 +73,6 @@ SHA256: ea3a9bee3c8b6c96315fb9095258520575e22a6d5ac2c07f074fea9031db58d8
 
 > 暂不支持 SceneDelegate，详见文档 [微信-iOS接入指南](https://developers.weixin.qq.com/doc/oplatform/Mobile_App/Access_Guide/iOS.html)
 
-```shell
-sudo gem install plist
-```
-
 * 在Xcode中，选择你的工程设置项，选中「TARGETS」一栏，在「info」标签栏的「URL type」添加「URL scheme」为你所注册的应用程序 id。
 
 ```
@@ -100,10 +96,6 @@ weixin: identifier=weixin schemes=${appId}
 ```
 
 * Universal Links
-
-```
-Capabilities -> Associated Domain -> Domain -> applinks:${your applinks domain}
-```
 
 apple-app-site-association - 通过 https://${your applinks domain}/.well-known/apple-app-site-association 链接可访问
 
@@ -131,32 +123,36 @@ https://${your applinks domain}/universal_link/${example_app}/wechat/
 
 ### Flutter
 
-* 已发布的 pub 版本
+* 配置
 
-```
+```yaml
 dependencies:
   wechat_kit: ^${latestTag}
+#  wechat_kit:
+#    git:
+#      url: https://github.com/RxReader/wechat_kit.git
 
 wechat_kit:
+  app_id: ${your wechat app id}
   universal_link: https://${your applinks domain}/universal_link/${example_app}/wechat/
 ```
 
 若需要不包含支付的 iOS SDK
-
-* 请修改项目下的 `pubspec.yaml`
 
 ```diff
 wechat_kit:
 +  ios: no_pay # 默认 pay
 ```
 
-* snapshot
+* 安装（仅iOS）
 
-```
-dependencies:
-  wechat_kit:
-    git:
-      url: https://github.com/RxReader/wechat_kit.git
+```shell
+# step.1 安装必要依赖
+sudo gem install plist
+# step.2 切换工作目录，插件里为 example/ios/，普通项目为 ios/
+cd example/ios/
+# step.3 执行脚本
+pod install
 ```
 
 ## 示例
