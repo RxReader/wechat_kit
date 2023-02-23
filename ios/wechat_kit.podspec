@@ -7,8 +7,9 @@ pubspec = YAML.load_file(File.join('..', 'pubspec.yaml'))
 library_version = pubspec['version'].gsub('+', '-')
 
 calling_dir = File.dirname(__FILE__)
-flutter_project_dir = calling_dir.slice(0..(calling_dir.index('/ios/.symlinks')))
-cfg = YAML.load_file(File.join(flutter_project_dir, 'pubspec.yaml'))
+# project_dir = calling_dir.slice(0..(calling_dir.index('/.symlinks')))
+root_project_dir = calling_dir.slice(0..(calling_dir.index('/ios/.symlinks')))
+cfg = YAML.load_file(File.join(root_project_dir, 'pubspec.yaml'))
 if cfg['wechat_kit'] && cfg['wechat_kit']['ios'] == 'no_pay'
     wechat_kit_subspec = 'no_pay'
 else
