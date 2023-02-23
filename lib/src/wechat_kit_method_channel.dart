@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:wechat_kit/src/model/qrauth.dart';
 import 'package:wechat_kit/src/model/req.dart';
 import 'package:wechat_kit/src/model/resp.dart';
-import 'package:wechat_kit/src/wechat_constant.dart';
+import 'package:wechat_kit/src/wechat_kit_constant.dart';
 import 'package:wechat_kit/src/wechat_kit_platform_interface.dart';
 
 /// An implementation of [WechatKitPlatform] that uses method channels.

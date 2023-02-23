@@ -1,8 +1,10 @@
 name: wechat_kit
 description: A powerful Flutter plugin allowing developers to auth/share/pay with natvie Android & iOS Wechat SDKs.
-version: 4.0.4
+version: 5.0.0
 # author: v7lin <v7lin@qq.com>
 homepage: https://github.com/RxReader/wechat_kit
+repository: https://github.com/RxReader/wechat_kit.git
+issue_tracker: https://github.com/RxReader/wechat_kit/issues
 
 environment:
   sdk: ">=2.17.0 <3.0.0"

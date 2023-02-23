@@ -18,7 +18,7 @@ Flutter 版微信登录/分享/支付 SDK。
 
 ## Dart/Flutter Pub 私服
 
-* [simple_pub_server](https://github.com/rxreader/simple_pub_server)
+* [simple_pub_server](https://github.com/RxReader/simple_pub_server)
 
 ## 相关文档
 
@@ -116,18 +116,11 @@ dependencies:
 
 若需要不包含支付的 iOS SDK
 
-* wechat_kit: ^4.0.2 请修改项目下的 `pubspec.yaml`
+* 请修改项目下的 `pubspec.yaml`
 
 ```diff
 +wechat_kit:
 +  ios: no_pay # 默认 pay
-```
-
-* wechat_kit: ^3.2.0/^4.0.0 请修改项目下的 `ios/Podfile`：
-
-```diff 
-# 5.x.y 版本将删除
-+ $WechatKitSubspec = 'no_pay'
 ```
 
 * snapshot
@@ -136,7 +129,7 @@ dependencies:
 dependencies:
   wechat_kit:
     git:
-      url: https://github.com/rxreader/wechat_kit.git
+      url: https://github.com/RxReader/wechat_kit.git
 ```
 
 ## 示例

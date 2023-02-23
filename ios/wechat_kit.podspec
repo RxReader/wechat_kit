@@ -8,32 +8,20 @@ library_version = pubspec['version'].gsub('+', '-')
 
 calling_dir = File.dirname(__FILE__)
 flutter_project_dir = calling_dir.slice(0..(calling_dir.index('/ios/.symlinks')))
-# cfg = YAML.load_file(File.join(File.expand_path('../../../../..', File.dirname(__FILE__)), 'pubspec.yaml'))
 cfg = YAML.load_file(File.join(flutter_project_dir, 'pubspec.yaml'))
-if cfg['wechat_kit']
-    if cfg['wechat_kit']['ios'] == 'no_pay'
-        wechat_kit_subspec = 'no_pay'
-    else
-        wechat_kit_subspec = 'pay'
-    end
+if cfg['wechat_kit'] && cfg['wechat_kit']['ios'] == 'no_pay'
+    wechat_kit_subspec = 'no_pay'
 else
-    # 5.x.y 版本将删除
-    if defined?($WechatKitSubspec)
-      wechat_kit_subspec = $WechatKitSubspec
-    else
-      wechat_kit_subspec = 'pay'
-    end
+    wechat_kit_subspec = 'pay'
 end
 Pod::UI.puts "wechatsdk #{wechat_kit_subspec}"
 
 Pod::Spec.new do |s|
   s.name             = 'wechat_kit'
   s.version          = library_version
-  s.summary          = 'The Flutter plugin for WeChat SDKs.'
-  s.description      = <<-DESC
-A powerful Flutter plugin allowing developers to auth/pay/share with native Android & iOS WeChat SDKs.
-                       DESC
-  s.homepage         = 'http://example.com'
+  s.summary          = pubspec['description']
+  s.description      = pubspec['description']
+  s.homepage         = pubspec['homepage']
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Your Company' => 'email@example.com' }
   s.source           = { :path => '.' }
