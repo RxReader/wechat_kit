@@ -28,10 +28,6 @@ Flutter 版微信登录/分享/支付 SDK。
 * [微信支付](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419317780&token=&lang=zh_CN)
 * [Universal Links](https://developer.apple.com/documentation/uikit/inter-process_communication/allowing_apps_and_websites_to_link_to_your_content)
 
-## FEATURE
-
-* 5.x.y 通过配置 pubspec.yaml 和 cli 抹平 Android/iOS 平台的复杂配置
-
 ## 开始使用
 
 ### Android
@@ -102,8 +98,28 @@ iOS 9系统策略更新，限制了http协议的访问，此外应用需要在�
 Universal Links
 
 ```
-Capabilities -> Associated Domain -> Domain -> applinks:${your applinks}
+Capabilities -> Associated Domain -> Domain -> applinks:${your applinks domain}
 ```
+
+apple-app-site-association - 通过 https://${your applinks domain}/.well-known/apple-app-site-association 链接可访问
+
+```json
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "${your team id}.${your app bundle id}",
+        "paths": [
+          "/universal_link/${example_app}/wechat/*"
+        ]
+      }
+    ]
+  }
+}
+```
+
+> ⚠️ 很多 SDK 都会用到 universal_link，可为不同 SDK 分配不同的 path 以作区分
 
 ### Flutter
 

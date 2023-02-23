@@ -16,6 +16,11 @@ else
     wechat_kit_subspec = 'pay'
 end
 Pod::UI.puts "wechatsdk #{wechat_kit_subspec}"
+if cfg['wechat_kit'] && cfg['wechat_kit']['universal_link']
+    domain = URI.parse(cfg['wechat_kit']['universal_link']).host
+    # TODO: Capabilities -> Associated Domain -> Domain -> applinks:${your applinks domain}
+    Pod::UI.puts "wechatsdk applinks:#{domain}"
+end
 
 Pod::Spec.new do |s|
   s.name             = 'wechat_kit'
