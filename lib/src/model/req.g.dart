@@ -6,15 +6,17 @@ part of 'req.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-LaunchFromWXReq _$LaunchFromWXReqFromJson(Map<String, dynamic> json) =>
-    LaunchFromWXReq(
+WechatLaunchFromWXReq _$WechatLaunchFromWXReqFromJson(
+        Map<String, dynamic> json) =>
+    WechatLaunchFromWXReq(
       messageAction: json['messageAction'] as String?,
       messageExt: json['messageExt'] as String?,
       lang: json['lang'] as String,
       country: json['country'] as String,
     );
 
-Map<String, dynamic> _$LaunchFromWXReqToJson(LaunchFromWXReq instance) =>
+Map<String, dynamic> _$WechatLaunchFromWXReqToJson(
+        WechatLaunchFromWXReq instance) =>
     <String, dynamic>{
       'messageAction': instance.messageAction,
       'messageExt': instance.messageExt,
@@ -22,17 +24,17 @@ Map<String, dynamic> _$LaunchFromWXReqToJson(LaunchFromWXReq instance) =>
       'country': instance.country,
     };
 
-ShowMessageFromWXReq _$ShowMessageFromWXReqFromJson(
+WechatShowMessageFromWXReq _$WechatShowMessageFromWXReqFromJson(
         Map<String, dynamic> json) =>
-    ShowMessageFromWXReq(
+    WechatShowMessageFromWXReq(
       messageAction: json['messageAction'] as String?,
       messageExt: json['messageExt'] as String?,
       lang: json['lang'] as String,
       country: json['country'] as String,
     );
 
-Map<String, dynamic> _$ShowMessageFromWXReqToJson(
-        ShowMessageFromWXReq instance) =>
+Map<String, dynamic> _$WechatShowMessageFromWXReqToJson(
+        WechatShowMessageFromWXReq instance) =>
     <String, dynamic>{
       'messageAction': instance.messageAction,
       'messageExt': instance.messageExt,

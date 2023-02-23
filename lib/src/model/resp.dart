@@ -4,8 +4,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'resp.g.dart';
 
-abstract class BaseResp {
-  const BaseResp({
+abstract class WechatResp {
+  const WechatResp({
     required this.errorCode,
     this.errorMsg,
   });
@@ -46,8 +46,8 @@ abstract class BaseResp {
 }
 
 @JsonSerializable()
-class AuthResp extends BaseResp {
-  const AuthResp({
+class WechatAuthResp extends WechatResp {
+  const WechatAuthResp({
     required super.errorCode,
     super.errorMsg,
     this.code,
@@ -56,8 +56,8 @@ class AuthResp extends BaseResp {
     this.country,
   });
 
-  factory AuthResp.fromJson(Map<String, dynamic> json) =>
-      _$AuthRespFromJson(json);
+  factory WechatAuthResp.fromJson(Map<String, dynamic> json) =>
+      _$WechatAuthRespFromJson(json);
 
   final String? code;
   final String? state;
@@ -65,40 +65,40 @@ class AuthResp extends BaseResp {
   final String? country;
 
   @override
-  Map<String, dynamic> toJson() => _$AuthRespToJson(this);
+  Map<String, dynamic> toJson() => _$WechatAuthRespToJson(this);
 }
 
 @JsonSerializable()
-class OpenUrlResp extends BaseResp {
-  const OpenUrlResp({
+class WechatOpenUrlResp extends WechatResp {
+  const WechatOpenUrlResp({
     required super.errorCode,
     super.errorMsg,
   });
 
-  factory OpenUrlResp.fromJson(Map<String, dynamic> json) =>
-      _$OpenUrlRespFromJson(json);
+  factory WechatOpenUrlResp.fromJson(Map<String, dynamic> json) =>
+      _$WechatOpenUrlRespFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$OpenUrlRespToJson(this);
+  Map<String, dynamic> toJson() => _$WechatOpenUrlRespToJson(this);
 }
 
 @JsonSerializable()
-class ShareMsgResp extends BaseResp {
-  const ShareMsgResp({
+class WechatShareMsgResp extends WechatResp {
+  const WechatShareMsgResp({
     required super.errorCode,
     super.errorMsg,
   });
 
-  factory ShareMsgResp.fromJson(Map<String, dynamic> json) =>
-      _$ShareMsgRespFromJson(json);
+  factory WechatShareMsgResp.fromJson(Map<String, dynamic> json) =>
+      _$WechatShareMsgRespFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$ShareMsgRespToJson(this);
+  Map<String, dynamic> toJson() => _$WechatShareMsgRespToJson(this);
 }
 
 @JsonSerializable()
-class SubscribeMsgResp extends BaseResp {
-  const SubscribeMsgResp({
+class WechatSubscribeMsgResp extends WechatResp {
+  const WechatSubscribeMsgResp({
     required super.errorCode,
     super.errorMsg,
     this.openId,
@@ -108,8 +108,8 @@ class SubscribeMsgResp extends BaseResp {
     this.reserved,
   });
 
-  factory SubscribeMsgResp.fromJson(Map<String, dynamic> json) =>
-      _$SubscribeMsgRespFromJson(json);
+  factory WechatSubscribeMsgResp.fromJson(Map<String, dynamic> json) =>
+      _$WechatSubscribeMsgRespFromJson(json);
 
   final String? openId;
   final String? templateId;
@@ -118,91 +118,93 @@ class SubscribeMsgResp extends BaseResp {
   final String? reserved;
 
   @override
-  Map<String, dynamic> toJson() => _$SubscribeMsgRespToJson(this);
+  Map<String, dynamic> toJson() => _$WechatSubscribeMsgRespToJson(this);
 }
 
 @JsonSerializable()
-class LaunchMiniProgramResp extends BaseResp {
-  const LaunchMiniProgramResp({
+class WechatLaunchMiniProgramResp extends WechatResp {
+  const WechatLaunchMiniProgramResp({
     required super.errorCode,
     super.errorMsg,
     this.extMsg,
   });
 
-  factory LaunchMiniProgramResp.fromJson(Map<String, dynamic> json) =>
-      _$LaunchMiniProgramRespFromJson(json);
+  factory WechatLaunchMiniProgramResp.fromJson(Map<String, dynamic> json) =>
+      _$WechatLaunchMiniProgramRespFromJson(json);
 
   final String? extMsg;
 
   @override
-  Map<String, dynamic> toJson() => _$LaunchMiniProgramRespToJson(this);
+  Map<String, dynamic> toJson() => _$WechatLaunchMiniProgramRespToJson(this);
 }
 
 @JsonSerializable()
-class OpenCustomerServiceChatResp extends BaseResp {
-  const OpenCustomerServiceChatResp({
+class WechatOpenCustomerServiceChatResp extends WechatResp {
+  const WechatOpenCustomerServiceChatResp({
     required super.errorCode,
     super.errorMsg,
   });
 
-  factory OpenCustomerServiceChatResp.fromJson(Map<String, dynamic> json) =>
-      _$OpenCustomerServiceChatRespFromJson(json);
+  factory WechatOpenCustomerServiceChatResp.fromJson(
+          Map<String, dynamic> json) =>
+      _$WechatOpenCustomerServiceChatRespFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$OpenCustomerServiceChatRespToJson(this);
+  Map<String, dynamic> toJson() =>
+      _$WechatOpenCustomerServiceChatRespToJson(this);
 }
 
 @JsonSerializable()
-class OpenBusinessViewResp extends BaseResp {
-  const OpenBusinessViewResp({
+class WechatOpenBusinessViewResp extends WechatResp {
+  const WechatOpenBusinessViewResp({
     required super.errorCode,
     super.errorMsg,
     required this.businessType,
     this.extMsg,
   });
 
-  factory OpenBusinessViewResp.fromJson(Map<String, dynamic> json) =>
-      _$OpenBusinessViewRespFromJson(json);
+  factory WechatOpenBusinessViewResp.fromJson(Map<String, dynamic> json) =>
+      _$WechatOpenBusinessViewRespFromJson(json);
 
   final String businessType;
   final String? extMsg;
 
   @override
-  Map<String, dynamic> toJson() => _$OpenBusinessViewRespToJson(this);
+  Map<String, dynamic> toJson() => _$WechatOpenBusinessViewRespToJson(this);
 }
 
 @JsonSerializable()
-class OpenBusinessWebviewResp extends BaseResp {
-  const OpenBusinessWebviewResp({
+class WechatOpenBusinessWebviewResp extends WechatResp {
+  const WechatOpenBusinessWebviewResp({
     required super.errorCode,
     super.errorMsg,
     required this.businessType,
     this.resultInfo,
   });
 
-  factory OpenBusinessWebviewResp.fromJson(Map<String, dynamic> json) =>
-      _$OpenBusinessWebviewRespFromJson(json);
+  factory WechatOpenBusinessWebviewResp.fromJson(Map<String, dynamic> json) =>
+      _$WechatOpenBusinessWebviewRespFromJson(json);
 
   final int businessType;
   final String? resultInfo;
 
   @override
-  Map<String, dynamic> toJson() => _$OpenBusinessWebviewRespToJson(this);
+  Map<String, dynamic> toJson() => _$WechatOpenBusinessWebviewRespToJson(this);
 }
 
 @JsonSerializable()
-class PayResp extends BaseResp {
-  const PayResp({
+class WechatPayResp extends WechatResp {
+  const WechatPayResp({
     required super.errorCode,
     super.errorMsg,
     this.returnKey,
   });
 
-  factory PayResp.fromJson(Map<String, dynamic> json) =>
-      _$PayRespFromJson(json);
+  factory WechatPayResp.fromJson(Map<String, dynamic> json) =>
+      _$WechatPayRespFromJson(json);
 
   final String? returnKey;
 
   @override
-  Map<String, dynamic> toJson() => _$PayRespToJson(this);
+  Map<String, dynamic> toJson() => _$WechatPayRespToJson(this);
 }

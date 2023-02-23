@@ -45,9 +45,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late final StreamSubscription<BaseResp> _respSubs;
+  late final StreamSubscription<WechatResp> _respSubs;
 
-  AuthResp? _authResp;
+  WechatAuthResp? _authResp;
 
   @override
   void initState() {
@@ -55,18 +55,18 @@ class _HomeState extends State<Home> {
     _respSubs = WechatKitPlatform.instance.respStream().listen(_listenResp);
   }
 
-  void _listenResp(BaseResp resp) {
-    if (resp is AuthResp) {
+  void _listenResp(WechatResp resp) {
+    if (resp is WechatAuthResp) {
       _authResp = resp;
       final String content = 'auth: ${resp.errorCode} ${resp.errorMsg}';
       _showTips('登录', content);
-    } else if (resp is ShareMsgResp) {
+    } else if (resp is WechatShareMsgResp) {
       final String content = 'share: ${resp.errorCode} ${resp.errorMsg}';
       _showTips('分享', content);
-    } else if (resp is PayResp) {
+    } else if (resp is WechatPayResp) {
       final String content = 'pay: ${resp.errorCode} ${resp.errorMsg}';
       _showTips('支付', content);
-    } else if (resp is LaunchMiniProgramResp) {
+    } else if (resp is WechatLaunchMiniProgramResp) {
       final String content = 'mini program: ${resp.errorCode} ${resp.errorMsg}';
       _showTips('拉起小程序', content);
     }
@@ -267,7 +267,7 @@ class Qrauth extends StatefulWidget {
 }
 
 class _QrauthState extends State<Qrauth> {
-  late final StreamSubscription<QrauthResp> _qrauthRespSubs;
+  late final StreamSubscription<WechatQrauthResp> _qrauthRespSubs;
 
   Uint8List? _qrcode;
 
@@ -278,16 +278,16 @@ class _QrauthState extends State<Qrauth> {
         WechatKitPlatform.instance.qrauthRespStream().listen(_listenQrauthResp);
   }
 
-  void _listenQrauthResp(QrauthResp resp) {
-    if (resp is GotQrcodeResp) {
+  void _listenQrauthResp(WechatQrauthResp resp) {
+    if (resp is WechatGotQrcodeResp) {
       setState(() {
         _qrcode = resp.imageData;
       });
-    } else if (resp is QrcodeScannedResp) {
+    } else if (resp is WechatQrcodeScannedResp) {
       if (kDebugMode) {
         print('QrcodeScanned');
       }
-    } else if (resp is FinishResp) {
+    } else if (resp is WechatFinishResp) {
       if (kDebugMode) {
         print('resp: ${resp.errorCode} - ${resp.authCode}');
       }

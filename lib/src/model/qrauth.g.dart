@@ -6,28 +6,32 @@ part of 'qrauth.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-GotQrcodeResp _$GotQrcodeRespFromJson(Map<String, dynamic> json) =>
-    GotQrcodeResp(
-      imageData: GotQrcodeResp._byteArrayFromJson(json['imageData']),
+WechatGotQrcodeResp _$WechatGotQrcodeRespFromJson(Map<String, dynamic> json) =>
+    WechatGotQrcodeResp(
+      imageData: WechatGotQrcodeResp._byteArrayFromJson(json['imageData']),
     );
 
-Map<String, dynamic> _$GotQrcodeRespToJson(GotQrcodeResp instance) =>
+Map<String, dynamic> _$WechatGotQrcodeRespToJson(
+        WechatGotQrcodeResp instance) =>
     <String, dynamic>{
       'imageData': instance.imageData,
     };
 
-QrcodeScannedResp _$QrcodeScannedRespFromJson(Map<String, dynamic> json) =>
-    QrcodeScannedResp();
+WechatQrcodeScannedResp _$WechatQrcodeScannedRespFromJson(
+        Map<String, dynamic> json) =>
+    WechatQrcodeScannedResp();
 
-Map<String, dynamic> _$QrcodeScannedRespToJson(QrcodeScannedResp instance) =>
+Map<String, dynamic> _$WechatQrcodeScannedRespToJson(
+        WechatQrcodeScannedResp instance) =>
     <String, dynamic>{};
 
-FinishResp _$FinishRespFromJson(Map<String, dynamic> json) => FinishResp(
+WechatFinishResp _$WechatFinishRespFromJson(Map<String, dynamic> json) =>
+    WechatFinishResp(
       errorCode: json['errorCode'] as int? ?? 0,
       authCode: json['authCode'] as String?,
     );
 
-Map<String, dynamic> _$FinishRespToJson(FinishResp instance) =>
+Map<String, dynamic> _$WechatFinishRespToJson(WechatFinishResp instance) =>
     <String, dynamic>{
       'errorCode': instance.errorCode,
       'authCode': instance.authCode,

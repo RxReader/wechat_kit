@@ -6,7 +6,8 @@ part of 'resp.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-AuthResp _$AuthRespFromJson(Map<String, dynamic> json) => AuthResp(
+WechatAuthResp _$WechatAuthRespFromJson(Map<String, dynamic> json) =>
+    WechatAuthResp(
       errorCode: json['errorCode'] as int? ?? 0,
       errorMsg: json['errorMsg'] as String?,
       code: json['code'] as String?,
@@ -15,7 +16,8 @@ AuthResp _$AuthRespFromJson(Map<String, dynamic> json) => AuthResp(
       country: json['country'] as String?,
     );
 
-Map<String, dynamic> _$AuthRespToJson(AuthResp instance) => <String, dynamic>{
+Map<String, dynamic> _$WechatAuthRespToJson(WechatAuthResp instance) =>
+    <String, dynamic>{
       'errorCode': instance.errorCode,
       'errorMsg': instance.errorMsg,
       'code': instance.code,
@@ -24,30 +26,33 @@ Map<String, dynamic> _$AuthRespToJson(AuthResp instance) => <String, dynamic>{
       'country': instance.country,
     };
 
-OpenUrlResp _$OpenUrlRespFromJson(Map<String, dynamic> json) => OpenUrlResp(
+WechatOpenUrlResp _$WechatOpenUrlRespFromJson(Map<String, dynamic> json) =>
+    WechatOpenUrlResp(
       errorCode: json['errorCode'] as int? ?? 0,
       errorMsg: json['errorMsg'] as String?,
     );
 
-Map<String, dynamic> _$OpenUrlRespToJson(OpenUrlResp instance) =>
+Map<String, dynamic> _$WechatOpenUrlRespToJson(WechatOpenUrlResp instance) =>
     <String, dynamic>{
       'errorCode': instance.errorCode,
       'errorMsg': instance.errorMsg,
     };
 
-ShareMsgResp _$ShareMsgRespFromJson(Map<String, dynamic> json) => ShareMsgResp(
+WechatShareMsgResp _$WechatShareMsgRespFromJson(Map<String, dynamic> json) =>
+    WechatShareMsgResp(
       errorCode: json['errorCode'] as int? ?? 0,
       errorMsg: json['errorMsg'] as String?,
     );
 
-Map<String, dynamic> _$ShareMsgRespToJson(ShareMsgResp instance) =>
+Map<String, dynamic> _$WechatShareMsgRespToJson(WechatShareMsgResp instance) =>
     <String, dynamic>{
       'errorCode': instance.errorCode,
       'errorMsg': instance.errorMsg,
     };
 
-SubscribeMsgResp _$SubscribeMsgRespFromJson(Map<String, dynamic> json) =>
-    SubscribeMsgResp(
+WechatSubscribeMsgResp _$WechatSubscribeMsgRespFromJson(
+        Map<String, dynamic> json) =>
+    WechatSubscribeMsgResp(
       errorCode: json['errorCode'] as int? ?? 0,
       errorMsg: json['errorMsg'] as String?,
       openId: json['openId'] as String?,
@@ -57,7 +62,8 @@ SubscribeMsgResp _$SubscribeMsgRespFromJson(Map<String, dynamic> json) =>
       reserved: json['reserved'] as String?,
     );
 
-Map<String, dynamic> _$SubscribeMsgRespToJson(SubscribeMsgResp instance) =>
+Map<String, dynamic> _$WechatSubscribeMsgRespToJson(
+        WechatSubscribeMsgResp instance) =>
     <String, dynamic>{
       'errorCode': instance.errorCode,
       'errorMsg': instance.errorMsg,
@@ -68,47 +74,47 @@ Map<String, dynamic> _$SubscribeMsgRespToJson(SubscribeMsgResp instance) =>
       'reserved': instance.reserved,
     };
 
-LaunchMiniProgramResp _$LaunchMiniProgramRespFromJson(
+WechatLaunchMiniProgramResp _$WechatLaunchMiniProgramRespFromJson(
         Map<String, dynamic> json) =>
-    LaunchMiniProgramResp(
+    WechatLaunchMiniProgramResp(
       errorCode: json['errorCode'] as int? ?? 0,
       errorMsg: json['errorMsg'] as String?,
       extMsg: json['extMsg'] as String?,
     );
 
-Map<String, dynamic> _$LaunchMiniProgramRespToJson(
-        LaunchMiniProgramResp instance) =>
+Map<String, dynamic> _$WechatLaunchMiniProgramRespToJson(
+        WechatLaunchMiniProgramResp instance) =>
     <String, dynamic>{
       'errorCode': instance.errorCode,
       'errorMsg': instance.errorMsg,
       'extMsg': instance.extMsg,
     };
 
-OpenCustomerServiceChatResp _$OpenCustomerServiceChatRespFromJson(
+WechatOpenCustomerServiceChatResp _$WechatOpenCustomerServiceChatRespFromJson(
         Map<String, dynamic> json) =>
-    OpenCustomerServiceChatResp(
+    WechatOpenCustomerServiceChatResp(
       errorCode: json['errorCode'] as int? ?? 0,
       errorMsg: json['errorMsg'] as String?,
     );
 
-Map<String, dynamic> _$OpenCustomerServiceChatRespToJson(
-        OpenCustomerServiceChatResp instance) =>
+Map<String, dynamic> _$WechatOpenCustomerServiceChatRespToJson(
+        WechatOpenCustomerServiceChatResp instance) =>
     <String, dynamic>{
       'errorCode': instance.errorCode,
       'errorMsg': instance.errorMsg,
     };
 
-OpenBusinessViewResp _$OpenBusinessViewRespFromJson(
+WechatOpenBusinessViewResp _$WechatOpenBusinessViewRespFromJson(
         Map<String, dynamic> json) =>
-    OpenBusinessViewResp(
+    WechatOpenBusinessViewResp(
       errorCode: json['errorCode'] as int? ?? 0,
       errorMsg: json['errorMsg'] as String?,
       businessType: json['businessType'] as String,
       extMsg: json['extMsg'] as String?,
     );
 
-Map<String, dynamic> _$OpenBusinessViewRespToJson(
-        OpenBusinessViewResp instance) =>
+Map<String, dynamic> _$WechatOpenBusinessViewRespToJson(
+        WechatOpenBusinessViewResp instance) =>
     <String, dynamic>{
       'errorCode': instance.errorCode,
       'errorMsg': instance.errorMsg,
@@ -116,17 +122,17 @@ Map<String, dynamic> _$OpenBusinessViewRespToJson(
       'extMsg': instance.extMsg,
     };
 
-OpenBusinessWebviewResp _$OpenBusinessWebviewRespFromJson(
+WechatOpenBusinessWebviewResp _$WechatOpenBusinessWebviewRespFromJson(
         Map<String, dynamic> json) =>
-    OpenBusinessWebviewResp(
+    WechatOpenBusinessWebviewResp(
       errorCode: json['errorCode'] as int? ?? 0,
       errorMsg: json['errorMsg'] as String?,
       businessType: json['businessType'] as int,
       resultInfo: json['resultInfo'] as String?,
     );
 
-Map<String, dynamic> _$OpenBusinessWebviewRespToJson(
-        OpenBusinessWebviewResp instance) =>
+Map<String, dynamic> _$WechatOpenBusinessWebviewRespToJson(
+        WechatOpenBusinessWebviewResp instance) =>
     <String, dynamic>{
       'errorCode': instance.errorCode,
       'errorMsg': instance.errorMsg,
@@ -134,13 +140,15 @@ Map<String, dynamic> _$OpenBusinessWebviewRespToJson(
       'resultInfo': instance.resultInfo,
     };
 
-PayResp _$PayRespFromJson(Map<String, dynamic> json) => PayResp(
+WechatPayResp _$WechatPayRespFromJson(Map<String, dynamic> json) =>
+    WechatPayResp(
       errorCode: json['errorCode'] as int? ?? 0,
       errorMsg: json['errorMsg'] as String?,
       returnKey: json['returnKey'] as String?,
     );
 
-Map<String, dynamic> _$PayRespToJson(PayResp instance) => <String, dynamic>{
+Map<String, dynamic> _$WechatPayRespToJson(WechatPayResp instance) =>
+    <String, dynamic>{
       'errorCode': instance.errorCode,
       'errorMsg': instance.errorMsg,
       'returnKey': instance.returnKey,

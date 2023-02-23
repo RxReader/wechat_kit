@@ -2,10 +2,10 @@ import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:wechat_kit/src/constant.dart';
 import 'package:wechat_kit/src/model/qrauth.dart';
 import 'package:wechat_kit/src/model/req.dart';
 import 'package:wechat_kit/src/model/resp.dart';
-import 'package:wechat_kit/src/wechat_kit_constant.dart';
 import 'package:wechat_kit/src/wechat_kit_method_channel.dart';
 import 'package:wechat_kit/src/wechat_kit_platform_interface.dart';
 
@@ -21,17 +21,17 @@ class MockWechatKitPlatform
   }
 
   @override
-  Stream<BaseReq> reqStream() {
+  Stream<WechatReq> reqStream() {
     throw UnimplementedError();
   }
 
   @override
-  Stream<BaseResp> respStream() {
+  Stream<WechatResp> respStream() {
     throw UnimplementedError();
   }
 
   @override
-  Stream<QrauthResp> qrauthRespStream() {
+  Stream<WechatQrauthResp> qrauthRespStream() {
     throw UnimplementedError();
   }
 

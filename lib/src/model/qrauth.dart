@@ -5,8 +5,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'qrauth.g.dart';
 
-abstract class QrauthResp {
-  const QrauthResp();
+abstract class WechatQrauthResp {
+  const WechatQrauthResp();
 
   Map<String, dynamic> toJson();
 
@@ -15,19 +15,19 @@ abstract class QrauthResp {
 }
 
 @JsonSerializable()
-class GotQrcodeResp extends QrauthResp {
-  const GotQrcodeResp({
+class WechatGotQrcodeResp extends WechatQrauthResp {
+  const WechatGotQrcodeResp({
     required this.imageData,
   });
 
-  factory GotQrcodeResp.fromJson(Map<String, dynamic> json) =>
-      _$GotQrcodeRespFromJson(json);
+  factory WechatGotQrcodeResp.fromJson(Map<String, dynamic> json) =>
+      _$WechatGotQrcodeRespFromJson(json);
 
   @JsonKey(fromJson: _byteArrayFromJson)
   final Uint8List imageData;
 
   @override
-  Map<String, dynamic> toJson() => _$GotQrcodeRespToJson(this);
+  Map<String, dynamic> toJson() => _$WechatGotQrcodeRespToJson(this);
 
   static Uint8List _byteArrayFromJson(Object? json) {
     return json! as Uint8List;
@@ -35,25 +35,25 @@ class GotQrcodeResp extends QrauthResp {
 }
 
 @JsonSerializable()
-class QrcodeScannedResp extends QrauthResp {
-  const QrcodeScannedResp();
+class WechatQrcodeScannedResp extends WechatQrauthResp {
+  const WechatQrcodeScannedResp();
 
-  factory QrcodeScannedResp.fromJson(Map<String, dynamic> json) =>
-      _$QrcodeScannedRespFromJson(json);
+  factory WechatQrcodeScannedResp.fromJson(Map<String, dynamic> json) =>
+      _$WechatQrcodeScannedRespFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$QrcodeScannedRespToJson(this);
+  Map<String, dynamic> toJson() => _$WechatQrcodeScannedRespToJson(this);
 }
 
 @JsonSerializable()
-class FinishResp extends QrauthResp {
-  const FinishResp({
+class WechatFinishResp extends WechatQrauthResp {
+  const WechatFinishResp({
     required this.errorCode,
     this.authCode,
   });
 
-  factory FinishResp.fromJson(Map<String, dynamic> json) =>
-      _$FinishRespFromJson(json);
+  factory WechatFinishResp.fromJson(Map<String, dynamic> json) =>
+      _$WechatFinishRespFromJson(json);
 
   /// Auth成功
   static const int ERRORCODE_OK = 0;
@@ -82,5 +82,5 @@ class FinishResp extends QrauthResp {
   bool get isCancelled => errorCode == ERRORCODE_CANCEL;
 
   @override
-  Map<String, dynamic> toJson() => _$FinishRespToJson(this);
+  Map<String, dynamic> toJson() => _$WechatFinishRespToJson(this);
 }

@@ -4,8 +4,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'req.g.dart';
 
-abstract class BaseReq {
-  const BaseReq();
+abstract class WechatReq {
+  const WechatReq();
 
   Map<String, dynamic> toJson();
 
@@ -14,16 +14,16 @@ abstract class BaseReq {
 }
 
 @JsonSerializable()
-class LaunchFromWXReq extends BaseReq {
-  const LaunchFromWXReq({
+class WechatLaunchFromWXReq extends WechatReq {
+  const WechatLaunchFromWXReq({
     this.messageAction,
     this.messageExt,
     required this.lang,
     required this.country,
   });
 
-  factory LaunchFromWXReq.fromJson(Map<String, dynamic> json) =>
-      _$LaunchFromWXReqFromJson(json);
+  factory WechatLaunchFromWXReq.fromJson(Map<String, dynamic> json) =>
+      _$WechatLaunchFromWXReqFromJson(json);
 
   final String? messageAction;
   final String? messageExt;
@@ -31,20 +31,20 @@ class LaunchFromWXReq extends BaseReq {
   final String country;
 
   @override
-  Map<String, dynamic> toJson() => _$LaunchFromWXReqToJson(this);
+  Map<String, dynamic> toJson() => _$WechatLaunchFromWXReqToJson(this);
 }
 
 @JsonSerializable()
-class ShowMessageFromWXReq extends BaseReq {
-  const ShowMessageFromWXReq({
+class WechatShowMessageFromWXReq extends WechatReq {
+  const WechatShowMessageFromWXReq({
     this.messageAction,
     this.messageExt,
     required this.lang,
     required this.country,
   });
 
-  factory ShowMessageFromWXReq.fromJson(Map<String, dynamic> json) =>
-      _$ShowMessageFromWXReqFromJson(json);
+  factory WechatShowMessageFromWXReq.fromJson(Map<String, dynamic> json) =>
+      _$WechatShowMessageFromWXReqFromJson(json);
 
   final String? messageAction;
   final String? messageExt;
@@ -52,5 +52,5 @@ class ShowMessageFromWXReq extends BaseReq {
   final String country;
 
   @override
-  Map<String, dynamic> toJson() => _$ShowMessageFromWXReqToJson(this);
+  Map<String, dynamic> toJson() => _$WechatShowMessageFromWXReqToJson(this);
 }

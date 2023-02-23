@@ -1,16 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:wechat_kit/src/constant.dart';
 import 'package:wechat_kit/src/model/qrauth.dart';
 import 'package:wechat_kit/src/model/req.dart';
 import 'package:wechat_kit/src/model/resp.dart';
-import 'package:wechat_kit/src/wechat_kit_constant.dart';
 import 'package:wechat_kit/src/wechat_kit_platform_interface.dart';
 
 /// An implementation of [WechatKitPlatform] that uses method channels.
@@ -21,19 +20,19 @@ class MethodChannelWechatKit extends WechatKitPlatform {
       const MethodChannel('v7lin.github.io/wechat_kit')
         ..setMethodCallHandler(_handleMethod);
 
-  final StreamController<BaseReq> _reqStreamController =
-      StreamController<BaseReq>.broadcast();
+  final StreamController<WechatReq> _reqStreamController =
+      StreamController<WechatReq>.broadcast();
 
-  final StreamController<BaseResp> _respStreamController =
-      StreamController<BaseResp>.broadcast();
+  final StreamController<WechatResp> _respStreamController =
+      StreamController<WechatResp>.broadcast();
 
-  final StreamController<QrauthResp> _qrauthRespStreamController =
-      StreamController<QrauthResp>.broadcast();
+  final StreamController<WechatQrauthResp> _qrauthRespStreamController =
+      StreamController<WechatQrauthResp>.broadcast();
 
   Future<dynamic> _handleMethod(MethodCall call) async {
     // 优先处理不需要参数的请求
     if (call.method == 'onAuthQrcodeScanned') {
-      _qrauthRespStreamController.add(QrcodeScannedResp());
+      _qrauthRespStreamController.add(WechatQrcodeScannedResp());
       return;
     }
 
@@ -43,45 +42,46 @@ class MethodChannelWechatKit extends WechatKitPlatform {
     switch (call.method) {
       // onReq
       case 'onLaunchFromWXReq':
-        _reqStreamController.add(LaunchFromWXReq.fromJson(data));
+        _reqStreamController.add(WechatLaunchFromWXReq.fromJson(data));
         break;
       case 'onShowMessageFromWXReq':
-        _reqStreamController.add(ShowMessageFromWXReq.fromJson(data));
+        _reqStreamController.add(WechatShowMessageFromWXReq.fromJson(data));
         break;
       // onResp
       case 'onAuthResp':
-        _respStreamController.add(AuthResp.fromJson(data));
+        _respStreamController.add(WechatAuthResp.fromJson(data));
         break;
       case 'onOpenUrlResp':
-        _respStreamController.add(OpenUrlResp.fromJson(data));
+        _respStreamController.add(WechatOpenUrlResp.fromJson(data));
         break;
       case 'onShareMsgResp':
-        _respStreamController.add(ShareMsgResp.fromJson(data));
+        _respStreamController.add(WechatShareMsgResp.fromJson(data));
         break;
       case 'onSubscribeMsgResp':
-        _respStreamController.add(SubscribeMsgResp.fromJson(data));
+        _respStreamController.add(WechatSubscribeMsgResp.fromJson(data));
         break;
       case 'onLaunchMiniProgramResp':
-        _respStreamController.add(LaunchMiniProgramResp.fromJson(data));
+        _respStreamController.add(WechatLaunchMiniProgramResp.fromJson(data));
         break;
       case 'onOpenCustomerServiceChatResp':
-        _respStreamController.add(OpenCustomerServiceChatResp.fromJson(data));
+        _respStreamController
+            .add(WechatOpenCustomerServiceChatResp.fromJson(data));
         break;
       case 'onOpenBusinessViewResp':
-        _respStreamController.add(OpenBusinessViewResp.fromJson(data));
+        _respStreamController.add(WechatOpenBusinessViewResp.fromJson(data));
         break;
       case 'onOpenBusinessWebviewResp':
-        _respStreamController.add(OpenBusinessWebviewResp.fromJson(data));
+        _respStreamController.add(WechatOpenBusinessWebviewResp.fromJson(data));
         break;
       case 'onPayResp':
-        _respStreamController.add(PayResp.fromJson(data));
+        _respStreamController.add(WechatPayResp.fromJson(data));
         break;
       // onQrauth
       case 'onAuthGotQrcode':
-        _qrauthRespStreamController.add(GotQrcodeResp.fromJson(data));
+        _qrauthRespStreamController.add(WechatGotQrcodeResp.fromJson(data));
         break;
       case 'onAuthFinish':
-        _qrauthRespStreamController.add(FinishResp.fromJson(data));
+        _qrauthRespStreamController.add(WechatFinishResp.fromJson(data));
         break;
     }
   }
@@ -102,17 +102,17 @@ class MethodChannelWechatKit extends WechatKitPlatform {
   }
 
   @override
-  Stream<BaseReq> reqStream() {
+  Stream<WechatReq> reqStream() {
     return _reqStreamController.stream;
   }
 
   @override
-  Stream<BaseResp> respStream() {
+  Stream<WechatResp> respStream() {
     return _respStreamController.stream;
   }
 
   @override
-  Stream<QrauthResp> qrauthRespStream() {
+  Stream<WechatQrauthResp> qrauthRespStream() {
     return _qrauthRespStreamController.stream;
   }
 
