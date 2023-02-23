@@ -6,8 +6,9 @@
 pubspec = YAML.load_file(File.join('..', 'pubspec.yaml'))
 library_version = pubspec['version'].gsub('+', '-')
 
+current_dir = Dir.pwd
 calling_dir = File.dirname(__FILE__)
-# project_dir = calling_dir.slice(0..(calling_dir.index('/.symlinks')))
+project_dir = calling_dir.slice(0..(calling_dir.index('/.symlinks')))
 root_project_dir = calling_dir.slice(0..(calling_dir.index('/ios/.symlinks')))
 cfg = YAML.load_file(File.join(root_project_dir, 'pubspec.yaml'))
 if cfg['wechat_kit'] && cfg['wechat_kit']['ios'] == 'no_pay'
@@ -16,10 +17,10 @@ else
     wechat_kit_subspec = 'pay'
 end
 Pod::UI.puts "wechatsdk #{wechat_kit_subspec}"
-if cfg['wechat_kit'] && cfg['wechat_kit']['universal_link']
-    domain = URI.parse(cfg['wechat_kit']['universal_link']).host
-    # TODO: Capabilities -> Associated Domain -> Domain -> applinks:${your applinks domain}
-    Pod::UI.puts "wechatsdk applinks:#{domain}"
+if cfg['wechat_kit'] && (cfg['wechat_kit']['app_id'] || cfg['wechat_kit']['universal_link'])
+    app_id = cfg['wechat_kit']['app_id']
+    universal_link = cfg['wechat_kit']['universal_link']
+    system("ruby #{current_dir}/wechat_setup.rb -a #{app_id} -u #{universal_link} -p #{project_dir} -n Runner.xcodeproj")
 end
 
 Pod::Spec.new do |s|

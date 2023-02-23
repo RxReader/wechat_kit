@@ -94,4 +94,5 @@ flutter:
 
 wechat_kit:
 #  ios: no_pay # 默认 pay
+  app_id: wx123456789
   universal_link: https://www.yourdomain.com/universal_link/example_app/wechat/
