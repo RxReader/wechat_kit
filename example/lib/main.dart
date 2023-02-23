@@ -114,7 +114,7 @@ class _HomeState extends State<Home> {
             title: Text('登录'),
             onTap: () {
               WechatKitPlatform.instance.auth(
-                scope: <String>[WechatScope.SNSAPI_USERINFO],
+                scope: <String>[WechatScope.kSNSApiUserInfo],
                 state: 'auth',
               );
             },
@@ -155,7 +155,7 @@ class _HomeState extends State<Home> {
             title: Text('文字分享'),
             onTap: () {
               WechatKitPlatform.instance.shareText(
-                scene: WechatScene.TIMELINE,
+                scene: WechatScene.kTimeline,
                 text: 'Share Text',
               );
             },
@@ -166,7 +166,7 @@ class _HomeState extends State<Home> {
               final File file = await DefaultCacheManager().getSingleFile(
                   'https://www.baidu.com/img/bd_logo1.png?where=super');
               await WechatKitPlatform.instance.shareImage(
-                scene: WechatScene.SESSION,
+                scene: WechatScene.kSession,
                 imageUri: Uri.file(file.path),
               );
             },
@@ -177,7 +177,7 @@ class _HomeState extends State<Home> {
               final File file = await DefaultCacheManager().getSingleFile(
                   'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
               await WechatKitPlatform.instance.shareFile(
-                scene: WechatScene.SESSION,
+                scene: WechatScene.kSession,
                 title: '测试文件',
                 fileUri: Uri.file(file.path),
                 fileExtension: path.extension(file.path),
@@ -197,7 +197,7 @@ class _HomeState extends State<Home> {
                     quality: 100 * 32 * 1024 ~/ thumbData.length));
               }
               await WechatKitPlatform.instance.shareEmoji(
-                scene: WechatScene.SESSION,
+                scene: WechatScene.kSession,
                 thumbData: thumbData,
                 emojiUri: Uri.file(file.path),
               );
@@ -207,7 +207,7 @@ class _HomeState extends State<Home> {
             title: Text('网页分享'),
             onTap: () {
               WechatKitPlatform.instance.shareWebpage(
-                scene: WechatScene.TIMELINE,
+                scene: WechatScene.kTimeline,
                 webpageUrl: 'https://www.baidu.com',
               );
             },
@@ -233,7 +233,7 @@ class _HomeState extends State<Home> {
               WechatKitPlatform.instance.launchMiniProgram(
                 userName: WECHAT_MINIAPPID,
                 path: 'page/page/index?uid=123',
-                type: WechatMiniProgram.PREVIEW,
+                type: WechatMiniProgram.kPreview,
               );
             },
           ),
@@ -332,7 +332,7 @@ class _QrauthState extends State<Qrauth> {
               }
               await WechatKitPlatform.instance.startQrauth(
                 appId: WECHAT_APPID,
-                scope: <String>[WechatScope.SNSAPI_USERINFO],
+                scope: <String>[WechatScope.kSNSApiUserInfo],
                 noncestr: Uuid().v1().replaceAll('-', ''),
                 ticket: ticket.ticket!,
               );

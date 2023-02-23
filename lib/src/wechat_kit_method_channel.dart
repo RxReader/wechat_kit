@@ -147,11 +147,11 @@ class MethodChannelWechatKit extends WechatKitPlatform {
   Future<void> auth({
     required List<String> scope,
     String? state,
-    int type = WechatAuthType.NORMAL,
+    int type = WechatAuthType.kNormal,
   }) {
-    assert((Platform.isAndroid && type == WechatAuthType.NORMAL) ||
+    assert((Platform.isAndroid && type == WechatAuthType.kNormal) ||
         (Platform.isIOS &&
-            <int>[WechatAuthType.NORMAL, WechatAuthType.WEB].contains(type)));
+            <int>[WechatAuthType.kNormal, WechatAuthType.kWeb].contains(type)));
     return methodChannel.invokeMethod<void>('auth', <String, dynamic>{
       'scope': scope.join(','), // Scope
       if (state != null) 'state': state,
@@ -425,10 +425,10 @@ class MethodChannelWechatKit extends WechatKitPlatform {
     String? path,
     Uint8List? hdImageData,
     bool withShareTicket = false,
-    int type = WechatMiniProgram.RELEASE,
+    int type = WechatMiniProgram.kRelease,
     bool disableForward = false,
   }) {
-    assert(scene == WechatScene.SESSION);
+    assert(scene == WechatScene.kSession);
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
@@ -473,7 +473,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
   Future<void> launchMiniProgram({
     required String userName,
     String? path,
-    int type = WechatMiniProgram.RELEASE,
+    int type = WechatMiniProgram.kRelease,
   }) {
     return methodChannel.invokeMethod<void>(
       'launchMiniProgram',

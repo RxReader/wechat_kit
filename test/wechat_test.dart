@@ -66,7 +66,7 @@ class MockWechatKitPlatform
   Future<void> auth({
     required List<String> scope,
     String? state,
-    int type = WechatAuthType.NORMAL,
+    int type = WechatAuthType.kNormal,
   }) {
     throw UnimplementedError();
   }
@@ -195,7 +195,7 @@ class MockWechatKitPlatform
     String? path,
     Uint8List? hdImageData,
     bool withShareTicket = false,
-    int type = WechatMiniProgram.RELEASE,
+    int type = WechatMiniProgram.kRelease,
     bool disableForward = false,
   }) {
     throw UnimplementedError();
@@ -214,7 +214,7 @@ class MockWechatKitPlatform
   Future<void> launchMiniProgram({
     required String userName,
     String? path,
-    int type = WechatMiniProgram.RELEASE,
+    int type = WechatMiniProgram.kRelease,
   }) {
     throw UnimplementedError();
   }

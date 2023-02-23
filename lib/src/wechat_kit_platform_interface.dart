@@ -83,7 +83,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
   Future<void> auth({
     required List<String> scope,
     String? state,
-    int type = WechatAuthType.NORMAL,
+    int type = WechatAuthType.kNormal,
   }) {
     throw UnimplementedError(
         'auth({required scope, state, type}) has not been implemented.');
@@ -222,7 +222,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
     String? path,
     Uint8List? hdImageData,
     bool withShareTicket = false,
-    int type = WechatMiniProgram.RELEASE,
+    int type = WechatMiniProgram.kRelease,
     bool disableForward = false,
   }) {
     throw UnimplementedError(
@@ -243,7 +243,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
   Future<void> launchMiniProgram({
     required String userName,
     String? path,
-    int type = WechatMiniProgram.RELEASE,
+    int type = WechatMiniProgram.kRelease,
   }) {
     throw UnimplementedError(
         'launchMiniProgram({required userName, path, type}) has not been implemented.');
