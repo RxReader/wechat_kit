@@ -56,30 +56,30 @@ class WechatFinishResp extends WechatQrauthResp {
       _$WechatFinishRespFromJson(json);
 
   /// Auth成功
-  static const int ERRORCODE_OK = 0;
+  static const int kErrorCodeSuccess = 0;
 
   /// 普通错误
-  static const int ERRORCODE_NORMAL = -1;
+  static const int kErrorCodeNormal = -1;
 
   /// 网络错误
-  static const int ERRORCODE_NETWORK = -2;
+  static const int kErrorCodeNetwork = -2;
 
   /// 获取二维码失败
-  static const int ERRORCODE_GETQRCODEFAILED = -3;
+  static const int kErrorCodeGetQrcodeFailed = -3;
 
   /// 用户取消授权
-  static const int ERRORCODE_CANCEL = -4;
+  static const int kErrorCodeCancel = -4;
 
   /// 超时
-  static const int ERRORCODE_TIMEOUT = -5;
+  static const int kErrorCodeTimeout = -5;
 
-  @JsonKey(defaultValue: ERRORCODE_OK)
+  @JsonKey(defaultValue: kErrorCodeSuccess)
   final int errorCode;
   final String? authCode;
 
-  bool get isSuccessful => errorCode == ERRORCODE_OK;
+  bool get isSuccessful => errorCode == kErrorCodeSuccess;
 
-  bool get isCancelled => errorCode == ERRORCODE_CANCEL;
+  bool get isCancelled => errorCode == kErrorCodeCancel;
 
   @override
   Map<String, dynamic> toJson() => _$WechatFinishRespToJson(this);

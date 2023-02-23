@@ -11,33 +11,33 @@ abstract class WechatResp {
   });
 
   /// 成功
-  static const int ERRORCODE_SUCCESS = 0;
+  static const int kErrorCodeSuccess = 0;
 
   /// 普通错误类型
-  static const int ERRORCODE_COMMON = -1;
+  static const int kErrorCodeCommon = -1;
 
   /// 用户点击取消并返回
-  static const int ERRORCODE_USERCANCEL = -2;
+  static const int kErrorCodeUserCancel = -2;
 
   /// 发送失败
-  static const int ERRORCODE_SENTFAIL = -3;
+  static const int kErrorCodeSentFail = -3;
 
   /// 授权失败
-  static const int ERRORCODE_AUTHDENY = -4;
+  static const int kErrorCodeAuthDeny = -4;
 
   /// 微信不支持
-  static const int ERRORCODE_UNSUPPORT = -5;
+  static const int kErrorCodeUnsupport = -5;
 
   /// 错误码
-  @JsonKey(defaultValue: ERRORCODE_SUCCESS)
+  @JsonKey(defaultValue: kErrorCodeSuccess)
   final int errorCode;
 
   /// 错误提示字符串
   final String? errorMsg;
 
-  bool get isSuccessful => errorCode == ERRORCODE_SUCCESS;
+  bool get isSuccessful => errorCode == kErrorCodeSuccess;
 
-  bool get isCancelled => errorCode == ERRORCODE_USERCANCEL;
+  bool get isCancelled => errorCode == kErrorCodeUserCancel;
 
   Map<String, dynamic> toJson();
 
