@@ -1,3 +1,7 @@
+## 5.0.1
+
+* iOS: 优化 ruby 脚本
+
 ## 5.0.0
 
 * break change

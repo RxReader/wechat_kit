@@ -414,7 +414,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "5.0.0"
+    version: "5.0.1"
   wechat_kit_extension:
     dependency: "direct main"
     description:
