@@ -1,3 +1,8 @@
+## 5.0.2
+
+* iOS: 优化 ruby 脚本
+* 优化 Github Action
+
 ## 5.0.1
 
 * iOS: 优化 ruby 脚本

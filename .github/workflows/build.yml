@@ -17,6 +17,9 @@ jobs:
       - name: Run llvm/clang-format@shell
         run: |
           brew install clang-format
+      - name: Run ruby/plist@shell
+        run: |
+          gem install plist
       - run: clang-format -style=file -i ios/Classes/*.h ios/Classes/*.m --dry-run --Werror
       - run: flutter --version
       - run: flutter pub get
@@ -39,6 +42,9 @@ jobs:
       - name: Run llvm/clang-format@shell
         run: |
           brew install clang-format
+      - name: Run ruby/plist@shell
+        run: |
+          gem install plist
       - run: clang-format -style=file -i ios/Classes/*.h ios/Classes/*.m --dry-run
       - run: flutter --version
       - run: flutter pub get
