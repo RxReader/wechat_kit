@@ -11,10 +11,10 @@ import 'package:uuid/uuid.dart';
 import 'package:wechat_kit/wechat_kit.dart';
 import 'package:wechat_kit_extension/wechat_kit_extension.dart';
 
-const String WECHAT_APPID = 'your wechat appId';
-const String WECHAT_UNIVERSAL_LINK = 'your wechat universal link'; // iOS 请配置
-const String WECHAT_APPSECRET = 'your wechat appSecret';
-const String WECHAT_MINIAPPID = 'your wechat miniAppId';
+const String kWechatAppID = 'your wechat appId';
+const String kWechatUniversalLink = 'your wechat universal link'; // iOS 请配置
+const String kWechatAppSecret = 'your wechat appSecret';
+const String kWechatMiniAppID = 'your wechat miniAppId';
 
 void main() {
   runApp(MyApp());
@@ -90,8 +90,8 @@ class _HomeState extends State<Home> {
             title: Text('注册APP'),
             onTap: () async {
               await WechatKitPlatform.instance.registerApp(
-                appId: WECHAT_APPID,
-                universalLink: WECHAT_UNIVERSAL_LINK,
+                appId: kWechatAppID,
+                universalLink: kWechatUniversalLink,
               );
               _showTips('注册APP', '注册成功');
             },
@@ -133,8 +133,8 @@ class _HomeState extends State<Home> {
               if (_authResp != null && _authResp!.isSuccessful) {
                 final WechatAccessTokenResp accessTokenResp =
                     await WechatExtension.getAccessTokenUnionID(
-                  appId: WECHAT_APPID,
-                  appSecret: WECHAT_APPSECRET,
+                  appId: kWechatAppID,
+                  appSecret: kWechatAppSecret,
                   code: _authResp!.code!,
                 );
                 if (accessTokenResp.isSuccessful) {
@@ -217,7 +217,7 @@ class _HomeState extends State<Home> {
             onTap: () {
               // 微信 Demo 例子：https://wxpay.wxutil.com/pub_v2/app/app_pay.php
               WechatKitPlatform.instance.pay(
-                appId: WECHAT_APPID,
+                appId: kWechatAppID,
                 partnerId: '商户号',
                 prepayId: '预支付交易会话ID',
                 package: '扩展字段,暂填写固定值：Sign=WXPay',
@@ -231,7 +231,7 @@ class _HomeState extends State<Home> {
             title: Text('拉起小程序'),
             onTap: () {
               WechatKitPlatform.instance.launchMiniProgram(
-                userName: WECHAT_MINIAPPID,
+                userName: kWechatMiniAppID,
                 path: 'page/page/index?uid=123',
                 type: WechatMiniProgram.kPreview,
               );
@@ -310,8 +310,8 @@ class _QrauthState extends State<Qrauth> {
             onPressed: () async {
               final WechatAccessTokenResp accessToken =
                   await WechatExtension.getAccessToken(
-                appId: WECHAT_APPID,
-                appSecret: WECHAT_APPSECRET,
+                appId: kWechatAppID,
+                appSecret: kWechatAppSecret,
               );
               if (kDebugMode) {
                 print(
@@ -331,7 +331,7 @@ class _QrauthState extends State<Qrauth> {
                 );
               }
               await WechatKitPlatform.instance.startQrauth(
-                appId: WECHAT_APPID,
+                appId: kWechatAppID,
                 scope: <String>[WechatScope.kSNSApiUserInfo],
                 noncestr: Uuid().v1().replaceAll('-', ''),
                 ticket: ticket.ticket!,
