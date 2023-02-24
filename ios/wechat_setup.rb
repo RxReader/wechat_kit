@@ -47,7 +47,7 @@ end
 # Actually open and modify the project
 project = Xcodeproj::Project.open(project_path)
 project.targets.each do |target|
-    if (target.name == "Runner")
+    if target.name == "Runner"
         app_id = options_dict[:app_id]
         universal_link = options_dict[:universal_link]
         applinks = "applinks:#{URI.parse(universal_link).host}"
@@ -61,7 +61,7 @@ project.targets.each do |target|
         end
         sectionObject.build_configurations.each do |config|
             infoplist = config.build_settings["INFOPLIST_FILE"]
-            if (!infoplist)
+            if !infoplist
                 puts("INFOPLIST_FILE is not exist")
                 exit(0)
             end
@@ -71,16 +71,16 @@ project.targets.each do |target|
                 exit(0)
             end
             result = Plist.parse_xml(infoplistFile, marshal: false)
-            if (!result)
+            if !result
                 result = {}
             end
             urlTypes = result["CFBundleURLTypes"]
-            if (!urlTypes)
+            if !urlTypes
                 urlTypes = []
                 result["CFBundleURLTypes"] = urlTypes
             end
             isUrlTypeExist = urlTypes.any? { |urlType| urlType["CFBundleURLSchemes"] && (urlType["CFBundleURLSchemes"].include? app_id) }
-            if (!isUrlTypeExist)
+            if !isUrlTypeExist
                 urlTypes << {
                     "CFBundleTypeRole": "Editor",
                     "CFBundleURLName": "weixin",
@@ -89,36 +89,36 @@ project.targets.each do |target|
                 File.write(infoplistFile, Plist::Emit.dump(result))
             end
             queriesSchemes = result["LSApplicationQueriesSchemes"]
-            if (!queriesSchemes)
+            if !queriesSchemes
                 queriesSchemes = []
                 result["LSApplicationQueriesSchemes"] = queriesSchemes
             end
             wechatSchemes = ["weixin", "weixinULAPI"]
-            if (wechatSchemes.any? { |scheme| !(queriesSchemes.include? scheme)} )
+            if wechatSchemes.any? { |scheme| !(queriesSchemes.include? scheme) }
                 wechatSchemes.each do |scheme|
-                    if (!(queriesSchemes.include? scheme))
+                    if !(queriesSchemes.include? scheme)
                         queriesSchemes << scheme
                     end
                 end
                 File.write(infoplistFile, Plist::Emit.dump(result))
             end
             security = result["NSAppTransportSecurity"]
-            if (!security)
+            if !security
                 security = {}
                 result["NSAppTransportSecurity"] = security
             end
-            if (security["NSAllowsArbitraryLoads"] != true)
+            if security["NSAllowsArbitraryLoads"] != true
                 security["NSAllowsArbitraryLoads"] = true
                 File.write(infoplistFile, Plist::Emit.dump(result))
             end
-            if (security["NSAllowsArbitraryLoadsInWebContent"] != true)
+            if security["NSAllowsArbitraryLoadsInWebContent"] != true
                 security["NSAllowsArbitraryLoadsInWebContent"] = true
                 File.write(infoplistFile, Plist::Emit.dump(result))
             end
         end
         sectionObject.build_configurations.each do |config|
             codeSignEntitlements = config.build_settings["CODE_SIGN_ENTITLEMENTS"]
-            if (!codeSignEntitlements)
+            if !codeSignEntitlements
                 codeSignEntitlements = "Runner/Runner.entitlements"
                 config.build_settings["CODE_SIGN_ENTITLEMENTS"] = codeSignEntitlements
                 project.save()
@@ -135,16 +135,16 @@ project.targets.each do |target|
                 project.save()
             end
             result = Plist.parse_xml(codeSignEntitlementsFile, marshal: false)
-            if (!result)
+            if !result
                 result = {}
             end
             domains = result["com.apple.developer.associated-domains"]
-            if (!domains)
+            if !domains
                 domains = []
                 result["com.apple.developer.associated-domains"] = domains
             end
             isApplinksExist = domains.include? applinks
-            if (!isApplinksExist)
+            if !isApplinksExist
                 domains << applinks
                 File.write(codeSignEntitlementsFile, Plist::Emit.dump(result))
             end
