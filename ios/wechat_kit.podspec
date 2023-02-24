@@ -17,7 +17,7 @@ else
     wechat_kit_subspec = 'pay'
 end
 Pod::UI.puts "wechatsdk #{wechat_kit_subspec}"
-if cfg['wechat_kit'] && (cfg['wechat_kit']['app_id'] || cfg['wechat_kit']['universal_link'])
+if cfg['wechat_kit'] && (cfg['wechat_kit']['app_id'] && cfg['wechat_kit']['universal_link'])
     app_id = cfg['wechat_kit']['app_id']
     universal_link = cfg['wechat_kit']['universal_link']
     system("ruby #{current_dir}/wechat_setup.rb -a #{app_id} -u #{universal_link} -p #{project_dir} -n Runner.xcodeproj")
