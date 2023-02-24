@@ -116,6 +116,7 @@ dependencies:
 #      url: https://github.com/RxReader/wechat_kit.git
 
 wechat_kit:
+#  ios: no_pay # 默认 pay
   app_id: ${your wechat app id}
   universal_link: https://${your applinks domain}/universal_link/${example_app}/wechat/
 ```

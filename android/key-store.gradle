@@ -43,20 +43,28 @@ class KeyStorePlugin implements Plugin<Project> {
             target.android.applicationVariants.whenObjectAdded { variant ->
                 target.tasks.create(name: "${variant.name}SigningConfig") {
                     doLast {
-                        println '--- key-store-cli · signingConfig ---'
+                        println '--- key-store-cli ---'
 
                         keyStore(target, variant)
 
-                        println '--- key-store-cli · signingConfig ---'
+                        println '--- key-store-cli ---'
                     }
                 }
 
                 variant.assemble.doLast {
+                    println '--- key-store ---'
+
                     keyStore(target, variant)
+
+                    println '--- key-store ---'
                 }
 
                 target.tasks.findByPath("bundle${variant.name.capitalize()}").doLast {
+                    println '--- key-store ---'
+
                     keyStore(target, variant)
+
+                    println '--- key-store ---'
                 }
             }
         }
@@ -68,8 +76,6 @@ class KeyStorePlugin implements Plugin<Project> {
     }
 
     void keyStore(Project target, variant) {
-        println '--- key-store ---'
-
 //        def certificateInfo = com.android.ide.common.signing.KeystoreHelper.getCertificateInfo(
 //                variant.signingConfig.storeType,
 //                variant.signingConfig.storeFile,
@@ -112,8 +118,6 @@ class KeyStorePlugin implements Plugin<Project> {
         println "Wechat/Weibo/Alipay MD5 HEX: " + string.md5().hex()
         println "Firebase SHA1 HEX: " + fingerprints(string.sha1())
         println "Facebook SHA1 BASE64: " + string.sha1().base64()
-
-        println '--- key-store ---'
     }
 
     static final char[] HEX_DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
