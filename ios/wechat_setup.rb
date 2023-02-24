@@ -93,12 +93,12 @@ project.targets.each do |target|
                 queriesSchemes = []
                 result["LSApplicationQueriesSchemes"] = queriesSchemes
             end
-            if (!(queriesSchemes.include? "weixin") || !(queriesSchemes.include? "weixinULAPI"))
-                if (!(queriesSchemes.include? "weixin"))
-                    queriesSchemes << "weixin"
-                end
-                if (!(queriesSchemes.include? "weixinULAPI"))
-                    queriesSchemes << "weixinULAPI"
+            wechatSchemes = ["weixin", "weixinULAPI"]
+            if (wechatSchemes.any? { |scheme| !(queriesSchemes.include? scheme)} )
+                wechatSchemes.each do |scheme|
+                    if (!(queriesSchemes.include? scheme))
+                        queriesSchemes << scheme
+                    end
                 end
                 File.write(infoplistFile, Plist::Emit.dump(result))
             end
