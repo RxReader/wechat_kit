@@ -1,4 +1,4 @@
-File pubspec = new File(project.projectDir.parentFile,  'pubspec.yaml')
+File pubspec = new File(project.projectDir.parentFile, 'pubspec.yaml')
 String yaml = pubspec.text
 // Using \s*['|"]?([^\n|'|"]*)['|"]? to extract version number.
 java.util.regex.Matcher versionMatcher = java.util.regex.Pattern.compile("^version:\\s*['|\"]?([^\\n|'|\"]*)['|\"]?\$", java.util.regex.Pattern.MULTILINE).matcher(yaml)
