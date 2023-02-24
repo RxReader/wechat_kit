@@ -1,5 +1,6 @@
 #
 # 参考文献
+# https://github.com/firebase/flutterfire/blob/master/packages/firebase_crashlytics/firebase_crashlytics/ios/crashlytics_add_upload_symbols
 # https://github.com/MagicalWater/Base-APP-Env/blob/master/fastlane/actions/xcode_parse.rb
 #
 
@@ -69,17 +70,54 @@ project.targets.each do |target|
                 puts("#{infoplist} is not exist")
                 exit(0)
             end
-            result = Plist.parse_xml(codeSignEntitlementsFile, marshal: false)
+            result = Plist.parse_xml(infoplistFile, marshal: false)
             if (!result)
                 result = {}
             end
-            # TODO
+            urlTypes = result["CFBundleURLTypes"]
+            if (!urlTypes)
+                urlTypes = []
+                result["CFBundleURLTypes"] = urlTypes
+            end
+            isUrlTypeExist = urlTypes.any? { |urlType| urlType["CFBundleURLSchemes"] && (urlType["CFBundleURLSchemes"].include? app_id) }
+            if (!isUrlTypeExist)
+                urlTypes << {
+                    "CFBundleTypeRole": "Editor",
+                    "CFBundleURLName": "weixin",
+                    "CFBundleURLSchemes": [ app_id ]
+                }
+                File.write(infoplistFile, Plist::Emit.dump(result))
+            end
+            queriesSchemes = result["LSApplicationQueriesSchemes"]
+            if (!queriesSchemes)
+                queriesSchemes = []
+                result["LSApplicationQueriesSchemes"] = queriesSchemes
+            end
+            if (!(queriesSchemes.include? "weixin") || !(queriesSchemes.include? "weixinULAPI"))
+                if (!(queriesSchemes.include? "weixin"))
+                    queriesSchemes << "weixin"
+                end
+                if (!(queriesSchemes.include? "weixinULAPI"))
+                    queriesSchemes << "weixinULAPI"
+                end
+                File.write(infoplistFile, Plist::Emit.dump(result))
+            end
+            security = result["NSAppTransportSecurity"]
+            if (!security)
+                security = {}
+                result["NSAppTransportSecurity"] = security
+            end
+            if (security["NSAllowsArbitraryLoads"] != true)
+                security["NSAllowsArbitraryLoads"] = true
+                File.write(infoplistFile, Plist::Emit.dump(result))
+            end
         end
         sectionObject.build_configurations.each do |config|
             codeSignEntitlements = config.build_settings["CODE_SIGN_ENTITLEMENTS"]
             if (!codeSignEntitlements)
                 codeSignEntitlements = "Runner/Runner.entitlements"
                 config.build_settings["CODE_SIGN_ENTITLEMENTS"] = codeSignEntitlements
+                project.save()
             end
             codeSignEntitlementsFile = File.join(options_dict[:project_dir], codeSignEntitlements)
             if !File.exist?(codeSignEntitlementsFile)
@@ -90,6 +128,7 @@ project.targets.each do |target|
             isRefExist = runnerTargetMainGroup.files.any? { |file| file.path.include? File.basename(codeSignEntitlementsFile) }
             if !isRefExist
                 runnerTargetMainGroup.new_reference(File.basename(codeSignEntitlementsFile))
+                project.save()
             end
             result = Plist.parse_xml(codeSignEntitlementsFile, marshal: false)
             if (!result)
@@ -103,14 +142,8 @@ project.targets.each do |target|
             isApplinksExist = domains.include? applinks
             if (!isApplinksExist)
                 domains << applinks
-                content = Plist::Emit.dump(result)
-                File.write(codeSignEntitlementsFile, content)
+                File.write(codeSignEntitlementsFile, Plist::Emit.dump(result))
             end
-            puts("#{domains}")
-
-            project.save()
         end
     end
 end
-
-

@@ -73,26 +73,9 @@ SHA256: ea3a9bee3c8b6c96315fb9095258520575e22a6d5ac2c07f074fea9031db58d8
 
 > 暂不支持 SceneDelegate，详见文档 [微信-iOS接入指南](https://developers.weixin.qq.com/doc/oplatform/Mobile_App/Access_Guide/iOS.html)
 
-* 在Xcode中，选择你的工程设置项，选中「TARGETS」一栏，在「info」标签栏的「URL type」添加「URL scheme」为你所注册的应用程序 id。
-
 ```
-URL Types
-weixin: identifier=weixin schemes=${appId}
-```
-
-* iOS 9系统策略更新，限制了http协议的访问，此外应用需要在“Info.plist”中将要使用的URL Schemes列为白名单，才可正常检查其他应用是否安装。
-
-```plist
-<key>LSApplicationQueriesSchemes</key>
-<array>
-	<string>weixin</string>
-	<string>weixinULAPI</string>
-</array>
-<key>NSAppTransportSecurity</key>
-<dict>
-	<key>NSAllowsArbitraryLoads</key>
-	<true/>
-</dict>
+# 不需要做任何额外接入工作
+# 配置已集成到脚本里
 ```
 
 * Universal Links
