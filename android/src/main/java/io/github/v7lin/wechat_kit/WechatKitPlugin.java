@@ -120,10 +120,10 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, PluginRegi
 
     @Override
     public boolean onNewIntent(@NonNull Intent intent) {
-        final Intent resp = WechatCallbackActivity.extraCallback(intent);
-        if (resp != null) {
+        final Intent extra = WechatCallbackActivity.extraCallback(intent);
+        if (extra != null) {
             if (iwxapi != null) {
-                iwxapi.handleIntent(resp, iwxapiEventHandler);
+                iwxapi.handleIntent(extra, iwxapiEventHandler);
             }
             return true;
         }
@@ -303,10 +303,10 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, PluginRegi
         if (handleInitialWXReqFlag.compareAndSet(false, true)) {
             final Activity activity = activityPluginBinding != null ? activityPluginBinding.getActivity() : null;
             if (activity != null) {
-                final Intent resp = WechatCallbackActivity.extraCallback(activity.getIntent());
-                if (resp != null) {
+                final Intent extra = WechatCallbackActivity.extraCallback(activity.getIntent());
+                if (extra != null) {
                     if (iwxapi != null) {
-                        iwxapi.handleIntent(resp, iwxapiEventHandler);
+                        iwxapi.handleIntent(extra, iwxapiEventHandler);
                     }
                 }
             }
