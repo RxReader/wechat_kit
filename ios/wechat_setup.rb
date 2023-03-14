@@ -7,6 +7,7 @@
 require 'xcodeproj'
 require 'plist'
 require 'optparse'
+require 'uri'
 
 # Dictionary to hold command line arguments
 options_dict = {}
