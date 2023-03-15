@@ -240,12 +240,27 @@ class MethodChannelWechatKit extends WechatKitPlatform {
     assert(title == null || title.length <= 512);
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
+
+    /// Android imageData 限制 1MB、imageUri 限制 25MB
+    /// https://developers.weixin.qq.com/doc/oplatform/Mobile_App/Share_and_Favorites/Android.html
+    ///
+    /// iOS 统一限制 10MB
+    /// https://developers.weixin.qq.com/doc/oplatform/Mobile_App/Share_and_Favorites/iOS.html
     assert(
-      (imageData != null && imageData.lengthInBytes <= 25 * 1024 * 1024) ||
+      (imageData != null &&
+              ((Platform.isAndroid &&
+                      imageData.lengthInBytes <= 1 * 1024 * 1024) ||
+                  (Platform.isIOS &&
+                      imageData.lengthInBytes <= 10 * 1024 * 1024))) ||
           (imageUri != null &&
               imageUri.isScheme('file') &&
               imageUri.toFilePath().length <= 10 * 1024 &&
-              File.fromUri(imageUri).lengthSync() <= 25 * 1024 * 1024),
+              ((Platform.isAndroid &&
+                      File.fromUri(imageUri).lengthSync() <=
+                          25 * 1024 * 1024) ||
+                  (Platform.isIOS &&
+                      File.fromUri(imageUri).lengthSync() <=
+                          10 * 1024 * 1024))),
     );
     return methodChannel.invokeMethod<void>(
       'shareImage',
