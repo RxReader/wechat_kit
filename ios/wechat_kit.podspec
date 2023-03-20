@@ -21,6 +21,8 @@ if cfg['wechat_kit'] && (cfg['wechat_kit']['app_id'] && cfg['wechat_kit']['unive
     app_id = cfg['wechat_kit']['app_id']
     universal_link = cfg['wechat_kit']['universal_link']
     system("ruby #{current_dir}/wechat_setup.rb -a #{app_id} -u #{universal_link} -p #{project_dir} -n Runner.xcodeproj")
+else
+    abort("wechat app_id/universal_link is null, add code in pubspec.yaml:\nwechat_kit:\n  app_id: ${your wechat app id}\n  universal_link: https://${your applinks domain}/universal_link/${example_app}/wechat/\n")
 end
 
 Pod::Spec.new do |s|

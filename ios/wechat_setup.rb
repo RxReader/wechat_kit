@@ -63,13 +63,11 @@ project.targets.each do |target|
         sectionObject.build_configurations.each do |config|
             infoplist = config.build_settings["INFOPLIST_FILE"]
             if !infoplist
-                puts("INFOPLIST_FILE is not exist")
-                exit(0)
+                abort("INFOPLIST_FILE is not exist\n")
             end
             infoplistFile = File.join(options_dict[:project_dir], infoplist)
             if !File.exist?(infoplistFile)
-                puts("#{infoplist} is not exist")
-                exit(0)
+                abort("#{infoplist} is not exist\n")
             end
             result = Plist.parse_xml(infoplistFile, marshal: false)
             if !result
