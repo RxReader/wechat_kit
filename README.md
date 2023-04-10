@@ -132,7 +132,7 @@ wechat_kit:
 
 ```shell
 # step.1 安装必要依赖
-sudo gem install plist
+sudo gem install rexml plist
 # step.2 切换工作目录，插件里为 example/ios/，普通项目为 ios/
 cd example/ios/
 # step.3 执行脚本
