@@ -63,7 +63,7 @@ class MockWechatKitPlatform
   // --- 微信APP授权登录
 
   @override
-  Future<void> auth({
+  Future<bool?> auth({
     required List<String> scope,
     String? state,
     int type = WechatAuthType.kNormal,
@@ -91,19 +91,19 @@ class MockWechatKitPlatform
   //
 
   @override
-  Future<void> openUrl({
+  Future<bool?> openUrl({
     required String url,
   }) {
     throw UnimplementedError();
   }
 
   @override
-  Future<void> openRankList() {
+  Future<bool?> openRankList() {
     throw UnimplementedError();
   }
 
   @override
-  Future<void> shareText({
+  Future<bool?> shareText({
     required int scene,
     required String text,
   }) {
@@ -111,7 +111,7 @@ class MockWechatKitPlatform
   }
 
   @override
-  Future<void> shareImage({
+  Future<bool?> shareImage({
     required int scene,
     String? title,
     String? description,
@@ -123,7 +123,7 @@ class MockWechatKitPlatform
   }
 
   @override
-  Future<void> shareFile({
+  Future<bool?> shareFile({
     required int scene,
     String? title,
     String? description,
@@ -136,7 +136,7 @@ class MockWechatKitPlatform
   }
 
   @override
-  Future<void> shareEmoji({
+  Future<bool?> shareEmoji({
     required int scene,
     String? title,
     String? description,
@@ -148,7 +148,7 @@ class MockWechatKitPlatform
   }
 
   @override
-  Future<void> shareMediaMusic({
+  Future<bool?> shareMediaMusic({
     required int scene,
     String? title,
     String? description,
@@ -162,7 +162,7 @@ class MockWechatKitPlatform
   }
 
   @override
-  Future<void> shareVideo({
+  Future<bool?> shareVideo({
     required int scene,
     String? title,
     String? description,
@@ -174,7 +174,7 @@ class MockWechatKitPlatform
   }
 
   @override
-  Future<void> shareWebpage({
+  Future<bool?> shareWebpage({
     required int scene,
     String? title,
     String? description,
@@ -185,7 +185,7 @@ class MockWechatKitPlatform
   }
 
   @override
-  Future<void> shareMiniProgram({
+  Future<bool?> shareMiniProgram({
     required int scene,
     String? title,
     String? description,
@@ -202,7 +202,7 @@ class MockWechatKitPlatform
   }
 
   @override
-  Future<void> subscribeMsg({
+  Future<bool?> subscribeMsg({
     required int scene,
     required String templateId,
     String? reserved,
@@ -211,7 +211,7 @@ class MockWechatKitPlatform
   }
 
   @override
-  Future<void> launchMiniProgram({
+  Future<bool?> launchMiniProgram({
     required String userName,
     String? path,
     int type = WechatMiniProgram.kRelease,
@@ -220,7 +220,7 @@ class MockWechatKitPlatform
   }
 
   @override
-  Future<void> openCustomerServiceChat({
+  Future<bool?> openCustomerServiceChat({
     required String corpId,
     required String url,
   }) {
@@ -228,7 +228,7 @@ class MockWechatKitPlatform
   }
 
   @override
-  Future<void> openBusinessView({
+  Future<bool?> openBusinessView({
     required String businessType,
     String? query,
     String? extInfo,
@@ -237,7 +237,7 @@ class MockWechatKitPlatform
   }
 
   @override
-  Future<void> openBusinessWebview({
+  Future<bool?> openBusinessWebview({
     required int businessType,
     Map<String, String>? resultInfo,
   }) {
@@ -245,7 +245,7 @@ class MockWechatKitPlatform
   }
 
   @override
-  Future<void> pay({
+  Future<bool?> pay({
     required String appId,
     required String partnerId,
     required String prepayId,

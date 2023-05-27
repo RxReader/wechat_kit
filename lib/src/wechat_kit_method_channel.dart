@@ -144,7 +144,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
   // --- 微信APP授权登录
 
   @override
-  Future<void> auth({
+  Future<bool?> auth({
     required List<String> scope,
     String? state,
     int type = WechatAuthType.kNormal,
@@ -152,7 +152,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
     assert((Platform.isAndroid && type == WechatAuthType.kNormal) ||
         (Platform.isIOS &&
             <int>[WechatAuthType.kNormal, WechatAuthType.kWeb].contains(type)));
-    return methodChannel.invokeMethod<void>('auth', <String, dynamic>{
+    return methodChannel.invokeMethod<bool>('auth', <String, dynamic>{
       'scope': scope.join(','), // Scope
       if (state != null) 'state': state,
       'type': type,
@@ -196,11 +196,11 @@ class MethodChannelWechatKit extends WechatKitPlatform {
   //
 
   @override
-  Future<void> openUrl({
+  Future<bool?> openUrl({
     required String url,
   }) {
     assert(url.length <= 10 * 1024);
-    return methodChannel.invokeMethod<void>(
+    return methodChannel.invokeMethod<bool>(
       'openUrl',
       <String, dynamic>{
         'url': url,
@@ -209,17 +209,17 @@ class MethodChannelWechatKit extends WechatKitPlatform {
   }
 
   @override
-  Future<void> openRankList() {
-    return methodChannel.invokeMethod<void>('openRankList');
+  Future<bool?> openRankList() {
+    return methodChannel.invokeMethod<bool>('openRankList');
   }
 
   @override
-  Future<void> shareText({
+  Future<bool?> shareText({
     required int scene,
     required String text,
   }) {
     assert(text.length <= 10 * 1024);
-    return methodChannel.invokeMethod<void>(
+    return methodChannel.invokeMethod<bool>(
       'shareText',
       <String, dynamic>{
         'scene': scene, // Scene
@@ -229,7 +229,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
   }
 
   @override
-  Future<void> shareImage({
+  Future<bool?> shareImage({
     required int scene,
     String? title,
     String? description,
@@ -262,7 +262,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
                       File.fromUri(imageUri).lengthSync() <=
                           10 * 1024 * 1024))),
     );
-    return methodChannel.invokeMethod<void>(
+    return methodChannel.invokeMethod<bool>(
       'shareImage',
       <String, dynamic>{
         'scene': scene, // Scene
@@ -276,7 +276,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
   }
 
   @override
-  Future<void> shareFile({
+  Future<bool?> shareFile({
     required int scene,
     String? title,
     String? description,
@@ -296,7 +296,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
               File.fromUri(fileUri).lengthSync() <= 10 * 1024 * 1024),
     );
     assert(Platform.isAndroid || (fileExtension?.isNotEmpty ?? false));
-    return methodChannel.invokeMethod<void>(
+    return methodChannel.invokeMethod<bool>(
       'shareFile',
       <String, dynamic>{
         'scene': scene, // Scene
@@ -311,7 +311,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
   }
 
   @override
-  Future<void> shareEmoji({
+  Future<bool?> shareEmoji({
     required int scene,
     String? title,
     String? description,
@@ -329,7 +329,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
               emojiUri.toFilePath().length <= 10 * 1024 &&
               File.fromUri(emojiUri).lengthSync() <= 10 * 1024 * 1024),
     );
-    return methodChannel.invokeMethod<void>(
+    return methodChannel.invokeMethod<bool>(
       'shareEmoji',
       <String, dynamic>{
         'scene': scene, // Scene
@@ -343,7 +343,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
   }
 
   @override
-  Future<void> shareMediaMusic({
+  Future<bool?> shareMediaMusic({
     required int scene,
     String? title,
     String? description,
@@ -360,7 +360,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
       (musicUrl != null && musicUrl.length <= 10 * 1024) ||
           (musicLowBandUrl != null && musicLowBandUrl.length <= 10 * 1024),
     );
-    return methodChannel.invokeMethod<void>(
+    return methodChannel.invokeMethod<bool>(
       'shareMusic',
       <String, dynamic>{
         'scene': scene, // Scene
@@ -377,7 +377,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
   }
 
   @override
-  Future<void> shareVideo({
+  Future<bool?> shareVideo({
     required int scene,
     String? title,
     String? description,
@@ -392,7 +392,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
       (videoUrl != null && videoUrl.length <= 10 * 1024) ||
           (videoLowBandUrl != null && videoLowBandUrl.length <= 10 * 1024),
     );
-    return methodChannel.invokeMethod<void>(
+    return methodChannel.invokeMethod<bool>(
       'shareVideo',
       <String, dynamic>{
         'scene': scene, // Scene
@@ -406,7 +406,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
   }
 
   @override
-  Future<void> shareWebpage({
+  Future<bool?> shareWebpage({
     required int scene,
     String? title,
     String? description,
@@ -417,7 +417,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
     assert(webpageUrl.length <= 10 * 1024);
-    return methodChannel.invokeMethod<void>(
+    return methodChannel.invokeMethod<bool>(
       'shareWebpage',
       <String, dynamic>{
         'scene': scene, // Scene
@@ -430,7 +430,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
   }
 
   @override
-  Future<void> shareMiniProgram({
+  Future<bool?> shareMiniProgram({
     required int scene,
     String? title,
     String? description,
@@ -448,7 +448,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
     assert(description == null || description.length <= 1024);
     assert(thumbData == null || thumbData.lengthInBytes <= 32 * 1024);
     assert(hdImageData == null || hdImageData.lengthInBytes <= 128 * 1024);
-    return methodChannel.invokeMethod<void>(
+    return methodChannel.invokeMethod<bool>(
       'shareMiniProgram',
       <String, dynamic>{
         'scene': scene, // Scene
@@ -467,14 +467,14 @@ class MethodChannelWechatKit extends WechatKitPlatform {
   }
 
   @override
-  Future<void> subscribeMsg({
+  Future<bool?> subscribeMsg({
     required int scene,
     required String templateId,
     String? reserved,
   }) {
     assert(templateId.length <= 1024);
     assert(reserved == null || reserved.length <= 1024);
-    return methodChannel.invokeMethod<void>(
+    return methodChannel.invokeMethod<bool>(
       'subscribeMsg',
       <String, dynamic>{
         'scene': scene,
@@ -485,12 +485,12 @@ class MethodChannelWechatKit extends WechatKitPlatform {
   }
 
   @override
-  Future<void> launchMiniProgram({
+  Future<bool?> launchMiniProgram({
     required String userName,
     String? path,
     int type = WechatMiniProgram.kRelease,
   }) {
-    return methodChannel.invokeMethod<void>(
+    return methodChannel.invokeMethod<bool>(
       'launchMiniProgram',
       <String, dynamic>{
         'username': userName,
@@ -501,11 +501,11 @@ class MethodChannelWechatKit extends WechatKitPlatform {
   }
 
   @override
-  Future<void> openCustomerServiceChat({
+  Future<bool?> openCustomerServiceChat({
     required String corpId,
     required String url,
   }) {
-    return methodChannel.invokeMethod<void>(
+    return methodChannel.invokeMethod<bool>(
       'openCustomerServiceChat',
       <String, dynamic>{
         'corpId': corpId,
@@ -515,12 +515,12 @@ class MethodChannelWechatKit extends WechatKitPlatform {
   }
 
   @override
-  Future<void> openBusinessView({
+  Future<bool?> openBusinessView({
     required String businessType,
     String? query,
     String? extInfo,
   }) {
-    return methodChannel.invokeMethod<void>(
+    return methodChannel.invokeMethod<bool>(
       'openBusinessView',
       <String, dynamic>{
         'businessType': businessType,
@@ -531,11 +531,11 @@ class MethodChannelWechatKit extends WechatKitPlatform {
   }
 
   @override
-  Future<void> openBusinessWebview({
+  Future<bool?> openBusinessWebview({
     required int businessType,
     Map<String, String>? resultInfo,
   }) {
-    return methodChannel.invokeMethod<void>(
+    return methodChannel.invokeMethod<bool>(
       'openBusinessWebview',
       <String, dynamic>{
         'businessType': businessType,
@@ -545,7 +545,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
   }
 
   @override
-  Future<void> pay({
+  Future<bool?> pay({
     required String appId,
     required String partnerId,
     required String prepayId,
@@ -554,7 +554,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
     required String timeStamp,
     required String sign,
   }) {
-    return methodChannel.invokeMethod<void>(
+    return methodChannel.invokeMethod<bool>(
       'pay',
       <String, dynamic>{
         'appId': appId,

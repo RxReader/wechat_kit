@@ -320,10 +320,12 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, PluginRegi
         final SendAuth.Req req = new SendAuth.Req();
         req.scope = call.argument("scope");
         req.state = call.argument("state");
+
+        boolean b = false;
         if (iwxapi != null) {
-            iwxapi.sendReq(req);
+            b = iwxapi.sendReq(req);
         }
-        result.success(null);
+        result.success(b);
     }
 
     private void handleQRAuthCall(@NonNull MethodCall call, @NonNull Result result) {
@@ -371,18 +373,22 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, PluginRegi
     private void handleOpenUrlCall(@NonNull MethodCall call, @NonNull Result result) {
         final OpenWebview.Req req = new OpenWebview.Req();
         req.url = call.argument("url");
+
+        boolean b = false;
         if (iwxapi != null) {
-            iwxapi.sendReq(req);
+            b = iwxapi.sendReq(req);
         }
-        result.success(null);
+        result.success(b);
     }
 
     private void handleOpenRankListCall(@NonNull MethodCall call, @NonNull Result result) {
         final OpenRankList.Req req = new OpenRankList.Req();
+
+        boolean b = false;
         if (iwxapi != null) {
-            iwxapi.sendReq(req);
+            b = iwxapi.sendReq(req);
         }
-        result.success(null);
+        result.success(b);
     }
 
     private void handleShareTextCall(@NonNull MethodCall call, @NonNull Result result) {
@@ -396,10 +402,12 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, PluginRegi
         object.text = text;
         message.mediaObject = object;
         req.message = message;
+
+        boolean b = false;
         if (iwxapi != null) {
-            iwxapi.sendReq(req);
+            b = iwxapi.sendReq(req);
         }
-        result.success(null);
+        result.success(b);
     }
 
     private void handleShareMediaCall(@NonNull MethodCall call, @NonNull Result result) {
@@ -470,10 +478,12 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, PluginRegi
             message.mediaObject = object;
         }
         req.message = message;
+
+        boolean b = false;
         if (iwxapi != null) {
-            iwxapi.sendReq(req);
+            b = iwxapi.sendReq(req);
         }
-        result.success(null);
+        result.success(b);
     }
 
     private void handleSubscribeMsgCall(@NonNull MethodCall call, @NonNull Result result) {
@@ -481,10 +491,12 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, PluginRegi
         req.scene = call.argument("scene");
         req.templateID = call.argument("templateId");
         req.reserved = call.argument("reserved");
+
+        boolean b = false;
         if (iwxapi != null) {
-            iwxapi.sendReq(req);
+            b = iwxapi.sendReq(req);
         }
-        result.success(null);
+        result.success(b);
     }
 
     private void handleLaunchMiniProgramCall(@NonNull MethodCall call, @NonNull Result result) {
@@ -492,20 +504,24 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, PluginRegi
         req.userName = call.argument("username");
         req.path = call.argument("path");
         req.miniprogramType = call.argument("type");
+
+        boolean b = false;
         if (iwxapi != null) {
-            iwxapi.sendReq(req);
+            b = iwxapi.sendReq(req);
         }
-        result.success(null);
+        result.success(b);
     }
 
     private void handleOpenCustomerServiceChat(@NonNull MethodCall call, @NonNull Result result) {
         final WXOpenCustomerServiceChat.Req req = new WXOpenCustomerServiceChat.Req();
         req.corpId = call.argument("corpId");
         req.url = call.argument("url");
+
+        boolean b = false;
         if (iwxapi != null) {
-            iwxapi.sendReq(req);
+            b = iwxapi.sendReq(req);
         }
-        result.success(null);
+        result.success(b);
     }
 
     private void handleOpenBusinessView(@NonNull MethodCall call, @NonNull Result result) {
@@ -513,20 +529,24 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, PluginRegi
         req.businessType = call.argument("businessType");
         req.query = call.argument("query");
         req.extInfo = call.argument("extInfo");
+
+        boolean b = false;
         if (iwxapi != null) {
-            iwxapi.sendReq(req);
+            b = iwxapi.sendReq(req);
         }
-        result.success(null);
+        result.success(b);
     }
 
     private void handleOpenBusinessWebview(@NonNull MethodCall call, @NonNull Result result) {
         final WXOpenBusinessWebview.Req req = new WXOpenBusinessWebview.Req();
         req.businessType = call.argument("businessType");
         req.queryInfo = call.argument("queryInfo");
+
+        boolean b = false;
         if (iwxapi != null) {
-            iwxapi.sendReq(req);
+            b = iwxapi.sendReq(req);
         }
-        result.success(null);
+        result.success(b);
     }
 
     private void handlePayCall(@NonNull MethodCall call, @NonNull Result result) {
@@ -538,10 +558,12 @@ public class WechatKitPlugin implements FlutterPlugin, ActivityAware, PluginRegi
         req.timeStamp = call.argument("timestamp");
         req.packageValue = call.argument("package");
         req.sign = call.argument("sign");
+
+        boolean b = false;
         if (iwxapi != null) {
-            iwxapi.sendReq(req);
+            b = iwxapi.sendReq(req);
         }
-        result.success(null);
+        result.success(b);
     }
 
     //
