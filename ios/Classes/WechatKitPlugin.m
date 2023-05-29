@@ -117,7 +117,7 @@ typedef void (^WechatKitWXReqRunnable)(void);
     if ([type intValue] == 0) {
         [WXApi sendReq:req
             completion:^(BOOL success){
-                // do nothing
+                result([NSNumber numberWithBool:success]);
             }];
     } else if ([type intValue] == 1) {
         UIViewController *viewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
@@ -125,10 +125,9 @@ typedef void (^WechatKitWXReqRunnable)(void);
             viewController:viewController
                   delegate:self
                 completion:^(BOOL success){
-                    // do nothing
+                    result([NSNumber numberWithBool:success]);
                 }];
     }
-    result(nil);
 }
 
 - (void)handleQRAuthCall:(FlutterMethodCall *)call
@@ -157,9 +156,8 @@ typedef void (^WechatKitWXReqRunnable)(void);
     req.url = call.arguments[@"url"];
     [WXApi sendReq:req
         completion:^(BOOL success){
-            // do nothing
+            result([NSNumber numberWithBool:success]);
         }];
-    result(nil);
 }
 
 - (void)handleOpenRankListCall:(FlutterMethodCall *)call
@@ -167,9 +165,8 @@ typedef void (^WechatKitWXReqRunnable)(void);
     OpenRankListReq *req = [[OpenRankListReq alloc] init];
     [WXApi sendReq:req
         completion:^(BOOL success){
-            // do nothing
+            result([NSNumber numberWithBool:success]);
         }];
-    result(nil);
 }
 
 - (void)handleShareTextCall:(FlutterMethodCall *)call
@@ -181,9 +178,8 @@ typedef void (^WechatKitWXReqRunnable)(void);
     req.text = call.arguments[@"text"];
     [WXApi sendReq:req
         completion:^(BOOL success){
-            // do nothing
+            result([NSNumber numberWithBool:success]);
         }];
-    result(nil);
 }
 
 - (void)handleShareMediaCall:(FlutterMethodCall *)call
@@ -273,9 +269,8 @@ typedef void (^WechatKitWXReqRunnable)(void);
     req.message = message;
     [WXApi sendReq:req
         completion:^(BOOL success){
-            // do nothing
+            result([NSNumber numberWithBool:success]);
         }];
-    result(nil);
 }
 
 - (void)handleSubscribeMsgCall:(FlutterMethodCall *)call
@@ -291,9 +286,8 @@ typedef void (^WechatKitWXReqRunnable)(void);
     req.reserved = call.arguments[@"reserved"];
     [WXApi sendReq:req
         completion:^(BOOL success){
-            // do nothing
+            result([NSNumber numberWithBool:success]);
         }];
-    result(nil);
 }
 
 - (void)handleLaunchMiniProgramCall:(FlutterMethodCall *)call
@@ -305,9 +299,8 @@ typedef void (^WechatKitWXReqRunnable)(void);
     req.miniProgramType = miniProgramType.unsignedIntegerValue;
     [WXApi sendReq:req
         completion:^(BOOL success){
-            // do nothing
+            result([NSNumber numberWithBool:success]);
         }];
-    result(nil);
 }
 
 - (void)handleOpenCustomerServiceChatCall:(FlutterMethodCall *)call
@@ -317,9 +310,8 @@ typedef void (^WechatKitWXReqRunnable)(void);
     req.url = call.arguments[@"url"];
     [WXApi sendReq:req
         completion:^(BOOL success){
-            // do nothing
+            result([NSNumber numberWithBool:success]);
         }];
-    result(nil);
 }
 
 - (void)handleOpenBusinessViewCall:(FlutterMethodCall *)call
@@ -330,9 +322,8 @@ typedef void (^WechatKitWXReqRunnable)(void);
     req.extInfo = call.arguments[@"extInfo"];
     [WXApi sendReq:req
         completion:^(BOOL success){
-            // do nothing
+            result([NSNumber numberWithBool:success]);
         }];
-    result(nil);
 }
 
 - (void)handleOpenBusinessWebviewCall:(FlutterMethodCall *)call
@@ -360,9 +351,8 @@ typedef void (^WechatKitWXReqRunnable)(void);
     req.sign = call.arguments[@"sign"];
     [WXApi sendReq:req
         completion:^(BOOL success){
-            // do nothing
+            result([NSNumber numberWithBool:success]);
         }];
-    result(nil);
 }
 #endif
 

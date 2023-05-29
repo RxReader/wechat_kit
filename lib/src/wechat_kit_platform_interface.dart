@@ -80,7 +80,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
   // --- 微信APP授权登录
 
   /// 授权登录
-  Future<void> auth({
+  Future<bool?> auth({
     required List<String> scope,
     String? state,
     int type = WechatAuthType.kNormal,
@@ -110,7 +110,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
   //
 
   /// 打开指定网页
-  Future<void> openUrl({
+  Future<bool?> openUrl({
     required String url,
   }) {
     throw UnimplementedError(
@@ -118,12 +118,12 @@ abstract class WechatKitPlatform extends PlatformInterface {
   }
 
   /// 打开硬件排行榜
-  Future<void> openRankList() {
+  Future<bool?> openRankList() {
     throw UnimplementedError('openRankList() has not been implemented.');
   }
 
   /// 分享 - 文本
-  Future<void> shareText({
+  Future<bool?> shareText({
     required int scene,
     required String text,
   }) {
@@ -132,7 +132,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
   }
 
   /// 分享 - 图片
-  Future<void> shareImage({
+  Future<bool?> shareImage({
     required int scene,
     String? title,
     String? description,
@@ -145,7 +145,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
   }
 
   /// 分享 - 文件
-  Future<void> shareFile({
+  Future<bool?> shareFile({
     required int scene,
     String? title,
     String? description,
@@ -159,7 +159,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
   }
 
   /// 分享 - Emoji/GIF
-  Future<void> shareEmoji({
+  Future<bool?> shareEmoji({
     required int scene,
     String? title,
     String? description,
@@ -172,7 +172,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
   }
 
   /// 分享 - 音乐
-  Future<void> shareMediaMusic({
+  Future<bool?> shareMediaMusic({
     required int scene,
     String? title,
     String? description,
@@ -187,7 +187,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
   }
 
   /// 分享 - 视频
-  Future<void> shareVideo({
+  Future<bool?> shareVideo({
     required int scene,
     String? title,
     String? description,
@@ -200,7 +200,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
   }
 
   /// 分享 - 网页
-  Future<void> shareWebpage({
+  Future<bool?> shareWebpage({
     required int scene,
     String? title,
     String? description,
@@ -212,7 +212,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
   }
 
   /// 分享 - 小程序 - 目前只支持分享到会话
-  Future<void> shareMiniProgram({
+  Future<bool?> shareMiniProgram({
     required int scene,
     String? title,
     String? description,
@@ -230,7 +230,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
   }
 
   /// 一次性订阅消息
-  Future<void> subscribeMsg({
+  Future<bool?> subscribeMsg({
     required int scene,
     required String templateId,
     String? reserved,
@@ -240,7 +240,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
   }
 
   /// 打开小程序
-  Future<void> launchMiniProgram({
+  Future<bool?> launchMiniProgram({
     required String userName,
     String? path,
     int type = WechatMiniProgram.kRelease,
@@ -250,7 +250,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
   }
 
   /// 打开微信客服
-  Future<void> openCustomerServiceChat({
+  Future<bool?> openCustomerServiceChat({
     required String corpId,
     required String url,
   }) {
@@ -262,7 +262,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
   ///  * 免确认模式：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter6_1_7.shtml
   ///  * 需确认授权：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter6_1_11.shtml
   ///  * 拉起小程序：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter6_1_23.shtml
-  Future<void> openBusinessView({
+  Future<bool?> openBusinessView({
     required String businessType,
     String? query,
     String? extInfo,
@@ -274,7 +274,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
   /// APP纯签约
   /// * APP纯签约-预签约接口：https://pay.weixin.qq.com/wiki/doc/api/xiaowei.php?chapter=19_5
   /// * APP纯签约-预签约接口：https://pay.weixin.qq.com/wiki/doc/api/pap_jt_v2.php?chapter=19_5&index=2_2
-  Future<void> openBusinessWebview({
+  Future<bool?> openBusinessWebview({
     required int businessType,
     Map<String, String>? resultInfo,
   }) {
@@ -289,7 +289,7 @@ abstract class WechatKitPlatform extends PlatformInterface {
   /// * 默认包含支付，参考 https://github.com/RxReader/wechat_kit/blob/master/example/pubspec.yaml
   ///   修改 `wechat_kit.ios = no_pay` 可切换为不包含支付
   /// * 不含「iOS 支付」调用会抛出 [MissingPluginException]
-  Future<void> pay({
+  Future<bool?> pay({
     required String appId,
     required String partnerId,
     required String prepayId,
