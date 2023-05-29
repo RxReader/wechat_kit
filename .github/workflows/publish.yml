@@ -27,9 +27,3 @@ jobs:
       - run: flutter pub get
       - run: flutter format --dry-run --set-exit-if-changed .
       - run: echo "y" | flutter pub publish
-      - name: Run pub.dev/update-credentials@shell
-        env:
-          UPDATE_SECRETS_PAT_TOKEN: ${{ secrets.UPDATE_SECRETS_PAT_TOKEN }}
-        run: |
-          gh auth login --with-token <<< $UPDATE_SECRETS_PAT_TOKEN
-          gh secret set CREDENTIALS_JSON < $PUB_CACHE/credentials.json
