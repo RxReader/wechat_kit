@@ -37,31 +37,24 @@ Pod::Spec.new do |s|
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.platform = :ios, '9.0'
+  s.platform = :ios, '11.0'
 
-  s.static_framework = true
   # s.default_subspecs = :none
   s.default_subspec = wechat_kit_subspec
 
   s.subspec 'pay' do |sp|
-    sp.source_files = 'Libraries/OpenSDK1.9.9/*.h'
-    sp.public_header_files = 'Libraries/OpenSDK1.9.9/*.h'
-    sp.vendored_libraries = 'Libraries/OpenSDK1.9.9/*.a'
+    sp.vendored_frameworks = 'Libraries/Pay/*.xcframework'
     sp.frameworks = 'CoreGraphics', 'Security', 'WebKit'
     sp.libraries = 'c++', 'z', 'sqlite3.0'
     sp.pod_target_xcconfig = {
-        'OTHER_LDFLAGS' => '$(inherited) -ObjC -all_load',
     }
   end
 
   s.subspec 'no_pay' do |sp|
-    sp.source_files = 'Libraries/OpenSDK1.9.9_NoPay/*.h'
-    sp.public_header_files = 'Libraries/OpenSDK1.9.9_NoPay/*.h'
-    sp.vendored_libraries = 'Libraries/OpenSDK1.9.9_NoPay/*.a'
+    sp.vendored_frameworks = 'Libraries/NoPay/*.xcframework'
     sp.frameworks = 'CoreGraphics', 'Security', 'WebKit'
     sp.libraries = 'c++', 'z', 'sqlite3.0'
     sp.pod_target_xcconfig = {
-        'OTHER_LDFLAGS' => '$(inherited) -ObjC -all_load',
         'GCC_PREPROCESSOR_DEFINITIONS' => 'NO_PAY=1'
     }
   end
