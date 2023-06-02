@@ -25,21 +25,26 @@ typedef void (^WechatKitWXReqRunnable)(void);
     FlutterMethodChannel *channel =
         [FlutterMethodChannel methodChannelWithName:@"v7lin.github.io/wechat_kit"
                                     binaryMessenger:[registrar messenger]];
-    WechatKitPlugin *instance = [[WechatKitPlugin alloc] initWithChannel:channel];
+    WechatKitPlugin *instance = [[WechatKitPlugin alloc] init];
+    [instance setMethodChannel:channel];
     [registrar addApplicationDelegate:instance];
     [registrar addMethodCallDelegate:instance channel:channel];
 }
 
-- (instancetype)initWithChannel:(FlutterMethodChannel *)channel {
+- (instancetype)init {
     self = [super init];
     if (self) {
-        _channel = channel;
+//        _channel = channel;
         _qrauth = [[WechatAuthSDK alloc] init];
         _qrauth.delegate = self;
         _isRunning = NO;
         _handleInitialWXReqFlag = NO;
     }
     return self;
+}
+
+- (void) setMethodChannel:(FlutterMethodChannel *)channel {
+    _channel = channel;
 }
 
 - (void)handleMethodCall:(FlutterMethodCall *)call
