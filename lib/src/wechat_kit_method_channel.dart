@@ -43,46 +43,33 @@ class MethodChannelWechatKit extends WechatKitPlatform {
       // onReq
       case 'onLaunchFromWXReq':
         _reqStreamController.add(WechatLaunchFromWXReq.fromJson(data));
-        break;
       case 'onShowMessageFromWXReq':
         _reqStreamController.add(WechatShowMessageFromWXReq.fromJson(data));
-        break;
       // onResp
       case 'onAuthResp':
         _respStreamController.add(WechatAuthResp.fromJson(data));
-        break;
       case 'onOpenUrlResp':
         _respStreamController.add(WechatOpenUrlResp.fromJson(data));
-        break;
       case 'onShareMsgResp':
         _respStreamController.add(WechatShareMsgResp.fromJson(data));
-        break;
       case 'onSubscribeMsgResp':
         _respStreamController.add(WechatSubscribeMsgResp.fromJson(data));
-        break;
       case 'onLaunchMiniProgramResp':
         _respStreamController.add(WechatLaunchMiniProgramResp.fromJson(data));
-        break;
       case 'onOpenCustomerServiceChatResp':
         _respStreamController
             .add(WechatOpenCustomerServiceChatResp.fromJson(data));
-        break;
       case 'onOpenBusinessViewResp':
         _respStreamController.add(WechatOpenBusinessViewResp.fromJson(data));
-        break;
       case 'onOpenBusinessWebviewResp':
         _respStreamController.add(WechatOpenBusinessWebviewResp.fromJson(data));
-        break;
       case 'onPayResp':
         _respStreamController.add(WechatPayResp.fromJson(data));
-        break;
       // onQrauth
       case 'onAuthGotQrcode':
         _qrauthRespStreamController.add(WechatGotQrcodeResp.fromJson(data));
-        break;
       case 'onAuthFinish':
         _qrauthRespStreamController.add(WechatFinishResp.fromJson(data));
-        break;
     }
   }
 

@@ -17,6 +17,7 @@ void main() {
           case 'isInstalled':
             return true;
         }
+        return null;
       },
     );
   });
