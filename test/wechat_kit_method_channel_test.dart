@@ -6,7 +6,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   final MethodChannelWechatKit platform = MethodChannelWechatKit();
-  const MethodChannel channel = MethodChannel('wechat_kit');
+  const MethodChannel channel = MethodChannel('v7lin.github.io/wechat_kit');
 
   setUp(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
