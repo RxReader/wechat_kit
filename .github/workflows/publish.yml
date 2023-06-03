@@ -16,6 +16,10 @@ jobs:
           channel: 'stable'
       - name: Run pub.dev/inject-credentials@shell
         env:
+          # Mac: ~/Library/Application\ Support/dart/pub-credentials.json
+          # Linux: $HOME/.config/dart/pub-credentials.json
+          # Windows: %APPDATA%/dart/pub-credentials.json
+          # Windows: %LOCALAPPDATA%/dart/pub-credentials.json
           CREDENTIALS: ${{ secrets.CREDENTIALS_JSON }}
         run: |
           if [ -z $PUB_CACHE ];then
