@@ -31,12 +31,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
-  path: ^1.8.1
-  image: ^3.0.1
-  flutter_cache_manager: ^3.1.2
+  path: ^1.8.3
+  image: ^4.0.17
+  flutter_cache_manager: ^3.3.0
 
-  uuid: ^3.0.6
-  wechat_kit_extension: ^1.0.0
+  uuid: ^3.0.7
+  wechat_kit_extension: ^1.0.1
 
 dev_dependencies:
   integration_test:
