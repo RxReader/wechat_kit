@@ -34,7 +34,7 @@ typedef void (^WechatKitWXReqRunnable)(void);
 - (instancetype)init {
     self = [super init];
     if (self) {
-//        _channel = channel;
+        // _channel = channel;
         _qrauth = [[WechatAuthSDK alloc] init];
         _qrauth.delegate = self;
         _isRunning = NO;
@@ -43,7 +43,7 @@ typedef void (^WechatKitWXReqRunnable)(void);
     return self;
 }
 
-- (void) setMethodChannel:(FlutterMethodChannel *)channel {
+- (void)setMethodChannel:(FlutterMethodChannel *)channel {
     _channel = channel;
 }
 

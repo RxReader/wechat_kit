@@ -47,6 +47,7 @@ Pod::Spec.new do |s|
     sp.frameworks = 'CoreGraphics', 'Security', 'WebKit'
     sp.libraries = 'c++', 'z', 'sqlite3.0'
     sp.pod_target_xcconfig = {
+        'OTHER_LDFLAGS' => '$(inherited) -ObjC -all_load',
     }
   end
 
@@ -55,7 +56,8 @@ Pod::Spec.new do |s|
     sp.frameworks = 'CoreGraphics', 'Security', 'WebKit'
     sp.libraries = 'c++', 'z', 'sqlite3.0'
     sp.pod_target_xcconfig = {
-        'GCC_PREPROCESSOR_DEFINITIONS' => 'NO_PAY=1'
+        'OTHER_LDFLAGS' => '$(inherited) -ObjC -all_load',
+        'GCC_PREPROCESSOR_DEFINITIONS' => 'NO_PAY=1',
     }
   end
 

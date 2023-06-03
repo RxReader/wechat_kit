@@ -44,6 +44,8 @@ Flutter 版微信登录/分享/支付 SDK。
 // 1. 执行 flutter run/build ，即可获得签名信息
 // 2. shell 执行 pushd android && ./gradlew :app:${variant}SigningConfig && popd (variant: debug/release/profile、flavorDebug/flavorRelease/flavorProfile)，即可获得签名信息
 apply from: "${project(":wechat_kit").projectDir}/key-store.gradle"
+// 或
+apply from: project(":wechat_kit").file("key-store.gradle")
 ```
 
 ```diff

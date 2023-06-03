@@ -2,6 +2,7 @@
 //使用方法
 //
 //apply from: 'key-store.gradle'
+////apply from: project(":wechat_kit").file("key-store.gradle")
 //
 //# CI/CD
 //
