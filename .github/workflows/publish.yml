@@ -14,22 +14,12 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-      - name: Run pub.dev/inject-credentials@shell
-        env:
-          # Mac: ~/Library/Application\ Support/dart/pub-credentials.json
-          # Linux: $HOME/.config/dart/pub-credentials.json
-          # Windows: %APPDATA%/dart/pub-credentials.json
-          # Windows: %LOCALAPPDATA%/dart/pub-credentials.json
-          CREDENTIALS: ${{ secrets.CREDENTIALS_JSON }}
-        run: |
-          if [ -z $XDG_CONFIG_HOME ];then
-            CONFIG_DART_DIR=$XDG_CONFIG_HOME/dart
-          else
-            CONFIG_DART_DIR=~/.config/dart
-          fi
-          mkdir -p $PUB_CACHE
-          echo $CREDENTIALS > $CONFIG_DART_DIR/pub-credentials.json
       - run: flutter --version
       - run: flutter pub get
       - run: dart format --set-exit-if-changed .
-      - run: echo "y" | flutter pub publish
+      - uses: sakebook/actions-flutter-pub-publisher@v1.3.0
+        with:
+          credential: ${{ secrets.CREDENTIALS_JSON }}
+          flutter_package: true
+          skip_test: true
+          dry_run: false
