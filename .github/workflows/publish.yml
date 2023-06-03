@@ -22,11 +22,13 @@ jobs:
           # Windows: %LOCALAPPDATA%/dart/pub-credentials.json
           CREDENTIALS: ${{ secrets.CREDENTIALS_JSON }}
         run: |
-          if [ -z $PUB_CACHE ];then
-            PUB_CACHE=~/.pub-cache
+          if [ -z $XDG_CONFIG_HOME ];then
+            CONFIG_DART_DIR=$XDG_CONFIG_HOME/dart
+          else
+            CONFIG_DART_DIR=~/.config/dart
           fi
           mkdir -p $PUB_CACHE
-          echo $CREDENTIALS > $PUB_CACHE/credentials.json
+          echo $CREDENTIALS > $CONFIG_DART_DIR/pub-credentials.json
       - run: flutter --version
       - run: flutter pub get
       - run: dart format --set-exit-if-changed .
