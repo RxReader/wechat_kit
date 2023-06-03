@@ -15,7 +15,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.2'
+        classpath 'com.android.tools.build:gradle:7.3.0'
     }
 }
 
@@ -55,9 +55,23 @@ android {
             consumerProguardFiles 'consumer-vendor-rules.pro'
         }
     }
-}
 
-dependencies {
-    //
-    vendorImplementation 'com.tencent.mm.opensdk:wechat-sdk-android:6.8.18'
+    dependencies {
+        //
+        vendorImplementation 'com.tencent.mm.opensdk:wechat-sdk-android:6.8.24'
+
+        testImplementation 'junit:junit:4.13.2'
+        testImplementation 'org.mockito:mockito-core:5.0.0'
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+        unitTests.all {
+            testLogging {
+               events "passed", "skipped", "failed", "standardOut", "standardError"
+               outputs.upToDateWhen {false}
+               showStandardStreams = true
+            }
+        }
+    }
 }

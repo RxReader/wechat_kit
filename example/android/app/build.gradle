@@ -24,9 +24,10 @@ if (flutterVersionName == null) {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
-apply from: "${project(":wechat_kit").projectDir}/key-store.gradle"
+apply from: project(":wechat_kit").file("key-store.gradle")
 
 android {
+    namespace "io.github.v7lin.wechat_kit_example"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
@@ -38,8 +39,8 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "io.github.v7lin.wechat_kit_example"
-        // You can update the following values to match your application needs. 
-        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
+        // You can update the following values to match your application needs.
+        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()

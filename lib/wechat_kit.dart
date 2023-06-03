@@ -1,3 +1,4 @@
+/// wechat_kit
 library wechat_kit;
 
 export 'src/constant.dart';
