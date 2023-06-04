@@ -40,24 +40,24 @@ Pod::Spec.new do |s|
   s.platform = :ios, '11.0'
 
   # s.default_subspecs = :none
-  s.default_subspec = wechat_kit_subspec
+  s.default_subspecs = wechat_kit_subspec, 'vendor'
 
   s.subspec 'pay' do |sp|
     sp.vendored_frameworks = 'Libraries/Pay/*.xcframework'
-    sp.frameworks = 'CoreGraphics', 'Security', 'WebKit'
-    sp.libraries = 'c++', 'z', 'sqlite3.0'
-    sp.pod_target_xcconfig = {
-        'OTHER_LDFLAGS' => '$(inherited) -ObjC -all_load',
-    }
   end
 
   s.subspec 'no_pay' do |sp|
     sp.vendored_frameworks = 'Libraries/NoPay/*.xcframework'
+    sp.pod_target_xcconfig = {
+        'GCC_PREPROCESSOR_DEFINITIONS' => 'NO_PAY=1',
+    }
+  end
+
+  s.subspec 'vendor' do |sp|
     sp.frameworks = 'CoreGraphics', 'Security', 'WebKit'
     sp.libraries = 'c++', 'z', 'sqlite3.0'
     sp.pod_target_xcconfig = {
         'OTHER_LDFLAGS' => '$(inherited) -ObjC -all_load',
-        'GCC_PREPROCESSOR_DEFINITIONS' => 'NO_PAY=1',
     }
   end
 
