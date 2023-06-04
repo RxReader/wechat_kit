@@ -8,18 +8,23 @@ on:
 jobs:
   publish:
     name: Publish
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
+      - name: Run pub.dev/inject-credentials@shell
+        env:
+          # Mac: ~/Library/Application\ Support/dart/pub-credentials.json
+          # Linux: $HOME/.config/dart/pub-credentials.json
+          # Windows: %APPDATA%/dart/pub-credentials.json
+          # Windows: %LOCALAPPDATA%/dart/pub-credentials.json
+          CREDENTIALS: ${{ secrets.CREDENTIALS_JSON }}
+        run: |
+          mkdir -p ~/Library/Application\ Support/dart
+          echo $CREDENTIALS > ~/Library/Application\ Support/dart/pub-credentials.json
       - run: flutter --version
       - run: flutter pub get
       - run: dart format --set-exit-if-changed .
-      - uses: sakebook/actions-flutter-pub-publisher@v1.3.0
-        with:
-          credential: ${{ secrets.CREDENTIALS_JSON }}
-          flutter_package: true
-          skip_test: true
-          dry_run: false
+      - run: echo "y" | flutter pub publish
