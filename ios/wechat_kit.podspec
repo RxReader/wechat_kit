@@ -42,6 +42,8 @@ Pod::Spec.new do |s|
   # s.default_subspecs = :none
   s.default_subspecs = wechat_kit_subspec, 'vendor'
 
+  s.resource_bundles = {'wechat_kit_privacy' => ['Resources/PrivacyInfo.xcprivacy']}
+
   s.subspec 'pay' do |sp|
     sp.vendored_frameworks = 'Libraries/Pay/*.xcframework'
   end
@@ -63,5 +65,4 @@ Pod::Spec.new do |s|
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
-  s.resource_bundles = {'wechat_kit_privacy' => ['Resources/PrivacyInfo.xcprivacy']}
 end
