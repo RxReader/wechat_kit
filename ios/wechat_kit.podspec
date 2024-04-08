@@ -42,7 +42,9 @@ Pod::Spec.new do |s|
   # s.default_subspecs = :none
   s.default_subspecs = wechat_kit_subspec, 'vendor'
 
-  s.resource_bundles = {'wechat_kit_privacy' => ['Resources/PrivacyInfo.xcprivacy']}
+  s.resource_bundles = {
+    'wechat_kit' => ['Resources/*']
+  }
 
   s.subspec 'pay' do |sp|
     sp.vendored_frameworks = 'Libraries/Pay/*.xcframework'
