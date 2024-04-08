@@ -126,6 +126,15 @@ typedef BOOL(^WXGrantReadPasteBoardPermissionCompletion)(void);
 + (BOOL)isWXAppSupportStateAPI;
 
 
+#ifndef BUILD_WITHOUT_PAY
+/*! @brief 判断当前微信的版本是否支持二维码拉起微信支付
+ *
+ * @attention 需在工程LSApplicationQueriesSchemes配置中添加weixinQRCodePayAPI
+ * @return 支持返回YES，不支持返回NO。
+ */
++ (BOOL)isWXAppSupportQRCodePayAPI;
+
+#endif
 
 
 /*! @brief 获取微信的itunes安装地址
