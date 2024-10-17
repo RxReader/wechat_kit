@@ -29,6 +29,7 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
+    namespace 'io.github.v7lin.wechat_kit'
     compileSdkVersion 31
 
     compileOptions {
