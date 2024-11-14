@@ -29,7 +29,11 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    namespace 'io.github.v7lin.wechat_kit'
+    if (project.android.hasProperty('namespace') ||
+            getGradle().getGradleVersion().substring(0, 1).toInteger() >= 8) {
+        namespace 'io.github.v7lin.wechat_kit'
+    }
+
     compileSdkVersion 31
 
     compileOptions {
