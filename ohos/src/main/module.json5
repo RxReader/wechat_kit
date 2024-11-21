@@ -1,0 +1,10 @@
+{
+  "module": {
+    "name": "wechat_kit",
+    "type": "har",
+    "deviceTypes": [
+      "default",
+      "tablet"
+    ]
+  }
+}
