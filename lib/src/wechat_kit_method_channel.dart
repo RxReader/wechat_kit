@@ -136,7 +136,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
     String? state,
     int type = WechatAuthType.kNormal,
   }) {
-    assert((Platform.isAndroid && type == WechatAuthType.kNormal) ||
+    assert((!Platform.isIOS && type == WechatAuthType.kNormal) ||
         (Platform.isIOS &&
             <int>[WechatAuthType.kNormal, WechatAuthType.kWeb].contains(type)));
     return methodChannel.invokeMethod<void>('auth', <String, dynamic>{
@@ -235,14 +235,14 @@ class MethodChannelWechatKit extends WechatKitPlatform {
     /// https://developers.weixin.qq.com/doc/oplatform/Mobile_App/Share_and_Favorites/iOS.html
     assert(
       (imageData != null &&
-              ((Platform.isAndroid &&
+              ((!Platform.isIOS &&
                       imageData.lengthInBytes <= 1 * 1024 * 1024) ||
                   (Platform.isIOS &&
                       imageData.lengthInBytes <= 10 * 1024 * 1024))) ||
           (imageUri != null &&
               imageUri.isScheme('file') &&
               imageUri.toFilePath().length <= 10 * 1024 &&
-              ((Platform.isAndroid &&
+              ((!Platform.isIOS &&
                       File.fromUri(imageUri).lengthSync() <=
                           25 * 1024 * 1024) ||
                   (Platform.isIOS &&
@@ -282,7 +282,7 @@ class MethodChannelWechatKit extends WechatKitPlatform {
               fileUri.toFilePath().length <= 10 * 1024 &&
               File.fromUri(fileUri).lengthSync() <= 10 * 1024 * 1024),
     );
-    assert(Platform.isAndroid || (fileExtension?.isNotEmpty ?? false));
+    assert(!Platform.isIOS || (fileExtension?.isNotEmpty ?? false));
     return methodChannel.invokeMethod<void>(
       'shareFile',
       <String, dynamic>{

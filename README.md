@@ -106,6 +106,22 @@ https://${your applinks domain}/universal_link/${example_app}/wechat/
 
 > ⚠️ 很多 SDK 都会用到 universal_link，可为不同 SDK 分配不同的 path 以作区分
 
+### OpenHarmony / HarmonyOS
+
+> 当前 OpenHarmony 的微信 SDK 仅支持部分 API, 使用过程中请自行查阅文档
+
+为了检查是否安装了微信，请在项目的 module.json5 文件中添加以下 scheme
+
+```json5
+{
+  "module": {
+    "querySchemes": [
+      "weixin"
+    ],
+  }
+}
+```
+
 ### Flutter
 
 * 配置
